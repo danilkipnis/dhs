@@ -1,0 +1,35 @@
+{
+  "table": "IV",
+  "title": "Sphere of Thought",
+  "entity": "S",
+  "source_pages": "94-95",
+  "note": "Page 93 describes S as 'one of 13 combinations of one of four spheres (avacāra) with one of three general qualities of thought and dharmas.' The avacara field below decomposes each sphere into its underlying avacāra. For sphere 11 ('neva kusalā nākusalā'), the avacāra isn't named in the sphere's own Pali text -- it's inferred from its case range (225-228) sitting alongside sphere 10's sensuous-sphere cases, so it's flagged as inferred rather than read directly off the page.",
+  "rows": [
+    { "sphere_id": 1,  "sphere": "kāmāvacaraṃ kusalaṃ", "translation": "the sensuous sphere (and) wholesome (thought)", "avacara": "sensuous", "char_dharma": "A", "cases": ["1-8", "111-112"] },
+    { "sphere_id": 2,  "sphere": "rūpāvacaraṃ kusalaṃ", "translation": "the sphere of form (and) wholesome (thought)", "avacara": "form", "char_dharma": "A", "cases": ["9-106", "113-114"] },
+    { "sphere_id": 3,  "sphere": "arūpāvacaraṃ kusalaṃ", "translation": "the sphere of formlessness (and) wholesome (thought)", "avacara": "formlessness", "char_dharma": "A", "cases": ["107-110", "115-118"] },
+    { "sphere_id": 4,  "sphere": "lokuttaraṃ kusalaṃ", "translation": "the supramundane sphere (and) wholesome (thought)", "avacara": "supramundane", "char_dharma": "A", "cases": ["119-144"] },
+    { "sphere_id": 5,  "sphere": "akusalaṃ cittaṃ", "translation": "unwholesome thought (in the sensuous sphere)", "avacara": "sensuous", "char_dharma": "B", "cases": ["145-156"] },
+    { "sphere_id": 6,  "sphere": "kāmāvacaraṃ kusalaṃ", "translation": "the sensuous sphere (and) wholesome (action)", "avacara": "sensuous", "char_dharma": "C", "cases": ["157-165"] },
+    { "sphere_id": 7,  "sphere": "rūpāvacaraṃ kusalaṃ", "translation": "the sphere of form (and) wholesome (action)", "avacara": "form", "char_dharma": "C", "cases": ["166-167"] },
+    { "sphere_id": 8,  "sphere": "arūpāvacaraṃ kusalaṃ", "translation": "the sphere of formlessness (and) wholesome (action)", "avacara": "formlessness", "char_dharma": "C", "cases": ["168-171"] },
+    { "sphere_id": 9,  "sphere": "lokuttaraṃ kusalaṃ", "translation": "the supramundane sphere (and) wholesome (thought)", "avacara": "supramundane", "char_dharma": "C", "cases": ["172-220"] },
+    { "sphere_id": 10, "sphere": "akusalaṃ kammaṃ", "translation": "unwholesome action (in the sensuous sphere)", "avacara": "sensuous", "char_dharma": "C", "cases": ["221-224"] },
+    { "sphere_id": 11, "sphere": "neva kusalā nākusalā", "translation": "of (act which is) neither wholesome nor unwholesome", "avacara": "sensuous", "avacara_inferred": true, "char_dharma": "C", "cases": ["225-228"] },
+    { "sphere_id": 12, "sphere": "rūpāvacaraṃ jhānaṃ", "translation": "the trance in the sphere of form", "avacara": "form", "char_dharma": "C", "cases": ["229-230"] },
+    { "sphere_id": 13, "sphere": "arūpāvacaraṃ jhānaṃ", "translation": "the trance in the sphere of formlessness", "avacara": "formlessness", "char_dharma": "C", "cases": ["231-234"] }
+  ],
+  "lookups": {
+    "avacara": {
+      "sensuous": "kāmāvacara — 'pertaining to the sensuous sphere'",
+      "form": "rūpāvacara — 'pertaining to the sphere of form'",
+      "formlessness": "arūpāvacara — 'pertaining to the sphere of formlessness'",
+      "supramundane": "lokuttara — 'supramundane'"
+    },
+    "char_dharma": {
+      "A": "kusalā — 'wholesome'",
+      "B": "akusalā — 'unwholesome'",
+      "C": "abyākatā — 'indeterminate'"
+    }
+  }
+}
