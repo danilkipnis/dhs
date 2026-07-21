@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Table III — Nomenclature of Thought</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#efe8d8;
+    --paper-edge:#e4dac4;
+    --rule:#c9bda0;
+    --ink:#2a2118;
+    --ink-soft:#5a5044;
+    --brick:#6b3a2a;
+    --teal:#3c4a45;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper-edge);
+    color:var(--ink);
+    font-family:"Source Serif 4", serif;
+    display:flex;
+    justify-content:center;
+    padding:48px 16px 96px;
+  }
+  .page{
+    width:100%;
+    max-width:760px;
+    background:var(--paper);
+    box-shadow:0 1px 2px rgba(0,0,0,0.08), 0 12px 32px rgba(42,33,24,0.15);
+    padding:56px 44px 40px;
+    position:relative;
+  }
+  .folio{
+    position:absolute;
+    top:20px;
+    right:28px;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    color:var(--ink-soft);
+  }
+  .eyebrow{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--brick);
+    margin:0 0 6px;
+  }
+  h1{
+    font-family:"Fraunces", serif;
+    font-weight:500;
+    font-style:italic;
+    font-size:clamp(26px, 4vw, 34px);
+    margin:0 0 4px;
+    line-height:1.15;
+  }
+  .subtitle{
+    color:var(--ink-soft);
+    font-size:14px;
+    margin:0 0 32px;
+    border-bottom:1px solid var(--rule);
+    padding-bottom:24px;
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+  }
+  thead th{
+    text-align:left;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:10.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    font-weight:500;
+    padding:0 10px 10px;
+    border-bottom:1px solid var(--ink);
+  }
+  thead th:first-child{ padding-left:0; width:64px; }
+  tbody td{
+    padding:14px 10px;
+    border-bottom:1px solid var(--rule);
+    vertical-align:baseline;
+  }
+  tbody tr:last-child td{ border-bottom:1px solid var(--ink); }
+  tbody td:first-child{ padding-left:0; }
+  .num{
+    font-family:"Fraunces", serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:19px;
+    color:var(--brick);
+  }
+  .term{
+    font-style:italic;
+    font-size:17px;
+  }
+  .translation{
+    color:var(--ink-soft);
+    font-size:15px;
+  }
+  .translation::before{ content:"‘"; }
+  .translation::after{ content:"’"; }
+  .cases{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px;
+    color:var(--teal);
+    line-height:1.6;
+  }
+  .cases span{
+    display:inline-block;
+    margin:0 6px 4px 0;
+  }
+  .cases span:not(:last-child)::after{
+    content:",";
+    color:var(--ink-soft);
+  }
+  .foot{
+    margin-top:28px;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:10.5px;
+    color:var(--ink-soft);
+    letter-spacing:0.02em;
+  }
+  .foot a{ color:var(--brick); }
+  @media (max-width:520px){
+    .page{ padding:40px 20px 28px; }
+    thead th:nth-child(4), tbody td:nth-child(4){ display:none; }
+    .cases-mobile-row td{ display:table-cell !important; }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="folio" id="folio"></div>
+    <p class="eyebrow" id="eyebrow"></p>
+    <h1 id="title"></h1>
+    <p class="subtitle" id="subtitle"></p>
+    <table>
+      <thead>
+        <tr id="head-row"></tr>
+      </thead>
+      <tbody id="body"></tbody>
+    </table>
+    <p class="foot">Source: transcribed table data embedded as JSON in this document's <code>&lt;script type="application/json"&gt;</code> block — view page source to read it directly.</p>
+  </div>
+
+<script type="application/json" id="table-data">
+{
+  "table": "III",
+  "title": "Nomenclature of Thought",
+  "entity": "T",
+  "source_pages": "93-94",
+  "columns": [
+    { "key": "term_id", "label": "No. of Term" },
+    { "key": "term", "label": "Term" },
+    { "key": "translation", "label": "Translation" },
+    { "key": "cases", "label": "Nos. of Cases" }
+  ],
+  "rows": [
+    { "term_id": 1, "term": "citta", "translation": "thought", "cases": ["1-8", "111-112", "145-146"] },
+    { "term_id": 2, "term": "jhāna", "translation": "trance", "cases": ["9-144", "166-220", "229-234"] },
+    { "term_id": 3, "term": "cakkhuviññāṇa", "translation": "eye-consciousness", "cases": ["157", "221"] },
+    { "term_id": 4, "term": "sotaviññāṇa", "translation": "ear-consciousness", "cases": ["158", "222"] },
+    { "term_id": 5, "term": "ghānaviññāṇa", "translation": "smell-consciousness", "cases": ["159", "222a"] },
+    { "term_id": 6, "term": "jivhāviññāṇa", "translation": "taste-consciousness", "cases": ["160", "222b"] },
+    { "term_id": 7, "term": "kāyaviññāṇa", "translation": "body-consciousness", "cases": ["161", "222c"] },
+    { "term_id": 8, "term": "manodhātu", "translation": "element of mind", "cases": ["162", "223", "225"] },
+    { "term_id": 9, "term": "manoviññāṇadhātu", "translation": "element of mind-consciousness", "cases": ["163-165", "224", "226-228"] }
+  ]
+}
+</script>
+
+<script>
+  const data = JSON.parse(document.getElementById('table-data').textContent);
+
+  document.getElementById('folio').textContent = 'pp. ' + data.source_pages;
+  document.getElementById('eyebrow').textContent = 'Table ' + data.table + ' · Entity ' + data.entity;
+  document.getElementById('title').textContent = data.title;
+  document.getElementById('subtitle').textContent =
+    'Each term classifies one or more cases of rise of thought (' + data.rows.length + ' terms).';
+
+  const headRow = document.getElementById('head-row');
+  data.columns.forEach(col => {
+    const th = document.createElement('th');
+    th.textContent = col.label;
+    headRow.appendChild(th);
+  });
+
+  const body = document.getElementById('body');
+  data.rows.forEach(row => {
+    const tr = document.createElement('tr');
+
+    const tdNum = document.createElement('td');
+    tdNum.className = 'num';
+    tdNum.textContent = row.term_id;
+    tr.appendChild(tdNum);
+
+    const tdTerm = document.createElement('td');
+    tdTerm.className = 'term';
+    tdTerm.textContent = row.term;
+    tr.appendChild(tdTerm);
+
+    const tdTrans = document.createElement('td');
+    tdTrans.className = 'translation';
+    tdTrans.textContent = row.translation;
+    tr.appendChild(tdTrans);
+
+    const tdCases = document.createElement('td');
+    tdCases.className = 'cases';
+    row.cases.forEach(c => {
+      const span = document.createElement('span');
+      span.textContent = c;
+      tdCases.appendChild(span);
+    });
+    tr.appendChild(tdCases);
+
+    body.appendChild(tr);
+  });
+</script>
+</body>
+</html>
