@@ -1,0 +1,40 @@
+{
+  "table": "V-O",
+  "title": "Objects of Thought",
+  "entity": "O",
+  "note": "Dimension table for the 'Objects of Thought No.' column of Table V (referenced there as object_ids). Per chapter-5-source.md, either one of 6 objects of the senses (1-6, or a range/'all' covering them, e.g. \"1-6\"), or one of 22 specifically dhyanic objects, which the source brackets as [1]-[22] to distinguish them from the sense-object numbering. 'sense_objects' and 'dhyanic_objects' are therefore kept as two separate lists sharing this one dimension table.",
+  "source_pages": "96-107 (dhyanic_objects complete, 1-22)",
+  "sense_objects": [
+    { "id": 1, "translation": "form-objects" },
+    { "id": 2, "translation": "sound-objects" },
+    { "id": 3, "translation": "objects of smell" },
+    { "id": 4, "translation": "objects of taste" },
+    { "id": 5, "translation": "tangible objects" },
+    { "id": 6, "translation": "dharma-objects" }
+  ],
+  "dhyanic_objects": [
+    { "id": 1, "pali": "pathavikasiṇaṃ", "translation": "earth-device" },
+    { "id": 2, "pali": "āpokasiṇaṃ", "translation": "water-device" },
+    { "id": 3, "pali": "tejokasiṇaṃ", "translation": "flame-device" },
+    { "id": 4, "pali": "vāyokasiṇaṃ", "translation": "air-device" },
+    { "id": 5, "pali": "nīlakasiṇaṃ", "translation": "black-blue device" },
+    { "id": 6, "pali": "pītakasiṇaṃ", "translation": "yellow device" },
+    { "id": 7, "pali": "lohitakasiṇaṃ", "translation": "red device" },
+    { "id": 8, "pali": "odātakasiṇaṃ", "translation": "white device" },
+    { "id": 9, "pali": "uddhumātakasaññāsahagataṃ", "translation": "accompanied by the notion of a swollen corpse" },
+    { "id": 10, "pali": "vinīlakasaññāsahagataṃ", "translation": "accompanied by the notion of a discoloured corpse" },
+    { "id": 11, "pali": "vipubbakasaññāsahagataṃ", "translation": "accompanied by the notion of a festering corpse" },
+    { "id": 12, "pali": "vicchiddakasaññāsahagataṃ", "translation": "accompanied by the notion of a corpse with cracked skin" },
+    { "id": 13, "pali": "vikkhāyitakasaññāsahagataṃ", "translation": "accompanied by the notion of a corpse gnawed and mangled" },
+    { "id": 14, "pali": "vikkhattakasaññāsahagataṃ", "translation": "accompanied by the notion of a corpse cut to pieces" },
+    { "id": 15, "pali": "hatavikkhittakasaññāsahagataṃ", "translation": "accompanied with the notion of a mutilated corpse" },
+    { "id": 16, "pali": "lohitakasaññāsahagataṃ", "translation": "accompanied with the notion of a bloody corpse" },
+    { "id": 17, "pali": "puḷuvakasaññāsahagataṃ", "translation": "accompanied with the notion of a corpse with worms" },
+    { "id": 18, "pali": "aṭṭhikasaññāsahagataṃ", "translation": "accompanied by the notion of a skeleton" },
+    { "id": 19, "pali": "ākāsānañcāyatanasaññāsahagataṃ", "translation": "accompanied by the notion of the basis of unbounded space" },
+    { "id": 20, "pali": "viññāṇanañcāyatanasaññāsahagataṃ", "translation": "accompanied by the notion of the basis of unbounded consciousness" },
+    { "id": 21, "pali": "ākiñcaññāyatanasaññāsahagataṃ", "translation": "accompanied by the notion of the basis of nothingness" },
+    { "id": 22, "pali": "nevasaññānāsaññāyatanasaññāsahagataṃ", "translation": "accompanied by the notion of the basis of neither notion nor nonnotion" }
+  ],
+  "note_kasina": "ids 1-8 are the classic set of 8 kasiṇa (meditation-device) objects: earth, water, fire, air, and the four colours black-blue/yellow/red/white. ids 9-18 are the asubha (foulness/corpse) contemplations, the traditional set of 10 (though the source only brackets ids 10-12 as '[10]'-'[12]'; ids 13-18 appear unbracketed -- likely just a typesetting inconsistency in the original, not a meaningful distinction). ids 19-22 are the four arūpa (formless) attainments in order: unbounded space, unbounded consciousness, nothingness, neither-notion-nor-nonnotion. This completes the 22-item dhyanic object list chapter-5-source.md describes."
+}

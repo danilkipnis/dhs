@@ -1,0 +1,24 @@
+{
+  "table": "V-MV",
+  "title": "Mental Variables",
+  "entity": "MV",
+  "note": "Dimension table for the 'Mental Variables No.' column of Table V (referenced there as mental_ids, an array since a case can carry several). Per chapter-5-source.md, one of 15 general characteristics of mind. Consistent with 5.0.2's case No. 162 formula (MV.5 = 'indifference'), id 5 here is upekkha-sahagatam, 'associated with indifference'. Ids 6-8 are three of the four brahmavihāra (sublime states) -- mettā/karuṇā/muditā -- introduced pp. 102-103 pairing the first jhāna with loving-kindness, mercy, and sympathetic joy in turn; the fourth, upekkhā, reuses id 5 rather than getting a new id, now paired with the fourth jhāna.",
+  "source_pages": "96-115 (complete through this page)",
+  "rows": [
+    { "id": 1, "pali": "somanassa-sahagataṃ", "translation": "accompanied by mental gladness" },
+    { "id": 2, "pali": "ñāṇa-sampayuttaṃ", "translation": "associated with knowledge" },
+    { "id": 3, "pali": "sa-saṃkhārena", "translation": "with synergies" },
+    { "id": 4, "pali": "ñāṇa-vippayuttaṃ", "translation": "dissociated from knowledge" },
+    { "id": 5, "pali": "upekkhā-sahagataṃ", "translation": "associated with indifference" },
+    { "id": 6, "pali": "mettāsahagataṃ", "translation": "accompanied by friendliness" },
+    { "id": 7, "pali": "karuṇāsahagataṃ", "translation": "accompanied by mercy" },
+    { "id": 8, "pali": "muditāsahagataṃ", "translation": "accompanied by sympathy" },
+    { "id": 9, "pali": "diṭṭhigatasampayuttaṃ", "translation": "associated with views and opinions" },
+    { "id": 10, "pali": "diṭṭhigatavippayuttaṃ", "translation": "dissociated from views and opinions" },
+    { "id": 11, "pali": "domanassasahagataṃ", "translation": "accompanied by mental sorrow" },
+    { "id": 12, "pali": "paṭighasampayuttaṃ", "translation": "associated with (negative) reaction" },
+    { "id": 13, "pali": "vicikicchāsampayuttaṃ", "translation": "associated with perplexity" },
+    { "id": 14, "pali": "uddhaccasampayuttaṃ", "translation": "associated with excitement" },
+    { "id": 15, "pali": "dukkhasahagataṃ", "translation": "accompanied by suffering" }
+  ]
+}

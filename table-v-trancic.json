@@ -1,0 +1,25 @@
+{
+  "table": "V-TV",
+  "title": "Trancic Variables",
+  "entity": "TV",
+  "note": "Dimension table for the 'Trancic Variables No.' column of Table V (referenced there as trancic_id, an array since a case can carry more than one, e.g. a paṭipada id plus an abhiññā id). Per chapter-5-source.md, one of 16 characteristics (1-16) applicable to or connected with the dhyanic (trance) content of thought. First appears at case 18 (p. 99): the classic four-part paṭipadā (progress) x abhiññā (direct-knowledge) scheme -- 2 progress qualities (painful/pleasant) each paired with 2 knowledge-speed qualities (slow/rapid). Ids 9-14 (p. 106-107) are 3 of the 4 adhipati (dominant conditions -- chanda/viriya/citta; paññā not yet seen) each paired with one of 3 intensity grades (hīna/majjhima/paṇīta -- inferior/medium/superior), applied to the plain kāmāvacara-citta content (id 0) at cases 111/111a/111b. Ids 15-16 (p. 107) are the 'empty'/'aimless' qualifiers of the lokuttara (supramundane) path content (id 12).",
+  "source_pages": "96-107 (partial -- more pages pending)",
+  "rows": [
+    { "id": 1, "pali": "dukkhapaṭipadaṃ", "translation": "(with) process painful" },
+    { "id": 2, "pali": "dandhābhiññaṃ", "translation": "(with) special knowledge slow" },
+    { "id": 3, "pali": "khippābhiññaṃ", "translation": "(with) special knowledge rapid" },
+    { "id": 4, "pali": "sukhapaṭipadaṃ", "translation": "(with) process pleasant" },
+    { "id": 5, "pali": "parittaṃ", "translation": "(thought) limited" },
+    { "id": 6, "pali": "parittārammaṇaṃ", "translation": "(with) object limited" },
+    { "id": 7, "pali": "appamāṇārammaṇaṃ", "translation": "(with) object immeasurable" },
+    { "id": 8, "pali": "appamāṇaṃ", "translation": "(thought) immeasurable" },
+    { "id": 9, "pali": "chandādhipateyyaṃ", "translation": "dominated by desire" },
+    { "id": 10, "pali": "hīnaṃ", "translation": "inferior" },
+    { "id": 11, "pali": "viriyādhipateyyaṃ", "translation": "dominated by energy" },
+    { "id": 12, "pali": "majjhimaṃ", "translation": "medium" },
+    { "id": 13, "pali": "cittādhipateyyaṃ", "translation": "dominated by thought" },
+    { "id": 14, "pali": "paṇītaṃ", "translation": "superior" },
+    { "id": 15, "pali": "suññataṃ", "translation": "empty" },
+    { "id": 16, "pali": "appaṇihitaṃ", "translation": "aimless" }
+  ]
+}

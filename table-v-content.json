@@ -1,0 +1,215 @@
+{
+  "table": "V-C",
+  "title": "Variants of Content",
+  "entity": "C",
+  "note": "Dimension table for the 'Variants of Content No.' column of Table V (referenced there as content_id). Per chapter-5-source.md, one of 22 variants (0-22) of the content of thought, some divided into lettered subvariants that together form the variant's full clause. Where a variant N has subvariants, 'closing' holds the standard attainment clause that the source table labels 0^(N) (the digit 0, superscripted with the variant's own id in parentheses) after the lettered subvariants -- e.g. 0^(1) for variant 1's closing clause, 0^(2) for variant 2's. 'closing.label' below preserves that source label literally. Starting at id 3 (pp. 98-99), every 0^(N) label additionally carries a trailing '*', a footnote-reference marker (the footnote text itself isn't present in Table V) first anchored, per the source, at case 14's nomenclature entry with a distinct superscript '5'. NOTE: ids here are THIS TABLE's own unique keys, not always identical to the book's own printed 'Variants of Content No.' digit -- cases 14-17 never get their own book-assigned integer at all (see table-v.json's 'content_recombination' field instead); and starting at case 157 (p. 112-113) the book's own numbering restarts within a new section (vipāka cittas) rather than running as one single 0-22 sequence throughout, producing a genuine reuse of digits like '15'. Where id and book_no diverge, 'book_no' preserves the literal printed digit (confirmed against the physical page, not a misread) and 'id' is this table's disambiguated key.",
+  "source_pages": "96-115 (complete through this page, book_no 0-23)",
+  "rows": [
+    {
+      "id": 0,
+      "pali": "uppannaṃ hoti",
+      "translation": "has arisen"
+    },
+    {
+      "id": 1,
+      "pali": "vivicceva kāmehi vivicca akusalehi dhammehi",
+      "translation": "separated from sensuous things (and) separated from unwholesome dhammas",
+      "subvariants": [
+        { "letter": "a", "pali": "savitakkaṃ", "translation": "with reasoning" },
+        { "letter": "b", "pali": "savicāraṃ", "translation": "with reflexion" },
+        { "letter": "c", "pali": "vivekajaṃ", "translation": "born of separation" },
+        { "letter": "d", "pali": "pītisukhaṃ", "translation": "(full) of joy and pleasure" }
+      ],
+      "closing": {
+        "label": "0⁽¹⁾",
+        "pali": "paṭhamaṃ jhānaṃ upasampajja viharati",
+        "translation": "(he) abides in the attainment of the first trance"
+      }
+    },
+    {
+      "id": 2,
+      "pali": "vitakkavicārānaṃ vūpasamā ajjhattaṃ sampasādanaṃ cetaso ekodibhāvaṃ",
+      "translation": "suppressing the reasonings and reflexions (together with) tranquillization and fixation of the psyche",
+      "subvariants": [
+        { "letter": "a", "pali": "avitakkaṃ", "translation": "without reasoning" },
+        { "letter": "b", "pali": "avicāraṃ", "translation": "without reflexion" },
+        { "letter": "c", "pali": "samādhijaṃ", "translation": "born of concentration" },
+        { "letter": "d", "pali": null, "translation": null }
+      ],
+      "closing": {
+        "label": "0⁽²⁾",
+        "pali": "dutiyaṃ jhānaṃ upasampajja viharati",
+        "translation": "(he) abides in the attainment of the second trance"
+      }
+    },
+    {
+      "id": 3,
+      "pali": "pītiyā ca virāgā upekkhako ca viharati sato ca sampajāno sukhaṃ ca kāyena paṭisaṃvedeti yaṃ taṃ ariyā ācikkhanti —'upekkhako satimā sukhavihārī'ti",
+      "translation": "dispassionate for joy and indifferent (he) abides; recollectful and self-conscious (he) experiences by body the pleasure of which the Noble Ones declare: \"Indifferent and recollectful, he abides in pleasure...\"",
+      "closing": {
+        "label": "0⁽³⁾*",
+        "footnote": true,
+        "pali": "tatiyaṃ jhānaṃ upasampajja viharati",
+        "translation": "(he) abides in the attainment of the third trance"
+      }
+    },
+    {
+      "id": 4,
+      "pali": "sukhassa ca pahānā dukkhassa ca pahānā pubbeva somanassadomanassānaṃ atthaṅgamā",
+      "translation": "by the avoiding of pleasure and by the avoiding of suffering, (and) with previous mental gladness and mental sorrow gone away",
+      "subvariants": [
+        { "letter": "a", "pali": "adukkhamasukhaṃ", "translation": "without suffering and pleasure" },
+        { "letter": "b", "pali": "upekkhāsatipārisuddhiṃ", "translation": "of utter purity (attained) by recollection and indifference" }
+      ],
+      "closing": {
+        "label": "0⁽⁴⁾*",
+        "footnote": true,
+        "pali": "catutthaṃ jhānaṃ upasampajja viharati",
+        "translation": "(he) abides in the attainment of the fourth trance"
+      }
+    },
+    {
+      "id": 5,
+      "pali": "ajjhattaṃ arūpasaññī bahiddhā rūpāni passati",
+      "translation": "not conscious of himself (as) form, he sees external forms",
+      "note": "First appears case 46, combined with the earth-kasiṇa (Objects id 1). Subvariants a/b form the base combination (case 46); c, d, e are alternative qualifiers each introduced together with subvariant b rather than a (cases 65, 67, 88). Every case using this variant also references content id 1 in full (see that case's 'content_also' field in table-v.json) -- the arūpa-perception clause here is combined with, not a replacement for, the ordinary first-jhāna description.",
+      "subvariants": [
+        { "letter": "a", "pali": "parittāni", "translation": "(as) limited" },
+        { "letter": "b", "pali": "tāni abhibhuyya jānāmi passāmi ti", "translation": "having them mastered, and saying \"I know, I see\", he..." },
+        { "letter": "c", "pali": "suvaṇṇadubbaṇṇāni", "translation": "(as) beautiful and ugly" },
+        { "letter": "d", "pali": "appamāṇāni", "translation": "(as) infinite" },
+        { "letter": "e", "pali": "nīlāni nīlavaṇṇāni nīlanidassanāni nīlanibhāsāni", "translation": "black-blue, of black-blue colour, of black-blue-spaced, of black-blue luminosity" },
+        { "letter": "f", "pali": "pītāni pītavaṇṇāni pītanidassanāni pītanibhāsāni", "translation": "yellow, of yellow colour, of yellow-spaced, of yellow luminosity" },
+        { "letter": "g", "pali": "lohitakāni lohitakavaṇṇāni lohitakanidassanāni lohitakanibhāsāni", "translation": "red, of red colour, of red-spaced, of red luminosity" },
+        { "letter": "h", "pali": "odātāni odātavaṇṇāni odātanidassanāni odātanibhāsāni", "translation": "white, of white colour, of white-spaced, of white luminosity" }
+      ]
+    },
+    {
+      "id": 6,
+      "pali": "rūpī rūpāni passati",
+      "translation": "possessed of form, he sees forms",
+      "note": "Case 90. Objects id 1 (earth-kasiṇa) still. This and id 7 read as the classic 'eight liberations' (aṭṭha vimokkhā) series continuing on from id 5's kasiṇa/colour qualifiers."
+    },
+    {
+      "id": 7,
+      "pali": "subhaṃ ti",
+      "translation": "saying \"How beautiful!\", he...",
+      "note": "Case 92, combined with content id 1 in full (content_also)."
+    },
+    {
+      "id": 8,
+      "pali": "sabbaso rūpasaññānaṃ samatikkamā paṭighasaññānaṃ atthaṅgamā nānāsaññānaṃ amanasikārā",
+      "translation": "by wholly transcending the notions of form, with (all) reflexes gone away, (and totally) mindless of the notions of the manifold...",
+      "note": "Case 107, the standard entry formula for the first arūpa (formless) jhāna -- ākāsānañcāyatana, 'the basis of unbounded space' (Objects id 19), reached from the fourth rūpa-jhāna's equanimity, hence combined with content id 4 in full (content_also) rather than id 1."
+    },
+    {
+      "id": 9,
+      "pali": "sabbaso ākāsānañcāyatanaṃ samatikkammā",
+      "translation": "by wholly transcending the basis of unbounded space...",
+      "note": "Case 108, entry formula for the second arūpa-jhāna, viññāṇañcāyatana (Objects id 20), reached by transcending the first. Combined with content id 4 in full (content_also), like id 8."
+    },
+    {
+      "id": 10,
+      "pali": "sabbaso viññāṇanañcāyatanaṃ samatikkammā",
+      "translation": "by wholly transcending the basis of unbounded consciousness",
+      "note": "Case 109, entry formula for the third arūpa-jhāna, ākiñcaññāyatana (Objects id 21). Combined with content id 4 in full (content_also)."
+    },
+    {
+      "id": 11,
+      "pali": "sabbaso ākiñcaññāyatanaṃ samatikkammā",
+      "translation": "by wholly transcending the basis of nothingness...",
+      "note": "Case 110, entry formula for the fourth arūpa-jhāna, nevasaññānāsaññāyatana (Objects id 22). Combined with content id 4 in full (content_also)."
+    },
+    {
+      "id": 12,
+      "pali": "niyyānikaṃ apacayagāmiṃ",
+      "translation": "leading out (and) unmaking...",
+      "note": "Case 119, entry into the lokuttara (supramundane) path, sphere id 4. Combined with content id 1 in full (content_also). This is the first of the four noble path-stages (sotāpatti); ids 13-15 (cases 142-144) are the entry formulas for the second through fourth stages, each also combining with id 12 itself in addition to id 1 -- see their 'note' fields.",
+      "subvariants": [
+        { "letter": "a", "pali": "diṭṭhigatānaṃ pahānāya paṭhamāya bhūmiyā pattiyā", "translation": "(and) avoiding of (all) views and opinions in order to attain at the first stage" }
+      ]
+    },
+    {
+      "id": 13,
+      "pali": "kāmarāgavyāpādānaṃ tanubhāvā dutiyāya bhūmiyā pattiyā",
+      "translation": "having reduced (the strength of) sensuality, passion and maliciousness, in order to attain to the second stage...",
+      "note": "Case 142, the second noble path-stage (sakadāgāmi). Nomenclature restated as 'jhānaṃ⁽¹⁾'; sphere gloss 'lokuttaraṃ jhānaṃ bhāveti'. Combined with content ids 12 and 1 in full (content_also: [12, 1])."
+    },
+    {
+      "id": 14,
+      "pali": "kāmarāgavyāpādānaṃ anavasesappahānāya tatiyāya bhūmiyā pattiyā",
+      "translation": "having avoided (all) sensuality, passion and maliciousness without residuum, in order to attain to the third stage...",
+      "note": "Case 143, the third noble path-stage (anāgāmi). Combined with content ids 12 and 1 in full (content_also: [12, 1])."
+    },
+    {
+      "id": 15,
+      "book_no": "15",
+      "pali": "rūpārāga arūpārāga māna uddhacca avijjāya uppahānāya catutthāya bhūmiyā pattiyā",
+      "translation": "(all) passion for form, (all) passion for the formless, (all) conceit, excitement and ignorance without residuum, in order to attain to the fourth stage...",
+      "note": "Case 144, the fourth and final noble path-stage (arahatta). Combined with content ids 12 and 1 in full (content_also: [12, 1])."
+    },
+    {
+      "id": 16,
+      "book_no": "15",
+      "pali": "kāmāvacarassa kusalassa kammassa katattā upacitattā vipākaṃ",
+      "translation": "resulting from (the) ripening (of) wholesome action wrought and stored up in the sensuous sphere",
+      "note": "Case 157 (cakkhuviññāṇa, eye-consciousness-vipāka). The source prints this case's own content number as '15' again -- confirmed against the physical page as a genuine reuse, not a misread: the book's 'Variants of Content No.' sequence restarts within this new section (vipāka cittas) rather than running as one single 0-22 sequence throughout. 'id' here is this dimension table's own unique key; 'book_no' preserves the literal printed digit."
+    },
+    {
+      "id": 17,
+      "book_no": "16",
+      "pali": "kāmāvacarassa kusalassa kammassa katattā upacitattā vipākaṃ",
+      "translation": "resulting from (the) ripening (of) wholesome action wrought and stored up in the sensuous sphere",
+      "note": "Cases 158-162 (sotaviññāṇa through manodhātu). Source shows only the bare number '16' at case 158, not fresh text -- taken to be identical wording to id 16 (book_no 15) since none is given; this is also the content referenced as 'C.16' in chapter-5-source.md's case 162 example (5.0.2-5.0.3), confirming the id."
+    },
+    {
+      "id": 18,
+      "book_no": "17",
+      "pali": "rūpāvacarassa kusalassa kammassa katattā upacitattā vipākaṃ",
+      "translation": "resulting from the ripening wholesome action wrought and stored up in the sphere of form",
+      "note": "Case 166 (jhānaṃ⁽¹⁾), sphere id 7 (rūpāvacaraṃ kusalaṃ, cases 166-167). Rūpa-jhāna-vipāka, paralleling id 16/17's kāma-vipāka. Combined with content id 1 in full (content_also)."
+    },
+    {
+      "id": 19,
+      "book_no": "18",
+      "pali": "arūpāvacayassa kusalassa kammassa katattā upacitattā vipākaṃ",
+      "translation": "resulting from the ripening wholesome action wrought and stored up in the sphere of formlessness",
+      "note": "Case 168 (jhānaṃ⁽⁴⁾), sphere id 8 (arūpāvacaraṃ kusalaṃ, cases 168-171). Arūpa-jhāna-vipāka. Combined with content ids 8 and 4 in full (content_also: [8, 4]), paralleling how the original arūpa-jhāna entries (ids 8-11) combined with id 4."
+    },
+    {
+      "id": 20,
+      "book_no": "19",
+      "pali": "lokuttarassa kusalassa jhānassa bhāvitattā vipākaṃ",
+      "translation": "resulting from the ripening wholesome trance wrought and experienced in the Supramundane sphere",
+      "note": "Case 172 (jhānaṃ⁽¹⁾), sphere id 9 (lokuttaraṃ kusalaṃ, cases 172-220). Lokuttara-vipāka. Combined with content id 12 (and its subvariant 12a) in full (content_also)."
+    },
+    {
+      "id": 21,
+      "book_no": "20",
+      "pali": "akusalassa kammassa katattā upacitattā vipākaṃ",
+      "translation": "resulting from the ripening unwholesome action wrought and stored...",
+      "note": "Case 222 (cakkhuviññāṇa), sphere id 10 (akusalaṃ kammaṃ, cases 221-224) -- vipāka of unwholesome kamma, paralleling ids 16/17's wholesome-kamma vipāka. Case 222a (kāyaviññāṇa) reuses this id combined with content id 0 in full (content_also)."
+    },
+    {
+      "id": 22,
+      "book_no": "21",
+      "pali": "kiriyā neva kusalā nākusalā na ca kammavipākā",
+      "translation": "(which is) an act (as such), neither wholesome nor unwholesome, and not resulting from the ripening action",
+      "note": "Case 225 (manodhātu), sphere id 11 (neva kusalā nākusalā, cases 225-228) -- kiriya (functional, non-karmic) citta. Combined with content id 0 in full (content_also). Case 226 (manoviññāṇadhātu) reuses this id, likewise with content_also 0."
+    },
+    {
+      "id": 23,
+      "book_no": "22",
+      "pali": "diṭṭhadhammasukhavihāraṃ",
+      "translation": "happy abiding with seen dhammas",
+      "note": "Case 229 (jhānaṃ⁽¹⁾), sphere id 12 (rūpāvacaraṃ jhānaṃ, cases 229-230) -- kiriya rūpa-jhāna. Combined with content ids 22 and 1 in full (content_also: [22, 1])."
+    },
+    {
+      "id": 24,
+      "book_no": "23",
+      "pali": null,
+      "translation": null,
+      "note": "Case 231 (jhānaṃ⁽⁴⁾), sphere id 13 (arūpāvacaraṃ jhānaṃ, cases 231-234) -- kiriya arūpa-jhāna. No fresh pali/translation is given in the source for this book number (confirmed against the physical page, not a transcription gap) -- only the combination is shown: content_also [22, 8, 4], paralleling case 229's rūpa-jhāna kiriya combined with the arūpa-jhāna-entry (8) and fourth-jhāna (4) formulas."
+    }
+  ]
+}
