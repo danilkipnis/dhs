@@ -1,0 +1,219 @@
+[
+  {
+    "pali": "cittam",
+    "translation": "thought",
+    "cases": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      111,
+      "111a",
+      "111b",
+      145,
+      146,
+      147,
+      153,
+      155,
+      156
+    ]
+  },
+  {
+    "pali": "jhānam",
+    "translation": "the first trance",
+    "cases": [
+      9
+    ]
+  },
+  {
+    "pali": "jhānam",
+    "translation": "the second trance",
+    "cases": [
+      10
+    ]
+  },
+  {
+    "pali": "jhānam",
+    "translation": "the third trance",
+    "cases": [
+      11
+    ]
+  },
+  {
+    "pali": "jhānam",
+    "translation": "the fourth trance",
+    "cases": [
+      12
+    ]
+  },
+  {
+    "pali": "jhānam (2)*",
+    "translation": null,
+    "cases": [
+      14
+    ]
+  },
+  {
+    "pali": "jhānam (3)*",
+    "translation": null,
+    "cases": [
+      15
+    ]
+  },
+  {
+    "pali": "jhānam (4)*",
+    "translation": null,
+    "cases": [
+      16
+    ]
+  },
+  {
+    "pali": "jhānam (4)",
+    "translation": null,
+    "cases": [
+      104,
+      107,
+      108,
+      109,
+      110,
+      115,
+      168,
+      231
+    ]
+  },
+  {
+    "pali": "jhānam (5)*",
+    "translation": null,
+    "cases": [
+      17
+    ]
+  },
+  {
+    "pali": "jhānam (1)",
+    "translation": null,
+    "cases": [
+      18,
+      19,
+      20,
+      23,
+      24,
+      25,
+      45,
+      "45a",
+      "45b",
+      "45c",
+      "45d",
+      "45e",
+      "45f",
+      46,
+      65,
+      67,
+      88,
+      89,
+      "89a",
+      "89b",
+      90,
+      91,
+      92,
+      93,
+      100,
+      102,
+      105,
+      106,
+      "106a",
+      "106b",
+      "106c",
+      "106d",
+      "106e",
+      "106f",
+      "106g",
+      "106h",
+      113,
+      119,
+      124,
+      131,
+      138,
+      "138a",
+      "138b",
+      "138c",
+      "138d",
+      "138e",
+      "138f",
+      "138g",
+      "138h",
+      "138i",
+      "138j",
+      "138k",
+      "138l",
+      "138m",
+      "138n",
+      "138o",
+      "138p",
+      "138q",
+      "138s",
+      142,
+      143,
+      144,
+      166,
+      172,
+      229
+    ]
+  },
+  {
+    "pali": "cakkhuviññāṇaṃ",
+    "translation": "eye-consciousness",
+    "cases": [
+      157,
+      222
+    ]
+  },
+  {
+    "pali": "sotaviññāṇaṃ",
+    "translation": "ear-consciousness",
+    "cases": [
+      158
+    ]
+  },
+  {
+    "pali": "ghānaviññāṇaṃ",
+    "translation": "smell-consciousness",
+    "cases": [
+      159
+    ]
+  },
+  {
+    "pali": "jivhāviññāṇaṃ",
+    "translation": "taste-consciousness",
+    "cases": [
+      160
+    ]
+  },
+  {
+    "pali": "kāyaviññāṇaṃ",
+    "translation": "body-consciousness",
+    "cases": [
+      161,
+      "222a"
+    ]
+  },
+  {
+    "pali": "manodhātu",
+    "translation": "element of mind",
+    "cases": [
+      162,
+      225
+    ]
+  },
+  {
+    "pali": "manoviññāṇadhātu",
+    "translation": "element of mind-consciousness",
+    "cases": [
+      163,
+      226
+    ]
+  }
+]

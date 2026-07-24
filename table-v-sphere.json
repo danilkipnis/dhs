@@ -1,0 +1,268 @@
+[
+  {
+    "pali": "kāmāvacaraṃ kusalaṃ",
+    "translation": "pertaining to the sensuous sphere (and) wholesome",
+    "cases": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      111,
+      "111a",
+      "111b"
+    ]
+  },
+  {
+    "pali": "rūpūpapattiyā maggam bhāveti",
+    "translation": "he cultivates the way of attainment of form",
+    "cases": [
+      9,
+      10,
+      11,
+      12,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      23,
+      24,
+      25,
+      45,
+      "45a",
+      "45b",
+      "45c",
+      "45d",
+      "45e",
+      "45f",
+      46,
+      65,
+      67,
+      88,
+      89,
+      "89a",
+      "89b",
+      90,
+      91,
+      92,
+      93,
+      100,
+      102,
+      104,
+      105,
+      106,
+      "106a",
+      "106b",
+      "106c",
+      "106d",
+      "106e",
+      "106f",
+      "106g",
+      "106h",
+      113,
+      166
+    ]
+  },
+  {
+    "pali": "arūpapattiyā maggam bhāveti",
+    "translation": "(one) cultivates the way of attainment of the formless",
+    "cases": [
+      107,
+      108,
+      109,
+      110
+    ]
+  },
+  {
+    "pali": "arūpūpapattiyā maggam bhāveti",
+    "translation": "(one) cultivates the way of attainment of the formless",
+    "cases": [
+      115,
+      168
+    ]
+  },
+  {
+    "pali": "lokuttaraṃ maggam bhāveti",
+    "translation": "when he cultivates the trance of the supramundane...",
+    "cases": [
+      119,
+      124,
+      131,
+      138
+    ]
+  },
+  {
+    "pali": "lokuttaraṃ satipaṭṭhānaṃ bhāveti",
+    "translation": "(when) he cultivates the supramundane advance in recollection",
+    "cases": [
+      "138a"
+    ]
+  },
+  {
+    "pali": "lokuttaraṃ sammapadhānaṃ bhāveti",
+    "translation": "(when) he cultivates the supramundane right efforts",
+    "cases": [
+      "138b"
+    ]
+  },
+  {
+    "pali": "lokuttaraṃ iddhipādaṃ bhāveti",
+    "translation": "(when) he cultivates the course of supramundane power",
+    "cases": [
+      "138c"
+    ]
+  },
+  {
+    "pali": "lokuttaraṃ indriyaṃ bhāveti",
+    "translation": "(when) he cultivates the supramundane faculty",
+    "cases": [
+      "138d"
+    ]
+  },
+  {
+    "pali": "lokuttaraṃ balaṃ bhāveti",
+    "translation": "(when) he cultivates the supramundane power",
+    "cases": [
+      "138e"
+    ]
+  },
+  {
+    "pali": "lokuttaraṃ bojjhaṅgaṃ bhāveti",
+    "translation": "(when) he cultivates the supramundane component of (complete) awakening",
+    "cases": [
+      "138f"
+    ]
+  },
+  {
+    "pali": "lokuttaraṃ saccaṃ bhāveti",
+    "translation": "(when) he cultivates the supramundane truth",
+    "cases": [
+      "138g"
+    ]
+  },
+  {
+    "pali": "lokuttaraṃ samathaṃ bhāveti",
+    "translation": "(when) he cultivates the supramundane quietude",
+    "cases": [
+      "138h"
+    ]
+  },
+  {
+    "pali": "lokuttaraṃ dhammaṃ bhāveti",
+    "translation": "(when) he cultivates the supramundane dharma",
+    "cases": [
+      "138i"
+    ]
+  },
+  {
+    "pali": "lokuttaraṃ khandhaṃ bhāveti",
+    "translation": "(when) he cultivates the supramundane aggregate",
+    "cases": [
+      "138j"
+    ]
+  },
+  {
+    "pali": "lokuttaraṃ āyatanaṃ bhāveti",
+    "translation": "(when) he cultivates the supramundane basis",
+    "cases": [
+      "138k"
+    ]
+  },
+  {
+    "pali": "lokuttaraṃ dhātuṃ bhāveti",
+    "translation": "(when) he cultivates the supramundane element",
+    "cases": [
+      "138l"
+    ]
+  },
+  {
+    "pali": "lokuttaraṃ āhāraṃ bhāveti",
+    "translation": "(when) he cultivates the supramundane nutriment",
+    "cases": [
+      "138m"
+    ]
+  },
+  {
+    "pali": "lokuttaraṃ phassaṃ bhāveti",
+    "translation": "(when) he cultivates the supramundane touch",
+    "cases": [
+      "138n"
+    ]
+  },
+  {
+    "pali": "lokuttaraṃ vedanaṃ bhāveti",
+    "translation": "(when) he cultivates the supramundane sensation",
+    "cases": [
+      "138o"
+    ]
+  },
+  {
+    "pali": "lokuttaraṃ saññaṃ bhāveti",
+    "translation": "(when) he cultivates the supramundane cognition",
+    "cases": [
+      "138p"
+    ]
+  },
+  {
+    "pali": "lokuttaraṃ cetanaṃ bhāveti",
+    "translation": "(when) he cultivates the supramundane volition",
+    "cases": [
+      "138q"
+    ]
+  },
+  {
+    "pali": "lokuttaraṃ cittaṃ bhāveti",
+    "translation": "(when) he cultivates the supramundane thought",
+    "cases": [
+      "138s"
+    ]
+  },
+  {
+    "pali": "lokuttaraṃ jhānaṃ bhāveti",
+    "translation": null,
+    "cases": [
+      142,
+      143,
+      144,
+      172
+    ]
+  },
+  {
+    "pali": "akusalam",
+    "translation": "unwholesome",
+    "cases": [
+      145,
+      146,
+      147,
+      153,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160,
+      161,
+      162
+    ]
+  },
+  {
+    "pali": "rūpāvacaraṃ bhāveti",
+    "translation": "he experiences in the sphere of form",
+    "cases": [
+      229
+    ]
+  },
+  {
+    "pali": "arūpāvacaraṃ bhāveti",
+    "translation": "he experiences in the sphere of formlessness",
+    "cases": [
+      231
+    ]
+  }
+]
