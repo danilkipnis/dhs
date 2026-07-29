@@ -1,0 +1,1714 @@
+{
+  "cases": [
+    {
+      "case_no": "1A",
+      "dharmas": [
+        {
+          "no": 1,
+          "name_pali": "phassa",
+          "name_translation": "touch",
+          "ms_range": [[1, 4]],
+          "ms": [
+            { "no": 1, "pali": "phassa", "translation": "touch" },
+            { "no": 2, "pali": "phusanā", "translation": "touching" },
+            { "no": 3, "pali": "samphusanā", "translation": "contact" },
+            { "no": 4, "pali": "samphusitattaṃ", "translation": "(being) contacted" }
+          ]
+        },
+        {
+          "no": 2,
+          "name_pali": "vedanā",
+          "name_translation": "sensation",
+          "ms_range": [[5, 11]],
+          "ms": [
+            { "no": 5, "pali": "manoviññāṇadhātu samphassajaṃ cetasikaṃ sātaṃ", "translation": "psychical ease born of contact with element of mind-consciousness" },
+            { "no": 6, "pali": "cetasikaṃ sukhaṃ", "translation": "psychical(ly) pleasant" },
+            { "no": 7, "pali": "cetosamphassajaṃ sātaṃ (vedayitaṃ)", "translation": "ease (experienced as) born of contact with the psychical" },
+            { "no": 8, "pali": "(cetosamphassajaṃ) sukhaṃ vedayitaṃ", "translation": "the pleasant experienced as (born of contact with the psychical)" },
+            { "no": 9, "pali": "cetosamphassajā sātā (vedanā)", "translation": "(sensation of) ease born of contact with the psychical" },
+            { "no": 10, "pali": "(cetosamphassajā) sukhā vedanā", "translation": "sensation of pleasant (born of contact with the psychical)" },
+            { "no": 11, "pali": "(vedanā)", "translation": "sensation" }
+          ]
+        },
+        {
+          "no": 3,
+          "name_pali": "saññā",
+          "name_translation": "cognition",
+          "ms_range": [[12, 14]],
+          "ms": [
+            { "no": 12, "pali": "manoviññāṇadhātu samphassajā saññā", "translation": "cognition born of contact with element of mind-consciousness" },
+            { "no": 13, "pali": "saññānanā", "translation": "cognizing" },
+            { "no": 14, "pali": "saññānitattaṃ", "translation": "(being) cognized" }
+          ]
+        },
+        {
+          "no": 4,
+          "name_pali": "cetanā",
+          "name_translation": "intention",
+          "ms_range": [[15, 17]],
+          "ms": [
+            { "no": 15, "pali": "manoviññāṇadhātu samphassajā cetanā", "translation": "volition born of contact with element of mind-consciousness" },
+            { "no": 16, "pali": "sañcetanā", "translation": "intention" },
+            { "no": 17, "pali": "cetayitattaṃ", "translation": "(being) intended" }
+          ]
+        },
+        {
+          "no": 5,
+          "name_pali": "citta",
+          "name_translation": "thought",
+          "ms_range": [[18, 22], [19, 19], [23, 27]],
+          "ms": [
+            { "no": 18, "pali": "citta", "translation": "thought" },
+            { "no": 19, "pali": "mano", "translation": "mind" },
+            { "no": 20, "pali": "mānasa", "translation": "mental" },
+            { "no": 21, "pali": "hadaya", "translation": "heart" },
+            { "no": 22, "pali": "paṇḍara", "translation": "clear (?!)" },
+            { "no": [19, 23], "pali": "manāyatana", "translation": "base of mind" },
+            { "no": 24, "pali": "manindriya", "translation": "faculty of mind" },
+            { "no": 25, "pali": "viññāṇa", "translation": "consciousness" },
+            { "no": 26, "pali": "viññāṇakkhandha", "translation": "aggregate of consciousness" },
+            { "no": 27, "pali": "manoviññāṇadhātu", "translation": "element of mind-consciousness" }
+          ]
+        },
+        {
+          "no": 6,
+          "name_pali": "vitakka",
+          "name_translation": "reasoning",
+          "ms_range": [[28, 34]],
+          "ms": [
+            { "no": 28, "pali": "takka", "translation": "ratiocination" },
+            { "no": 29, "pali": "vitakka", "translation": "reasoning" },
+            { "no": 30, "pali": "saṅkappa", "translation": "construing" },
+            { "no": 31, "pali": "appanā", "translation": "fixation" },
+            { "no": 32, "pali": "vyappanā", "translation": "focusing" },
+            { "no": 33, "pali": "cetaso abhiniropanā", "translation": "application of psyche" },
+            { "no": 34, "pali": "sammāsaṅkappa", "translation": "correct construing" }
+          ]
+        },
+        {
+          "no": 7,
+          "name_pali": "vicāra",
+          "name_translation": "reflexion",
+          "ms_range": [[35, 40]],
+          "ms": [
+            { "no": 35, "pali": "cāra", "translation": "procedure (of reflexion)" },
+            { "no": 36, "pali": "vicāra", "translation": "reflexion" },
+            { "no": 37, "pali": "anuvicāra", "translation": "application of reflexion" },
+            { "no": 38, "pali": "upavicāra", "translation": "approaching reflexion" },
+            { "no": 39, "pali": "cittassa anusandhanatā", "translation": "adjustment of thought" },
+            { "no": 40, "pali": "anupekkhanatā", "translation": "stabilization (of thought)" }
+          ]
+        },
+        {
+          "no": 8,
+          "name_pali": "pīti",
+          "name_translation": "joy",
+          "ms_range": [[41, 49]],
+          "ms": [
+            { "no": 41, "pali": "pīti", "translation": "joy" },
+            { "no": 42, "pali": "pāmojja", "translation": "delightful" },
+            { "no": 43, "pali": "āmodanā", "translation": "delight" },
+            { "no": 44, "pali": "pamodanā", "translation": "delightfulness" },
+            { "no": 45, "pali": "hāsa", "translation": "mirth" },
+            { "no": 46, "pali": "pahāsa", "translation": "merriment" },
+            { "no": 47, "pali": "vitti", "translation": "felicity" },
+            { "no": 48, "pali": "odagya", "translation": "elation" },
+            { "no": 49, "pali": "attamanatā cittassa", "translation": "uprisedness of thought" }
+          ]
+        },
+        {
+          "no": 9,
+          "name_pali": "sukha",
+          "name_translation": "pleasure",
+          "ms_range": [[5, 11]],
+          "note": "as in dharma 2 (vedanā); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 10,
+          "name_pali": "cittassekaggatā",
+          "name_translation": "one-directedness of thought",
+          "ms_range": [[50, 59]],
+          "ms": [
+            { "no": 50, "pali": "cittassa ṭhiti", "translation": "stasis of thought" },
+            { "no": 51, "pali": "(cittassa) saṇṭhiti", "translation": "constancy (of thought)" },
+            { "no": 52, "pali": "(cittassa) avaṭṭhiti", "translation": "steadfastness (of thought)" },
+            { "no": 53, "pali": "avisāhāra", "translation": "unperturbedness of thought" },
+            { "no": 54, "pali": "avikkhepa", "translation": "unperplexity (of thought)" },
+            { "no": 55, "pali": "avisāhaṭamānasatā", "translation": "unperturbed mindedness" },
+            { "no": 56, "pali": "samatha", "translation": "quietude" },
+            { "no": 57, "pali": "samādhindriya", "translation": "faculty of concentration" },
+            { "no": 58, "pali": "samādhibala", "translation": "power of concentration" },
+            { "no": 59, "pali": "sammāsamādhi", "translation": "correct concentration" }
+          ]
+        },
+        {
+          "no": 11,
+          "name_pali": "saddhindriya",
+          "name_translation": "faculty of faith",
+          "ms_range": [[60, 63], [60, 60], [64, 65]],
+          "ms": [
+            { "no": 60, "pali": "saddhā", "translation": "faith" },
+            { "no": 61, "pali": "saddahanā", "translation": "having faith" },
+            { "no": 62, "pali": "okappanā", "translation": "confidence" },
+            { "no": 63, "pali": "abhippasāda", "translation": "assurance" },
+            { "no": [60, 64], "pali": "saddhindriya", "translation": "faculty of faith" },
+            { "no": 65, "pali": "saddhābala", "translation": "power of faith" }
+          ]
+        },
+        {
+          "no": 12,
+          "name_pali": "viriyindriya",
+          "name_translation": "faculty of energy",
+          "ms_range": [[66, 82]],
+          "ms": [
+            { "no": 66, "pali": "cetasiko viriyārambho", "translation": "physical inception of energy" },
+            { "no": 67, "pali": "nikkama", "translation": "exercise" },
+            { "no": 68, "pali": "parakkama", "translation": "exertion" },
+            { "no": 69, "pali": "uyyāma", "translation": "strive" },
+            { "no": 70, "pali": "vāyāma", "translation": "endeavour" },
+            { "no": 71, "pali": "ussāha", "translation": "zeal" },
+            { "no": 72, "pali": "ussolhi", "translation": "ardour" },
+            { "no": 73, "pali": "thāma", "translation": "stamina" },
+            { "no": 74, "pali": "dhiti", "translation": "firmness" },
+            { "no": 75, "pali": "asithilaparakkamatā", "translation": "(state of) unfaltering exertion" },
+            { "no": 76, "pali": "anikkhittacchandatā", "translation": "(state of) unabated desire" },
+            { "no": 77, "pali": "anikkhittadharatā", "translation": "(state of) unabated endurance" },
+            { "no": 78, "pali": "dhurasampaggāha", "translation": "strong grip of the burden" },
+            { "no": 79, "pali": "viriya", "translation": "energy" },
+            { "no": 80, "pali": "viriyindriya", "translation": "faculty of energy" },
+            { "no": 81, "pali": "viriyabala", "translation": "power of energy" },
+            { "no": 82, "pali": "sammāvāyāma", "translation": "correct endeavour" }
+          ]
+        },
+        {
+          "no": 13,
+          "name_pali": "satindriya",
+          "name_translation": "faculty of recollection",
+          "ms_range": [[83, 85], [83, 83], [86, 89], [83, 83], [90, 92]],
+          "ms": [
+            { "no": 83, "pali": "sati", "translation": "recollection" },
+            { "no": 84, "pali": "anussati", "translation": "remembering" },
+            { "no": 85, "pali": "paṭissati", "translation": "recalling" },
+            { "no": [83, 86], "pali": "saraṇatā", "translation": "remembrance" },
+            { "no": 87, "pali": "dhāraṇatā", "translation": "mindfulness" },
+            { "no": 88, "pali": "apilāpanatā", "translation": "deep penetration (by memory)" },
+            { "no": 89, "pali": "asammusanatā", "translation": "unforgetfulness" },
+            { "no": [83, 90], "pali": "satindriya", "translation": "faculty of recollection" },
+            { "no": 91, "pali": "satibala", "translation": "power of recollection" },
+            { "no": 92, "pali": "sammāsati", "translation": "correct recollection" }
+          ]
+        },
+        {
+          "no": 14,
+          "name_pali": "samādhindriya",
+          "name_translation": "faculty of concentration",
+          "ms_range": [[50, 59]],
+          "note": "as in dharma 10 (cittassekaggatā); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 15,
+          "name_pali": "paññindriya",
+          "name_translation": "faculty of wisdom",
+          "ms_range": [[93, 112], [93, 93], [113, 121], [97, 97], [122, 122]],
+          "ms": [
+            { "no": 93, "pali": "paññā", "translation": "wisdom" },
+            { "no": 94, "pali": "pajānanā", "translation": "understanding" },
+            { "no": 95, "pali": "vicaya", "translation": "search" },
+            { "no": 96, "pali": "pavicaya", "translation": "research" },
+            { "no": 97, "pali": "dhammavicaya", "translation": "search of Dharma" },
+            { "no": 98, "pali": "sallakkhaṇā", "translation": "discernment" },
+            { "no": 99, "pali": "upalakkhaṇā", "translation": "discrimination" },
+            { "no": 100, "pali": "paccupalakkhaṇā", "translation": "differentiation" },
+            { "no": 101, "pali": "paṇḍicca", "translation": "erudition" },
+            { "no": 102, "pali": "kosalla", "translation": "proficiency" },
+            { "no": 103, "pali": "nepuñña", "translation": "expertise" },
+            { "no": 104, "pali": "vebhabyā", "translation": "pondering" },
+            { "no": 105, "pali": "cintā", "translation": "thinking" },
+            { "no": 106, "pali": "upaparikkhā", "translation": "analytical investigation" },
+            { "no": 107, "pali": "bhūri", "translation": "breadth (of wisdom)" },
+            { "no": 108, "pali": "medhā", "translation": "sagacity" },
+            { "no": 109, "pali": "pariṇāyika", "translation": "(wisdom as) a guide" },
+            { "no": 110, "pali": "vipassanā", "translation": "intuition" },
+            { "no": 111, "pali": "sampajañña", "translation": "(being) conscious" },
+            { "no": 112, "pali": "patoda", "translation": "(wisdom as) a goad" },
+            { "no": [93, 113], "pali": "paññindriya", "translation": "faculty of wisdom" },
+            { "no": 114, "pali": "paññābala", "translation": "power of wisdom" },
+            { "no": 115, "pali": "paññāsattha", "translation": "sword of wisdom" },
+            { "no": 116, "pali": "paññāpāsāda", "translation": "palace of wisdom" },
+            { "no": 117, "pali": "paññāloka", "translation": "lamp of wisdom" },
+            { "no": 118, "pali": "paññābhāsa", "translation": "lustre of wisdom" },
+            { "no": 119, "pali": "paññāpajjota", "translation": "splendour of wisdom" },
+            { "no": 120, "pali": "paññāratana", "translation": "jewel of wisdom" },
+            { "no": 121, "pali": "amoha", "translation": "absence of delusion" },
+            { "no": [97, 122], "pali": "sammādiṭṭhi", "translation": "correct view" }
+          ]
+        },
+        {
+          "no": 16,
+          "name_pali": "manindriya",
+          "name_translation": "faculty of mind",
+          "ms_range": [[18, 27]],
+          "note": "as in dharma 5 (citta); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 17,
+          "name_pali": "somanassindriya",
+          "name_translation": "faculty of mental gladness",
+          "ms_range": [[5, 11]],
+          "note": "as in dharmas 2 (vedanā) and 9 (sukha); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 18,
+          "name_pali": "jīvitindriya",
+          "name_translation": "faculty of living",
+          "ms_range": [[123, 131]],
+          "ms": [
+            { "no": 123, "pali": "arūpinaṃ dhammānaṃ āyu", "translation": "duration of the formless dharmas" },
+            { "no": 124, "pali": "ṭhiti", "translation": "(their) stasis" },
+            { "no": 125, "pali": "yapanā", "translation": "(their) going on" },
+            { "no": 126, "pali": "yāpanā", "translation": "(their) keeping going on" },
+            { "no": 127, "pali": "iriyanā", "translation": "(their) progression" },
+            { "no": 128, "pali": "vattanā", "translation": "(their) continuance" },
+            { "no": 129, "pali": "pālanā", "translation": "(their) conservation" },
+            { "no": 130, "pali": "jīvita", "translation": "living" },
+            { "no": 131, "pali": "jīvitindriya", "translation": "faculty of life" }
+          ]
+        },
+        {
+          "no": 19,
+          "name_pali": "sammādiṭṭhi",
+          "name_translation": "correct view",
+          "ms_range": [[93, 122]],
+          "note": "as in dharma 15 (paññindriya); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 20,
+          "name_pali": "sammāsaṅkappa",
+          "name_translation": "correct construing",
+          "ms_range": [[28, 34]],
+          "note": "as in dharma 6 (vitakka); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 21,
+          "name_pali": "sammāvāyāma",
+          "name_translation": "correct endeavour",
+          "ms_range": [[66, 82]],
+          "note": "as in dharma 12 (viriyindriya); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 22,
+          "name_pali": "sammāsati",
+          "name_translation": "correct recollection",
+          "ms_range": [[83, 92]],
+          "note": "as in dharma 13 (satindriya); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 23,
+          "name_pali": "sammāsamādhi",
+          "name_translation": "correct concentration",
+          "ms_range": [[50, 59]],
+          "note": "as in dharmas 10 (cittassekaggatā) and 14 (samādhindriya); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 24,
+          "name_pali": "saddhābala",
+          "name_translation": "power of faith",
+          "ms_range": [[60, 65]],
+          "note": "as in dharma 11 (saddhindriya); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 25,
+          "name_pali": "viriyabala",
+          "name_translation": "faculty of energy",
+          "ms_range": [[66, 82]],
+          "note": "as in dharmas 12 (viriyindriya) and 21 (sammāvāyāma); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 26,
+          "name_pali": "satibala",
+          "name_translation": "power of recollection",
+          "ms_range": [[83, 92]],
+          "note": "as in dharmas 13 (satindriya) and 22 (sammāsati); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 27,
+          "name_pali": "samādhibala",
+          "name_translation": "power of concentration",
+          "ms_range": [[50, 59]],
+          "note": "as in dharmas 10 (cittassekaggatā), 14 (samādhindriya), and 23 (sammāsamādhi); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 28,
+          "name_pali": "paññābala",
+          "name_translation": "power of wisdom",
+          "ms_range": [[93, 122]],
+          "note": "as in dharmas 15 (paññindriya) and 19 (sammādiṭṭhi); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 29,
+          "name_pali": "hiribala",
+          "name_translation": "power of shame",
+          "ms_range": [[132, 133]],
+          "ms": [
+            { "no": 132, "pali": "hirīyati hirīyitabbena", "translation": "(when one) is ashamed of (what one ought to be ashamed)" },
+            { "no": 133, "pali": "hirīyati pāpakānaṃ akusalānaṃ dhammānaṃ samāpattiyā", "translation": "(when one is) ashamed of acquisition of sinful and unwholesome dharmas" }
+          ]
+        },
+        {
+          "no": 30,
+          "name_pali": "ottappabala",
+          "name_translation": "power of remorse",
+          "ms_range": [[134, 135]],
+          "ms": [
+            { "no": 134, "pali": "ottappati ottappitabbena", "translation": "(when one) feels remorse of (what one ought to be remorseful)" },
+            { "no": 135, "pali": "ottappati pāpakānaṃ akusalānaṃ dhammānaṃ samāpattiyā", "translation": "(when one) feels remorse of acquisition of sinful and unwholesome dharmas" }
+          ]
+        },
+        {
+          "no": 31,
+          "name_pali": "alobha",
+          "name_translation": "disinterestedness",
+          "ms_range": [[136, 143]],
+          "ms": [
+            { "no": 136, "pali": "alobha", "translation": "disinterestedness" },
+            { "no": 137, "pali": "alubbhanā", "translation": "(state of) not being greedy" },
+            { "no": 138, "pali": "alubbhitattaṃ", "translation": "(state of) not feeling greed" },
+            { "no": 139, "pali": "asārāga", "translation": "not infatuated" },
+            { "no": 140, "pali": "asārajjanā", "translation": "(state of) not being infatuated" },
+            { "no": 141, "pali": "asārajjitattaṃ", "translation": "(state of) not feeling infatuation" },
+            { "no": 142, "pali": "anabhijjhā", "translation": "not being covetous" },
+            { "no": 143, "pali": "alobho kusala mūlaṃ", "translation": "disinterestedness (as) a wholesome root" }
+          ]
+        },
+        {
+          "no": 32,
+          "name_pali": "adosa",
+          "name_translation": "non-hatred",
+          "ms_range": [[144, 149]],
+          "ms": [
+            { "no": 144, "pali": "adosa", "translation": "non-hatred" },
+            { "no": 145, "pali": "adussanā", "translation": "non-hating" },
+            { "no": 146, "pali": "adussitattaṃ", "translation": "(state of) not feeling hatred" },
+            { "no": 147, "pali": "abyāpāda", "translation": "unmaliciousness" },
+            { "no": 148, "pali": "avyāpajja", "translation": "harmless" },
+            { "no": 149, "pali": "adoso kusala mūlaṃ", "translation": "non-hatred (as) a wholesome root" }
+          ]
+        },
+        {
+          "no": 33,
+          "name_pali": "amoha",
+          "name_translation": "absence of delusion",
+          "ms_range": [[93, 122]],
+          "note": "as in dharmas 15 (paññindriya), 19 (sammādiṭṭhi), and 28 (paññābala); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 34,
+          "name_pali": "anabhijjhā",
+          "name_translation": "not being covetous",
+          "ms_range": [[136, 143]],
+          "note": "as in dharma 31 (alobha); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 35,
+          "name_pali": "abyāpāda",
+          "name_translation": "unmaliciousness",
+          "ms_range": [[144, 149]],
+          "note": "as in dharma 32 (adosa); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 36,
+          "name_pali": "sammādiṭṭhi",
+          "name_translation": "correct view",
+          "ms_range": [[93, 122]],
+          "note": "as in dharmas 15 (paññindriya), 19 (sammādiṭṭhi), 28 (paññābala), and 33 (amoha); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 37,
+          "name_pali": "hiri",
+          "name_translation": "shame",
+          "ms_range": [[132, 133]],
+          "note": "as in dharma 29 (hiribala); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 38,
+          "name_pali": "ottappa",
+          "name_translation": "remorse",
+          "ms_range": [[134, 135]],
+          "note": "as in dharma 30 (ottappabala); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 39,
+          "name_pali": "kāyapassaddhi",
+          "name_translation": "composedness of body",
+          "ms_range": [[150, 154]],
+          "ms": [
+            { "no": 150, "pali": "vedanākkhandhassa saññākkhandhassa saṅkhārakkhandhassa passaddhi", "translation": "composedness of the aggregate of sensation, of the aggregate of cognition, and of the aggregate of synergies" },
+            { "no": 151, "pali": "paṭipassaddhi", "translation": "(their) composure" },
+            { "no": 152, "pali": "passambhanā", "translation": "(their) calming down" },
+            { "no": 153, "pali": "paṭipassambhanā", "translation": "(their) complete tranquillization" },
+            { "no": 154, "pali": "paṭipassambhatattaṃ", "translation": "completely tranquillized" }
+          ]
+        },
+        {
+          "no": 40,
+          "name_pali": "cittapassaddhi",
+          "name_translation": "composedness of thought",
+          "ms_range": [[155, 159]],
+          "ms": [
+            { "no": 155, "pali": "viññāṇakkhandhassa passaddhi", "translation": "composedness of the aggregate of consciousness" },
+            { "no": 156, "pali": "paṭipassaddhi", "translation": "(its) composure" },
+            { "no": 157, "pali": "passambhanā", "translation": "(its) calming down" },
+            { "no": 158, "pali": "paṭipassambhanā", "translation": "(its) complete tranquillization" },
+            { "no": 159, "pali": "paṭipassambhatattaṃ", "translation": "completely tranquillized" }
+          ]
+        },
+        {
+          "no": 41,
+          "name_pali": "kāyalahutā",
+          "name_translation": "lightness of body",
+          "ms_range": [[160, 163]],
+          "ms": [
+            { "no": 160, "pali": "vedanākkhandhassa saññākkhandhassa saṅkhārakkhandhassa labutā", "translation": "lightness of the aggregate of sensation, of the aggregate of cognition, and of the aggregate of synergies" },
+            { "no": 161, "pali": "lahupariṇāmatā", "translation": "(their capacity of) easy transformation" },
+            { "no": 162, "pali": "adandhanatā", "translation": "(their) non-sluggishness" },
+            { "no": 163, "pali": "avitthanatā", "translation": "(their) non-inertness" }
+          ]
+        },
+        {
+          "no": 42,
+          "name_pali": "cittalahutā",
+          "name_translation": "lightness of thought",
+          "ms_range": [[164, 167]],
+          "ms": [
+            { "no": 164, "pali": "viññāṇakkhandhassa lahutā", "translation": "lightness of the aggregate of consciousness" },
+            { "no": 165, "pali": "lahupariṇāmatā", "translation": "(its) capacity of easy transformation" },
+            { "no": 166, "pali": "adandhanatā", "translation": "(its) non non-sluggishness" },
+            { "no": 167, "pali": "avitthanatā", "translation": "(its) non-inertness" }
+          ]
+        },
+        {
+          "no": 43,
+          "name_pali": "kāyamudutā",
+          "name_translation": "flexibility of body",
+          "ms_range": [[168, 171]],
+          "ms": [
+            { "no": 168, "pali": "vedanākkhandhassa saññākkhandhassa saṅkhārakkhandhassa mudutā", "translation": "flexibility of the aggregate of sensation, of the aggregate of cognition, and of the aggregate of synergies" },
+            { "no": 169, "pali": "maddavatā", "translation": "(their) mildness" },
+            { "no": 170, "pali": "akakkhalatā", "translation": "(their) non-rigidity" },
+            { "no": 171, "pali": "akathinatā", "translation": "(their) non-stiffness" }
+          ]
+        },
+        {
+          "no": 44,
+          "name_pali": "cittamudutā",
+          "name_translation": "flexibility of thought",
+          "ms_range": [[172, 175]],
+          "ms": [
+            { "no": 172, "pali": "viññāṇakkhandhassa mudutā", "translation": "flexibility of the aggregate of consciousness" },
+            { "no": 173, "pali": "maddavatā", "translation": "(its) mildness" },
+            { "no": 174, "pali": "akakkhalatā", "translation": "(its) non-rigidity" },
+            { "no": 175, "pali": "akathinatā", "translation": "(its) non-stiffness" }
+          ]
+        },
+        {
+          "no": 45,
+          "name_pali": "kāyakammaññatā",
+          "name_translation": "workability of body",
+          "ms_range": [[176, 178]],
+          "ms": [
+            { "no": 176, "pali": "vedanākkhandhassa saññākkhandhassa saṅkhārakkhandhassa kammaññatā", "translation": "workability of the aggregate of sensation, of the aggregate of cognition, and of the aggregate of synergies" },
+            { "no": 177, "pali": "kammaññattaṃ", "translation": "(their) working ability" },
+            { "no": 178, "pali": "kammaññabhāva", "translation": "(their) being workable" }
+          ]
+        },
+        {
+          "no": 46,
+          "name_pali": "cittakammaññatā",
+          "name_translation": "workability of thought",
+          "ms_range": [[179, 181]],
+          "ms": [
+            { "no": 179, "pali": "viññāṇakkhandhassa kammaññatā", "translation": "workability of the aggregate of consciousness" },
+            { "no": 180, "pali": "kammaññattaṃ", "translation": "(its) working ability" },
+            { "no": 181, "pali": "kammaññabhāva", "translation": "(its) being workable" }
+          ]
+        },
+        {
+          "no": 47,
+          "name_pali": "kāyapāguññatā",
+          "name_translation": "fitness of body",
+          "ms_range": [[182, 184]],
+          "ms": [
+            { "no": 182, "pali": "vedanākkhandhassa saññākkhandhassa saṅkhārakkhandhassa paguṇatā", "translation": "good quality of the aggregate of sensation, of the aggregate of cognition, and of the aggregate of synergies" },
+            { "no": 183, "pali": "paguṇattaṃ", "translation": "(their) good quality" },
+            { "no": 184, "pali": "paguṇabhāva", "translation": "(their) being of good quality" }
+          ]
+        },
+        {
+          "no": 48,
+          "name_pali": "cittapāguññatā",
+          "name_translation": "fitness of thought",
+          "ms_range": [[185, 187]],
+          "ms": [
+            { "no": 185, "pali": "viññāṇakkhandhassa paguṇatā", "translation": "good quality of the aggregate of consciousness" },
+            { "no": 186, "pali": "paguṇattaṃ", "translation": "(its) good quality" },
+            { "no": 187, "pali": "paguṇabhāva", "translation": "(its) being of good quality" }
+          ]
+        },
+        {
+          "no": 49,
+          "name_pali": "kāyujukatā",
+          "name_translation": "straightness of body",
+          "ms_range": [[188, 192]],
+          "ms": [
+            { "no": 188, "pali": "vedanākkhandhassa saññākkhandhassa saṅkhārakkhandhassa ujukatā", "translation": "straightness of the aggregate of sensation, of the aggregate of cognition, and of the aggregate of synergies" },
+            { "no": 189, "pali": "ujutā", "translation": "(their) rectitude" },
+            { "no": 190, "pali": "ajimhatā", "translation": "(their) undeflectedness" },
+            { "no": 191, "pali": "avaṅkatā", "translation": "(their) uncrookedness" },
+            { "no": 192, "pali": "akuṭilatā", "translation": "(their) untwistedness" }
+          ]
+        },
+        {
+          "no": 50,
+          "name_pali": "cittujukatā",
+          "name_translation": "straightness of thought",
+          "ms_range": [[193, 197]],
+          "ms": [
+            { "no": 193, "pali": "viññāṇakkhandhassa ujukatā", "translation": "straightness of the aggregate of consciousness" },
+            { "no": 194, "pali": "ujutā", "translation": "(its) rectitude" },
+            { "no": 195, "pali": "ajimhatā", "translation": "(its) undeflectedness" },
+            { "no": 196, "pali": "avaṅkatā", "translation": "(its) uncrookedness" },
+            { "no": 197, "pali": "akuṭilatā", "translation": "(its) untwistedness" }
+          ]
+        },
+        {
+          "no": 51,
+          "name_pali": "sati",
+          "name_translation": "recollection",
+          "ms_range": [[83, 92]],
+          "note": "as in dharmas 13 (satindriya), 22 (sammāsati), and 26 (satibala); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 52,
+          "name_pali": "sampajañña",
+          "name_translation": "self-awareness",
+          "ms_range": [[93, 122]],
+          "note": "as in dharmas 15 (paññindriya), 19 (sammādiṭṭhi), 28 (paññābala), 33 (amoha), and 36 (sammādiṭṭhi); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 53,
+          "name_pali": "samatha",
+          "name_translation": "quietude",
+          "ms_range": [[50, 59]],
+          "note": "as in dharmas 10 (cittassekaggatā), 14 (samādhindriya), 23 (sammāsamādhi), and 27 (samādhibala); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 54,
+          "name_pali": "vipassanā",
+          "name_translation": "intuition",
+          "ms_range": [[93, 122]],
+          "note": "as in dharmas 15 (paññindriya), 19 (sammādiṭṭhi), 28 (paññābala), 33 (amoha), 36 (sammādiṭṭhi), and 52 (sampajañña); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 55,
+          "name_pali": "paggāha",
+          "name_translation": "grasp",
+          "ms_range": [[66, 82]],
+          "note": "as in dharmas 12 (viriyindriya), 21 (sammāvāyāma), and 25 (viriyabala); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 56,
+          "name_pali": "avikkhepa",
+          "name_translation": "unperturbedness",
+          "ms_range": [[50, 59]],
+          "note": "as in dharmas 10 (cittassekaggatā), 14 (samādhindriya), 23 (sammāsamādhi), 27 (samādhibala), and 53 (samatha); MS names not repeated in source",
+          "ms": []
+        }
+      ]
+    },
+    {
+      "case_no": "5A",
+      "dharmas": [
+        {
+          "no": "2a",
+          "name_pali": "vedanā",
+          "name_translation": null,
+          "footnote_ref": 8,
+          "footnote_ref_note": "superscript footnote marker on the dharma name in source; footnote text not visible in this scan",
+          "ms_range": [[198, 200]],
+          "ms": [
+            { "no": 198, "pali": "manoviññāṇadhātusamphassajaṃ cetasikaṃ neva sātaṃ nāsātaṃ", "translation": "neither psychical ease nor unease born of contact with element of mind-consciousness" },
+            { "no": 199, "pali": "cetosamphassajaṃ adukkhamasukhaṃ vedayitaṃ", "translation": "(what is) neither suffering nor pleasure experienced (as) born of contact with the psychical" },
+            { "no": 200, "pali": "cetosamphassajā adukkhamasukhā vedanā", "translation": "sensation of neither suffering nor pleasure born of contact with the psychical", "footnote_ref": 9, "footnote_ref_note": "superscript footnote marker at end of translation in source; footnote text not visible in this scan" }
+          ]
+        },
+        {
+          "no": 57,
+          "name_pali": "upekkhā",
+          "name_translation": "indifference",
+          "ms_range": [[198, 200]],
+          "note": "as in dharma 2a (vedanā); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 58,
+          "name_pali": "upekkhindriya",
+          "name_translation": "of indifference",
+          "ms_range": [[198, 200]],
+          "note": "as in dharmas 2a (vedanā) and 57 (upekkhā); MS names not repeated in source",
+          "ms": []
+        }
+      ]
+    },
+    {
+      "case_no": "119A",
+      "dharmas": [
+        {
+          "no": "6a",
+          "name_pali": "vitakka",
+          "name_translation": null,
+          "ms_range": [[28, 34], [201, 202]],
+          "note": "MS 28-34 as in dharma 6 (vitakka); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 201, "pali": "maggaṅga", "translation": "a component of the Way" },
+            { "no": 202, "pali": "maggapariyāpanna", "translation": "included in the Way" }
+          ]
+        },
+        {
+          "no": "8a",
+          "name_pali": "pīti",
+          "name_translation": null,
+          "ms_range": [[41, 49], [203, 203]],
+          "note": "MS 41-49 as in dharma 8 (pīti); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 203, "pali": "pītisambojjhaṅga", "translation": "joy (as) a component of Complete Awakening" }
+          ]
+        },
+        {
+          "no": "10a",
+          "name_pali": "cittassekaggatā",
+          "name_translation": null,
+          "ms_range": [[50, 59], [201, 202], [204, 204]],
+          "note": "MS 50-59 as in dharma 10 (cittassekaggatā), MS 201-202 as in dharma 6a (vitakka); MS names not repeated in source for those spans",
+          "ms": [
+            { "no": 204, "pali": "samādhisambojjhaṅga", "translation": "concentration (as) a component of Complete Awakening" }
+          ]
+        },
+        {
+          "no": "12a",
+          "name_pali": "viriyindriya",
+          "name_translation": null,
+          "ms_range": [[66, 82], [201, 202], [205, 205]],
+          "note": "MS 66-82 as in dharma 12 (viriyindriya), MS 201-202 as in dharma 6a (vitakka); MS names not repeated in source for those spans",
+          "ms": [
+            { "no": 205, "pali": "viriyasambojjhaṅga", "translation": "energy (as) a compoment of Complete Awakening" }
+          ]
+        },
+        {
+          "no": "13a",
+          "name_pali": "satindriya",
+          "name_translation": null,
+          "ms_range": [[83, 92], [201, 202], [206, 206]],
+          "note": "MS 83-92 as in dharma 13 (satindriya), MS 201-202 as in dharma 6a (vitakka); MS names not repeated in source for those spans",
+          "ms": [
+            { "no": 206, "pali": "satisambojjhaṅga", "translation": "recollection (as) a component of Complete Awakening" }
+          ]
+        },
+        {
+          "no": "14a",
+          "name_pali": "samādhindriya",
+          "name_translation": null,
+          "ms_range": [[50, 59], [201, 202], [204, 204]],
+          "note": "as in dharma 10a (cittassekaggatā); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "15a",
+          "name_pali": "paññindriya",
+          "name_translation": null,
+          "ms_range": [[93, 122], [201, 202], [207, 207]],
+          "note": "MS 93-122 as in dharma 15 (paññindriya), MS 201-202 as in dharma 6a (vitakka); MS names not repeated in source for those spans. Source header prints this span as '83-122', which appears to be a typo for '93-122' — corrected here based on the numeric MS column and consistency with dharma 15 elsewhere.",
+          "ms": [
+            { "no": 207, "pali": "dhammavicayasambojjhaṅga", "translation": "a search of Dharma (as) a component of Complete Awakening" }
+          ]
+        },
+        {
+          "no": 59,
+          "name_pali": "anaññātaññassāmītindriya",
+          "name_translation": "the faculty [of those who] say: 'I shall know the unknown'",
+          "ms_range": [[93, 122], [201, 202], [207, 207], [208, 208]],
+          "note": "MS 93-122 as in dharma 15 (paññindriya), MS 201-202 as in dharma 6a (vitakka), MS 207 as in dharma 15a (paññindriya); MS names not repeated in source for those spans",
+          "ms": [
+            { "no": 208, "pali": "dhammānaṃ anaññātānaṃ adiṭṭhānaṃ apattānaṃ aviditānaṃ asacchikatānaṃ sacchikiriyāya paññā", "translation": "the wisdom (that), seeing with (its) own eyes the unrecognized, unseen, unattained, unknown, and unfound dharmas, (says:) \"I shall know the unknown\"" }
+          ]
+        },
+        {
+          "no": "19a",
+          "name_pali": "sammādiṭṭhi",
+          "name_translation": null,
+          "ms_range": [[93, 122], [207, 207], [201, 202]],
+          "note": "as in dharma 15a (paññindriya); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "20a",
+          "name_pali": "sammāsaṅkappa",
+          "name_translation": null,
+          "ms_range": [[28, 34], [201, 202]],
+          "note": "as in dharma 6a (vitakka); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 60,
+          "name_pali": "sammāvācā",
+          "name_translation": "correct speech",
+          "ms_range": [[201, 202], [209, 215]],
+          "note": "MS 201-202 as in dharma 6a (vitakka); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 209, "pali": "catūhi vaciduccaritehi ārati virati paṭivirati veramaṇī", "translation": "leaving off, abstaining, totally abstaining and refraining from the four deviations of speech" },
+            { "no": 210, "pali": "akiriyā", "translation": "leaving (them) undone" },
+            { "no": 211, "pali": "akaraṇaṃ", "translation": "(leaving them) unaffected" },
+            { "no": 212, "pali": "anajjhāpatti", "translation": "not incurring guilt" },
+            { "no": 213, "pali": "velā anatikkamo", "translation": "not trespassing limit" },
+            { "no": 214, "pali": "setughāta", "translation": "destroying (their) cause" },
+            { "no": 215, "pali": "sammāvācā", "translation": "correct speech" }
+          ]
+        },
+        {
+          "no": 61,
+          "name_pali": "sammākammanta",
+          "name_translation": "correct action",
+          "ms_range": [[201, 202], [216, 222]],
+          "note": "MS 201-202 as in dharma 6a (vitakka); MS names not repeated in source for that span. Source prints the fifth item's index as '211' (repeating the number already used in dharma 60 for akaraṇaṃ), which appears to be a typo for '221' given the surrounding sequence 216-220, 222 — corrected here.",
+          "ms": [
+            { "no": 216, "pali": "tīhi kāyaduccaritehi ārati virati paṭivirati veramaṇī", "translation": "leaving off, abstaining, totally abstaining and refraining from the three deviations of body" },
+            { "no": 217, "pali": "akiriyā", "translation": "leaving (them) undone" },
+            { "no": 218, "pali": "akaraṇaṃ", "translation": "(leaving them) unaffected" },
+            { "no": 219, "pali": "anajjhāpatti", "translation": "not incurring guilt" },
+            { "no": 220, "pali": "velā anatikkamo", "translation": "not trespassing limit" },
+            { "no": 221, "pali": "setughāta", "translation": "destroying (their) cause" },
+            { "no": 222, "pali": "sammākammanta", "translation": "correct action" }
+          ]
+        },
+        {
+          "no": 62,
+          "name_pali": "sammā ājīva",
+          "name_translation": "correct livelihood",
+          "ms_range": [[201, 202], [223, 229]],
+          "note": "MS 201-202 as in dharma 6a (vitakka); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 223, "pali": "micchā ājīvā ārati virati paṭivirati veramaṇī", "translation": "leaving off, abstaining, totally abstaining and refraining from the wrong livelihood" },
+            { "no": 224, "pali": "akiriyā", "translation": "leaving (it) undone" },
+            { "no": 225, "pali": "akaraṇaṃ", "translation": "(leaving it) unaffected" },
+            { "no": 226, "pali": "anajjhāpatti", "translation": "not incurring guilt" },
+            { "no": 227, "pali": "velā anatikkama", "translation": "not trespassing limit" },
+            { "no": 228, "pali": "setughāta", "translation": "destroying (its) cause" },
+            { "no": 229, "pali": "sammā ājīva", "translation": "correct livelihood" }
+          ]
+        },
+        {
+          "no": "21a",
+          "name_pali": "sammāvāyāma",
+          "name_translation": null,
+          "ms_range": [[66, 82], [205, 205], [201, 202]],
+          "note": "as in dharma 12a (viriyindriya); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "22a",
+          "name_pali": "sammāsati",
+          "name_translation": null,
+          "ms_range": [[83, 92], [206, 206], [201, 202]],
+          "note": "as in dharma 13a (satindriya); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "23a",
+          "name_pali": "sammāsamādhi",
+          "name_translation": null,
+          "ms_range": [[50, 59], [201, 202], [204, 204]],
+          "note": "as in dharmas 10a (cittassekaggatā) and 14a (samādhindriya); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "25a",
+          "name_pali": "viriyabala",
+          "name_translation": null,
+          "ms_range": [[66, 82], [205, 205], [201, 202]],
+          "note": "as in dharmas 12a (viriyindriya) and 21a (sammāvāyāma); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "26a",
+          "name_pali": "satibala",
+          "name_translation": null,
+          "ms_range": [[83, 92], [206, 206], [201, 202]],
+          "note": "as in dharmas 13a (satindriya) and 22a (sammāsati); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "27a",
+          "name_pali": "samādhibala",
+          "name_translation": null,
+          "ms_range": [[50, 59], [201, 202], [204, 204]],
+          "note": "as in dharmas 10a (cittassekaggatā), 14a (samādhindriya), and 23a (sammāsamādhi); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "28a",
+          "name_pali": "paññābala",
+          "name_translation": null,
+          "ms_range": [[93, 122], [207, 207], [201, 202]],
+          "note": "as in dharmas 15a (paññindriya) and 19a (sammādiṭṭhi); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "33a",
+          "name_pali": "amoha",
+          "name_translation": null,
+          "ms_range": [[93, 122], [207, 207], [201, 202]],
+          "note": "as in dharmas 15a (paññindriya), 19a (sammādiṭṭhi), and 28a (paññābala); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "36a",
+          "name_pali": "sammādiṭṭhi",
+          "name_translation": null,
+          "ms_range": [[93, 122], [207, 207], [201, 202]],
+          "note": "as in dharmas 15a (paññindriya), 19a (sammādiṭṭhi), 28a (paññābala), and 33a (amoha); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "39a",
+          "name_pali": "kāyapassadhi",
+          "name_translation": null,
+          "ms_range": [[150, 154], [230, 230]],
+          "note": "MS 150-154 as in dharma 39 (kāyapassaddhi); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 230, "pali": "passadhisambojjhaṅga", "translation": "composedness as a component of Complete Awakening" }
+          ]
+        },
+        {
+          "no": "40a",
+          "name_pali": "cittapassadhi",
+          "name_translation": null,
+          "ms_range": [[155, 159], [230, 230]],
+          "note": "MS 155-159 as in dharma 40 (cittapassaddhi), MS 230 as in dharma 39a (kāyapassadhi); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "51a",
+          "name_pali": "sati",
+          "name_translation": null,
+          "ms_range": [[83, 92], [206, 206], [201, 202]],
+          "note": "as in dharmas 13a (satindriya), 22a (sammāsati), and 26a (satibala); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "52a",
+          "name_pali": "sampajañña",
+          "name_translation": null,
+          "ms_range": [[93, 122], [207, 207], [201, 202]],
+          "note": "as in dharmas 15a (paññindriya), 19a (sammādiṭṭhi), 28a (paññābala), 33a (amoha), and 36a (sammādiṭṭhi); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "53a",
+          "name_pali": "samatha",
+          "name_translation": null,
+          "ms_range": [[50, 59], [201, 202], [204, 204]],
+          "note": "as in dharmas 10a (cittassekaggatā), 14a (samādhindriya), 23a (sammāsamādhi), and 27a (samādhibala); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "54a",
+          "name_pali": "vipassanā",
+          "name_translation": null,
+          "ms_range": [[93, 122], [207, 207], [201, 202]],
+          "note": "as in dharmas 15a (paññindriya), 19a (sammādiṭṭhi), 28a (paññābala), 33a (amoha), 36a (sammādiṭṭhi), and 52a (sampajañña); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "55a",
+          "name_pali": "paggāha",
+          "name_translation": null,
+          "ms_range": [[66, 82], [205, 205], [201, 202]],
+          "note": "as in dharmas 12a (viriyindriya), 21a (sammāvāyāma), and 25a (viriyabala); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "56a",
+          "name_pali": "avikkhepa",
+          "name_translation": null,
+          "ms_range": [[50, 59], [204, 204], [201, 202]],
+          "note": "as in dharmas 10a (cittassekaggatā), 14a (samādhindriya), 23a (sammāsamādhi), 27a (samādhibala), and 53a (samatha); MS names not repeated in source",
+          "ms": []
+        }
+      ]
+    },
+    {
+      "case_no": "144A",
+      "dharmas": [
+        {
+          "no": 63,
+          "name_pali": "aññindriya",
+          "name_translation": "faculty of recognition",
+          "ms_range": [[208, 208], [93, 122], [207, 207], [201, 202]],
+          "note": "as in dharma 59 (anaññātaññassāmītindriya); MS names not repeated in source",
+          "ms": []
+        }
+      ]
+    },
+    {
+      "case_no": "145B",
+      "dharmas": [
+        {
+          "no": "6b",
+          "name_pali": "vitakka",
+          "name_translation": null,
+          "ms_range": [[28, 33], [231, 231]],
+          "note": "MS 28-33 as in dharma 6 (vitakka), a subset excluding MS 34 (sammāsaṅkappa, the 'correct' variant); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 231, "pali": "micchāsaṅkappa", "translation": "wrong construing" }
+          ]
+        },
+        {
+          "no": "10b",
+          "name_pali": "cittassekaggatā",
+          "name_translation": null,
+          "ms_range": [[50, 58], [232, 232]],
+          "note": "MS 50-58 as in dharma 10 (cittassekaggatā), a subset excluding MS 59 (sammāsamādhi, the 'correct' variant); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 232, "pali": "micchāsamādhi", "translation": "wrong concentration" }
+          ]
+        },
+        {
+          "no": "12b",
+          "name_pali": "viriyindriya",
+          "name_translation": null,
+          "ms_range": [[66, 81], [233, 233]],
+          "note": "MS 66-81 as in dharma 12 (viriyindriya), a subset excluding MS 82 (sammāvāyāma, the 'correct' variant); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 233, "pali": "micchāvāyāma", "translation": "wrong endeavour" }
+          ]
+        },
+        {
+          "no": "14b",
+          "name_pali": "samādhindriya",
+          "name_translation": null,
+          "ms_range": [[50, 58], [232, 232]],
+          "note": "as in dharma 10b (cittassekaggatā); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 64,
+          "name_pali": "micchādiṭṭhi",
+          "name_translation": "wrong view",
+          "ms_range": [[234, 249]],
+          "ms": [
+            { "no": 234, "pali": "diṭṭhi", "translation": "view" },
+            { "no": 235, "pali": "diṭṭhigata", "translation": "current views and opinions" },
+            { "no": 236, "pali": "diṭṭhigahana", "translation": "thicket of views" },
+            { "no": 237, "pali": "diṭṭhikantāra", "translation": "wilderness of views" },
+            { "no": 238, "pali": "diṭṭhivisūkāyika", "translation": "distortion of views" },
+            { "no": 239, "pali": "diṭṭhivipphandita", "translation": "scuffle of views" },
+            { "no": 240, "pali": "diṭṭhisaññojana", "translation": "fetters of views" },
+            { "no": 241, "pali": "gāha", "translation": "grasping (of view)" },
+            { "no": 242, "pali": "paṭiggāha", "translation": "sticking strongly (to view)" },
+            { "no": 243, "pali": "abhinivesa", "translation": "inclination (towards view)" },
+            { "no": 244, "pali": "parāmāsa", "translation": "holding as paramount (one's view)" },
+            { "no": 245, "pali": "kummagga", "translation": "erroneous way" },
+            { "no": 246, "pali": "micchāpatha", "translation": "wrong path" },
+            { "no": 247, "pali": "micchatta", "translation": "wrongness" },
+            { "no": 248, "pali": "titthāyatana", "translation": "sectarian bias" },
+            { "no": 249, "pali": "vipariyāsaggāha", "translation": "grasping of inverted (views)" }
+          ]
+        },
+        {
+          "no": 65,
+          "name_pali": "micchāsaṅkappa",
+          "name_translation": "wrong construing",
+          "ms_range": [[28, 33], [231, 231]],
+          "note": "as in dharma 6b (vitakka); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 66,
+          "name_pali": "micchāvāyāma",
+          "name_translation": "wrong endeavour",
+          "ms_range": [[66, 81], [233, 233]],
+          "note": "as in dharma 12b (viriyindriya); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 67,
+          "name_pali": "micchāsamādhi",
+          "name_translation": "wrong concentration",
+          "ms_range": [[50, 58], [232, 232]],
+          "note": "as in dharmas 10b (cittassekaggatā) and 14b (samādhindriya); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "25b",
+          "name_pali": "viriyabala",
+          "name_translation": null,
+          "ms_range": [[66, 81], [233, 233]],
+          "note": "as in dharmas 12b (viriyindriya) and 66 (micchāvāyāma); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "27b",
+          "name_pali": "samādhibala",
+          "name_translation": null,
+          "ms_range": [[50, 58], [232, 232]],
+          "note": "as in dharmas 10b (cittassekaggatā), 14b (samādhindriya), and 67 (micchāsamādhi); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 68,
+          "name_pali": "ahirikabala",
+          "name_translation": "power of shamelessness",
+          "ms_range": [[250, 251]],
+          "ms": [
+            { "no": 250, "pali": "na hirīyati hirīyitabbena", "translation": "(when one is) not ashamed of (what one ought to be ashamed)" },
+            { "no": 251, "pali": "na hirīyati pāpakānaṃ akusalānaṃ dhammānaṃ samāpattiyā", "translation": "(when one is) not ashamed of acquisition of sinful and unwholesome dharmas" }
+          ]
+        },
+        {
+          "no": 69,
+          "name_pali": "anottappabala",
+          "name_translation": "power of unremorsefulness",
+          "ms_range": [[252, 253]],
+          "ms": [
+            { "no": 252, "pali": "na ottappati ottappitabbena", "translation": "(when one) does not feel remorse of (what one ought to be remorseful)" },
+            { "no": 253, "pali": "na ottappati pāpakānaṃ akusalānaṃ dhammānaṃ samāpattiyā", "translation": "(when one) does not feel remorse of acquisition of sinful and unwholesome dharmas" }
+          ]
+        },
+        {
+          "no": 70,
+          "name_pali": "lobha",
+          "name_translation": "greed",
+          "ms_range": [[254, 261]],
+          "ms": [
+            { "no": 254, "pali": "lobha", "translation": "greed" },
+            { "no": 255, "pali": "lubbhanā", "translation": "(state of) being greedy" },
+            { "no": 256, "pali": "lubbhitattaṃ", "translation": "(state of) feeling greed" },
+            { "no": 257, "pali": "sārāga", "translation": "infatuated" },
+            { "no": 258, "pali": "sārajjanā", "translation": "(state of) being infatuated" },
+            { "no": 259, "pali": "sārajitattaṃ", "translation": "(state of) feeling infatuation" },
+            { "no": 260, "pali": "abhijjhā", "translation": "covetousness" },
+            { "no": 261, "pali": "lobho akusalamūlaṃ", "translation": "greed (as) an unwholesome root" }
+          ]
+        },
+        {
+          "no": 71,
+          "name_pali": "moha",
+          "name_translation": "delusion",
+          "ms_range": [[262, 285]],
+          "ms": [
+            { "no": 262, "pali": "aññāṇa", "translation": "nescience" },
+            { "no": 263, "pali": "adassana", "translation": "not-seeing" },
+            { "no": 264, "pali": "anabhisamaya", "translation": "un-comprehension" },
+            { "no": 265, "pali": "ananubodha", "translation": "not understanding" },
+            { "no": 266, "pali": "asambodha", "translation": "unawakened" },
+            { "no": 267, "pali": "appaṭivedha", "translation": "non-penetration" },
+            { "no": 268, "pali": "asagāhanā", "translation": "non-grasping" },
+            { "no": 269, "pali": "apariyogāhanā", "translation": "inability to compare" },
+            { "no": 270, "pali": "asamapekkhanā", "translation": "being unobservant" },
+            { "no": 271, "pali": "apaccavekkhanā", "translation": "non-consideration" },
+            { "no": 272, "pali": "apacakkhakamma", "translation": "inability to demonstrate" },
+            { "no": 273, "pali": "dummajjha", "translation": "stupidity" },
+            { "no": 274, "pali": "bālya", "translation": "childishness" },
+            { "no": 275, "pali": "asampajañña", "translation": "unawareness" },
+            { "no": 276, "pali": "moha", "translation": "delusion" },
+            { "no": 277, "pali": "pamoha", "translation": "utter delusion" },
+            { "no": 278, "pali": "sammoha", "translation": "complete delusion" },
+            { "no": 279, "pali": "avijjā", "translation": "ignorance" },
+            { "no": 280, "pali": "avijjogha", "translation": "flood of ignorance" },
+            { "no": 281, "pali": "avijjāyoga", "translation": "fetters of ignorance" },
+            { "no": 282, "pali": "avijjānusaya", "translation": "tendency towards ignorance" },
+            { "no": 283, "pali": "avijjāpariyuṭṭhāna", "translation": "obsession with ignorance" },
+            { "no": 284, "pali": "avijjālaṅga", "translation": "snares of ignorance" },
+            { "no": 285, "pali": "moho akusalamūlaṃ", "translation": "delusion (as) an unwholesome root" }
+          ]
+        },
+        {
+          "no": 72,
+          "name_pali": "abhijjhā",
+          "name_translation": "covetousness",
+          "ms_range": [[254, 261]],
+          "note": "as in dharma 70 (lobha); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 73,
+          "name_pali": "micchādiṭṭhi",
+          "name_translation": "wrong view",
+          "ms_range": [[234, 249]],
+          "note": "as in dharma 64 (micchādiṭṭhi); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 74,
+          "name_pali": "ahirika",
+          "name_translation": "shamelessness",
+          "ms_range": [[250, 251]],
+          "note": "as in dharma 68 (ahirikabala); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 75,
+          "name_pali": "anottappa",
+          "name_translation": "unremorsefulness",
+          "ms_range": [[252, 253]],
+          "note": "as in dharma 69 (anottappabala); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "53b",
+          "name_pali": "samatha",
+          "name_translation": null,
+          "ms_range": [[50, 58], [232, 232]],
+          "note": "as in dharmas 10b (cittassekaggatā), 14b (samādhindriya), and 67 (micchāsamādhi); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "55b",
+          "name_pali": "paggāha",
+          "name_translation": null,
+          "ms_range": [[66, 81], [233, 233]],
+          "note": "as in dharmas 12b (viriyindriya), 25b (viriyabala), and 66 (micchāvāyāma); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "56b",
+          "name_pali": "avikkhepa",
+          "name_translation": null,
+          "ms_range": [[50, 58], [232, 232]],
+          "note": "as in dharmas 10b (cittassekaggatā), 14b (samādhindriya), 53b (samatha), and 67 (micchāsamādhi); MS names not repeated in source",
+          "ms": []
+        }
+      ]
+    },
+    {
+      "case_no": "153B",
+      "dharmas": [
+        {
+          "no": "2b",
+          "name_pali": "vedanā",
+          "name_translation": null,
+          "ms_range": [[286, 291]],
+          "note": "MS list continues on next page",
+          "ms": [
+            { "no": 286, "pali": "manoviññāṇadhātusampassajaṃ cetasikaṃ asātaṃ", "translation": "psychical unease born of contact with element of mind-consciousness" },
+            { "no": 287, "pali": "cetasikaṃ dukkhaṃ", "translation": "psychically unpleasant" },
+            { "no": 288, "pali": "cetosamphassajamasātaṃ (vedayitaṃ)", "translation": "unease (experienced as) born of contact with the psychical" },
+            { "no": 289, "pali": "(cetosamphassajaṃ) dukkhaṃ vedayitaṃ", "translation": "the unpleasant experienced (as born of contact with the psychical)" },
+            { "no": 290, "pali": "cetosamphassajā asātā (vedanā)", "translation": "(sensation of) unease born of contact with the psychical" },
+            { "no": 291, "pali": "(cetosamphassajā) dukkhā vedanā", "translation": "sensation of unpleasant (born of contact with the psychical)" }
+          ]
+        },
+        {
+          "no": 76,
+          "name_pali": "dukkha",
+          "name_translation": "suffering",
+          "ms_range": [[286, 291]],
+          "note": "as in dharma 2b (vedanā); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 77,
+          "name_pali": "domanassindriya",
+          "name_translation": "faculty of mental sorrow",
+          "ms_range": [[286, 291]],
+          "note": "as in dharmas 2b (vedanā) and 76 (dukkha); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 78,
+          "name_pali": "dosa",
+          "name_translation": "hatred",
+          "ms_range": [[292, 302]],
+          "ms": [
+            { "no": 292, "pali": "dosa", "translation": "hatred" },
+            { "no": 293, "pali": "dussanā", "translation": "hating" },
+            { "no": 294, "pali": "dussitattaṃ", "translation": "(state of) feeling hatred" },
+            { "no": 295, "pali": "byāpatti", "translation": "maliciousness" },
+            { "no": 296, "pali": "byāpajjanā", "translation": "causing harm" },
+            { "no": 297, "pali": "byāpajjitatta", "translation": "harmfulness" },
+            { "no": 298, "pali": "virodha", "translation": "enmity" },
+            { "no": 299, "pali": "paṭivirodha", "translation": "hostility" },
+            { "no": 300, "pali": "caṇḍikka", "translation": "churlishness" },
+            { "no": 301, "pali": "asuropa", "translation": "abruptness" },
+            { "no": 302, "pali": "anattamanatā cittassa", "translation": "depression of thought" }
+          ]
+        },
+        {
+          "no": 79,
+          "name_pali": "byāpāda",
+          "name_translation": "maliciousness",
+          "ms_range": [[292, 302]],
+          "note": "as in dharma 78 (dosa); MS names not repeated in source",
+          "ms": []
+        }
+      ]
+    },
+    {
+      "case_no": "155B",
+      "dharmas": [
+        {
+          "no": "10c",
+          "name_pali": "cittassekaggatā",
+          "name_translation": null,
+          "ms_range": [[50, 50]],
+          "note": "MS 50 as in dharma 10 (cittassekaggatā); MS name not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 80,
+          "name_pali": "vicikicchā",
+          "name_translation": "perplexity",
+          "ms_range": [[303, 316]],
+          "ms": [
+            { "no": 303, "pali": "kaṅkhā", "translation": "doubt" },
+            { "no": 304, "pali": "kaṅkhāyanā", "translation": "doubting" },
+            { "no": 305, "pali": "kaṅkhāyitattaṃ", "translation": "dubiety" },
+            { "no": 306, "pali": "vimati", "translation": "puzzlement" },
+            { "no": 307, "pali": "vicikicchā", "translation": "perplexity" },
+            { "no": 308, "pali": "dvelhaka", "translation": "being in doubt (before two alternatives)" },
+            { "no": 309, "pali": "dvedhāpatha", "translation": "standing at crossroads" },
+            { "no": 310, "pali": "saṃsaya", "translation": "succumbing (to hesitation)" },
+            { "no": 311, "pali": "anekaṃsaggāha", "translation": "uncertainty (indecision)" },
+            { "no": 312, "pali": "āsappanā", "translation": "evasion" },
+            { "no": 313, "pali": "parisappanā", "translation": "indecisiveness" },
+            { "no": 314, "pali": "apariyogāhanā", "translation": "lack of real grasping" },
+            { "no": 315, "pali": "thāmbhatattaṃ", "translation": "vacillation" },
+            { "no": 316, "pali": "cittassa manovilekha", "translation": "mental perturbation of thought" }
+          ]
+        }
+      ]
+    },
+    {
+      "case_no": "156B",
+      "dharmas": [
+        {
+          "no": 81,
+          "name_pali": "uddhacca",
+          "name_translation": "excitement",
+          "ms_range": [[317, 320]],
+          "ms": [
+            { "no": 317, "pali": "cittassa uddhacca", "translation": "excitement of thought" },
+            { "no": 318, "pali": "avūpasama", "translation": "agitation" },
+            { "no": 319, "pali": "cetaso vikkhepo", "translation": "psychical perplexity" },
+            { "no": 320, "pali": "bhantattaṃ cittassa", "translation": "turmoil of thought" }
+          ]
+        }
+      ]
+    },
+    {
+      "case_no": "157C",
+      "dharmas": [
+        {
+          "no": "2c",
+          "name_pali": "vedanā",
+          "name_translation": null,
+          "ms_range": [[199, 200], [321, 321]],
+          "note": "MS 199-200 as in dharma 2a (vedanā, case 5A); MS name not repeated in source for that span",
+          "ms": [
+            { "no": 321, "pali": "cakkhuviññāṇadhātusamphassajaṃ cetasikaṃ neva sātaṃ nāsātaṃ", "translation": "neither psychical ease nor unease born of contact with element of eye-consciousness" }
+          ]
+        },
+        {
+          "no": "3a",
+          "name_pali": "saññā",
+          "name_translation": null,
+          "ms_range": [[13, 14], [322, 322]],
+          "note": "MS 13-14 as in dharma 3 (saññā); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 322, "pali": "cakkhuviññāṇadhātusamphassajā saññā", "translation": "cognition born of contact with element of eye-consciousness" }
+          ]
+        },
+        {
+          "no": "4a",
+          "name_pali": "cetanā",
+          "name_translation": null,
+          "ms_range": [[16, 17], [323, 323]],
+          "note": "MS 16-17 as in dharma 4 (cetanā); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 323, "pali": "cakkhuviññāṇadhātusamphassajā cetanā", "translation": "volition born of contact with element of eye-consciousness" }
+          ]
+        },
+        {
+          "no": "5a",
+          "name_pali": "citta",
+          "name_translation": null,
+          "ms_range": [[18, 26], [324, 324]],
+          "note": "MS 18-26 as in dharma 5 (citta), a subset excluding MS 27 (manoviññāṇadhātu, replaced here by cakkhuviññāṇadhātu); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 324, "pali": "cakkhuviññāṇadhātu", "translation": "element of eye-consciousness" }
+          ]
+        },
+        {
+          "no": "16a",
+          "name_pali": "manindriya",
+          "name_translation": null,
+          "ms_range": [[18, 26], [324, 324]],
+          "note": "as in dharma 5a (citta); MS names not repeated in source",
+          "ms": []
+        }
+      ]
+    },
+    {
+      "case_no": "158C",
+      "dharmas": [
+        {
+          "no": "2d",
+          "name_pali": "vedanā",
+          "name_translation": null,
+          "ms_range": [[199, 200], [325, 325]],
+          "note": "MS 199-200 as in dharma 2a (vedanā, case 5A); MS name not repeated in source for that span",
+          "ms": [
+            { "no": 325, "pali": "sotaviññāṇadhātusamphassajaṃ cetasikaṃ neva sātaṃ nāsātaṃ", "translation": "neither psychical ease nor unease born of contact with element of ear-consciousness" }
+          ]
+        },
+        {
+          "no": "3b",
+          "name_pali": "saññā",
+          "name_translation": null,
+          "ms_range": [[13, 14], [326, 326]],
+          "note": "MS 13-14 as in dharma 3 (saññā); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 326, "pali": "sotaviññāṇadhātusamphassajā saññā", "translation": "cognition born of contact with element of ear-consciousness" }
+          ]
+        },
+        {
+          "no": "4b",
+          "name_pali": "cetanā",
+          "name_translation": null,
+          "ms_range": [[16, 17], [327, 327]],
+          "note": "MS 16-17 as in dharma 4 (cetanā); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 327, "pali": "sotaviññāṇadhātusamphassajā cetanā", "translation": "volition born of contact with element of ear-consciousness" }
+          ]
+        },
+        {
+          "no": "5b",
+          "name_pali": "citta",
+          "name_translation": null,
+          "ms_range": [[18, 26], [328, 328]],
+          "note": "MS 18-26 as in dharma 5 (citta), a subset excluding MS 27 (manoviññāṇadhātu, replaced here by sotaviññāṇadhātu); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 328, "pali": "sotaviññāṇadhātu", "translation": "element of ear-consciousness" }
+          ]
+        },
+        {
+          "no": "16b",
+          "name_pali": "manindriya",
+          "name_translation": null,
+          "ms_range": [[18, 26], [328, 328]],
+          "note": "as in dharma 5b (citta); MS names not repeated in source",
+          "ms": []
+        }
+      ]
+    },
+    {
+      "case_no": "159C",
+      "dharmas": [
+        {
+          "no": "2e",
+          "name_pali": "vedanā",
+          "name_translation": null,
+          "ms_range": [[199, 200], [329, 329]],
+          "note": "MS 199-200 as in dharma 2a (vedanā, case 5A); MS name not repeated in source for that span",
+          "ms": [
+            { "no": 329, "pali": "ghānaviññāṇadhātusamphassajaṃ cetasikaṃ neva sātaṃ nāsātaṃ", "translation": "neither psychical ease nor unease born of contact with element of smell-consciousness" }
+          ]
+        },
+        {
+          "no": "3c",
+          "name_pali": "saññā",
+          "name_translation": null,
+          "ms_range": [[13, 14], [330, 330]],
+          "note": "MS 13-14 as in dharma 3 (saññā); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 330, "pali": "ghānaviññāṇadhātusamphassajā saññā", "translation": "cognition born of contact with element of smell-consciousness" }
+          ]
+        },
+        {
+          "no": "4c",
+          "name_pali": "cetanā",
+          "name_translation": null,
+          "ms_range": [[16, 17], [331, 331]],
+          "note": "MS 16-17 as in dharma 4 (cetanā); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 331, "pali": "ghānaviññāṇadhātusamphassajā cetanā", "translation": "volition born of contact with element of smell-consciousness" }
+          ]
+        },
+        {
+          "no": "5c",
+          "name_pali": "citta",
+          "name_translation": null,
+          "ms_range": [[18, 26], [332, 332]],
+          "note": "MS 18-26 as in dharma 5 (citta), a subset excluding MS 27 (manoviññāṇadhātu, replaced here by ghānaviññāṇadhātu); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 332, "pali": "ghānaviññāṇadhātu", "translation": "element of smell-consciousness" }
+          ]
+        },
+        {
+          "no": "16c",
+          "name_pali": "manindriya",
+          "name_translation": null,
+          "ms_range": [[18, 26], [332, 332]],
+          "note": "as in dharma 5c (citta); MS names not repeated in source",
+          "ms": []
+        }
+      ]
+    },
+    {
+      "case_no": "160C",
+      "dharmas": [
+        {
+          "no": "2f",
+          "name_pali": "vedanā",
+          "name_translation": null,
+          "ms_range": [[199, 200], [333, 333]],
+          "note": "MS 199-200 as in dharma 2a (vedanā, case 5A); MS name not repeated in source for that span",
+          "ms": [
+            { "no": 333, "pali": "jivhāviññāṇadhātusamphassajaṃ cetasikaṃ neva sātaṃ nāsātaṃ", "translation": "neither psychical ease nor unease born of contact with element of taste-consciousness" }
+          ]
+        },
+        {
+          "no": "3d",
+          "name_pali": "saññā",
+          "name_translation": null,
+          "ms_range": [[13, 14], [334, 334]],
+          "note": "MS 13-14 as in dharma 3 (saññā); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 334, "pali": "jivhāviññāṇadhātusamphassajā saññā", "translation": "cognition born of contact with element of taste-consciousness" }
+          ]
+        },
+        {
+          "no": "4d",
+          "name_pali": "cetanā",
+          "name_translation": null,
+          "ms_range": [[16, 17], [335, 335]],
+          "note": "MS 16-17 as in dharma 4 (cetanā); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 335, "pali": "jivhāviññāṇadhātusamphassajā cetanā", "translation": "volition born of contact with element of taste consciousness" }
+          ]
+        },
+        {
+          "no": "5d",
+          "name_pali": "citta",
+          "name_translation": null,
+          "ms_range": [[18, 26], [336, 336]],
+          "note": "MS 18-26 as in dharma 5 (citta), a subset excluding MS 27 (manoviññāṇadhātu, replaced here by jivhāviññāṇadhātu); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 336, "pali": "jivhāviññāṇadhātu", "translation": "element of taste-consciousness" }
+          ]
+        },
+        {
+          "no": "16d",
+          "name_pali": "manindriya",
+          "name_translation": null,
+          "ms_range": [[18, 26], [336, 336]],
+          "note": "as in dharma 5d (citta); MS names not repeated in source",
+          "ms": []
+        }
+      ]
+    },
+    {
+      "case_no": "161C",
+      "dharmas": [
+        {
+          "no": "2g",
+          "name_pali": "vedanā",
+          "name_translation": null,
+          "ms_range": [[337, 342]],
+          "ms": [
+            { "no": 337, "pali": "kāyaviññāṇadhātusamphassajaṃ kāyikaṃ sātaṃ", "translation": "bodily ease born of contact with element of body-consciousness" },
+            { "no": 338, "pali": "kāyikaṃ sukhaṃ", "translation": "bodily pleasant" },
+            { "no": 339, "pali": "kāyasamphassajaṃ sātaṃ (vedayitaṃ)", "translation": "ease (experienced as) born of contact with body" },
+            { "no": 340, "pali": "(kāyasamphassajaṃ) sukhaṃ vedayitaṃ", "translation": "the pleasant experienced (as born of contact with body)" },
+            { "no": 341, "pali": "kāyasamphassajā sātā (vedanā)", "translation": "(sensation of) ease born of contact with body" },
+            { "no": 342, "pali": "(kāyasamphassajā) sukhā vedanā", "translation": "sensation of pleasant (born of contact with body)" }
+          ]
+        },
+        {
+          "no": "3e",
+          "name_pali": "saññā",
+          "name_translation": null,
+          "ms_range": [[13, 14], [343, 343]],
+          "note": "MS 13-14 as in dharma 3 (saññā); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 343, "pali": "kāyaviññāṇadhātusamphassajā saññā", "translation": "cognition born of contact with element of body-consciousness" }
+          ]
+        },
+        {
+          "no": "4e",
+          "name_pali": "cetanā",
+          "name_translation": null,
+          "ms_range": [[16, 17], [344, 344]],
+          "note": "MS 16-17 as in dharma 4 (cetanā); MS names not repeated in source for that span. Source prints this MS 344 entry as 'kāyaviññāndhātusamphassajā cetanā', apparently missing an 'a' (kāyaviññāṇa-) relative to the consistent spelling used for the analogous entries elsewhere on this and surrounding pages — rendered here as 'kāyaviññāṇadhātusamphassajā cetanā'.",
+          "ms": [
+            { "no": 344, "pali": "kāyaviññāṇadhātusamphassajā cetanā", "translation": "volition born of contact with element of body-consciousness" }
+          ]
+        },
+        {
+          "no": "5e",
+          "name_pali": "citta",
+          "name_translation": null,
+          "ms_range": [[18, 26], [345, 345]],
+          "note": "MS 18-26 as in dharma 5 (citta), a subset excluding MS 27 (manoviññāṇadhātu, replaced here by kāyaviññāṇadhātu); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 345, "pali": "kāyaviññāṇadhātu", "translation": "element of body-consciousness" }
+          ]
+        },
+        {
+          "no": "9a",
+          "name_pali": "sukha",
+          "name_translation": null,
+          "ms_range": [[337, 342]],
+          "note": "as in dharma 2g (vedanā); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "16e",
+          "name_pali": "manindriya",
+          "name_translation": null,
+          "ms_range": [[18, 26], [345, 345]],
+          "note": "as in dharma 5e (citta); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 82,
+          "name_pali": "sukhindriya",
+          "name_translation": null,
+          "ms_range": [[337, 342]],
+          "note": "as in dharmas 2g (vedanā) and 9a (sukha); MS names not repeated in source",
+          "ms": []
+        }
+      ]
+    },
+    {
+      "case_no": "162C",
+      "dharmas": [
+        {
+          "no": "2h",
+          "name_pali": "vedanā",
+          "name_translation": null,
+          "ms_range": [[199, 200], [346, 346]],
+          "note": "MS 199-200 as in dharma 2a (vedanā, case 5A); MS name not repeated in source for that span",
+          "ms": [
+            { "no": 346, "pali": "manodhātusamphassajaṃ cetasikaṃ neva sātaṃ nāsātaṃ", "translation": "neither psychical ease nor unease born of contact with element of mind" }
+          ]
+        },
+        {
+          "no": "3f",
+          "name_pali": "saññā",
+          "name_translation": null,
+          "ms_range": [[13, 14], [347, 347]],
+          "note": "MS 13-14 as in dharma 3 (saññā); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 347, "pali": "manodhātusamphassajā saññā", "translation": "cognition born of contact with element of mind" }
+          ]
+        },
+        {
+          "no": "4f",
+          "name_pali": "cetanā",
+          "name_translation": null,
+          "ms_range": [[16, 17], [348, 348]],
+          "note": "MS 16-17 as in dharma 4 (cetanā); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 348, "pali": "manodhātusamphassajā cetanā", "translation": "volition born of contact with element of mind" }
+          ]
+        },
+        {
+          "no": "5f",
+          "name_pali": "citta",
+          "name_translation": null,
+          "ms_range": [[18, 26], [349, 349]],
+          "note": "MS 18-26 as in dharma 5 (citta), a subset excluding MS 27 (manoviññāṇadhātu, replaced here by manodhātu); MS names not repeated in source for that span",
+          "ms": [
+            { "no": 349, "pali": "manodhātu", "translation": "element of mind" }
+          ]
+        },
+        {
+          "no": "6c",
+          "name_pali": "vitakka",
+          "name_translation": null,
+          "ms_range": [[28, 33]],
+          "note": "as in dharma 6 (vitakka), a subset excluding MS 34 (sammāsaṅkappa); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": "16f",
+          "name_pali": "manindriya",
+          "name_translation": null,
+          "ms_range": [[18, 26], [349, 349]],
+          "note": "as in dharma 5f (citta); MS names not repeated in source",
+          "ms": []
+        }
+      ]
+    },
+    {
+      "case_no": "222C",
+      "dharmas": [
+        {
+          "no": "2i",
+          "name_pali": "vedanā",
+          "name_translation": null,
+          "ms_range": [[350, 355]],
+          "ms": [
+            { "no": 350, "pali": "kāyaviññāṇadhātusamphassajaṃ kāyikaṃ asātaṃ", "translation": "bodily unease born of contact with element of body-consciousness" },
+            { "no": 351, "pali": "kāyikaṃ dukkhaṃ", "translation": "bodily unpleasant" },
+            { "no": 352, "pali": "kāyasamphassajaṃ asātaṃ (vedayitaṃ)", "translation": "unease (experienced as) born of contact with body" },
+            { "no": 353, "pali": "(kāyasamphassajaṃ) dukkhaṃ (vedayitaṃ)", "translation": "the unpleasant experienced (as born of contact with body)" },
+            { "no": 354, "pali": "kāyasamphassajā asātā (vedanā)", "translation": "(sensation of) unease born of contact with body" },
+            { "no": 355, "pali": "(kāyasamphassajā) dukkhā vedanā", "translation": "sensation of unpleasant (born of contact with body)" }
+          ]
+        },
+        {
+          "no": "76a",
+          "name_pali": "dukkha",
+          "name_translation": null,
+          "ms_range": [[350, 355]],
+          "note": "as in dharma 2i (vedanā); MS names not repeated in source",
+          "ms": []
+        },
+        {
+          "no": 83,
+          "name_pali": "dukkhindriya",
+          "name_translation": "faculty of suffering",
+          "ms_range": [[350, 355]],
+          "note": "as in dharmas 2i (vedanā) and 76a (dukkha); MS names not repeated in source",
+          "ms": []
+        }
+      ]
+    }
+  ]
+}

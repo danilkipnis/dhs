@@ -1,0 +1,192 @@
+{
+  "table_name": "Table VII. Sets of Dharmas",
+  "page": 143,
+  "note": "Each entry Dn lists the full set of dharma (Δ) numbers belonging to one Case from Table VI, with a total count in parentheses, and a cross-reference 'No.<case_ref>' identifying that Case. dharmas_raw preserves the printed range/list notation verbatim (letter-suffixed dharma numbers, e.g. '6a', are kept as printed). case_ref is the case_ref stripped of the 'No' prefix (e.g. 'No119A' -> '119A'), matching the case_no values used in table.json. transcribed_in_table_vi is true when that case's full dharma/MS detail has already been captured in table.json, false when only this summary entry is available so far.",
+  "entries": [
+    {
+      "id": "D1",
+      "dharmas_raw": "1-56",
+      "count": 56,
+      "case_ref": "1A",
+      "transcribed_in_table_vi": true
+    },
+    {
+      "id": "D2",
+      "dharmas_raw": "1-14, 16-18, 20-27, 29-32, 34, 35, 37-51, 53, 55, 56",
+      "count": 49,
+      "case_ref": "3A",
+      "transcribed_in_table_vi": false
+    },
+    {
+      "id": "D3",
+      "dharmas_raw": "1, 2a, 3-7, 10-16, 18-58",
+      "count": 55,
+      "case_ref": "5A",
+      "transcribed_in_table_vi": true
+    },
+    {
+      "id": "D4",
+      "dharmas_raw": "1-7, 10-14, 16, 18, 20-27, 29-32, 34, 35, 37-51, 53, 55-58",
+      "count": 48,
+      "case_ref": "7A",
+      "transcribed_in_table_vi": false
+    },
+    {
+      "id": "D5",
+      "dharmas_raw": "1-5, 8-19, 21-56",
+      "count": 53,
+      "case_ref": "10A",
+      "transcribed_in_table_vi": false
+    },
+    {
+      "id": "D6",
+      "dharmas_raw": "1-5, 9-19, 21-56",
+      "count": 52,
+      "case_ref": "11A",
+      "transcribed_in_table_vi": false
+    },
+    {
+      "id": "D7",
+      "dharmas_raw": "1-5, 10-16, 18, 19, 21-58",
+      "count": 52,
+      "case_ref": "12A",
+      "transcribed_in_table_vi": false
+    },
+    {
+      "id": "D8",
+      "dharmas_raw": "1-5, 7-19, 21-56",
+      "count": 54,
+      "case_ref": "14A",
+      "transcribed_in_table_vi": false
+    },
+    {
+      "id": "D9",
+      "dharmas_raw": "1-5, 6a, 7, 8a, 9, 10a, 11, 12a-15a, 16-18, 19a-23a, 24, 25a-28a, 29-32, 33a, 34, 35, 36a, 37, 38, 39a, 40a, 41-50, 51a-56a, 59-62",
+      "count": 60,
+      "case_ref": "119A",
+      "transcribed_in_table_vi": true
+    },
+    {
+      "id": "D10",
+      "dharmas_raw": "as in D9, plus Δ63",
+      "based_on": "D9",
+      "additional_dharmas": [63],
+      "count": 61,
+      "case_ref": "144A",
+      "transcribed_in_table_vi": true
+    },
+    {
+      "id": "D11",
+      "dharmas_raw": "1-5, 6b, 7-9, 10b, 12b, 14, 16-18, 25b, 27b, 53b, 55b, 56b, 64-75",
+      "count": 32,
+      "case_ref": "145B",
+      "transcribed_in_table_vi": true
+    },
+    {
+      "id": "D12",
+      "dharmas_raw": "1-5, 6b, 7-9, 10b, 12b, 14b, 16-18, 25b, 27b, 53b, 55b, 56b, 65-72, 74, 75",
+      "count": 30,
+      "case_ref": "147B",
+      "transcribed_in_table_vi": false
+    },
+    {
+      "id": "D13",
+      "dharmas_raw": "1, 2a, 3-5, 6b, 7, 10b, 12b, 14b, 16, 18, 25b, 27b, 53b, 55b, 56b, 57, 58, 64-75",
+      "count": 31,
+      "case_ref": "149B",
+      "transcribed_in_table_vi": false
+    },
+    {
+      "id": "D14",
+      "dharmas_raw": "1, 2b, 3-5, 6b, 7, 10b, 12b, 14b, 16, 18, 25b, 27b, 53b, 55b, 56b, 65-69, 71, 74-79",
+      "count": 29,
+      "case_ref": "153B",
+      "transcribed_in_table_vi": true
+    },
+    {
+      "id": "D15",
+      "dharmas_raw": "1, 2a, 3-5, 6b, 7, 10c, 12b, 16, 18, 25b, 55b, 57, 58, 65, 66, 68, 69, 71, 74, 75, 80",
+      "count": 23,
+      "case_ref": "155B",
+      "transcribed_in_table_vi": true
+    },
+    {
+      "id": "D16",
+      "dharmas_raw": "1, 2a, 3-5, 6b, 7, 10c, 12b, 14b, 16, 18, 25b, 27b, 53b, 55b, 56b, 57, 58, 65-69, 71, 74, 75, 81",
+      "count": 28,
+      "case_ref": "156B",
+      "transcribed_in_table_vi": true
+    },
+    {
+      "id": "D17",
+      "dharmas_raw": "1, 2c, 3a, 4a, 5a, 10c, 16a, 18, 57, 58",
+      "count": 10,
+      "case_ref": "157C",
+      "transcribed_in_table_vi": true
+    },
+    {
+      "id": "D18",
+      "dharmas_raw": "1, 2d, 3b, 4b, 5b, 10c, 16b, 18, 57, 58",
+      "count": 10,
+      "case_ref": "158C",
+      "transcribed_in_table_vi": true
+    },
+    {
+      "id": "D19",
+      "dharmas_raw": "1, 2e, 3c, 4c, 5c, 10c, 16c, 18, 57, 58",
+      "count": 10,
+      "case_ref": "159C",
+      "transcribed_in_table_vi": true
+    },
+    {
+      "id": "D20",
+      "dharmas_raw": "1, 2f, 3d, 4d, 5d, 10c, 16d, 18, 57, 58",
+      "count": 10,
+      "case_ref": "160C",
+      "transcribed_in_table_vi": true
+    },
+    {
+      "id": "D21",
+      "dharmas_raw": "1, 2g, 3e, 4e, 5e, 9a, 10c, 16e, 18, 82",
+      "count": 10,
+      "case_ref": "161C",
+      "transcribed_in_table_vi": true
+    },
+    {
+      "id": "D22",
+      "dharmas_raw": "1, 2h, 3f, 4f, 5f, 6c, 7, 10c, 16f, 18, 57, 58",
+      "count": 12,
+      "case_ref": "162C",
+      "transcribed_in_table_vi": true
+    },
+    {
+      "id": "D23",
+      "dharmas_raw": "1-5, 6c, 7-9, 10c, 16-18",
+      "count": 13,
+      "case_ref": "163C",
+      "transcribed_in_table_vi": false
+    },
+    {
+      "id": "D24",
+      "dharmas_raw": "1, 2a, 3-5, 6c, 7, 10c, 16, 18, 57, 58",
+      "count": 12,
+      "case_ref": "164C",
+      "transcribed_in_table_vi": false,
+      "note": "Source prints a stray '(' before the initial dharma number (reading '[(1, 2a, ...' instead of the 'ΔΔ...' opening used by every other entry) — likely a printing/scanning artifact, not reproduced here."
+    },
+    {
+      "id": "D25",
+      "dharmas_raw": "1, 2i, 3-5, 10c, 16, 18, 76a, 83",
+      "count": 10,
+      "case_ref": "222C",
+      "transcribed_in_table_vi": true
+    },
+    {
+      "id": "D26",
+      "dharmas_raw": "1, 2i, 3-7, 10c, 16, 18, 57, 58",
+      "count": 12,
+      "case_ref": "224C",
+      "transcribed_in_table_vi": false
+    }
+  ]
+}
