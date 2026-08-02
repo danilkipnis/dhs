@@ -16,7 +16,7 @@
     { "term_id": 4, "term": "sotaviññāṇa", "translation": "ear-consciousness", "cases": ["158", "222"] },
     { "term_id": 5, "term": "ghānaviññāṇa", "translation": "smell-consciousness", "cases": ["159", "222a"] },
     { "term_id": 6, "term": "jivhāviññāṇa", "translation": "taste-consciousness", "cases": ["160", "222b"] },
-    { "term_id": 7, "term": "kāyaviññāṇa", "translation": "body-consciousness", "cases": ["161", "222c"] },
+    { "term_id": 7, "term": "kāyaviññāṇa", "translation": "body-consciousness", "cases": ["161", "222d"] },
     { "term_id": 8, "term": "manodhātu", "translation": "element of mind", "cases": ["162", "223", "225"] },
     { "term_id": 9, "term": "manoviññāṇadhātu", "translation": "element of mind-consciousness", "cases": ["163-165", "224", "226-228"] }
   ]
