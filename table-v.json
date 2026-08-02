@@ -32,7 +32,7 @@
     {"case_id": "45e", "nomenclature_id": 2, "sphere_id": 2, "content_ids": ["1", "1a", "1b", "1c", "1d", "0(1)"], "trancic_id": null, "object_ids": "[7]", "mental_ids": []},
     {"case_id": "45f", "nomenclature_id": 2, "sphere_id": 2, "content_ids": ["1", "1a", "1b", "1c", "1d", "0(1)"], "trancic_id": null, "object_ids": "[8]", "mental_ids": []},
     {"case_id": 46, "nomenclature_id": 2, "sphere_id": 2, "content_ids": ["5", "5a", "5b", "1"], "trancic_id": null, "object_ids": "[1]", "mental_ids": []},
-    {"case_id": 65, "nomenclature_id": 2, "sphere_id": 2, "content_ids": ["5", "5c", "5b", "5a", "1"], "trancic_id": null, "object_ids": "[1]", "mental_ids": []},
+    {"case_id": 65, "nomenclature_id": 2, "sphere_id": 2, "content_ids": ["5", "5a", "5c", "5b", "1"], "trancic_id": null, "object_ids": "[1]", "mental_ids": []},
     {"case_id": 67, "nomenclature_id": 2, "sphere_id": 2, "content_ids": ["5", "5d", "5b", "1"], "trancic_id": null, "object_ids": "[1]", "mental_ids": []},
     {"case_id": 88, "nomenclature_id": 2, "sphere_id": 2, "content_ids": ["5", "5e", "5b", "1"], "trancic_id": null, "object_ids": "[1]", "mental_ids": []},
     {"case_id": 89, "nomenclature_id": 2, "sphere_id": 2, "content_ids": ["5", "5f", "5b", "1"], "trancic_id": null, "object_ids": "[1]", "mental_ids": []},
