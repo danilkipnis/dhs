@@ -173,6 +173,7 @@
   .legend .item{ display:flex; align-items:center; gap:.5rem; }
   .legend .swatch{ width:.68rem; height:.68rem; border-radius:50%; display:inline-block; flex:0 0 auto; }
   .legend .swatch.sq{ border-radius:2px; }
+  .legend .count{ color:var(--text-muted); margin-left:.15rem; }
   .stage.grabbing{ cursor:grabbing; }
   svg#canvas{ position:absolute; top:0; left:0; width:100%; height:100%; }
   .node-case circle{ fill:var(--case); }
@@ -199,6 +200,7 @@
     pointer-events:none;
     transition:opacity .15s;
   }
+  .label.ms-no{ font-size:6px; }
   .edge{ stroke:var(--text-muted); fill:none; transition:opacity .15s, stroke .15s, stroke-width .15s; }
   .edge.ms-dharma{ stroke-width:.6px; opacity:.16; }
   .edge.dharma-case{ stroke-width:.8px; opacity:.28; }
@@ -234,13 +236,6 @@
   }
   #tooltip b{ color:var(--text-primary); }
   #tooltip .muted{ color:var(--text-muted); }
-  #statline{
-    position:absolute; bottom:.6rem; left:.8rem;
-    font-size:.7rem; color:var(--text-muted);
-    background:var(--surface-1); opacity:.9;
-    padding:.15rem .5rem; border-radius:4px;
-    pointer-events:none;
-  }
   #zoomctrl{
     position:absolute; top:.8rem; left:.8rem;
     display:flex; gap:.3rem;
@@ -258,7 +253,6 @@
     <svg id="canvas" xmlns="http://www.w3.org/2000/svg">
       <g id="viewport"></g>
     </svg>
-    <div id="statline"></div>
     <div id="zoomctrl">
       <button id="zoomIn">+</button>
       <button id="zoomOut">&minus;</button>
@@ -275,18 +269,18 @@
       <button id="resetBtn">Reset view</button>
     </div>
     <div class="legend">
-      <span class="item"><span class="swatch" style="background:var(--ms)"></span>Mental state</span>
-      <span class="item"><span class="swatch" style="background:var(--dharma)"></span>Dharma &Delta;</span>
-      <span class="item"><span class="swatch" style="background:var(--case)"></span>Case (table&#8209;v)</span>
-      <span class="item"><span class="swatch sq" style="background:var(--case-stub)"></span>Case not in table&#8209;v</span>
-      <span class="item"><span class="swatch" style="background:var(--superset)"></span>Table&#8209;vii superset (D<i>n</i>)</span>
-      <span class="item"><span class="swatch" style="background:var(--superset-untr)"></span>D<i>n</i>, case untranscribed</span>
-      <span class="item"><span class="swatch" style="background:var(--nomenclature)"></span>Nomenclature (table&#8209;iii)</span>
-      <span class="item"><span class="swatch" style="background:var(--sphere)"></span>Sphere of thought (table&#8209;iv)</span>
-      <span class="item"><span class="swatch" style="background:var(--avacara)"></span>Avacara</span>
-      <span class="item"><span class="swatch" style="background:var(--qualtier)"></span>Quality (dharma/thought/action)</span>
-      <span class="item"><span class="swatch" style="background:var(--content)"></span>Variants of content (table&#8209;v&#8209;c)</span>
-      <span class="item"><span class="swatch" style="background:var(--caseattr)"></span>Trancic / mental / object variables</span>
+      <span class="item"><span class="swatch" style="background:var(--ms)"></span>Mental state<span class="count" id="count-ms"></span></span>
+      <span class="item"><span class="swatch" style="background:var(--dharma)"></span>Dharma &Delta;<span class="count" id="count-dharma"></span></span>
+      <span class="item"><span class="swatch" style="background:var(--case)"></span>Case (table&#8209;v)<span class="count" id="count-case"></span></span>
+      <span class="item"><span class="swatch sq" style="background:var(--case-stub)"></span>Case not in table&#8209;v<span class="count" id="count-case-stub"></span></span>
+      <span class="item"><span class="swatch" style="background:var(--superset)"></span>Table&#8209;vii superset (D<i>n</i>)<span class="count" id="count-superset"></span></span>
+      <span class="item"><span class="swatch" style="background:var(--superset-untr)"></span>D<i>n</i>, case untranscribed<span class="count" id="count-superset-untr"></span></span>
+      <span class="item"><span class="swatch" style="background:var(--nomenclature)"></span>Nomenclature (table&#8209;iii)<span class="count" id="count-nomenclature"></span></span>
+      <span class="item"><span class="swatch" style="background:var(--sphere)"></span>Sphere of thought (table&#8209;iv)<span class="count" id="count-sphere"></span></span>
+      <span class="item"><span class="swatch" style="background:var(--avacara)"></span>Avacara<span class="count" id="count-avacara"></span></span>
+      <span class="item"><span class="swatch" style="background:var(--qualtier)"></span>Quality (dharma/thought/action)<span class="count" id="count-qualtier"></span></span>
+      <span class="item"><span class="swatch" style="background:var(--content)"></span>Variants of content (table&#8209;v&#8209;c)<span class="count" id="count-content"></span></span>
+      <span class="item"><span class="swatch" style="background:var(--caseattr)"></span>Trancic / mental / object variables<span class="count" id="count-caseattr"></span></span>
     </div>
   </div>
 </div>
@@ -300,7 +294,6 @@
   const viewport = document.getElementById('viewport');
   const stage = document.getElementById('stage');
   const tooltip = document.getElementById('tooltip');
-  const statline = document.getElementById('statline');
   const NS = 'http://www.w3.org/2000/svg';
 
   // ---------- sort helpers ----------
@@ -734,6 +727,7 @@
     if(!l) continue;
     const g = el('g', {class:'node node-ms', 'data-type':'ms', 'data-id':m.id, transform:`translate(${l.x},${Y_MS})`}, nodeLayer);
     el('circle', {r: 2.1}, g);
+    el('text', {class:'label ms-no', y:-6, 'text-anchor':'middle'}, g).textContent = m.no;
     nodeEls.ms.set(m.id, g);
   }
 
@@ -1017,7 +1011,7 @@
     describe(`${qualLabels[typeKey]} ${letter} (${g?g.gloss:''}) — ${spheres.size} sphere(s), ${cases.size} case(s).`);
   }
 
-  function describe(text){ statline.textContent = text; }
+  function describe(){ /* bottom status line removed */ }
 
   nodeLayer.addEventListener('click', (ev)=>{
     const g = ev.target.closest('.node');
@@ -1262,6 +1256,24 @@
     describe(`No match for "${q}".`);
   });
 
-  describe(`${data.cases.length} cases (table-v, ${[...caseById.values()].filter(c=>!c.stub).length} transcribed) · ${data.dharmas.length} dharmas · ${data.ms.length} mental states · ${data.supersets.length} table-vii supersets · ${data.nomenclature.length} nomenclature terms · ${data.spheres.length} spheres · ${data.avacaras.length} avacara · ${data.content.length} content variants · ${data.trancic.length} trancic variables · ${data.mental.length} mental variables · ${data.sense_objects.length + data.dhyanic_objects.length} objects. Click any node to trace its connections.`);
+  // ---------- legend entity counts ----------
+  const legendCounts = {
+    'count-ms': data.ms.length,
+    'count-dharma': data.dharmas.length,
+    'count-case': data.cases.filter(c=>!c.stub).length,
+    'count-case-stub': data.cases.filter(c=>c.stub).length,
+    'count-superset': data.supersets.filter(s=>s.transcribed_in_table_vi).length,
+    'count-superset-untr': data.supersets.filter(s=>!s.transcribed_in_table_vi).length,
+    'count-nomenclature': data.nomenclature.length,
+    'count-sphere': data.spheres.length,
+    'count-avacara': data.avacaras.length,
+    'count-qualtier': data.quality_dharma.length + data.quality_thought.length + data.quality_action.length,
+    'count-content': data.content.length,
+    'count-caseattr': data.trancic.length + data.mental.length + data.sense_objects.length + data.dhyanic_objects.length,
+  };
+  for(const id in legendCounts){
+    const el2 = document.getElementById(id);
+    if(el2) el2.textContent = ` (${legendCounts[id]})`;
+  }
 })();
 </script>
