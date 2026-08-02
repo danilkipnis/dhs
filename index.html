@@ -813,6 +813,16 @@
   };
 
   function curve(x1,y1,x2,y2){
+    if(Math.abs(y1-y2) < 8){
+      // same-row edge (e.g. avacara -> sphere): the usual vertical bezier
+      // degenerates into a near-flat line here, and with many such edges
+      // sharing a row they overlap into what looks like one continuous
+      // horizontal line. Bow it into a visible arc instead.
+      const midX = (x1+x2)/2;
+      const dip = Math.max(30, Math.abs(x2-x1) * 0.08);
+      const midY = y1 + dip;
+      return `M${x1},${y1} Q${midX},${midY} ${x2},${y2}`;
+    }
     const midY = (y1+y2)/2;
     return `M${x1},${y1} C${x1},${midY} ${x2},${midY} ${x2},${y2}`;
   }
