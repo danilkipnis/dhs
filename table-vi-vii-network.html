@@ -179,15 +179,11 @@
   .legend .count{ color:var(--text-muted); margin-left:.15rem; }
 
   #erBtn{
-    width:100%;
-    background:var(--surface-1);
-    border:1px solid var(--rule);
+    font-weight:650;
     color:var(--text-primary);
-    border-radius:5px;
-    padding:.5rem .6rem;
-    font-size:.78rem;
+    text-decoration:underline dotted;
+    text-underline-offset:2px;
     cursor:default;
-    margin-bottom:1.1rem;
   }
   #erPopup{
     position:fixed;
@@ -327,13 +323,12 @@
   <button id="sidebarToggle" title="Show/hide legend &amp; controls">&#9776;</button>
   <div id="sidebar">
     <h1>Dhs. Tables III&ndash;VII &mdash; mental&#8209;state network</h1>
-    <p class="desc">Modeled after the tables in Essay 5 of Alexander Piatigorsky's <em>The Buddhist Philosophy of Thought: Essays in Interpretation</em> (<a href="https://archive.org/details/buddhistphilosop0000piat" target="_blank" rel="noopener" style="color:var(--text-secondary)">archive.org</a>).</p>
-    <p class="desc">Bottom&#8211;up: mental states (MS, table&#8209;vi) &rarr; dharmas (&Delta;, many MS &rarr; one dharma) &rarr; cases (many dharmas &rarr; one case, table&#8209;v). Above cases: nomenclature (table&#8209;iii), sphere of thought (table&#8209;iv), variants of content / trancic / mental / object variables (table&#8209;v's dimension tables), each spanning many cases &rarr; avacara &amp; the three quality tiers (dharma/thought/action), each spanning many spheres. The green column at right holds table&#8209;vii's per&#8209;case dharma supersets. Case hover text also cites its <em>Dhs.</em> paragraph &amp; page (table&#8209;viii) where transcribed.</p>
+    <p class="desc">Modeled after the tables in Essay 5 of Alexander Piatigorsky's <em>The Buddhist Philosophy of Thought: Essays in Interpretation</em> (<a href="https://archive.org/details/buddhistphilosop0000piat" target="_blank" rel="noopener" style="color:var(--text-secondary)">archive.org</a>). The primary source, the <em>Dhammasangani</em> (<em>Dhs.</em>) itself, is on archive.org too (<a href="https://archive.org/details/in.ernet.dli.2015.314228" target="_blank" rel="noopener" style="color:var(--text-secondary)">archive.org</a>).</p>
+    <p class="desc">Bottom&#8211;up: mental states (MS, table&#8209;vi) &rarr; dharmas (&Delta;, many MS &rarr; one dharma) &rarr; cases (many dharmas &rarr; one case, table&#8209;v). Above cases: nomenclature (table&#8209;iii), sphere of thought (table&#8209;iv), variants of content / trancic / mental / object variables (table&#8209;v's dimension tables), each spanning many cases &rarr; avacara &amp; the three quality tiers (dharma/thought/action), each spanning many spheres. The green column at right holds table&#8209;vii's per&#8209;case dharma supersets. Case hover text also cites its <em>Dhs.</em> paragraph &amp; page (table&#8209;viii) where transcribed. Hover <span id="erBtn">ER</span> for the schema&#8209;level entity&ndash;relationship diagram.</p>
     <div class="toolbar">
       <input id="search" type="text" placeholder="Find case / dharma / D-set&hellip;">
       <button id="resetBtn">Reset view</button>
     </div>
-    <button id="erBtn">ER</button>
     <div class="legend">
       <span class="item"><span class="swatch" style="background:var(--ms)"></span>Mental state<span class="count" id="count-ms"></span></span>
       <span class="item"><span class="swatch" style="background:var(--dharma)"></span>Dharma &Delta;<span class="count" id="count-dharma"></span></span>
