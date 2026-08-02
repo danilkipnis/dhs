@@ -1499,7 +1499,7 @@
     if(caseById.has(q)){
       selectCase(q);
       const l = caseLayout.get(q);
-      panTo(l.x, Y_DHARMA, Math.max(600, l.width*3));
+      panTo(l.x, Y_CASE, Math.max(600, l.width*3));
       return;
     }
     const nomMatch = /^t(\d+)$/i.exec(q);
