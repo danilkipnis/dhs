@@ -186,20 +186,6 @@
   .edge.q-sphere{ stroke-width:1px; opacity:.25; stroke:var(--qualtier); stroke-dasharray:2,3; }
   .edge.content-case{ stroke-width:.6px; opacity:.08; stroke:var(--content); }
   .edge.caseattr-case{ stroke-width:.6px; opacity:.08; stroke:var(--caseattr); }
-
-  /* row baselines: keep a row legible as one string of entities even when
-     zoomed out far enough that the dots themselves shrink past visibility */
-  .lane{ stroke-linecap:round; }
-  .lane-case{ stroke:var(--case); stroke-opacity:.5; stroke-width:1.4px; }
-  .lane-dharma{ stroke:var(--dharma); stroke-opacity:.45; stroke-width:1.2px; }
-  .lane-ms{ stroke:var(--ms); stroke-opacity:.4; stroke-width:1px; }
-  .lane-superset{ stroke:var(--superset); stroke-opacity:.45; stroke-width:1.4px; }
-  .lane-nomenclature{ stroke:var(--nomenclature); stroke-opacity:.55; stroke-width:1.6px; }
-  .lane-sphere{ stroke:var(--sphere); stroke-opacity:.55; stroke-width:1.6px; }
-  .lane-avacara{ stroke:var(--avacara); stroke-opacity:.55; stroke-width:1.6px; }
-  .lane-qualtier{ stroke:var(--qualtier); stroke-opacity:.5; stroke-width:1.6px; }
-  .lane-content{ stroke:var(--content); stroke-opacity:.5; stroke-width:1.4px; }
-  .lane-caseattr{ stroke:var(--caseattr); stroke-opacity:.5; stroke-width:1.6px; }
   .edge.hl{ stroke:var(--highlight) !important; opacity:.9 !important; stroke-width:1.6px !important; }
   .row-label{
     font-size:10.5px;
@@ -550,43 +536,6 @@
     if(parent) parent.appendChild(e);
     return e;
   }
-
-  // ---------- lane baselines ----------
-  // A faint line through every node in a row, so the row still reads as one
-  // string of separate entities when zoomed out far enough that the dots
-  // themselves shrink to nothing (like the spine in an ER-diagram lane).
-  const laneLayer = el('g', {id:'lanes'}, viewport);
-  function laneRangeOf(xs){
-    if(!xs.length) return null;
-    return [Math.min(...xs), Math.max(...xs)];
-  }
-  function drawLane(xValues, y, cssClass){
-    const range = laneRangeOf(xValues);
-    if(!range) return;
-    const pad = 14;
-    el('line', {class:'lane '+cssClass, x1:range[0]-pad, y1:y, x2:range[1]+pad, y2:y}, laneLayer);
-  }
-  function drawVLane(yValues, x, cssClass){
-    const range = laneRangeOf(yValues);
-    if(!range) return;
-    const pad = 14;
-    el('line', {class:'lane '+cssClass, x1:x, y1:range[0]-pad, x2:x, y2:range[1]+pad}, laneLayer);
-  }
-  drawLane([...caseLayout.values()].map(l=>l.x), Y_CASE, 'lane-case');
-  drawLane([...dharmaLayout.values()].map(l=>l.x), Y_DHARMA, 'lane-dharma');
-  drawLane([...msLayout.values()].map(l=>l.x), Y_MS, 'lane-ms');
-  drawVLane([...supersetLayout.values()].map(l=>l.y), X_SUPER, 'lane-superset');
-  drawLane([NOM_X0, NOM_X1], Y_ROW_A, 'lane-nomenclature');
-  drawLane([SPHERE_X0, SPHERE_X1], Y_ROW_A, 'lane-sphere');
-  drawLane([AVACARA_X0, AVACARA_X1], Y_ROW_A, 'lane-avacara');
-  drawLane([CONTENT_X0, CONTENT_X1], Y_ROW_B, 'lane-content');
-  drawLane([TRANCIC_X0, TRANCIC_X1], Y_ROW_B, 'lane-caseattr');
-  drawLane([SENSEOBJ_X0, SENSEOBJ_X1], Y_ROW_B, 'lane-caseattr');
-  drawLane([DHYANICOBJ_X0, DHYANICOBJ_X1], Y_ROW_B, 'lane-caseattr');
-  drawLane([MENTAL_X0, MENTAL_X1], Y_ROW_B, 'lane-caseattr');
-  drawLane([QD_X0, QD_X1], Y_ROW_B, 'lane-qualtier');
-  drawLane([QT_X0, QT_X1], Y_ROW_B, 'lane-qualtier');
-  drawLane([QA_X0, QA_X1], Y_ROW_B, 'lane-qualtier');
 
   const edgeLayer = el('g', {id:'edges'}, viewport);
   const nodeLayer = el('g', {id:'nodes'}, viewport);
