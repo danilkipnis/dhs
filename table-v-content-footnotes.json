@@ -1,0 +1,12 @@
+{
+  "table": "V-C-FN",
+  "title": "Variants of Content — footnote markers",
+  "note": "n:m join between Table V's cases and table-v-content.json's ids: pp. 98-99 print a trailing '*' (a footnote-reference marker; the footnote text itself isn't present in Table V) after a closing/attainment clause on some cases' own occurrence of that clause but not others' -- e.g. case 10's use of '0(2)' is unmarked, but case 14's reuse of the very same id is starred. Only occurrences that carry the asterisk are listed here; any (case_id, content_id) pair absent from this list prints unstarred.",
+  "source_pages": "98-99",
+  "links": [
+    { "case_id": "14", "content_id": "0(2)", "asterisk": true },
+    { "case_id": "15", "content_id": "0(3)", "asterisk": true },
+    { "case_id": "16", "content_id": "0(4)", "asterisk": true },
+    { "case_id": "17", "content_id": "0(5)", "asterisk": true }
+  ]
+}
