@@ -353,8 +353,16 @@
   // all sharing one horizontal line.
   // row B: content / trancic / objects / mental on the left, the three
   // quality tiers grouped at the far right — also one shared line.
-  const Y_ROW_A = 20, Y_ROW_B = 90;
-  const Y_CASE = 170, Y_DHARMA = 450, Y_MS = 770;
+  // All six layers (row A, row B, case, dharma, table-vii, ms) sit exactly
+  // LAYER_GAP apart — the same spacing the original design used between
+  // ms and dharma.
+  const LAYER_GAP = 320;
+  const Y_ROW_A = 20;
+  const Y_ROW_B = Y_ROW_A + LAYER_GAP;
+  const Y_CASE = Y_ROW_B + LAYER_GAP;
+  const Y_DHARMA = Y_CASE + LAYER_GAP;
+  const Y_SUPERSET = Y_DHARMA + LAYER_GAP;
+  const Y_MS = Y_SUPERSET + LAYER_GAP;
 
   let cursor = 0;
   const dharmaLayout = new Map();
@@ -391,16 +399,15 @@
   }
   const totalWidth = cursor;
 
-  // superset column: to the right, y-band between Y_DHARMA and Y_MS
-  const X_SUPER = totalWidth + 160;
+  // table-vii supersets: their own horizontal row, between dharma and ms
   const supersetLayout = new Map();
   const supersetsSorted = data.supersets.slice().sort((a,b)=>{
     const ka = sortKey(a.case_num), kb = sortKey(b.case_num);
     return cmpKey(ka,kb);
   });
   supersetsSorted.forEach((s,i)=>{
-    const y = Y_DHARMA + (Y_MS - Y_DHARMA) * ((i+0.5)/supersetsSorted.length);
-    supersetLayout.set(s.label, {x: X_SUPER, y});
+    const x = totalWidth * (0.02 + 0.96 * (i+0.5)/supersetsSorted.length);
+    supersetLayout.set(s.label, {x, y: Y_SUPERSET});
   });
 
   // small upper tiers: laid out as horizontal segments of shared rows
@@ -578,8 +585,8 @@
   colLabel((QD_X0+QA_X1)/2, Y_ROW_B, 'QUALITY: DHARMA / THOUGHT / ACTION');
   el('text', {class:'row-label', x:-10, y:Y_CASE+4, 'text-anchor':'end'}, viewport).textContent = 'CASES (V)';
   el('text', {class:'row-label', x:-10, y:Y_DHARMA+4, 'text-anchor':'end'}, viewport).textContent = 'DHARMAS Δ (VI)';
+  el('text', {class:'row-label', x:-10, y:Y_SUPERSET+4, 'text-anchor':'end'}, viewport).textContent = 'TABLE-VII SUPERSETS';
   el('text', {class:'row-label', x:-10, y:Y_MS+4, 'text-anchor':'end'}, viewport).textContent = 'MENTAL STATES (VI)';
-  el('text', {class:'row-label', x:X_SUPER, y:Y_DHARMA-24, 'text-anchor':'middle'}, viewport).textContent = 'TABLE-VII SUPERSETS';
 
   // ---------- edges ----------
   const edgeEls = {
@@ -733,7 +740,7 @@
     const l = supersetLayout.get(s.label);
     const g = el('g', {class:'node node-superset'+(s.transcribed_in_table_vi?'':' untranscribed'), 'data-type':'superset', 'data-id':s.label, transform:`translate(${l.x},${l.y})`}, nodeLayer);
     el('circle', {r: 4.4}, g);
-    const t = el('text', {class:'label', x:8, y:3, 'text-anchor':'start'}, g);
+    const t = el('text', {class:'label', y:-8, 'text-anchor':'middle'}, g);
     t.textContent = s.label + ' (' + s.case_ref + ')';
     nodeEls.superset.set(s.label, g);
   }
@@ -765,7 +772,7 @@
   makeRowNodes(data.dhyanic_objects, 'object_id', dhyanicObjX, 'D:', 'node-caseattr', 'dhyanicObj', 'dhyanicobj', 3.6);
 
   // ---------- viewBox / pan / zoom ----------
-  const fullBox = { x: -170, y: 0, w: X_SUPER + 200, h: Y_MS + 60 };
+  const fullBox = { x: -170, y: 0, w: totalWidth + 200, h: Y_MS + 60 };
   let vb = { ...fullBox };
   function applyViewBox(){
     svg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
