@@ -340,10 +340,17 @@
 
   // ---------- layout ----------
   const W_MS = 10, W_MIN_DHARMA = 26, GAP_DHARMA = 6, W_MIN_CASE = 22, GAP_CASE = 10;
-  const Y_AVACARA = 20, Y_QUALDHARMA = 46, Y_QUALTHOUGHT = 72, Y_QUALACTION = 98;
-  const Y_SPHERE = 140, Y_NOM = 175;
-  const Y_CONTENT = 210, Y_TRANCIC = 240, Y_MENTAL = 270, Y_SENSEOBJ = 300, Y_DHYANICOBJ = 330;
-  const Y_CASE = 400, Y_DHARMA = 680, Y_MS = 1000;
+  // top block: nomenclature & sphere as tall left-hand columns; avacara (top)
+  // and the three quality tiers (below it) sharing one column at the far
+  // right — mirrors "avacara top-right, quality below it, sphere to their
+  // left, nomenclature left of that"
+  const Y_TOP0 = 20, Y_TOP1 = 280;
+  const Y_AVACARA0 = 20, Y_AVACARA1 = 120;
+  const Y_QUAL0 = 150, Y_QUAL1 = 280;
+  // second block: the four table-v dimension tables, all at the same level,
+  // each its own vertical column
+  const Y_MID0 = 320, Y_MID1 = 620;
+  const Y_CASE = 680, Y_DHARMA = 980, Y_MS = 1320;
 
   let cursor = 0;
   const dharmaLayout = new Map();
@@ -392,24 +399,49 @@
     supersetLayout.set(s.label, {x: X_SUPER, y});
   });
 
-  // small upper tiers: evenly spread across the full width, independent of
-  // case x-alignment (curved edges carry the real connectivity on click)
-  function evenSpread(list, idKey){
+  // small upper tiers: laid out as vertical columns (independent of case
+  // x-alignment — curved edges carry the real connectivity on click)
+  const X_NOM = totalWidth * 0.05, X_SPHERE = totalWidth * 0.16, X_RIGHT = totalWidth * 0.97;
+  const X_CONTENT = totalWidth * 0.25, X_TRANCIC = totalWidth * 0.42, X_MENTAL = totalWidth * 0.58;
+  const X_SENSEOBJ = totalWidth * 0.74, X_DHYANICOBJ = totalWidth * 0.88;
+
+  function columnLayout(list, idKey, x, yTop, yBottom){
     const m = new Map();
-    list.forEach((item,i)=> m.set(item[idKey], totalWidth*(i+0.5)/list.length));
+    const n = list.length;
+    list.forEach((item,i)=> m.set(item[idKey], {x, y: yTop + (yBottom-yTop) * (n<=1?0.5:(i+0.5)/n)}));
     return m;
   }
-  const nomenclatureX = evenSpread(data.nomenclature, 'term_id');
-  const sphereX = evenSpread(data.spheres, 'sphere_id');
-  const avacaraX = evenSpread(data.avacaras, 'key');
-  const qualDharmaX = evenSpread(data.quality_dharma, 'letter');
-  const qualThoughtX = evenSpread(data.quality_thought, 'letter');
-  const qualActionX = evenSpread(data.quality_action, 'letter');
-  const contentX = evenSpread(data.content, 'content_id');
-  const trancicX = evenSpread(data.trancic, 'trancic_id');
-  const mentalX = evenSpread(data.mental, 'mental_id');
-  const senseObjX = evenSpread(data.sense_objects, 'object_id');
-  const dhyanicObjX = evenSpread(data.dhyanic_objects, 'object_id');
+  const nomenclatureX = columnLayout(data.nomenclature, 'term_id', X_NOM, Y_TOP0, Y_TOP1);
+  const sphereX = columnLayout(data.spheres, 'sphere_id', X_SPHERE, Y_TOP0, Y_TOP1);
+  const avacaraX = columnLayout(data.avacaras, 'key', X_RIGHT, Y_AVACARA0, Y_AVACARA1);
+
+  // avacara's three quality tiers share the same right-hand column, below
+  // it, stacked as three back-to-back groups with a small gap between them
+  function qualityColumnLayout(){
+    const groups = [
+      { list: data.quality_dharma, map: new Map() },
+      { list: data.quality_thought, map: new Map() },
+      { list: data.quality_action, map: new Map() },
+    ];
+    const totalSlots = groups.reduce((s,g)=>s+g.list.length,0) + (groups.length-1);
+    let idx = 0;
+    for(const g of groups){
+      for(const item of g.list){
+        const y = Y_QUAL0 + (Y_QUAL1-Y_QUAL0) * ((idx+0.5)/totalSlots);
+        g.map.set(item.letter, {x:X_RIGHT, y});
+        idx++;
+      }
+      idx++; // gap between groups
+    }
+    return groups.map(g=>g.map);
+  }
+  const [qualDharmaX, qualThoughtX, qualActionX] = qualityColumnLayout();
+
+  const contentX = columnLayout(data.content, 'content_id', X_CONTENT, Y_MID0, Y_MID1);
+  const trancicX = columnLayout(data.trancic, 'trancic_id', X_TRANCIC, Y_MID0, Y_MID1);
+  const mentalX = columnLayout(data.mental, 'mental_id', X_MENTAL, Y_MID0, Y_MID1);
+  const senseObjX = columnLayout(data.sense_objects, 'object_id', X_SENSEOBJ, Y_MID0, Y_MID1);
+  const dhyanicObjX = columnLayout(data.dhyanic_objects, 'object_id', X_DHYANICOBJ, Y_MID0, Y_MID1);
 
   // ---------- build adjacency for highlighting ----------
   const dharmaToCase = new Map(data.dharma_case_edges.map(e=>[e.from.replace('dh-',''), e.to.replace('case-','')]));
@@ -554,33 +586,32 @@
   drawLane([...dharmaLayout.values()].map(l=>l.x), Y_DHARMA, 'lane-dharma');
   drawLane([...msLayout.values()].map(l=>l.x), Y_MS, 'lane-ms');
   drawVLane([...supersetLayout.values()].map(l=>l.y), X_SUPER, 'lane-superset');
-  drawLane([...nomenclatureX.values()], Y_NOM, 'lane-nomenclature');
-  drawLane([...sphereX.values()], Y_SPHERE, 'lane-sphere');
-  drawLane([...avacaraX.values()], Y_AVACARA, 'lane-avacara');
-  drawLane([...qualDharmaX.values()], Y_QUALDHARMA, 'lane-qualtier');
-  drawLane([...qualThoughtX.values()], Y_QUALTHOUGHT, 'lane-qualtier');
-  drawLane([...qualActionX.values()], Y_QUALACTION, 'lane-qualtier');
-  drawLane([...contentX.values()], Y_CONTENT, 'lane-content');
-  drawLane([...trancicX.values()], Y_TRANCIC, 'lane-caseattr');
-  drawLane([...mentalX.values()], Y_MENTAL, 'lane-caseattr');
-  drawLane([...senseObjX.values()], Y_SENSEOBJ, 'lane-caseattr');
-  drawLane([...dhyanicObjX.values()], Y_DHYANICOBJ, 'lane-caseattr');
+  drawVLane([Y_TOP0, Y_TOP1], X_NOM, 'lane-nomenclature');
+  drawVLane([Y_TOP0, Y_TOP1], X_SPHERE, 'lane-sphere');
+  drawVLane([Y_AVACARA0, Y_AVACARA1], X_RIGHT, 'lane-avacara');
+  drawVLane([Y_QUAL0, Y_QUAL1], X_RIGHT, 'lane-qualtier');
+  drawVLane([Y_MID0, Y_MID1], X_CONTENT, 'lane-content');
+  drawVLane([Y_MID0, Y_MID1], X_TRANCIC, 'lane-caseattr');
+  drawVLane([Y_MID0, Y_MID1], X_MENTAL, 'lane-caseattr');
+  drawVLane([Y_MID0, Y_MID1], X_SENSEOBJ, 'lane-caseattr');
+  drawVLane([Y_MID0, Y_MID1], X_DHYANICOBJ, 'lane-caseattr');
 
   const edgeLayer = el('g', {id:'edges'}, viewport);
   const nodeLayer = el('g', {id:'nodes'}, viewport);
 
   // row labels
-  el('text', {class:'row-label', x:-10, y:Y_AVACARA+4, 'text-anchor':'end'}, viewport).textContent = 'AVACARA';
-  el('text', {class:'row-label', x:-10, y:Y_QUALDHARMA+4, 'text-anchor':'end'}, viewport).textContent = 'QUALITY OF DHARMA';
-  el('text', {class:'row-label', x:-10, y:Y_QUALTHOUGHT+4, 'text-anchor':'end'}, viewport).textContent = 'QUALITY OF THOUGHT';
-  el('text', {class:'row-label', x:-10, y:Y_QUALACTION+4, 'text-anchor':'end'}, viewport).textContent = 'QUALITY OF ACTION';
-  el('text', {class:'row-label', x:-10, y:Y_SPHERE+4, 'text-anchor':'end'}, viewport).textContent = 'SPHERE OF THOUGHT (IV)';
-  el('text', {class:'row-label', x:-10, y:Y_NOM+4, 'text-anchor':'end'}, viewport).textContent = 'NOMENCLATURE (III)';
-  el('text', {class:'row-label', x:-10, y:Y_CONTENT+4, 'text-anchor':'end'}, viewport).textContent = 'VARIANTS OF CONTENT (V-C)';
-  el('text', {class:'row-label', x:-10, y:Y_TRANCIC+4, 'text-anchor':'end'}, viewport).textContent = 'TRANCIC VARIABLES (V-TV)';
-  el('text', {class:'row-label', x:-10, y:Y_MENTAL+4, 'text-anchor':'end'}, viewport).textContent = 'MENTAL VARIABLES (V-MV)';
-  el('text', {class:'row-label', x:-10, y:Y_SENSEOBJ+4, 'text-anchor':'end'}, viewport).textContent = 'SENSE OBJECTS (V-O)';
-  el('text', {class:'row-label', x:-10, y:Y_DHYANICOBJ+4, 'text-anchor':'end'}, viewport).textContent = 'DHYANIC OBJECTS (V-O)';
+  function colLabel(x, y, text){
+    el('text', {class:'row-label col-label', x, y:y-10, 'text-anchor':'middle'}, viewport).textContent = text;
+  }
+  colLabel(X_NOM, Y_TOP0, 'NOMENCLATURE (III)');
+  colLabel(X_SPHERE, Y_TOP0, 'SPHERE OF THOUGHT (IV)');
+  colLabel(X_RIGHT, Y_AVACARA0, 'AVACARA');
+  colLabel(X_RIGHT, Y_QUAL0, 'QUALITY: DHARMA / THOUGHT / ACTION');
+  colLabel(X_CONTENT, Y_MID0, 'VARIANTS OF CONTENT (V-C)');
+  colLabel(X_TRANCIC, Y_MID0, 'TRANCIC VARIABLES (V-TV)');
+  colLabel(X_MENTAL, Y_MID0, 'MENTAL VARIABLES (V-MV)');
+  colLabel(X_SENSEOBJ, Y_MID0, 'SENSE OBJECTS (V-O)');
+  colLabel(X_DHYANICOBJ, Y_MID0, 'DHYANIC OBJECTS (V-O)');
   el('text', {class:'row-label', x:-10, y:Y_CASE+4, 'text-anchor':'end'}, viewport).textContent = 'CASES (V)';
   el('text', {class:'row-label', x:-10, y:Y_DHARMA+4, 'text-anchor':'end'}, viewport).textContent = 'DHARMAS Δ (VI)';
   el('text', {class:'row-label', x:-10, y:Y_MS+4, 'text-anchor':'end'}, viewport).textContent = 'MENTAL STATES (VI)';
@@ -631,67 +662,67 @@
   for(const e of data.nomenclature_case_edges){
     const nid = e.from.replace('nom-',''), cId = e.to.replace('case-','');
     const nl = nomenclatureX.get(nid), cl = caseLayout.get(cId);
-    if(nl===undefined || !cl) continue;
-    const p = el('path', {class:'edge nom-case', d: curve(nl, Y_NOM, cl.x, Y_CASE)}, edgeLayer);
+    if(!nl || !cl) continue;
+    const p = el('path', {class:'edge nom-case', d: curve(nl.x, nl.y, cl.x, Y_CASE)}, edgeLayer);
     edgeEls.nomCase.push({el:p, nom:nid, case:cId});
   }
   for(const e of data.sphere_case_edges){
     const sid = e.from.replace('sph-',''), cId = e.to.replace('case-','');
     const sl = sphereX.get(sid), cl = caseLayout.get(cId);
-    if(sl===undefined || !cl) continue;
-    const p = el('path', {class:'edge sphere-case', d: curve(sl, Y_SPHERE, cl.x, Y_CASE)}, edgeLayer);
+    if(!sl || !cl) continue;
+    const p = el('path', {class:'edge sphere-case', d: curve(sl.x, sl.y, cl.x, Y_CASE)}, edgeLayer);
     edgeEls.sphereCase.push({el:p, sphere:sid, case:cId});
   }
   for(const e of data.avacara_sphere_edges){
     const aid = e.from.replace('av-',''), sid = e.to.replace('sph-','');
     const al = avacaraX.get(aid), sl = sphereX.get(sid);
-    if(al===undefined || sl===undefined) continue;
-    const p = el('path', {class:'edge av-sphere', d: curve(al, Y_AVACARA, sl, Y_SPHERE)}, edgeLayer);
+    if(!al || !sl) continue;
+    const p = el('path', {class:'edge av-sphere', d: curve(al.x, al.y, sl.x, sl.y)}, edgeLayer);
     edgeEls.avSphere.push({el:p, av:aid, sphere:sid});
   }
   for(const e of data.avacara_case_edges){
     const aid = e.from.replace('av-',''), cId = e.to.replace('case-','');
     const al = avacaraX.get(aid), cl = caseLayout.get(cId);
-    if(al===undefined || !cl) continue;
-    const p = el('path', {class:'edge av-case', d: curve(al, Y_AVACARA, cl.x, Y_CASE)}, edgeLayer);
+    if(!al || !cl) continue;
+    const p = el('path', {class:'edge av-case', d: curve(al.x, al.y, cl.x, Y_CASE)}, edgeLayer);
     edgeEls.avCase.push({el:p, av:aid, case:cId});
   }
   for(const e of data.quality_dharma_sphere_edges){
     const qid = e.from.replace('qd-',''), sid = e.to.replace('sph-','');
     const ql = qualDharmaX.get(qid), sl = sphereX.get(sid);
-    if(ql===undefined || sl===undefined) continue;
-    const p = el('path', {class:'edge q-sphere', d: curve(ql, Y_QUALDHARMA, sl, Y_SPHERE)}, edgeLayer);
+    if(!ql || !sl) continue;
+    const p = el('path', {class:'edge q-sphere', d: curve(ql.x, ql.y, sl.x, sl.y)}, edgeLayer);
     edgeEls.qdSphere.push({el:p, qd:qid, sphere:sid});
   }
   for(const e of data.quality_thought_sphere_edges){
     const qid = e.from.replace('qt-',''), sid = e.to.replace('sph-','');
     const ql = qualThoughtX.get(qid), sl = sphereX.get(sid);
-    if(ql===undefined || sl===undefined) continue;
-    const p = el('path', {class:'edge q-sphere', d: curve(ql, Y_QUALTHOUGHT, sl, Y_SPHERE)}, edgeLayer);
+    if(!ql || !sl) continue;
+    const p = el('path', {class:'edge q-sphere', d: curve(ql.x, ql.y, sl.x, sl.y)}, edgeLayer);
     edgeEls.qtSphere.push({el:p, qt:qid, sphere:sid});
   }
   for(const e of data.quality_action_sphere_edges){
     const qid = e.from.replace('qa-',''), sid = e.to.replace('sph-','');
     const ql = qualActionX.get(qid), sl = sphereX.get(sid);
-    if(ql===undefined || sl===undefined) continue;
-    const p = el('path', {class:'edge q-sphere', d: curve(ql, Y_QUALACTION, sl, Y_SPHERE)}, edgeLayer);
+    if(!ql || !sl) continue;
+    const p = el('path', {class:'edge q-sphere', d: curve(ql.x, ql.y, sl.x, sl.y)}, edgeLayer);
     edgeEls.qaSphere.push({el:p, qa:qid, sphere:sid});
   }
-  function drawCaseAttrEdges(edges, fromPrefix, xmap, y, cssClass, bucket, key){
+  function drawCaseAttrEdges(edges, fromPrefix, xmap, cssClass, bucket, key){
     for(const e of edges){
       const iid = e.from.replace(fromPrefix,''), cId = e.to.replace('case-','');
       const xl = xmap.get(iid), cl = caseLayout.get(cId);
-      if(xl===undefined || !cl) continue;
-      const p = el('path', {class:'edge '+cssClass, d: curve(xl, y, cl.x, Y_CASE)}, edgeLayer);
+      if(!xl || !cl) continue;
+      const p = el('path', {class:'edge '+cssClass, d: curve(xl.x, xl.y, cl.x, Y_CASE)}, edgeLayer);
       const rec = {el:p, case:cId}; rec[key] = iid;
       edgeEls[bucket].push(rec);
     }
   }
-  drawCaseAttrEdges(data.content_case_edges, 'ct-', contentX, Y_CONTENT, 'content-case', 'contentCase', 'content');
-  drawCaseAttrEdges(data.trancic_case_edges, 'tv-', trancicX, Y_TRANCIC, 'caseattr-case', 'trancicCase', 'trancic');
-  drawCaseAttrEdges(data.mental_case_edges, 'mv-', mentalX, Y_MENTAL, 'caseattr-case', 'mentalCase', 'mental');
-  drawCaseAttrEdges(data.sense_object_case_edges, 'so-', senseObjX, Y_SENSEOBJ, 'caseattr-case', 'senseObjCase', 'senseObj');
-  drawCaseAttrEdges(data.dhyanic_object_case_edges, 'do-', dhyanicObjX, Y_DHYANICOBJ, 'caseattr-case', 'dhyanicObjCase', 'dhyanicObj');
+  drawCaseAttrEdges(data.content_case_edges, 'ct-', contentX, 'content-case', 'contentCase', 'content');
+  drawCaseAttrEdges(data.trancic_case_edges, 'tv-', trancicX, 'caseattr-case', 'trancicCase', 'trancic');
+  drawCaseAttrEdges(data.mental_case_edges, 'mv-', mentalX, 'caseattr-case', 'mentalCase', 'mental');
+  drawCaseAttrEdges(data.sense_object_case_edges, 'so-', senseObjX, 'caseattr-case', 'senseObjCase', 'senseObj');
+  drawCaseAttrEdges(data.dhyanic_object_case_edges, 'do-', dhyanicObjX, 'caseattr-case', 'dhyanicObjCase', 'dhyanicObj');
 
   // ---------- nodes ----------
   const qualityColor = {A:'var(--quality-a)', B:'var(--quality-b)', C:'var(--quality-c)'};
@@ -743,59 +774,32 @@
     nodeEls.superset.set(s.label, g);
   }
 
-  for(const n of data.nomenclature){
-    const x = nomenclatureX.get(n.term_id);
-    const g = el('g', {class:'node node-nomenclature', 'data-type':'nomenclature', 'data-id':n.term_id, transform:`translate(${x},${Y_NOM})`}, nodeLayer);
-    el('circle', {r: 4.6}, g);
-    el('text', {class:'label', y:-8, 'text-anchor':'middle'}, g).textContent = 'T' + n.term_id;
-    nodeEls.nomenclature.set(n.term_id, g);
-  }
-
-  for(const s of data.spheres){
-    const x = sphereX.get(s.sphere_id);
-    const g = el('g', {class:'node node-sphere', 'data-type':'sphere', 'data-id':s.sphere_id, transform:`translate(${x},${Y_SPHERE})`}, nodeLayer);
-    el('circle', {r: 4.6}, g);
-    el('text', {class:'label', y:-8, 'text-anchor':'middle'}, g).textContent = 'S' + s.sphere_id;
-    nodeEls.sphere.set(s.sphere_id, g);
-  }
-
-  for(const a of data.avacaras){
-    const x = avacaraX.get(a.key);
-    const g = el('g', {class:'node node-avacara', 'data-type':'avacara', 'data-id':a.key, transform:`translate(${x},${Y_AVACARA})`}, nodeLayer);
-    el('circle', {r: 4.8}, g);
-    el('text', {class:'label', y:-8, 'text-anchor':'middle'}, g).textContent = a.key;
-    nodeEls.avacara.set(a.key, g);
-  }
-
-  function makeQualNodes(list, xmap, y, prefix, typeKey, dataType){
-    for(const q of list){
-      const x = xmap.get(q.letter);
-      const g = el('g', {class:'node node-qualtier', 'data-type':dataType, 'data-id':q.letter, transform:`translate(${x},${y})`}, nodeLayer);
-      el('circle', {r: 4.2}, g);
-      el('text', {class:'label', y:-8, 'text-anchor':'middle'}, g).textContent = prefix + q.letter;
-      nodeEls[typeKey].set(q.letter, g);
-    }
-  }
-  makeQualNodes(data.quality_dharma, qualDharmaX, Y_QUALDHARMA, 'D:', 'qualDharma', 'qualdharma');
-  makeQualNodes(data.quality_thought, qualThoughtX, Y_QUALTHOUGHT, 'T:', 'qualThought', 'qualthought');
-  makeQualNodes(data.quality_action, qualActionX, Y_QUALACTION, 'Ac:', 'qualAction', 'qualaction');
-
-  function makeSmallNodes(list, xmap, y, idKey, prefix, cssClass, typeKey, dataType){
+  // vertical-column node types: dot + label offset to the side (labels
+  // stacked above one another would collide since nodes sit close in y)
+  function makeColumnNodes(list, idKey, layoutMap, prefix, cssClass, typeKey, dataType, r, labelSide){
     for(const item of list){
-      const x = xmap.get(item[idKey]);
-      const g = el('g', {class:'node '+cssClass, 'data-type':dataType, 'data-id':item[idKey], transform:`translate(${x},${y})`}, nodeLayer);
-      el('circle', {r: 3.6}, g);
-      if(xmap.size <= 60){
-        el('text', {class:'label', y:-8, 'text-anchor':'middle'}, g).textContent = prefix + item[idKey];
+      const pos = layoutMap.get(item[idKey]);
+      if(!pos) continue;
+      const g = el('g', {class:'node '+cssClass, 'data-type':dataType, 'data-id':item[idKey], transform:`translate(${pos.x},${pos.y})`}, nodeLayer);
+      el('circle', {r}, g);
+      if(layoutMap.size <= 60){
+        const lx = labelSide==='left' ? -8 : 8;
+        el('text', {class:'label', x:lx, y:3, 'text-anchor':labelSide==='left'?'end':'start'}, g).textContent = prefix + item[idKey];
       }
       nodeEls[typeKey].set(item[idKey], g);
     }
   }
-  makeSmallNodes(data.content, contentX, Y_CONTENT, 'content_id', 'C:', 'node-content', 'content', 'content');
-  makeSmallNodes(data.trancic, trancicX, Y_TRANCIC, 'trancic_id', 'TV:', 'node-caseattr', 'trancic', 'trancic');
-  makeSmallNodes(data.mental, mentalX, Y_MENTAL, 'mental_id', 'MV:', 'node-caseattr', 'mental', 'mental');
-  makeSmallNodes(data.sense_objects, senseObjX, Y_SENSEOBJ, 'object_id', 'O:', 'node-caseattr', 'senseObj', 'senseobj');
-  makeSmallNodes(data.dhyanic_objects, dhyanicObjX, Y_DHYANICOBJ, 'object_id', 'D:', 'node-caseattr', 'dhyanicObj', 'dhyanicobj');
+  makeColumnNodes(data.nomenclature, 'term_id', nomenclatureX, 'T', 'node-nomenclature', 'nomenclature', 'nomenclature', 4.6, 'left');
+  makeColumnNodes(data.spheres, 'sphere_id', sphereX, 'S', 'node-sphere', 'sphere', 'sphere', 4.6, 'right');
+  makeColumnNodes(data.avacaras, 'key', avacaraX, '', 'node-avacara', 'avacara', 'avacara', 4.8, 'right');
+  makeColumnNodes(data.quality_dharma, 'letter', qualDharmaX, 'D:', 'node-qualtier', 'qualDharma', 'qualdharma', 4.2, 'right');
+  makeColumnNodes(data.quality_thought, 'letter', qualThoughtX, 'T:', 'node-qualtier', 'qualThought', 'qualthought', 4.2, 'right');
+  makeColumnNodes(data.quality_action, 'letter', qualActionX, 'Ac:', 'node-qualtier', 'qualAction', 'qualaction', 4.2, 'right');
+  makeColumnNodes(data.content, 'content_id', contentX, 'C:', 'node-content', 'content', 'content', 3.6, 'right');
+  makeColumnNodes(data.trancic, 'trancic_id', trancicX, 'TV:', 'node-caseattr', 'trancic', 'trancic', 3.6, 'right');
+  makeColumnNodes(data.mental, 'mental_id', mentalX, 'MV:', 'node-caseattr', 'mental', 'mental', 3.6, 'right');
+  makeColumnNodes(data.sense_objects, 'object_id', senseObjX, 'O:', 'node-caseattr', 'senseObj', 'senseobj', 3.6, 'right');
+  makeColumnNodes(data.dhyanic_objects, 'object_id', dhyanicObjX, 'D:', 'node-caseattr', 'dhyanicObj', 'dhyanicobj', 3.6, 'right');
 
   // ---------- viewBox / pan / zoom ----------
   const fullBox = { x: -170, y: 0, w: X_SUPER + 200, h: Y_MS + 60 };
@@ -1225,13 +1229,15 @@
     const nomMatch = /^t(\d+)$/i.exec(q);
     if(nomMatch && nomenclatureById.has(nomMatch[1])){
       selectNomenclature(nomMatch[1]);
-      panTo(nomenclatureX.get(nomMatch[1]), Y_NOM, 500);
+      const nl = nomenclatureX.get(nomMatch[1]);
+      panTo(nl.x, nl.y, 500);
       return;
     }
     const sphMatch = /^s(\d+)$/i.exec(q);
     if(sphMatch && sphereById.has(sphMatch[1])){
       selectSphere(sphMatch[1]);
-      panTo(sphereX.get(sphMatch[1]), Y_SPHERE, 500);
+      const sl = sphereX.get(sphMatch[1]);
+      panTo(sl.x, sl.y, 500);
       return;
     }
     for(const d of data.dharmas){
@@ -1245,29 +1251,32 @@
     for(const n of data.nomenclature){
       if((n.term_pali||'').toLowerCase().includes(q) || (n.translation||'').toLowerCase().includes(q)){
         selectNomenclature(n.term_id);
-        panTo(nomenclatureX.get(n.term_id), Y_NOM, 500);
+        const nl = nomenclatureX.get(n.term_id);
+        panTo(nl.x, nl.y, 500);
         return;
       }
     }
     for(const s of data.spheres){
       if((s.sphere_pali||'').toLowerCase().includes(q) || (s.translation||'').toLowerCase().includes(q)){
         selectSphere(s.sphere_id);
-        panTo(sphereX.get(s.sphere_id), Y_SPHERE, 500);
+        const sl = sphereX.get(s.sphere_id);
+        panTo(sl.x, sl.y, 500);
         return;
       }
     }
     const caseAttrSearchTargets = [
-      [data.content, 'content_id', contentX, Y_CONTENT, 'content'],
-      [data.trancic, 'trancic_id', trancicX, Y_TRANCIC, 'trancic'],
-      [data.mental, 'mental_id', mentalX, Y_MENTAL, 'mental'],
-      [data.sense_objects, 'object_id', senseObjX, Y_SENSEOBJ, 'senseObj'],
-      [data.dhyanic_objects, 'object_id', dhyanicObjX, Y_DHYANICOBJ, 'dhyanicObj'],
+      [data.content, 'content_id', contentX, 'content'],
+      [data.trancic, 'trancic_id', trancicX, 'trancic'],
+      [data.mental, 'mental_id', mentalX, 'mental'],
+      [data.sense_objects, 'object_id', senseObjX, 'senseObj'],
+      [data.dhyanic_objects, 'object_id', dhyanicObjX, 'dhyanicObj'],
     ];
-    for(const [list, idKey, xmap, y, typeKey] of caseAttrSearchTargets){
+    for(const [list, idKey, xmap, typeKey] of caseAttrSearchTargets){
       for(const item of list){
         if((item.pali||'').toLowerCase().includes(q) || (item.translation||'').toLowerCase().includes(q)){
           selectCaseAttr(typeKey, item[idKey]);
-          panTo(xmap.get(item[idKey]), y, 500);
+          const pl = xmap.get(item[idKey]);
+          panTo(pl.x, pl.y, 500);
           return;
         }
       }
