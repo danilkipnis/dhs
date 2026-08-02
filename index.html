@@ -1,60 +1,11 @@
 <title>Essay 5</title>
 <style>
+  /* Dark is the unconditional default -- not gated behind
+     prefers-color-scheme, since some browsers/environments (e.g. Safari on
+     macOS set to Light appearance) would otherwise silently fall back to
+     a very different-looking light theme instead of matching what every
+     other view of this page shows. */
   .viz-root{
-    color-scheme: light;
-    --surface-1:      #fcfcfb;
-    --surface-2:      #f1f0eb;
-    --text-primary:   #0b0b0b;
-    --text-secondary: #52514e;
-    --text-muted:     #8a887f;
-    --rule:           #dcdad2;
-    --ms:             #2a78d6;
-    --dharma:         #eb6834;
-    --case:           #22201a;
-    --case-stub:      #b6b3a8;
-    --superset:       #1baf7a;
-    --superset-untr:  #8a887f;
-    --nomenclature:   #eda100;
-    --sphere:         #008300;
-    --avacara:        #e87ba4;
-    --qualtier:       #4a3aa7;
-    --content:        #e34948;
-    --caseattr:       #0891b2;
-    --dharmaset:      #b8860b;
-    --highlight:      #4a3aa7;
-    --quality-a:      #0ca30c;
-    --quality-b:      #d03b3b;
-    --quality-c:      #8a887f;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:where(:not([data-theme="light"])) .viz-root{
-      color-scheme: dark;
-      --surface-1:      #000000;
-      --surface-2:      #121212;
-      --text-primary:   #ffffff;
-      --text-secondary: #c3c2b7;
-      --text-muted:     #8f8d82;
-      --rule:           #3a3934;
-      --ms:             #4b99f7;
-      --dharma:         #eb6b38;
-      --case:           #f1f0eb;
-      --case-stub:      #5c5a52;
-      --superset:       #2bb082;
-      --superset-untr:  #6f6d64;
-      --nomenclature:   #db9712;
-      --sphere:         #129512;
-      --avacara:        #e76393;
-      --qualtier:       #a297fb;
-      --content:        #f87979;
-      --caseattr:       #34e5ff;
-      --dharmaset:      #e0b13d;
-      --highlight:      #a297fb;
-      --quality-a:      #1eb51e;
-      --quality-b:      #f87979;
-      --quality-c:      #8f8d82;
-    }
-  }
-  :root[data-theme="dark"] .viz-root{
     color-scheme: dark;
     --surface-1:      #000000;
     --surface-2:      #121212;
@@ -80,9 +31,35 @@
     --quality-b:      #f87979;
     --quality-c:      #8f8d82;
   }
+  :root[data-theme="light"] .viz-root{
+    color-scheme: light;
+    --surface-1:      #fcfcfb;
+    --surface-2:      #f1f0eb;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #8a887f;
+    --rule:           #dcdad2;
+    --ms:             #2a78d6;
+    --dharma:         #eb6834;
+    --case:           #22201a;
+    --case-stub:      #b6b3a8;
+    --superset:       #1baf7a;
+    --superset-untr:  #8a887f;
+    --nomenclature:   #eda100;
+    --sphere:         #008300;
+    --avacara:        #e87ba4;
+    --qualtier:       #4a3aa7;
+    --content:        #e34948;
+    --caseattr:       #0891b2;
+    --dharmaset:      #b8860b;
+    --highlight:      #4a3aa7;
+    --quality-a:      #0ca30c;
+    --quality-b:      #d03b3b;
+    --quality-c:      #8a887f;
+  }
 
   *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
+  html,body{margin:0;padding:0;background:#000;}
   .viz-root{
     background:var(--surface-1);
     color:var(--text-primary);
@@ -531,7 +508,7 @@
   // All six layers (row A, row B, case, dharma, table-vii, ms) sit exactly
   // LAYER_GAP apart — the same spacing the original design used between
   // ms and dharma.
-  const LAYER_GAP = 320;
+  const LAYER_GAP = 640;
   const Y_ROW_A = 20;
   const Y_ROW_B = Y_ROW_A + LAYER_GAP;
   const Y_CASE = Y_ROW_B + LAYER_GAP;
