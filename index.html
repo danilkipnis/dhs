@@ -150,7 +150,6 @@
   .legend .count{ color:var(--text-muted); margin-left:.15rem; }
 
   #erBtn{
-    color:var(--text-primary);
     text-decoration:underline dotted;
     text-underline-offset:2px;
     cursor:default;
@@ -288,9 +287,7 @@
       <span class="item"><span class="swatch" style="background:var(--ms)"></span>Mental state<span class="count" id="count-ms"></span></span>
       <span class="item"><span class="swatch" style="background:var(--dharma)"></span>Dharma &Delta;<span class="count" id="count-dharma"></span></span>
       <span class="item"><span class="swatch" style="background:var(--case)"></span>Case (table&#8209;v)<span class="count" id="count-case"></span></span>
-      <span class="item"><span class="swatch sq" style="background:var(--case-stub)"></span>Case not in table&#8209;v<span class="count" id="count-case-stub"></span></span>
       <span class="item"><span class="swatch" style="background:var(--superset)"></span>Table&#8209;vii superset (D<i>n</i>)<span class="count" id="count-superset"></span></span>
-      <span class="item"><span class="swatch" style="background:var(--superset-untr)"></span>D<i>n</i>, case untranscribed<span class="count" id="count-superset-untr"></span></span>
       <span class="item"><span class="swatch" style="background:var(--nomenclature)"></span>Nomenclature (table&#8209;iii)<span class="count" id="count-nomenclature"></span></span>
       <span class="item"><span class="swatch" style="background:var(--sphere)"></span>Sphere of thought (table&#8209;iv)<span class="count" id="count-sphere"></span></span>
       <span class="item"><span class="swatch" style="background:var(--avacara)"></span>Avacara<span class="count" id="count-avacara"></span></span>
@@ -1565,9 +1562,7 @@
     'count-ms': data.ms.length,
     'count-dharma': data.dharmas.length,
     'count-case': data.cases.filter(c=>!c.stub).length,
-    'count-case-stub': data.cases.filter(c=>c.stub).length,
     'count-superset': data.supersets.filter(s=>s.transcribed_in_table_vi).length,
-    'count-superset-untr': data.supersets.filter(s=>!s.transcribed_in_table_vi).length,
     'count-nomenclature': data.nomenclature.length,
     'count-sphere': data.spheres.length,
     'count-avacara': data.avacaras.length,
