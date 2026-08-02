@@ -87,67 +87,92 @@
     height:100vh;
     width:100vw;
     overflow:hidden;
-    display:flex;
-    flex-direction:column;
-  }
-  header{
-    padding:.85rem 1.1rem .7rem;
-    border-bottom:1px solid var(--rule);
-    flex:0 0 auto;
-  }
-  header h1{
-    font-size:1rem;
-    margin:0 0 .2rem;
-    font-weight:650;
-    letter-spacing:.01em;
-  }
-  header p{
-    margin:0;
-    font-size:.78rem;
-    color:var(--text-secondary);
-    line-height:1.4;
-  }
-  .legend{
-    display:flex;
-    flex-wrap:wrap;
-    gap:.9rem;
-    margin-top:.55rem;
-    font-size:.74rem;
-    color:var(--text-secondary);
-    align-items:center;
-  }
-  .legend .item{ display:flex; align-items:center; gap:.35rem; white-space:nowrap; }
-  .legend .swatch{ width:.62rem; height:.62rem; border-radius:50%; display:inline-block; flex:0 0 auto; }
-  .legend .swatch.sq{ border-radius:2px; }
-  .toolbar{
-    display:flex; align-items:center; gap:.6rem; margin-left:auto;
-  }
-  .toolbar input{
-    background:var(--surface-2);
-    border:1px solid var(--rule);
-    color:var(--text-primary);
-    border-radius:5px;
-    padding:.32rem .55rem;
-    font-size:.78rem;
-    width:220px;
-  }
-  .toolbar button{
-    background:var(--surface-2);
-    border:1px solid var(--rule);
-    color:var(--text-primary);
-    border-radius:5px;
-    padding:.32rem .6rem;
-    font-size:.75rem;
-    cursor:pointer;
-  }
-  .toolbar button:hover{ background:var(--rule); }
-  .header-row{ display:flex; align-items:flex-start; gap:1rem; }
-  .stage{
     position:relative;
-    flex:1 1 auto;
+  }
+  .stage{
+    position:absolute;
+    inset:0;
     overflow:hidden;
     cursor:grab;
   }
+  #sidebarToggle{
+    position:absolute;
+    top:.8rem;
+    right:.8rem;
+    z-index:21;
+    width:34px; height:34px;
+    border-radius:7px;
+    background:var(--surface-2);
+    border:1px solid var(--rule);
+    color:var(--text-primary);
+    cursor:pointer;
+    font-size:1rem;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 2px 10px rgba(0,0,0,.15);
+  }
+  #sidebarToggle:hover{ background:var(--rule); }
+  #sidebar{
+    position:absolute;
+    top:0; right:0; bottom:0;
+    width:min(340px, 88vw);
+    background:var(--surface-2);
+    border-left:1px solid var(--rule);
+    box-shadow:-6px 0 24px rgba(0,0,0,.18);
+    z-index:20;
+    padding:3.2rem 1.1rem 1.1rem;
+    overflow-y:auto;
+    transition:transform .22s ease;
+    transform:translateX(0);
+  }
+  #sidebar.collapsed{ transform:translateX(100%); }
+  #sidebar h1{
+    font-size:1rem;
+    margin:0 0 .4rem;
+    font-weight:650;
+    letter-spacing:.01em;
+  }
+  #sidebar p.desc{
+    margin:0 0 1rem;
+    font-size:.78rem;
+    color:var(--text-secondary);
+    line-height:1.45;
+  }
+  .toolbar{
+    display:flex; flex-direction:column; gap:.5rem;
+    margin-bottom:1.1rem;
+    padding-bottom:1.1rem;
+    border-bottom:1px solid var(--rule);
+  }
+  .toolbar input{
+    background:var(--surface-1);
+    border:1px solid var(--rule);
+    color:var(--text-primary);
+    border-radius:5px;
+    padding:.4rem .6rem;
+    font-size:.78rem;
+    width:100%;
+  }
+  .toolbar button{
+    background:var(--surface-1);
+    border:1px solid var(--rule);
+    color:var(--text-primary);
+    border-radius:5px;
+    padding:.4rem .6rem;
+    font-size:.78rem;
+    cursor:pointer;
+    width:100%;
+  }
+  .toolbar button:hover{ background:var(--rule); }
+  .legend{
+    display:flex;
+    flex-direction:column;
+    gap:.55rem;
+    font-size:.76rem;
+    color:var(--text-secondary);
+  }
+  .legend .item{ display:flex; align-items:center; gap:.5rem; }
+  .legend .swatch{ width:.68rem; height:.68rem; border-radius:50%; display:inline-block; flex:0 0 auto; }
+  .legend .swatch.sq{ border-radius:2px; }
   .stage.grabbing{ cursor:grabbing; }
   svg#canvas{ position:absolute; top:0; left:0; width:100%; height:100%; }
   .node-case circle{ fill:var(--case); }
@@ -217,8 +242,9 @@
     pointer-events:none;
   }
   #zoomctrl{
-    position:absolute; bottom:.6rem; right:.8rem;
+    position:absolute; top:.8rem; left:.8rem;
     display:flex; gap:.3rem;
+    z-index:15;
   }
   #zoomctrl button{
     width:26px;height:26px;border-radius:5px;
@@ -228,32 +254,6 @@
 </style>
 
 <div class="viz-root">
-  <header>
-    <div class="header-row">
-      <div>
-        <h1>Dhs. Tables III&ndash;VII &mdash; mental&#8209;state network</h1>
-        <p>Bottom&#8211;up: mental states (MS, table&#8209;vi) &rarr; dharmas (&Delta;, many MS &rarr; one dharma) &rarr; cases (many dharmas &rarr; one case, table&#8209;v). Above cases: nomenclature (table&#8209;iii), sphere of thought (table&#8209;iv), variants of content / trancic / mental / object variables (table&#8209;v's dimension tables), each spanning many cases &rarr; avacara &amp; the three quality tiers (dharma/thought/action), each spanning many spheres. The green column at right holds table&#8209;vii's per&#8209;case dharma supersets. Case hover text also cites its <em>Dhs.</em> paragraph &amp; page (table&#8209;viii) where transcribed.</p>
-        <div class="legend">
-          <span class="item"><span class="swatch" style="background:var(--ms)"></span>Mental state</span>
-          <span class="item"><span class="swatch" style="background:var(--dharma)"></span>Dharma &Delta;</span>
-          <span class="item"><span class="swatch" style="background:var(--case)"></span>Case (table&#8209;v)</span>
-          <span class="item"><span class="swatch sq" style="background:var(--case-stub)"></span>Case not in table&#8209;v</span>
-          <span class="item"><span class="swatch" style="background:var(--superset)"></span>Table&#8209;vii superset (D<i>n</i>)</span>
-          <span class="item"><span class="swatch" style="background:var(--superset-untr)"></span>D<i>n</i>, case untranscribed</span>
-          <span class="item"><span class="swatch" style="background:var(--nomenclature)"></span>Nomenclature (table&#8209;iii)</span>
-          <span class="item"><span class="swatch" style="background:var(--sphere)"></span>Sphere of thought (table&#8209;iv)</span>
-          <span class="item"><span class="swatch" style="background:var(--avacara)"></span>Avacara</span>
-          <span class="item"><span class="swatch" style="background:var(--qualtier)"></span>Quality (dharma/thought/action)</span>
-          <span class="item"><span class="swatch" style="background:var(--content)"></span>Variants of content (table&#8209;v&#8209;c)</span>
-          <span class="item"><span class="swatch" style="background:var(--caseattr)"></span>Trancic / mental / object variables</span>
-        </div>
-      </div>
-      <div class="toolbar">
-        <input id="search" type="text" placeholder="Find case / dharma / D-set&hellip;">
-        <button id="resetBtn">Reset view</button>
-      </div>
-    </div>
-  </header>
   <div class="stage" id="stage">
     <svg id="canvas" xmlns="http://www.w3.org/2000/svg">
       <g id="viewport"></g>
@@ -264,6 +264,29 @@
       <button id="zoomOut">&minus;</button>
     </div>
     <div id="tooltip"></div>
+  </div>
+  <button id="sidebarToggle" title="Show/hide legend &amp; controls">&#9776;</button>
+  <div id="sidebar">
+    <h1>Dhs. Tables III&ndash;VII &mdash; mental&#8209;state network</h1>
+    <p class="desc">Bottom&#8211;up: mental states (MS, table&#8209;vi) &rarr; dharmas (&Delta;, many MS &rarr; one dharma) &rarr; cases (many dharmas &rarr; one case, table&#8209;v). Above cases: nomenclature (table&#8209;iii), sphere of thought (table&#8209;iv), variants of content / trancic / mental / object variables (table&#8209;v's dimension tables), each spanning many cases &rarr; avacara &amp; the three quality tiers (dharma/thought/action), each spanning many spheres. The green column at right holds table&#8209;vii's per&#8209;case dharma supersets. Case hover text also cites its <em>Dhs.</em> paragraph &amp; page (table&#8209;viii) where transcribed.</p>
+    <div class="toolbar">
+      <input id="search" type="text" placeholder="Find case / dharma / D-set&hellip;">
+      <button id="resetBtn">Reset view</button>
+    </div>
+    <div class="legend">
+      <span class="item"><span class="swatch" style="background:var(--ms)"></span>Mental state</span>
+      <span class="item"><span class="swatch" style="background:var(--dharma)"></span>Dharma &Delta;</span>
+      <span class="item"><span class="swatch" style="background:var(--case)"></span>Case (table&#8209;v)</span>
+      <span class="item"><span class="swatch sq" style="background:var(--case-stub)"></span>Case not in table&#8209;v</span>
+      <span class="item"><span class="swatch" style="background:var(--superset)"></span>Table&#8209;vii superset (D<i>n</i>)</span>
+      <span class="item"><span class="swatch" style="background:var(--superset-untr)"></span>D<i>n</i>, case untranscribed</span>
+      <span class="item"><span class="swatch" style="background:var(--nomenclature)"></span>Nomenclature (table&#8209;iii)</span>
+      <span class="item"><span class="swatch" style="background:var(--sphere)"></span>Sphere of thought (table&#8209;iv)</span>
+      <span class="item"><span class="swatch" style="background:var(--avacara)"></span>Avacara</span>
+      <span class="item"><span class="swatch" style="background:var(--qualtier)"></span>Quality (dharma/thought/action)</span>
+      <span class="item"><span class="swatch" style="background:var(--content)"></span>Variants of content (table&#8209;v&#8209;c)</span>
+      <span class="item"><span class="swatch" style="background:var(--caseattr)"></span>Trancic / mental / object variables</span>
+    </div>
   </div>
 </div>
 
@@ -797,6 +820,9 @@
     applyViewBox();
   }
   document.getElementById('resetBtn').onclick = ()=>{ fitToStage(); clearHighlight(); };
+
+  const sidebar = document.getElementById('sidebar');
+  document.getElementById('sidebarToggle').onclick = ()=>{ sidebar.classList.toggle('collapsed'); };
 
   function panTo(x, y, w){
     const h = w * (fullBox.h/fullBox.w) * (stage.clientHeight/stage.clientWidth || 1);
