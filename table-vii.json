@@ -77,10 +77,11 @@
     },
     {
       "id": "D11",
-      "dharmas_raw": "1-5, 6b, 7-9, 10b, 12b, 14, 16-18, 25b, 27b, 53b, 55b, 56b, 64-75",
+      "dharmas_raw": "1-5, 6b, 7-9, 10b, 12b, 14b, 16-18, 25b, 27b, 53b, 55b, 56b, 64-75",
       "count": 32,
       "case_ref": "145B",
-      "transcribed_in_table_vi": true
+      "transcribed_in_table_vi": true,
+      "note": "Source prints this dharma as plain '14' here, but table-vi.json transcribes it as 14b (samādhindriya), consistent with every other B-case (147B, 149B, 153B, 155B, 156B) that includes this dharma as 14b — corrected to 14b to match."
     },
     {
       "id": "D12",
