@@ -987,7 +987,7 @@
       if(!pos) continue;
       const g = el('g', {class:'node '+cssClass, 'data-type':dataType, 'data-id':item[idKey], transform:`translate(${pos.x},${pos.y})`}, nodeLayer);
       el('circle', {r}, g);
-      if(layoutMap.size <= 30){
+      if(layoutMap.size <= 50){
         el('text', {class:'label', y:-8, 'text-anchor':'middle'}, g).textContent = prefix + item[idKey];
       }
       nodeEls[typeKey].set(item[idKey], g);
