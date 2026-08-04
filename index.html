@@ -239,13 +239,12 @@
   .label.ms-no{ font-size:6px; }
   .edge{ stroke:var(--text-secondary); fill:none; transition:opacity .15s, stroke .15s, stroke-width .15s; }
   .edge.ms-dharma{ stroke-width:.8px; opacity:.4; }
-  /* MS -> MS derivation (6 in table-vi): same-row arc, so give it a distinct
-     hue and dash to keep it from reading as an MS-to-dharma line. */
-  .edge.ms-derivation{ stroke-width:1.1px; opacity:.75; stroke:var(--derivation); fill:none; stroke-dasharray:3,2; }
-  /* Dharma -> dharma "as in" (table-vi's name column): same-row arc, dotted,
-     sharing the MS-derivation hue since it is the same kind of "identical to an
-     earlier entry" relation one row up. */
-  .edge.dharma-as-in{ stroke-width:1.1px; opacity:.7; stroke:var(--derivation); fill:none; stroke-dasharray:1.5,2.5; }
+  /* The two same-row relations: MS derived from an earlier MS, and a dharma
+     declared "as in" an earlier dharma. Both bow into an arc along their own row,
+     and share a hue that no cross-row edge uses -- that, plus the arc shape, is
+     what tells them apart from the lines leaving the row. */
+  .edge.ms-derivation{ stroke-width:1.1px; opacity:.75; stroke:var(--derivation); fill:none; }
+  .edge.dharma-as-in{ stroke-width:1.1px; opacity:.7; stroke:var(--derivation); fill:none; }
   .edge.dharma-case{ stroke-width:1px; opacity:.5; }
   /* The same case-dharma relation, but stated by table-vii rather than table-vi.
      Solid like its table-vi counterpart, distinguished by colour. There are ~4x
@@ -1406,140 +1405,175 @@ const SOURCES = {
     if(map && map.get(id)) map.get(id).classList.add('active');
   }
 
-  function applyHighlightFromActive(activeMap){
-    const has = (t,id)=> (activeMap[t]||new Set()).has(id);
-    for(const e of edgeEls.msDharma) e.el.classList.toggle('hl', has('dharma', e.dharma));
-    for(const e of edgeEls.dharmaCase) e.el.classList.toggle('hl', has('dharma', e.dharma));
-    for(const e of edgeEls.dharmaCaseVii) e.el.classList.toggle('hl', has('case', e.case) && has('dharma', e.dharma));
-    for(const e of edgeEls.dharmaAsIn) e.el.classList.toggle('hl', has('dharma', e.from) || has('dharma', e.to));
-    for(const e of edgeEls.msDerivation) e.el.classList.toggle('hl', has('ms', e.parent) || has('ms', e.child));
-    for(const e of edgeEls.nomCase) e.el.classList.toggle('hl', has('nomenclature', e.nom));
-    for(const e of edgeEls.sphereCase) e.el.classList.toggle('hl', has('sphere', e.sphere));
-    for(const e of edgeEls.avSphere) e.el.classList.toggle('hl', has('avacara', e.av));
-    for(const e of edgeEls.qdSphere) e.el.classList.toggle('hl', has('qualDharma', e.qd));
-    for(const e of edgeEls.contentCase) e.el.classList.toggle('hl', has('content', e.content));
-    for(const e of edgeEls.trancicCase) e.el.classList.toggle('hl', has('trancic', e.trancic));
-    for(const e of edgeEls.mentalCase) e.el.classList.toggle('hl', has('mental', e.mental));
-    for(const e of edgeEls.senseObjCase) e.el.classList.toggle('hl', has('senseObj', e.senseObj));
-    for(const e of edgeEls.dhyanicObjCase) e.el.classList.toggle('hl', has('dhyanicObj', e.dhyanicObj));
+  // ---------- distance-based selection ----------
+  // One undirected adjacency list over typed keys ("type|id"), built from exactly
+  // the relations the diagram draws. Clicking a node then means "walk out N steps
+  // from here", so the rule is one number per entity type instead of a bespoke
+  // set of neighbours written out in each handler -- which is how the table-vii
+  // case-dharma edges came to be left unhighlighted when a dharma was clicked.
+  const adj = new Map();
+  const nkey = (t, id) => t + '|' + id;
+  function nlink(t1, id1, t2, id2){
+    const a = nkey(t1, id1), b = nkey(t2, id2);
+    if(!adj.has(a)) adj.set(a, new Set());
+    if(!adj.has(b)) adj.set(b, new Set());
+    adj.get(a).add(b); adj.get(b).add(a);
+  }
+  // MS keys keep their "ms-" prefix, matching the node ids; the rest are bare.
+  for(const e of data.ms_edges)                    nlink('ms', e.from, 'dharma', e.to.slice(3));
+  for(const e of data.ms_derivation_edges)         nlink('ms', e.from, 'ms', e.to);
+  for(const e of data.dharma_as_in_edges)          nlink('dharma', e.from.slice(3), 'dharma', e.to.slice(3));
+  for(const e of data.dharma_case_edges)           nlink('dharma', e.from.slice(3), 'case', e.to.slice(5));
+  for(const e of data.dharma_case_vii_edges)       nlink('dharma', e.from.slice(3), 'case', e.to.slice(5));
+  for(const e of data.nomenclature_case_edges)     nlink('nomenclature', e.from.slice(4), 'case', e.to.slice(5));
+  for(const e of data.sphere_case_edges)           nlink('sphere', e.from.slice(4), 'case', e.to.slice(5));
+  for(const e of data.avacara_sphere_edges)        nlink('avacara', e.from.slice(3), 'sphere', e.to.slice(4));
+  for(const e of data.quality_dharma_sphere_edges) nlink('qualDharma', e.from.slice(3), 'sphere', e.to.slice(4));
+  for(const [arr, t] of [[data.content_case_edges, 'content'],
+                         [data.trancic_case_edges, 'trancic'],
+                         [data.mental_case_edges, 'mental'],
+                         [data.sense_object_case_edges, 'senseObj'],
+                         [data.dhyanic_object_case_edges, 'dhyanicObj']]){
+    for(const e of arr) nlink(t, e.from.slice(3), 'case', e.to.slice(5));
+  }
+
+  // How far a click reaches. Only dharmas are limited to what they touch
+  // directly; everything else shows two steps.
+  const REACH = {
+    dharma: 1,
+    case: 2, ms: 2,
+    content: 2, trancic: 2, mental: 2, senseObj: 2, dhyanicObj: 2,
+    sphere: 2, nomenclature: 2,
+    avacara: 2, qualDharma: 2,
+  };
+
+  // Which row each type sits on, so a two-step walk can be kept from doubling
+  // back onto the row it started from.
+  const ROW = {
+    avacara: 1, qualDharma: 1,
+    sphere: 2, nomenclature: 2,
+    content: 3, trancic: 3, mental: 3, senseObj: 3, dhyanicObj: 3,
+    case: 4, dharma: 5, ms: 6,
+  };
+
+  function reachFrom(type, id){
+    const start = nkey(type, id);
+    const startRow = ROW[type];
+    const dist = new Map([[start, 0]]);
+    let frontier = [start];
+    for(let d = 1; d <= (REACH[type] ?? 1); d++){
+      const next = [];
+      for(const k of frontier) for(const n of (adj.get(k) || [])){
+        if(dist.has(n)) continue;
+        // Past the first step, never return to the starting row. Going out and
+        // back is what turned one mental state into every mental state of its
+        // dharma, and one content variant into every other variant of its cases.
+        // The first step is exempt, so a dharma still reaches the dharmas it is
+        // declared "as in", and a mental state its derivations.
+        if(d > 1 && ROW[n.slice(0, n.indexOf('|'))] === startRow) continue;
+        dist.set(n, d); next.push(n);
+      }
+      frontier = next;
+    }
+    const byType = {};
+    for(const k of dist.keys()){
+      const i = k.indexOf('|'), t = k.slice(0, i);
+      if(!byType[t]) byType[t] = new Set();
+      byType[t].add(k.slice(i + 1));
+    }
+    return { nodes: byType, dist };
+  }
+
+  // An edge lights up only when it crosses a distance layer -- its ends must be
+  // exactly one step apart. Requiring merely that both ends were reached lights
+  // edges that lead nowhere from the clicked node: clicking Δ15 reaches case 1
+  // and Δ19 (via "as in"), both one step out, and would then also light the
+  // case-1-to-Δ19 edge, which is not on any path out of Δ15.
+  function applyHighlightFromActive(reach){
+    const at = (t, id) => reach.dist.get(nkey(t, id));
+    const pair = (t1, i1, t2, i2) => {
+      const a = at(t1, i1), b = at(t2, i2);
+      return a !== undefined && b !== undefined && Math.abs(a - b) === 1;
+    };
+    for(const e of edgeEls.msDharma)       e.el.classList.toggle('hl', pair('ms', e.ms, 'dharma', e.dharma));
+    for(const e of edgeEls.msDerivation)   e.el.classList.toggle('hl', pair('ms', e.parent, 'ms', e.child));
+    for(const e of edgeEls.dharmaAsIn)     e.el.classList.toggle('hl', pair('dharma', e.from, 'dharma', e.to));
+    for(const e of edgeEls.dharmaCase)     e.el.classList.toggle('hl', pair('dharma', e.dharma, 'case', e.case));
+    for(const e of edgeEls.dharmaCaseVii)  e.el.classList.toggle('hl', pair('dharma', e.dharma, 'case', e.case));
+    for(const e of edgeEls.nomCase)        e.el.classList.toggle('hl', pair('nomenclature', e.nom, 'case', e.case));
+    for(const e of edgeEls.sphereCase)     e.el.classList.toggle('hl', pair('sphere', e.sphere, 'case', e.case));
+    for(const e of edgeEls.avSphere)       e.el.classList.toggle('hl', pair('avacara', e.av, 'sphere', e.sphere));
+    for(const e of edgeEls.qdSphere)       e.el.classList.toggle('hl', pair('qualDharma', e.qd, 'sphere', e.sphere));
+    for(const e of edgeEls.contentCase)    e.el.classList.toggle('hl', pair('content', e.content, 'case', e.case));
+    for(const e of edgeEls.trancicCase)    e.el.classList.toggle('hl', pair('trancic', e.trancic, 'case', e.case));
+    for(const e of edgeEls.mentalCase)     e.el.classList.toggle('hl', pair('mental', e.mental, 'case', e.case));
+    for(const e of edgeEls.senseObjCase)   e.el.classList.toggle('hl', pair('senseObj', e.senseObj, 'case', e.case));
+    for(const e of edgeEls.dhyanicObjCase) e.el.classList.toggle('hl', pair('dhyanicObj', e.dhyanicObj, 'case', e.case));
+  }
+
+  function select(type, id){
+    const reach = reachFrom(type, id);
+    dimAllExceptMap(reach.nodes);
+    setActive(type, id);
+    applyHighlightFromActive(reach);
+    return reach;
   }
 
   function selectCase(cId){
-    const dharmas = new Set(caseToDharmas.get(cId) || []);
-    const msSet = new Set();
-    for(const dId of dharmas) for(const mId of (dharmaToMs.get(dId)||[])) msSet.add(mId);
-    const supersets = new Set(caseToSupersets.get(cId) || []);
-    for(const sId of supersets) for(const dId of (supersetToDharmas.get(sId)||[])) dharmas.add(dId);
-    const nomenclatures = new Set(caseToNomenclature.get(cId) || []);
-    const spheres = new Set(caseToSphere.get(cId) || []);
-    const avacaras = new Set([...spheres].map(s=>sphereToAvacara.get(s)).filter(Boolean));
-    const qualDharmas = new Set([...spheres].map(s=>sphereToQualDharma.get(s)).filter(Boolean));
-    const activeMap = {
-      case: new Set([cId]), dharma: dharmas, ms: msSet, superset: supersets,
-      nomenclature: nomenclatures, sphere: spheres, avacara: avacaras,
-      qualDharma: qualDharmas,
-      content: new Set(caseToContent.get(cId) || []),
-      trancic: new Set(caseToTrancic.get(cId) || []),
-      mental: new Set(caseToMental.get(cId) || []),
-      senseObj: new Set(caseToSenseObj.get(cId) || []),
-      dhyanicObj: new Set(caseToDhyanicObj.get(cId) || []),
-    };
-    dimAllExceptMap(activeMap);
-    setActive('case', cId);
-    applyHighlightFromActive(activeMap);
-    describe(`Case ${cId}: ${caseToDharmas.get(cId)?.length||0} newly-introduced dharma(s) in table-vi, ${supersets.size} table-vii superset(s), ${nomenclatures.size} nomenclature term(s), ${spheres.size} sphere(s).`);
+    select('case', cId);
+    describe(`Case ${cId}: ${(caseToDharmas.get(cId)||[]).length} newly-introduced dharma(s) in table-vi, `
+      + `${(caseToNomenclature.get(cId)||[]).length} nomenclature term(s), ${(caseToSphere.get(cId)||[]).length} sphere(s).`);
   }
 
   function selectDharma(dId){
-    const cId = dharmaToCase.get(dId);
-    const msSet = new Set(dharmaToMs.get(dId) || []);
-    const supersets = new Set(dharmaToSupersets.get(dId) || []);
-    const activeMap = { case: new Set(cId?[cId]:[]), dharma: new Set([dId]), ms: msSet, superset: supersets };
-    dimAllExceptMap(activeMap);
-    setActive('dharma', dId);
-    applyHighlightFromActive(activeMap);
+    select('dharma', dId);
     const d = dharmaById.get(dId);
-    describe(`Δ${dId} ${d.name_pali} (${d.name_translation||''}) — quality ${d.quality}, introduced at case ${d.owner_case}; appears in ${supersets.size} table-vii superset(s).`);
+    describe(`Δ${dId} ${d.name_pali} (${d.name_translation||''}) — quality ${d.quality}, introduced at case ${d.owner_case}.`);
   }
 
   function selectMs(msId){
-    const dharmas = new Set(msToDharmas.get(msId) || []);
-    const cases = new Set([...dharmas].map(d=>dharmaToCase.get(d)).filter(Boolean));
-    const supersets = new Set(msToSupersets.get(msId) || []);
-    const activeMap = { case: cases, dharma: dharmas, ms: new Set([msId]), superset: supersets };
-    dimAllExceptMap(activeMap);
-    setActive('ms', msId);
-    applyHighlightFromActive(activeMap);
+    select('ms', msId);
     const m = msById.get(msId);
-    describe(`MS ${m.no} ${m.pali} — '${m.translation}'. Shared by dharma(s): ${[...dharmas].join(', ')}; appears in ${supersets.size} table-vii superset(s).`);
+    describe(`MS ${m.no} ${m.pali} — '${m.translation}'.`);
   }
 
   function selectNomenclature(nid){
-    const cases = new Set(nomenclatureToCases.get(nid) || []);
-    const activeMap = { nomenclature: new Set([nid]), case: cases };
-    dimAllExceptMap(activeMap);
-    setActive('nomenclature', nid);
-    applyHighlightFromActive(activeMap);
+    select('nomenclature', nid);
     const n = nomenclatureById.get(nid);
-    describe(`Nomenclature T${nid} — ${n.term_pali} (${n.translation}) — ${cases.size} case(s).`);
+    describe(`Nomenclature T${nid} — ${n.term_pali} (${n.translation}).`);
   }
 
   function selectSphere(sid){
-    const cases = new Set(sphereToCases.get(sid) || []);
-    const av = sphereToAvacara.get(sid);
-    const qd = sphereToQualDharma.get(sid);
-    const activeMap = {
-      sphere: new Set([sid]), case: cases,
-      avacara: av?new Set([av]):new Set(),
-      qualDharma: qd?new Set([qd]):new Set(),
-    };
-    dimAllExceptMap(activeMap);
-    setActive('sphere', sid);
-    applyHighlightFromActive(activeMap);
+    select('sphere', sid);
     const s = sphereById.get(sid);
-    describe(`Sphere S${sid} — ${s.sphere_pali} (${s.translation}) — avacara ${s.avacara}, character of dharmas ${s.char_dharma}, ${cases.size} case(s).`);
+    describe(`Sphere S${sid} — ${s.sphere_pali} (${s.translation}).`);
   }
 
   function selectAvacara(aid){
-    const spheres = new Set(avacaraToSpheres.get(aid) || []);
-    const cases = new Set(avacaraToCases.get(aid) || []);
-    const activeMap = { avacara: new Set([aid]), sphere: spheres, case: cases };
-    dimAllExceptMap(activeMap);
-    setActive('avacara', aid);
-    applyHighlightFromActive(activeMap);
+    select('avacara', aid);
     const a = avacaraById.get(aid);
-    describe(`Avacara ${aid} — ${a.gloss} — ${spheres.size} sphere(s), ${cases.size} case(s).`);
+    describe(`Avacara ${aid} — ${a.gloss}.`);
   }
 
   const caseAttrToCasesMaps = { content: contentToCases, trancic: trancicToCases, mental: mentalToCases, senseObj: senseObjToCases, dhyanicObj: dhyanicObjToCases };
   const caseAttrByIdMaps = { content: contentById, trancic: trancicById, mental: mentalById, senseObj: senseObjById, dhyanicObj: dhyanicObjById };
   const caseAttrLabels = { content: 'Variant of content', trancic: 'Trancic variable', mental: 'Mental variable', senseObj: 'Sense object', dhyanicObj: 'Dhyanic object' };
   function selectCaseAttr(typeKey, id){
-    const cases = new Set(caseAttrToCasesMaps[typeKey].get(id) || []);
-    const activeMap = { case: cases };
-    activeMap[typeKey] = new Set([id]);
-    dimAllExceptMap(activeMap);
-    setActive(typeKey, id);
-    applyHighlightFromActive(activeMap);
+    select(typeKey, id);
+    const cases = caseAttrToCasesMaps[typeKey].get(id) || [];
     const item = caseAttrByIdMaps[typeKey].get(id);
     const desc = item ? (item.pali ? `${item.pali} (${item.translation||''})` : (item.translation||'')) : '';
-    describe(`${caseAttrLabels[typeKey]} ${id} — ${desc} — ${cases.size} case(s).`);
+    describe(`${caseAttrLabels[typeKey]} ${id} — ${desc} — ${cases.length} case(s).`);
   }
 
   const qualToSpheresMaps = { qualDharma: qualDharmaToSpheres };
   const qualByIdMaps = { qualDharma: qualDharmaById };
   const qualLabels = { qualDharma: 'Character of dharmas' };
   function selectQuality(typeKey, letter){
-    const spheres = new Set(qualToSpheresMaps[typeKey].get(letter) || []);
-    const cases = new Set();
-    for(const s of spheres) for(const c of (sphereToCases.get(s)||[])) cases.add(c);
-    const activeMap = { case: cases, sphere: spheres };
-    activeMap[typeKey] = new Set([letter]);
-    dimAllExceptMap(activeMap);
-    setActive(typeKey, letter);
-    applyHighlightFromActive(activeMap);
+    select(typeKey, letter);
+    const spheres = qualToSpheresMaps[typeKey].get(letter) || [];
     const g = qualByIdMaps[typeKey].get(letter);
-    describe(`${qualLabels[typeKey]} ${letter} (${g?g.gloss:''}) — ${spheres.size} sphere(s), ${cases.size} case(s).`);
+    describe(`${qualLabels[typeKey]} ${letter} (${g?g.gloss:''}) — ${spheres.length} sphere(s).`);
   }
 
   function describe(){ /* bottom status line removed */ }
