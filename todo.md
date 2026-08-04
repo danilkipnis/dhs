@@ -23,3 +23,8 @@
 10. We can take any finite object from a dimention one higher and describe it
     in the lower dimention in its entirety. The same way a set of 3D points
     can be described in a 2D table.
+11. Fix zooming on mobile. There is a limit which blocks further zoom. Disable
+    it.
+12. Write howto. E.g. Pick a point, click on it, read the text, pick the next
+    point. Vertically, horizontally, distance 1 (level 1), distance 2 (level
+    2), etc.
