@@ -895,17 +895,40 @@ const SOURCES = {
   }
   const seg = (a,b) => [totalWidth*a, totalWidth*b];
 
-  // Level 1: character of dharmas | avacara — the two axes a sphere combines
-  const [QD_X0, QD_X1] = seg(0.15, 0.45);
-  const [AVACARA_X0, AVACARA_X1] = seg(0.55, 0.85);
-  const qualDharmaX = rowSegment(data.quality_dharma, 'letter', Y_L1, QD_X0, QD_X1);
-  const avacaraX = rowSegment(data.avacaras, 'key', Y_L1, AVACARA_X0, AVACARA_X1);
-
+  // Level 2 comes first: level 1 is positioned relative to the sphere block.
   // Level 2: nomenclature of thought | sphere of thought
   const [NOM_X0, NOM_X1] = seg(0.10, 0.42);
   const [SPHERE_X0, SPHERE_X1] = seg(0.50, 0.90);
   const nomenclatureX = rowSegment(data.nomenclature, 'term_id', Y_L2, NOM_X0, NOM_X1);
   const sphereX = rowSegment(data.spheres, 'sphere_id', Y_L2, SPHERE_X0, SPHERE_X1);
+
+  // Level 1: character of dharmas | avacara — the two axes a sphere combines,
+  // sized and placed as one block centred over the sphere dots below rather
+  // than given an arbitrary share of the width.
+  //
+  // rowSegment spreads n dots evenly across its segment, putting dot i at
+  // xStart + width*(i+0.5)/n. So to get an exact step and a chosen first dot,
+  // the segment must be n*step wide and start half a step early -- that is what
+  // the two [X0,X1] pairs below work out, instead of guessing at fractions.
+  const SPHERE_STEP  = (SPHERE_X1 - SPHERE_X0) / data.spheres.length;
+  const SPHERE_FIRST = SPHERE_X0 + SPHERE_STEP/2;   // centre of the first dot
+  const SPHERE_LAST  = SPHERE_X1 - SPHERE_STEP/2;   // centre of the last dot
+  const QD_STEP = SPHERE_STEP;           // character of dharmas: match level 2
+  const AV_STEP = SPHERE_STEP * 1.25;    // avacara: a little wider
+  const nQD = data.quality_dharma.length, nAV = data.avacaras.length;
+  // The block's right end is anchored to the sphere row's: the last avacara dot
+  // sits a half step inside the last sphere. The character group starts one own
+  // width in from the first sphere -- i.e. its first dot sits where its last dot
+  // would if it were flush left. The gap between the groups is whatever slack is
+  // left over, so it stays consistent if either group changes size.
+  const QD_FIRST = SPHERE_FIRST + (nQD - 1)*QD_STEP;
+  const AV_LAST  = SPHERE_LAST - SPHERE_STEP*0.5;
+  const L1_GAP   = (AV_LAST - QD_FIRST) - (nQD - 1)*QD_STEP - (nAV - 1)*AV_STEP;
+  const AV_FIRST = QD_FIRST + (nQD - 1)*QD_STEP + L1_GAP;
+  const QD_X0 = QD_FIRST - QD_STEP/2,      QD_X1 = QD_X0 + nQD*QD_STEP;
+  const AVACARA_X0 = AV_FIRST - AV_STEP/2, AVACARA_X1 = AVACARA_X0 + nAV*AV_STEP;
+  const qualDharmaX = rowSegment(data.quality_dharma, 'letter', Y_L1, QD_X0, QD_X1);
+  const avacaraX = rowSegment(data.avacaras, 'key', Y_L1, AVACARA_X0, AVACARA_X1);
 
   // Level 3: the table-v dimension tables, spread across the full width in
   // reading order and roughly in proportion to how many entries each holds.
