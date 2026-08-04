@@ -915,11 +915,12 @@ const SOURCES = {
   const seg = (a,b) => [totalWidth*a, totalWidth*b];
 
   // Level 2 comes first: level 1 is positioned relative to the sphere block.
-  // Level 2: nomenclature of thought | sphere of thought
-  const [NOM_X0, NOM_X1] = seg(0.10, 0.42);
-  const [SPHERE_X0, SPHERE_X1] = seg(0.50, 0.90);
-  const nomenclatureX = rowSegment(data.nomenclature, 'term_id', Y_L2, NOM_X0, NOM_X1);
+  // Level 2: sphere of thought | nomenclature of thought -- same left-to-right
+  // order as the ER diagram.
+  const [SPHERE_X0, SPHERE_X1] = seg(0.06, 0.46);
+  const [NOM_X0, NOM_X1] = seg(0.56, 0.88);
   const sphereX = rowSegment(data.spheres, 'sphere_id', Y_L2, SPHERE_X0, SPHERE_X1);
+  const nomenclatureX = rowSegment(data.nomenclature, 'term_id', Y_L2, NOM_X0, NOM_X1);
 
   // Level 1: character of dharmas | avacara — the two axes a sphere combines,
   // sized and placed as one block centred over the sphere dots below rather
@@ -1108,8 +1109,8 @@ const SOURCES = {
   }
   colLabel((QD_X0+QD_X1)/2, Y_L1, 'CHARACTER OF DHARMAS (IV)');
   colLabel((AVACARA_X0+AVACARA_X1)/2, Y_L1, 'AVACARA (IV)');
-  colLabel((NOM_X0+NOM_X1)/2, Y_L2, 'NOMENCLATURE OF THOUGHT (III)');
   colLabel((SPHERE_X0+SPHERE_X1)/2, Y_L2, 'SPHERE OF THOUGHT (IV)');
+  colLabel((NOM_X0+NOM_X1)/2, Y_L2, 'NOMENCLATURE OF THOUGHT (III)');
   colLabel((CONTENT_X0+CONTENT_X1)/2, Y_L3, 'VARIANTS OF CONTENT (V-C)');
   colLabel((TRANCIC_X0+TRANCIC_X1)/2, Y_L3, 'TRANCIC VARIABLES (V-TV)');
   colLabel((SENSEOBJ_X0+SENSEOBJ_X1)/2, Y_L3, 'SENSE OBJECTS (V-O)');

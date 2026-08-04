@@ -5,15 +5,6 @@
 PY      ?= python3
 PORT    ?= 8000
 
-# The publish repo (git remote "essay5") holds only what the page needs to run,
-# on a history unrelated to this one -- so it cannot be a second push target and
-# is instead synced one-way by `make publish`. Its URL is read from the remote so
-# it is not spelled out twice.
-PUBLISH_URL    ?= $(shell git remote get-url essay5 2>/dev/null)
-PUBLISH_BRANCH ?= main
-PUBLISH_DIR    ?= .publish
-PUBLISH_PUSH   ?= yes
-
 # Generated from table-vi.json by convert-table-vi.py.
 GENERATED := ms.json ms-membership.json table-vi-dharmas.json
 
@@ -23,12 +14,7 @@ SOURCES := table-iii.json table-iv.json table-v.json table-v-content.json \
            table-v-objects.json table-v-sphere.json table-v-thought.json \
            table-v-trancic.json table-vii.json Table-viii.json
 
-# Everything index.html fetches at runtime, plus table-vi.json for reference.
-# This is exactly the published file set -- build tooling and the table-*.html
-# renderings stay in this repo only.
-RUNTIME := index.html table-vi.json $(SOURCES) $(GENERATED)
-
-.PHONY: all check serve clean publish help
+.PHONY: all check serve clean help
 .DEFAULT_GOAL := help
 
 all: $(GENERATED)  ## Regenerate the table-vi files if table-vi.json is newer
@@ -60,33 +46,6 @@ check: ## Fail if the committed table-vi files differ from a fresh conversion
 serve: all ## Serve over HTTP (fetch() is blocked on file:// URLs)
 	@echo "http://localhost:$(PORT)/index.html"
 	$(PY) -m http.server $(PORT)
-
-publish: all check ## Sync the runtime files to the publish repo and push
-	@test -n "$(PUBLISH_URL)" || { echo "no 'essay5' remote; set PUBLISH_URL="; exit 1; }
-	@if [ ! -d $(PUBLISH_DIR)/.git ]; then \
-	  echo "cloning $(PUBLISH_URL) -> $(PUBLISH_DIR)"; \
-	  git clone --quiet --branch $(PUBLISH_BRANCH) $(PUBLISH_URL) $(PUBLISH_DIR); \
-	fi
-	@# "origin" here is the publish clone's own remote, not this repo's.
-	@git -C $(PUBLISH_DIR) fetch --quiet origin $(PUBLISH_BRANCH)
-	@git -C $(PUBLISH_DIR) checkout --quiet -B $(PUBLISH_BRANCH) origin/$(PUBLISH_BRANCH)
-	@# Drop every tracked file, then copy the set back, so a file removed here is
-	@# removed there too rather than lingering in the published tree.
-	@git -C $(PUBLISH_DIR) rm -rq --ignore-unmatch .
-	@cp $(RUNTIME) $(PUBLISH_DIR)/
-	@git -C $(PUBLISH_DIR) add -A
-	@if git -C $(PUBLISH_DIR) diff --cached --quiet; then \
-	  echo "publish: already up to date ($(words $(RUNTIME)) files)"; \
-	else \
-	  git -C $(PUBLISH_DIR) diff --cached --stat | tail -n 12; \
-	  git -C $(PUBLISH_DIR) commit -q -m "sync from dhs $$(git rev-parse --short HEAD)"; \
-	  if [ "$(PUBLISH_PUSH)" = yes ]; then \
-	    git -C $(PUBLISH_DIR) push --quiet origin $(PUBLISH_BRANCH) && \
-	    echo "publish: pushed $$(git -C $(PUBLISH_DIR) rev-parse --short HEAD) to $(PUBLISH_BRANCH)"; \
-	  else \
-	    echo "publish: committed locally, not pushed (PUBLISH_PUSH=$(PUBLISH_PUSH))"; \
-	  fi; \
-	fi
 
 clean: ## Remove the generated table-vi files and the stamp
 	rm -f $(GENERATED) .table-vi.stamp

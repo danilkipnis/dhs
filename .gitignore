@@ -4,6 +4,3 @@
 
 # Editor swap files
 .*.sw[a-p]
-
-# Working clone of the publish repo, created by `make publish`.
-.publish/
