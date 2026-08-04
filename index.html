@@ -285,7 +285,7 @@
   <button id="sidebarToggle" title="Show/hide legend &amp; controls">&#9776;</button>
   <div id="sidebar" class="collapsed">
     <p class="desc">Cases of rise of thought in <em>Dhs.</em> as described by the tables (III&ndash;VIII) of Essay 5, &ldquo;Rise of Thought as Phenomenon and System,&rdquo; of Alexander Piatigorsky's <em>The Buddhist Philosophy of Thought: Essays in Interpretation</em> (<a href="https://archive.org/details/buddhistphilosop0000piat" target="_blank" rel="noopener" style="color:var(--text-secondary)">archive.org</a>). The primary source, the <em>Dhammasangani</em> (<em>Dhs.</em>) itself, is on archive.org too (<a href="https://archive.org/details/in.ernet.dli.2015.314228" target="_blank" rel="noopener" style="color:var(--text-secondary)">archive.org</a>).</p>
-    <p class="desc">Bottom&#8211;up: mental states (MS, table&#8209;vi) &rarr; dharmas (&Delta;, many MS &rarr; one dharma) &rarr; cases (many dharmas &rarr; one case, table&#8209;v). Above cases: nomenclature (table&#8209;iii), sphere of thought (table&#8209;iv), variants of content / trancic / mental / object variables (table&#8209;v's dimension tables), each spanning many cases &rarr; avacara &amp; the quality of dharma, each spanning many spheres. Table&#8209;vii contributes case&ndash;dharma edges too: those it states and table&#8209;vi does not are drawn in green. A few mental states are printed as derivatives of an earlier one (MS&nbsp;122 &lsquo;correct view&rsquo; from MS&nbsp;97, MS&nbsp;113 from MS&nbsp;93), and many dharmas carry an &ldquo;as in dharma&nbsp;X&rdquo; note in their name column (&Delta;76a is &ldquo;as in &Delta;2i&rdquo;); both are drawn as arcs along their own row. Case hover text also cites its <em>Dhs.</em> paragraph &amp; page (table&#8209;viii) where transcribed. Hover <span id="erBtn">ER</span> for the schema&#8209;level entity&ndash;relationship diagram.</p>
+    <p class="desc">Bottom&#8211;up: mental states (MS, table&#8209;vi) &rarr; dharmas (&Delta;, many MS &rarr; one dharma) &rarr; cases (many dharmas &rarr; one case, table&#8209;v). Above cases: nomenclature (table&#8209;iii), sphere of thought (table&#8209;iv), variants of content / trancic / mental / object variables (table&#8209;v's dimension tables), each spanning many cases &rarr; avacara &amp; the character of dharmas, each spanning many spheres. Table&#8209;vii contributes case&ndash;dharma edges too: those it states and table&#8209;vi does not are drawn in green. A few mental states are printed as derivatives of an earlier one (MS&nbsp;122 &lsquo;correct view&rsquo; from MS&nbsp;97, MS&nbsp;113 from MS&nbsp;93), and many dharmas carry an &ldquo;as in dharma&nbsp;X&rdquo; note in their name column (&Delta;76a is &ldquo;as in &Delta;2i&rdquo;); both are drawn as arcs along their own row. Case hover text also cites its <em>Dhs.</em> paragraph &amp; page (table&#8209;viii) where transcribed. Hover <span id="erBtn">ER</span> for the schema&#8209;level entity&ndash;relationship diagram.</p>
     <div class="toolbar">
       <input id="search" type="text" placeholder="Find case / dharma / D-set&hellip;">
       <button id="resetBtn">Reset view</button>
@@ -298,7 +298,7 @@
       <span class="item"><span class="swatch" style="background:var(--nomenclature)"></span>Nomenclature (table&#8209;iii)<span class="count" id="count-nomenclature"></span></span>
       <span class="item"><span class="swatch" style="background:var(--sphere)"></span>Sphere of thought (table&#8209;iv)<span class="count" id="count-sphere"></span></span>
       <span class="item"><span class="swatch" style="background:var(--avacara)"></span>Avacara<span class="count" id="count-avacara"></span></span>
-      <span class="item"><span class="swatch" style="background:var(--qualtier)"></span>Quality (dharma/thought/action)<span class="count" id="count-qualtier"></span></span>
+      <span class="item"><span class="swatch" style="background:var(--qualtier)"></span>Character of dharmas (table&#8209;iv)<span class="count" id="count-qualtier"></span></span>
       <span class="item"><span class="swatch" style="background:var(--content)"></span>Variants of content (table&#8209;v&#8209;c)<span class="count" id="count-content"></span></span>
       <span class="item"><span class="swatch" style="background:var(--caseattr)"></span>Trancic / mental / object variables<span class="count" id="count-caseattr"></span></span>
       <span class="item"><span class="swatch" style="background:var(--derivation)"></span>MS derived from MS<span class="count" id="count-derivation"></span></span>
@@ -371,7 +371,7 @@
     <circle class="er-swatch" cx="88.0" cy="30.0" r="5" style="fill:var(--avacara)" /><text class="er-label" x="156" y="38" text-anchor="middle">AVACARA</text>
     <text class="er-count" x="150" y="54" text-anchor="middle" id="count-ms-er-avacara"></text>
     <rect class="er-box" x="275.0" y="17.0" width="150" height="46" rx="8" />
-    <circle class="er-swatch" cx="288.0" cy="30.0" r="5" style="fill:var(--qualtier)" /><text class="er-label" x="356" y="38" text-anchor="middle">QUALITY OF DHARMA</text>
+    <circle class="er-swatch" cx="288.0" cy="30.0" r="5" style="fill:var(--qualtier)" /><text class="er-label" x="356" y="38" text-anchor="middle">CHARACTER OF DHARMAS</text>
     <text class="er-count" x="350" y="54" text-anchor="middle" id="count-ms-er-qualdharma"></text>
     <rect class="er-box" x="275.0" y="142.0" width="150" height="46" rx="8" />
     <circle class="er-swatch" cx="288.0" cy="155.0" r="5" style="fill:var(--sphere)" /><text class="er-label" x="356" y="163" text-anchor="middle">SPHERE OF THOUGHT</text>
@@ -836,7 +836,7 @@ const SOURCES = {
   // row A (top): nomenclature, sphere of thought, avacara — left to right,
   // all sharing one horizontal line.
   // row B: content / trancic / objects / mental on the left, the three
-  // quality of dharma grouped at the far right — also one shared line.
+  // character of dharmas grouped at the far right — also one shared line.
   // All six layers (row A, row B, case, dharma, table-vii, ms) sit exactly
   // LAYER_GAP apart — the same spacing the original design used between
   // ms and dharma.
@@ -903,7 +903,7 @@ const SOURCES = {
   const avacaraX = rowSegment(data.avacaras, 'key', Y_ROW_A, AVACARA_X0, AVACARA_X1);
 
   // Row B: content | trancic | sense objects | dhyanic objects | mental — left side;
-  // quality of dharma | thought | action — grouped at the far right
+  // character of dharmas (table-iv's char_dharma) — grouped at the far right
   const [CONTENT_X0, CONTENT_X1] = seg(0.02, 0.16);
   const [TRANCIC_X0, TRANCIC_X1] = seg(0.19, 0.31);
   const [SENSEOBJ_X0, SENSEOBJ_X1] = seg(0.34, 0.40);
@@ -1066,7 +1066,7 @@ const SOURCES = {
   colLabel((SENSEOBJ_X0+SENSEOBJ_X1)/2, Y_ROW_B, 'SENSE OBJECTS (V-O)');
   colLabel((DHYANICOBJ_X0+DHYANICOBJ_X1)/2, Y_ROW_B, 'DHYANIC OBJECTS (V-O)');
   colLabel((MENTAL_X0+MENTAL_X1)/2, Y_ROW_B, 'MENTAL VARIABLES (V-MV)');
-  colLabel((QD_X0+QD_X1)/2, Y_ROW_B, 'QUALITY OF DHARMA');
+  colLabel((QD_X0+QD_X1)/2, Y_ROW_B, 'CHARACTER OF DHARMAS');
   el('text', {class:'row-label', x:-10, y:Y_CASE+4, 'text-anchor':'end'}, viewport).textContent = 'CASES (V)';
   el('text', {class:'row-label', x:-10, y:Y_DHARMA+4, 'text-anchor':'end'}, viewport).textContent = 'DHARMAS Δ (VI)';
   el('text', {class:'row-label', x:-10, y:Y_MS+4, 'text-anchor':'end'}, viewport).textContent = 'MENTAL STATES (VI)';
@@ -1245,7 +1245,7 @@ const SOURCES = {
   makeRowNodes(data.nomenclature, 'term_id', nomenclatureX, 'T', 'node-nomenclature', 'nomenclature', 'nomenclature', 4.6);
   makeRowNodes(data.spheres, 'sphere_id', sphereX, 'S', 'node-sphere', 'sphere', 'sphere', 4.6);
   makeRowNodes(data.avacaras, 'key', avacaraX, '', 'node-avacara', 'avacara', 'avacara', 4.8);
-  makeRowNodes(data.quality_dharma, 'letter', qualDharmaX, 'D:', 'node-qualtier', 'qualDharma', 'qualdharma', 4.2);
+  makeRowNodes(data.quality_dharma, 'letter', qualDharmaX, 'Ch:', 'node-qualtier', 'qualDharma', 'qualdharma', 4.2);
   makeRowNodes(data.content, 'content_id', contentX, 'C:', 'node-content', 'content', 'content', 3.6);
   makeRowNodes(data.trancic, 'trancic_id', trancicX, 'TV:', 'node-caseattr', 'trancic', 'trancic', 3.6);
   makeRowNodes(data.mental, 'mental_id', mentalX, 'MV:', 'node-caseattr', 'mental', 'mental', 3.6);
@@ -1443,7 +1443,7 @@ const SOURCES = {
     setActive('sphere', sid);
     applyHighlightFromActive(activeMap);
     const s = sphereById.get(sid);
-    describe(`Sphere S${sid} — ${s.sphere_pali} (${s.translation}) — avacara ${s.avacara}, dharma-quality ${s.char_dharma}, ${cases.size} case(s).`);
+    describe(`Sphere S${sid} — ${s.sphere_pali} (${s.translation}) — avacara ${s.avacara}, character of dharmas ${s.char_dharma}, ${cases.size} case(s).`);
   }
 
   function selectAvacara(aid){
@@ -1474,7 +1474,7 @@ const SOURCES = {
 
   const qualToSpheresMaps = { qualDharma: qualDharmaToSpheres };
   const qualByIdMaps = { qualDharma: qualDharmaById };
-  const qualLabels = { qualDharma: 'Quality of dharma' };
+  const qualLabels = { qualDharma: 'Character of dharmas' };
   function selectQuality(typeKey, letter){
     const spheres = new Set(qualToSpheresMaps[typeKey].get(letter) || []);
     const cases = new Set();
@@ -1610,7 +1610,7 @@ const SOURCES = {
       const s = sphereById.get(id);
       const cases = sphereToCases.get(id) || [];
       return `<b>S${esc(id)}</b> ${esc(s.sphere_pali)}<br><span class="muted">${esc(s.translation)}</span>`
-        + `<br><span class="muted">table-iv</span> avacara ${esc(s.avacara)}${s.avacara_inferred?' &dagger;':''} &middot; dharma-quality ${esc(s.char_dharma)}`
+        + `<br><span class="muted">table-iv</span> avacara ${esc(s.avacara)}${s.avacara_inferred?' &dagger;':''} &middot; character of dharmas ${esc(s.char_dharma)}`
         + `<br>${cases.length} case(s)`;
     }
     if(type==='avacara'){
@@ -1620,7 +1620,7 @@ const SOURCES = {
       return `<b>${esc(id)}</b><br><span class="muted">${esc(a.gloss)}</span><br>${spheres.length} sphere(s) &middot; ${cases.length} case(s)`;
     }
     if(type==='qualdharma'){
-      const cfg = [qualDharmaById, qualDharmaToSpheres, 'Quality of dharma'];
+      const cfg = [qualDharmaById, qualDharmaToSpheres, 'Character of dharmas'];
       const [byId, toSpheres, label] = cfg;
       const g = byId.get(id);
       const spheres = toSpheres.get(id) || [];
