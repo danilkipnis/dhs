@@ -32,6 +32,7 @@ Outputs:
 """
 
 import json
+import re
 import sys
 from collections import defaultdict
 
@@ -55,6 +56,28 @@ def split_no(no):
     return no, None
 
 
+# Table VI's name column sometimes carries "[As in dharma X]", linking this
+# dharma to an earlier one -- e.g. 76a reads "as in dharma 2i (vedana)". One
+# note can name several ("as in dharmas 15, 19, 28 and 33").
+#
+# Only notes that OPEN with the phrase are this relation. The other 39 notes
+# say "MS 28-34 as in dharma 6", which scopes the borrowing to an MS span, not
+# to the dharma as a whole -- that is already carried by ms_range/membership.
+AS_IN = re.compile(r"^as in dharmas?\b(.*?)(?:;|$)", re.IGNORECASE | re.DOTALL)
+
+
+def as_in_targets(note):
+    """Dharma numbers this dharma is declared identical to."""
+    if not note:
+        return []
+    m = AS_IN.match(note)
+    if not m:
+        return []
+    # Numbers inside the opening clause only; the parenthesised Pali names
+    # carry no digits, so every match is a dharma reference.
+    return re.findall(r"\d+[a-z]*", m.group(1))
+
+
 def main():
     with open(SRC, encoding="utf-8") as fh:
         src = json.load(fh)
@@ -62,6 +85,7 @@ def main():
     vocab = {}          # ms_no -> {no, pali, translation, derived_from?}
     membership = []     # one row per dharma instance
     dharmas = []        # cases -> dharma instances
+    as_in_links = []    # (key, [target dharma numbers])
     problems = []
 
     for case in src["cases"]:
@@ -111,10 +135,17 @@ def main():
             if stray:
                 problems.append(f"{key}: MS {sorted(stray)} in `ms` but not in `ms_range`")
 
+            targets = as_in_targets(d.get("note"))
+            if targets:
+                as_in_links.append((key, targets))
+
             out_dharma = {
                 "no": dharma_no,
                 "name_pali": d.get("name_pali"),
                 "name_translation": d.get("name_translation"),
+                # Dharmas this one is declared identical to, from the name
+                # column's "[As in dharma X]" note.
+                "as_in": targets,
                 # Kept for display only -- it preserves the source's printed
                 # range notation, which membership flattens away. Membership is
                 # what the graph joins on; never read this as the MS set.
@@ -131,6 +162,14 @@ def main():
             })
 
         dharmas.append({"case_no": case_no, "dharmas": out_dharmas})
+
+    # An as-in target naming a dharma that does not exist would draw an edge to
+    # nowhere, so it is a hard error rather than a dropped link.
+    known = {str(d["no"]) for case in dharmas for d in case["dharmas"]}
+    for key, targets in as_in_links:
+        for t in targets:
+            if t not in known:
+                problems.append(f"{key}: 'as in dharma {t}' names an unknown dharma")
 
     # Every derived_from target must itself be a known MS.
     for ms_no, row in vocab.items():
@@ -187,6 +226,8 @@ def main():
     print(f"ms.json                {len(vocab)} MS")
     print(f"                       {sum(1 for r in vocab.values() if 'derived_from' in r)} derived")
     print(f"table-vi-dharmas.json  {len(dharmas)} cases, {len(membership)} dharma instances")
+    print(f"                       {sum(len(t) for _, t in as_in_links)} as-in links "
+          f"from {len(as_in_links)} dharmas")
     print(f"ms-membership.json     {pairs} pairs "
           f"({len(membership)}x{len(vocab)} = {cells} cells, {100 * pairs / cells:.1f}% occupancy)")
     if unnamed:

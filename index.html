@@ -184,6 +184,11 @@
   #erSvg .er-label{ font-size:11px; font-weight:650; fill:#f5f5f5; }
   #erSvg .er-count{ font-size:9.5px; fill:#a8a8a8; }
   #erSvg .er-mark{ stroke:#8a8a8a; stroke-width:2px; fill:none; }
+  /* Self-relations: a dharma cites an earlier dharma, an MS derives from an
+     earlier MS. Drawn as a loop off the box's right edge, captioned because a
+     self-loop's meaning is not readable from crow's feet alone. */
+  #erSvg .er-selfloop{ stroke:#8a8a8a; stroke-width:1.2px; fill:none; }
+  #erSvg .er-rel{ font-size:9px; fill:#a8a8a8; font-style:italic; }
   #erSvg .er-swatch{ stroke:none; }
   .stage.grabbing{ cursor:grabbing; }
   svg#canvas{ position:absolute; top:0; left:0; width:100%; height:100%; }
@@ -215,6 +220,10 @@
   /* MS -> MS derivation (6 in table-vi): same-row arc, so give it a distinct
      hue and dash to keep it from reading as an MS-to-dharma line. */
   .edge.ms-derivation{ stroke-width:1.1px; opacity:.75; stroke:var(--derivation); fill:none; stroke-dasharray:3,2; }
+  /* Dharma -> dharma "as in" (table-vi's name column): same-row arc, dotted,
+     sharing the MS-derivation hue since it is the same kind of "identical to an
+     earlier entry" relation one row up. */
+  .edge.dharma-as-in{ stroke-width:1.1px; opacity:.7; stroke:var(--derivation); fill:none; stroke-dasharray:1.5,2.5; }
   .edge.dharma-case{ stroke-width:1px; opacity:.5; }
   /* The same case-dharma relation, but stated by table-vii rather than table-vi.
      Solid like its table-vi counterpart, distinguished by colour. There are ~4x
@@ -276,7 +285,7 @@
   <button id="sidebarToggle" title="Show/hide legend &amp; controls">&#9776;</button>
   <div id="sidebar" class="collapsed">
     <p class="desc">Cases of rise of thought in <em>Dhs.</em> as described by the tables (III&ndash;VIII) of Essay 5, &ldquo;Rise of Thought as Phenomenon and System,&rdquo; of Alexander Piatigorsky's <em>The Buddhist Philosophy of Thought: Essays in Interpretation</em> (<a href="https://archive.org/details/buddhistphilosop0000piat" target="_blank" rel="noopener" style="color:var(--text-secondary)">archive.org</a>). The primary source, the <em>Dhammasangani</em> (<em>Dhs.</em>) itself, is on archive.org too (<a href="https://archive.org/details/in.ernet.dli.2015.314228" target="_blank" rel="noopener" style="color:var(--text-secondary)">archive.org</a>).</p>
-    <p class="desc">Bottom&#8211;up: mental states (MS, table&#8209;vi) &rarr; dharmas (&Delta;, many MS &rarr; one dharma) &rarr; cases (many dharmas &rarr; one case, table&#8209;v). Above cases: nomenclature (table&#8209;iii), sphere of thought (table&#8209;iv), variants of content / trancic / mental / object variables (table&#8209;v's dimension tables), each spanning many cases &rarr; avacara &amp; the three quality tiers (dharma/thought/action), each spanning many spheres. Table&#8209;vii contributes case&ndash;dharma edges too: those it states and table&#8209;vi does not are drawn in green. A few mental states are printed as derivatives of an earlier one (MS&nbsp;122 &lsquo;correct view&rsquo; from MS&nbsp;97, MS&nbsp;113 from MS&nbsp;93); those are drawn as dashed arcs along the MS row. Case hover text also cites its <em>Dhs.</em> paragraph &amp; page (table&#8209;viii) where transcribed. Hover <span id="erBtn">ER</span> for the schema&#8209;level entity&ndash;relationship diagram.</p>
+    <p class="desc">Bottom&#8211;up: mental states (MS, table&#8209;vi) &rarr; dharmas (&Delta;, many MS &rarr; one dharma) &rarr; cases (many dharmas &rarr; one case, table&#8209;v). Above cases: nomenclature (table&#8209;iii), sphere of thought (table&#8209;iv), variants of content / trancic / mental / object variables (table&#8209;v's dimension tables), each spanning many cases &rarr; avacara &amp; the quality of dharma, each spanning many spheres. Table&#8209;vii contributes case&ndash;dharma edges too: those it states and table&#8209;vi does not are drawn in green. A few mental states are printed as derivatives of an earlier one (MS&nbsp;122 &lsquo;correct view&rsquo; from MS&nbsp;97, MS&nbsp;113 from MS&nbsp;93), and many dharmas carry an &ldquo;as in dharma&nbsp;X&rdquo; note in their name column (&Delta;76a is &ldquo;as in &Delta;2i&rdquo;); both are drawn as arcs along their own row. Case hover text also cites its <em>Dhs.</em> paragraph &amp; page (table&#8209;viii) where transcribed. Hover <span id="erBtn">ER</span> for the schema&#8209;level entity&ndash;relationship diagram.</p>
     <div class="toolbar">
       <input id="search" type="text" placeholder="Find case / dharma / D-set&hellip;">
       <button id="resetBtn">Reset view</button>
@@ -293,12 +302,13 @@
       <span class="item"><span class="swatch" style="background:var(--content)"></span>Variants of content (table&#8209;v&#8209;c)<span class="count" id="count-content"></span></span>
       <span class="item"><span class="swatch" style="background:var(--caseattr)"></span>Trancic / mental / object variables<span class="count" id="count-caseattr"></span></span>
       <span class="item"><span class="swatch" style="background:var(--derivation)"></span>MS derived from MS<span class="count" id="count-derivation"></span></span>
+      <span class="item"><span class="swatch" style="background:var(--derivation)"></span>Dharma &ldquo;as in&rdquo; dharma<span class="count" id="count-asin"></span></span>
     </div>
   </div>
   <div id="erPopup">
     <div class="er-head">
       <h2>ER &mdash; entity&ndash;relationship diagram</h2>
-      <p>Every entity type in this network, and how it relates to the others &mdash; almost always one-to-many (1:N); a few (the table-v dimension tables vs. case, and dharma vs. case, which table-vii extends) are many-to-many (M:N).</p>
+      <p>Every entity type in this network, and how it relates to the others &mdash; almost always one-to-many (1:N); a few (the table-v dimension tables vs. case, and dharma vs. case, which table-vii extends) are many-to-many (M:N). Two relations are self-referencing: a dharma may be declared &ldquo;as in&rdquo; an earlier dharma, and a mental state may be printed as a derivative of an earlier one.</p>
     </div>
     <div id="erScroll">
       <svg id="erSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 870" width="900" height="870">
@@ -306,8 +316,6 @@
 <g class="er-lines">
     <line class="er-line" x1="150" y1="40" x2="350" y2="165" />
     <line class="er-line" x1="350" y1="40" x2="350" y2="165" />
-    <line class="er-line" x1="550" y1="40" x2="350" y2="165" stroke-dasharray="5,4" />
-    <line class="er-line" x1="750" y1="40" x2="350" y2="165" stroke-dasharray="5,4" />
     <line class="er-line" x1="350" y1="165" x2="550" y2="305" />
     <line class="er-line" x1="750" y1="165" x2="550" y2="305" />
     <line class="er-line" x1="80" y1="450" x2="550" y2="305" />
@@ -317,16 +325,18 @@
     <line class="er-line" x1="810" y1="450" x2="550" y2="305" />
     <line class="er-line" x1="550" y1="305" x2="480" y2="715" />
     <line class="er-line" x1="480" y1="715" x2="550" y2="835" />
-    </g>
+        <path class="er-selfloop" d="M 555,704 C 604,699 604,731 555,726" />
+    <text class="er-rel" x="610" y="712">as in</text>
+    <text class="er-rel" x="610" y="723">(M:N)</text>
+    <path class="er-selfloop" d="M 625,824 C 674,819 674,851 625,846" />
+    <text class="er-rel" x="680" y="832">derived from</text>
+    <text class="er-rel" x="680" y="843">(1:N)</text>
+</g>
     <g class="er-cardlabels">
     <path class="er-mark" d="M 296.2,131.4 Q 310.8,125.1 315.7,134.2" />
     <path class="er-mark" d="M 296.2,131.4 Q 297.0,147.2 307.3,147.7" />
     <path class="er-mark" d="M 350.0,122.0 Q 363.0,131.0 358.0,140.0" />
     <path class="er-mark" d="M 350.0,122.0 Q 337.0,131.0 342.0,140.0" />
-    <path class="er-mark" d="M 403.8,131.4 Q 403.0,147.2 392.7,147.7" />
-    <path class="er-mark" d="M 403.8,131.4 Q 389.2,125.1 384.3,134.2" />
-    <path class="er-mark" d="M 442.7,136.0 Q 438.0,151.1 427.9,149.0" />
-    <path class="er-mark" d="M 442.7,136.0 Q 430.2,126.3 423.1,133.8" />
     <path class="er-mark" d="M 496.5,267.5 Q 511.3,262.0 515.8,271.3" />
     <path class="er-mark" d="M 496.5,267.5 Q 496.4,283.3 506.6,284.4" />
     <path class="er-mark" d="M 603.5,267.5 Q 603.6,283.3 593.4,284.4" />
@@ -361,14 +371,8 @@
     <circle class="er-swatch" cx="88.0" cy="30.0" r="5" style="fill:var(--avacara)" /><text class="er-label" x="156" y="38" text-anchor="middle">AVACARA</text>
     <text class="er-count" x="150" y="54" text-anchor="middle" id="count-ms-er-avacara"></text>
     <rect class="er-box" x="275.0" y="17.0" width="150" height="46" rx="8" />
-    <circle class="er-swatch" cx="288.0" cy="30.0" r="5" style="fill:var(--qualtier)" /><text class="er-label" x="356" y="38" text-anchor="middle">QUALITY: DHARMA</text>
+    <circle class="er-swatch" cx="288.0" cy="30.0" r="5" style="fill:var(--qualtier)" /><text class="er-label" x="356" y="38" text-anchor="middle">QUALITY OF DHARMA</text>
     <text class="er-count" x="350" y="54" text-anchor="middle" id="count-ms-er-qualdharma"></text>
-    <rect class="er-box" x="475.0" y="17.0" width="150" height="46" rx="8" />
-    <circle class="er-swatch" cx="488.0" cy="30.0" r="5" style="fill:var(--qualtier)" /><text class="er-label" x="556" y="38" text-anchor="middle">QUALITY: THOUGHT</text>
-    <text class="er-count" x="550" y="54" text-anchor="middle" id="count-ms-er-qualthought"></text>
-    <rect class="er-box" x="675.0" y="17.0" width="150" height="46" rx="8" />
-    <circle class="er-swatch" cx="688.0" cy="30.0" r="5" style="fill:var(--qualtier)" /><text class="er-label" x="756" y="38" text-anchor="middle">QUALITY: ACTION</text>
-    <text class="er-count" x="750" y="54" text-anchor="middle" id="count-ms-er-qualaction"></text>
     <rect class="er-box" x="275.0" y="142.0" width="150" height="46" rx="8" />
     <circle class="er-swatch" cx="288.0" cy="155.0" r="5" style="fill:var(--sphere)" /><text class="er-label" x="356" y="163" text-anchor="middle">SPHERE OF THOUGHT</text>
     <text class="er-count" x="350" y="179" text-anchor="middle" id="count-ms-er-sphere"></text>
@@ -496,33 +500,18 @@ function buildGraphData(F){
     id:'nom-'+r.term_id, term_id:String(r.term_id), term_pali:r.term, translation:r.translation,
   }));
 
-  // table-iv states dharma-quality per sphere, but the thought/action qualities
-  // are only in the prose translation ("wholesome thought", "unwholesome act").
-  // Parsing them is a heuristic, not a field copy -- see the note in index.html.
-  const qualityOf = tr => {
-    let q = null;
-    if(tr.includes('neither wholesome nor unwholesome')) q='C';
-    else if(tr.includes('unwholesome')) q='B';
-    else if(tr.includes('wholesome')) q='A';
-    if(!q) return [null,null];
-    if(tr.includes('thought')) return [q,null];
-    if(tr.includes('action') || tr.includes('(act')) return [null,q];
-    return [null,null];
-  };
-  data.spheres = t4.rows.map(r => {
-    const [qt,qa] = qualityOf(r.translation);
-    return {
-      id:'sph-'+r.sphere_id, sphere_id:String(r.sphere_id), sphere_pali:r.sphere,
-      translation:r.translation, avacara:r.avacara,
-      avacara_inferred: r.avacara_inferred ?? false,
-      char_dharma:r.char_dharma, quality_thought:qt, quality_action:qa,
-    };
-  });
+  // Only char_dharma is an actual table-iv field. The thought/action qualities
+  // the diagram used to show were parsed out of the English translation, which
+  // is guesswork rather than data, so they are not derived at all.
+  data.spheres = t4.rows.map(r => ({
+    id:'sph-'+r.sphere_id, sphere_id:String(r.sphere_id), sphere_pali:r.sphere,
+    translation:r.translation, avacara:r.avacara,
+    avacara_inferred: r.avacara_inferred ?? false,
+    char_dharma:r.char_dharma,
+  }));
   data.avacaras = Object.entries(t4.lookups.avacara).map(([k,v]) => ({id:'av-'+k, key:k, gloss:v}));
-  // All three quality tiers read the same char_dharma legend, re-prefixed.
-  for(const [pre,key] of [['qd','quality_dharma'],['qt','quality_thought'],['qa','quality_action']]){
-    data[key] = Object.entries(t4.lookups.char_dharma).map(([k,v]) => ({id:pre+'-'+k, letter:k, gloss:v}));
-  }
+  data.quality_dharma = Object.entries(t4.lookups.char_dharma)
+    .map(([k,v]) => ({id:'qd-'+k, letter:k, gloss:v}));
 
   // ---------- table-v dimension tables ----------
   data.content = t5c.rows.map(r => ({
@@ -552,13 +541,6 @@ function buildGraphData(F){
   data.avacara_case_edges      = caseEdges(t4.rows, r=>'av-'+r.avacara);
   data.avacara_sphere_edges       = t4.rows.map(r=>({from:'av-'+r.avacara,      to:'sph-'+r.sphere_id}));
   data.quality_dharma_sphere_edges= t4.rows.map(r=>({from:'qd-'+r.char_dharma,  to:'sph-'+r.sphere_id}));
-  data.quality_thought_sphere_edges = [];
-  data.quality_action_sphere_edges  = [];
-  for(const r of t4.rows){
-    const [qt,qa] = qualityOf(r.translation);
-    if(qt) data.quality_thought_sphere_edges.push({from:'qt-'+qt, to:'sph-'+r.sphere_id});
-    if(qa) data.quality_action_sphere_edges.push({from:'qa-'+qa, to:'sph-'+r.sphere_id});
-  }
 
   data.content_case_edges = t5.rows.flatMap(r =>
     (r.content_ids||[]).map(cid => ({from:'ct-'+cid, to:'case-'+r.case_id})));
@@ -669,8 +651,22 @@ function buildTableVi(data, vocab, membership, dharmaFile){
         note: d.note ?? null,
         // No MS names printed here: the source deferred to another dharma.
         xref: !msNamedBy.has(id),
+        as_in: d.as_in || [],
       });
       data.dharma_case_edges.push({from: 'dh-' + id, to: 'case-' + caseNum});
+    }
+  }
+
+  // --- Dharma -> dharma "as in". Table-vi's name column declares some dharmas
+  // identical to an earlier one (76a reads "as in dharma 2i"); one note can name
+  // several. Both endpoints sit on the dharma row, so curve() bows these into an
+  // arc, the same treatment as MS derivation on the MS row. ---
+  data.dharma_as_in_edges = [];
+  for(const c of dharmaFile.cases){
+    for(const d of c.dharmas){
+      for(const t of (d.as_in || [])){
+        data.dharma_as_in_edges.push({from: 'dh-' + d.no, to: 'dh-' + t});
+      }
     }
   }
 
@@ -793,8 +789,6 @@ const SOURCES = {
   const sphereById = new Map(data.spheres.map(s=>[s.sphere_id, s]));
   const avacaraById = new Map(data.avacaras.map(a=>[a.key, a]));
   const qualDharmaById = new Map(data.quality_dharma.map(q=>[q.letter, q]));
-  const qualThoughtById = new Map(data.quality_thought.map(q=>[q.letter, q]));
-  const qualActionById = new Map(data.quality_action.map(q=>[q.letter, q]));
   const contentDefs = data.content_defs;
   const contentFootnoteSet = new Set(data.content_footnotes.map(f=>f.case_id+'|'+f.content_id));
   const contentById = new Map(data.content.map(c=>[c.content_id, c]));
@@ -812,6 +806,16 @@ const SOURCES = {
 
   // Reverse of ms.derived_from, so an MS can name its derivatives as well as
   // its parent (MS 93 lists 113; MS 97 lists 122).
+  // Reverse of dharma.as_in, so a dharma can name the later dharmas that
+  // declare themselves identical to it, not just the earlier one it copies.
+  const dharmaAsInBy = new Map();
+  for(const d of data.dharmas){
+    for(const t of (d.as_in || [])){
+      if(!dharmaAsInBy.has(t)) dharmaAsInBy.set(t, []);
+      dharmaAsInBy.get(t).push(d.dharma_id);
+    }
+  }
+
   const msDerivedFrom = new Map();
   for(const m of data.ms){
     if(m.derived_from == null) continue;
@@ -832,7 +836,7 @@ const SOURCES = {
   // row A (top): nomenclature, sphere of thought, avacara — left to right,
   // all sharing one horizontal line.
   // row B: content / trancic / objects / mental on the left, the three
-  // quality tiers grouped at the far right — also one shared line.
+  // quality of dharma grouped at the far right — also one shared line.
   // All six layers (row A, row B, case, dharma, table-vii, ms) sit exactly
   // LAYER_GAP apart — the same spacing the original design used between
   // ms and dharma.
@@ -905,17 +909,13 @@ const SOURCES = {
   const [SENSEOBJ_X0, SENSEOBJ_X1] = seg(0.34, 0.40);
   const [DHYANICOBJ_X0, DHYANICOBJ_X1] = seg(0.43, 0.54);
   const [MENTAL_X0, MENTAL_X1] = seg(0.57, 0.68);
-  const [QD_X0, QD_X1] = seg(0.80, 0.86);
-  const [QT_X0, QT_X1] = seg(0.88, 0.94);
-  const [QA_X0, QA_X1] = seg(0.95, 0.99);
+  const [QD_X0, QD_X1] = seg(0.80, 0.99);
   const contentX = rowSegment(data.content, 'content_id', Y_ROW_B, CONTENT_X0, CONTENT_X1);
   const trancicX = rowSegment(data.trancic, 'trancic_id', Y_ROW_B, TRANCIC_X0, TRANCIC_X1);
   const senseObjX = rowSegment(data.sense_objects, 'object_id', Y_ROW_B, SENSEOBJ_X0, SENSEOBJ_X1);
   const dhyanicObjX = rowSegment(data.dhyanic_objects, 'object_id', Y_ROW_B, DHYANICOBJ_X0, DHYANICOBJ_X1);
   const mentalX = rowSegment(data.mental, 'mental_id', Y_ROW_B, MENTAL_X0, MENTAL_X1);
   const qualDharmaX = rowSegment(data.quality_dharma, 'letter', Y_ROW_B, QD_X0, QD_X1);
-  const qualThoughtX = rowSegment(data.quality_thought, 'letter', Y_ROW_B, QT_X0, QT_X1);
-  const qualActionX = rowSegment(data.quality_action, 'letter', Y_ROW_B, QA_X0, QA_X1);
 
   // ---------- build adjacency for highlighting ----------
   const dharmaToCase = new Map(data.dharma_case_edges.map(e=>[e.from.replace('dh-',''), e.to.replace('case-','')]));
@@ -1025,20 +1025,6 @@ const SOURCES = {
     qualDharmaToSpheres.get(qid).push(sid);
     sphereToQualDharma.set(sid, qid);
   }
-  const qualThoughtToSpheres = new Map(); const sphereToQualThought = new Map();
-  for(const e of data.quality_thought_sphere_edges){
-    const qid = e.from.replace('qt-',''), sid = e.to.replace('sph-','');
-    if(!qualThoughtToSpheres.has(qid)) qualThoughtToSpheres.set(qid, []);
-    qualThoughtToSpheres.get(qid).push(sid);
-    sphereToQualThought.set(sid, qid);
-  }
-  const qualActionToSpheres = new Map(); const sphereToQualAction = new Map();
-  for(const e of data.quality_action_sphere_edges){
-    const qid = e.from.replace('qa-',''), sid = e.to.replace('sph-','');
-    if(!qualActionToSpheres.has(qid)) qualActionToSpheres.set(qid, []);
-    qualActionToSpheres.get(qid).push(sid);
-    sphereToQualAction.set(sid, qid);
-  }
 
   function buildCaseAttrMaps(edges, fromPrefix){
     const itemToCases = new Map(), caseToItems = new Map();
@@ -1080,16 +1066,16 @@ const SOURCES = {
   colLabel((SENSEOBJ_X0+SENSEOBJ_X1)/2, Y_ROW_B, 'SENSE OBJECTS (V-O)');
   colLabel((DHYANICOBJ_X0+DHYANICOBJ_X1)/2, Y_ROW_B, 'DHYANIC OBJECTS (V-O)');
   colLabel((MENTAL_X0+MENTAL_X1)/2, Y_ROW_B, 'MENTAL VARIABLES (V-MV)');
-  colLabel((QD_X0+QA_X1)/2, Y_ROW_B, 'QUALITY: DHARMA / THOUGHT / ACTION');
+  colLabel((QD_X0+QD_X1)/2, Y_ROW_B, 'QUALITY OF DHARMA');
   el('text', {class:'row-label', x:-10, y:Y_CASE+4, 'text-anchor':'end'}, viewport).textContent = 'CASES (V)';
   el('text', {class:'row-label', x:-10, y:Y_DHARMA+4, 'text-anchor':'end'}, viewport).textContent = 'DHARMAS Δ (VI)';
   el('text', {class:'row-label', x:-10, y:Y_MS+4, 'text-anchor':'end'}, viewport).textContent = 'MENTAL STATES (VI)';
 
   // ---------- edges ----------
   const edgeEls = {
-    msDharma: [], dharmaCase: [], dharmaCaseVii: [],
+    msDharma: [], dharmaCase: [], dharmaCaseVii: [], dharmaAsIn: [],
     nomCase: [], sphereCase: [], avSphere: [], avCase: [],
-    qdSphere: [], qtSphere: [], qaSphere: [],
+    qdSphere: [],
     contentCase: [], trancicCase: [], mentalCase: [], senseObjCase: [], dhyanicObjCase: [],
     msDerivation: [],
   };
@@ -1107,6 +1093,14 @@ const SOURCES = {
     }
     const midY = (y1+y2)/2;
     return `M${x1},${y1} C${x1},${midY} ${x2},${midY} ${x2},${y2}`;
+  }
+
+  for(const e of data.dharma_as_in_edges){
+    const al = dharmaLayout.get(e.from.replace('dh-','')),
+          bl = dharmaLayout.get(e.to.replace('dh-',''));
+    if(!al || !bl) continue;
+    const p = el('path', {class:'edge dharma-as-in', d: curve(al.x, Y_DHARMA, bl.x, Y_DHARMA)}, edgeLayer);
+    edgeEls.dharmaAsIn.push({el:p, from:e.from.replace('dh-',''), to:e.to.replace('dh-','')});
   }
 
   for(const e of data.ms_derivation_edges){
@@ -1175,20 +1169,6 @@ const SOURCES = {
     const p = el('path', {class:'edge q-sphere', d: curve(ql.x, ql.y, sl.x, sl.y)}, edgeLayer);
     edgeEls.qdSphere.push({el:p, qd:qid, sphere:sid});
   }
-  for(const e of data.quality_thought_sphere_edges){
-    const qid = e.from.replace('qt-',''), sid = e.to.replace('sph-','');
-    const ql = qualThoughtX.get(qid), sl = sphereX.get(sid);
-    if(!ql || !sl) continue;
-    const p = el('path', {class:'edge q-sphere', d: curve(ql.x, ql.y, sl.x, sl.y)}, edgeLayer);
-    edgeEls.qtSphere.push({el:p, qt:qid, sphere:sid});
-  }
-  for(const e of data.quality_action_sphere_edges){
-    const qid = e.from.replace('qa-',''), sid = e.to.replace('sph-','');
-    const ql = qualActionX.get(qid), sl = sphereX.get(sid);
-    if(!ql || !sl) continue;
-    const p = el('path', {class:'edge q-sphere', d: curve(ql.x, ql.y, sl.x, sl.y)}, edgeLayer);
-    edgeEls.qaSphere.push({el:p, qa:qid, sphere:sid});
-  }
   function drawCaseAttrEdges(edges, fromPrefix, xmap, cssClass, bucket, key){
     for(const e of edges){
       const iid = e.from.replace(fromPrefix,''), cId = e.to.replace('case-','');
@@ -1210,7 +1190,7 @@ const SOURCES = {
   const nodeEls = {
     case: new Map(), dharma: new Map(), ms: new Map(),
     nomenclature: new Map(), sphere: new Map(), avacara: new Map(),
-    qualDharma: new Map(), qualThought: new Map(), qualAction: new Map(),
+    qualDharma: new Map(),
     content: new Map(), trancic: new Map(), mental: new Map(),
     senseObj: new Map(), dhyanicObj: new Map(),
   };
@@ -1266,8 +1246,6 @@ const SOURCES = {
   makeRowNodes(data.spheres, 'sphere_id', sphereX, 'S', 'node-sphere', 'sphere', 'sphere', 4.6);
   makeRowNodes(data.avacaras, 'key', avacaraX, '', 'node-avacara', 'avacara', 'avacara', 4.8);
   makeRowNodes(data.quality_dharma, 'letter', qualDharmaX, 'D:', 'node-qualtier', 'qualDharma', 'qualdharma', 4.2);
-  makeRowNodes(data.quality_thought, 'letter', qualThoughtX, 'T:', 'node-qualtier', 'qualThought', 'qualthought', 4.2);
-  makeRowNodes(data.quality_action, 'letter', qualActionX, 'Ac:', 'node-qualtier', 'qualAction', 'qualaction', 4.2);
   makeRowNodes(data.content, 'content_id', contentX, 'C:', 'node-content', 'content', 'content', 3.6);
   makeRowNodes(data.trancic, 'trancic_id', trancicX, 'TV:', 'node-caseattr', 'trancic', 'trancic', 3.6);
   makeRowNodes(data.mental, 'mental_id', mentalX, 'MV:', 'node-caseattr', 'mental', 'mental', 3.6);
@@ -1351,7 +1329,7 @@ const SOURCES = {
   }
 
   // ---------- highlighting ----------
-  const TYPES = ['case','dharma','ms','nomenclature','sphere','avacara','qualDharma','qualThought','qualAction','content','trancic','mental','senseObj','dhyanicObj'];
+  const TYPES = ['case','dharma','ms','nomenclature','sphere','avacara','qualDharma','content','trancic','mental','senseObj','dhyanicObj'];
   const allNodeGroups = TYPES.flatMap(t=>[...nodeEls[t].values()]);
   const allEdges = Object.values(edgeEls).flat();
 
@@ -1378,13 +1356,13 @@ const SOURCES = {
     for(const e of edgeEls.msDharma) e.el.classList.toggle('hl', has('dharma', e.dharma));
     for(const e of edgeEls.dharmaCase) e.el.classList.toggle('hl', has('dharma', e.dharma));
     for(const e of edgeEls.dharmaCaseVii) e.el.classList.toggle('hl', has('case', e.case) && has('dharma', e.dharma));
+    for(const e of edgeEls.dharmaAsIn) e.el.classList.toggle('hl', has('dharma', e.from) || has('dharma', e.to));
+    for(const e of edgeEls.msDerivation) e.el.classList.toggle('hl', has('ms', e.parent) || has('ms', e.child));
     for(const e of edgeEls.nomCase) e.el.classList.toggle('hl', has('nomenclature', e.nom));
     for(const e of edgeEls.sphereCase) e.el.classList.toggle('hl', has('sphere', e.sphere));
     for(const e of edgeEls.avSphere) e.el.classList.toggle('hl', has('avacara', e.av));
     for(const e of edgeEls.avCase) e.el.classList.toggle('hl', has('avacara', e.av));
     for(const e of edgeEls.qdSphere) e.el.classList.toggle('hl', has('qualDharma', e.qd));
-    for(const e of edgeEls.qtSphere) e.el.classList.toggle('hl', has('qualThought', e.qt));
-    for(const e of edgeEls.qaSphere) e.el.classList.toggle('hl', has('qualAction', e.qa));
     for(const e of edgeEls.contentCase) e.el.classList.toggle('hl', has('content', e.content));
     for(const e of edgeEls.trancicCase) e.el.classList.toggle('hl', has('trancic', e.trancic));
     for(const e of edgeEls.mentalCase) e.el.classList.toggle('hl', has('mental', e.mental));
@@ -1402,12 +1380,10 @@ const SOURCES = {
     const spheres = new Set(caseToSphere.get(cId) || []);
     const avacaras = new Set([...spheres].map(s=>sphereToAvacara.get(s)).filter(Boolean));
     const qualDharmas = new Set([...spheres].map(s=>sphereToQualDharma.get(s)).filter(Boolean));
-    const qualThoughts = new Set([...spheres].map(s=>sphereToQualThought.get(s)).filter(Boolean));
-    const qualActions = new Set([...spheres].map(s=>sphereToQualAction.get(s)).filter(Boolean));
     const activeMap = {
       case: new Set([cId]), dharma: dharmas, ms: msSet, superset: supersets,
       nomenclature: nomenclatures, sphere: spheres, avacara: avacaras,
-      qualDharma: qualDharmas, qualThought: qualThoughts, qualAction: qualActions,
+      qualDharma: qualDharmas,
       content: new Set(caseToContent.get(cId) || []),
       trancic: new Set(caseToTrancic.get(cId) || []),
       mental: new Set(caseToMental.get(cId) || []),
@@ -1458,14 +1434,10 @@ const SOURCES = {
     const cases = new Set(sphereToCases.get(sid) || []);
     const av = sphereToAvacara.get(sid);
     const qd = sphereToQualDharma.get(sid);
-    const qt = sphereToQualThought.get(sid);
-    const qa = sphereToQualAction.get(sid);
     const activeMap = {
       sphere: new Set([sid]), case: cases,
       avacara: av?new Set([av]):new Set(),
       qualDharma: qd?new Set([qd]):new Set(),
-      qualThought: qt?new Set([qt]):new Set(),
-      qualAction: qa?new Set([qa]):new Set(),
     };
     dimAllExceptMap(activeMap);
     setActive('sphere', sid);
@@ -1500,9 +1472,9 @@ const SOURCES = {
     describe(`${caseAttrLabels[typeKey]} ${id} — ${desc} — ${cases.size} case(s).`);
   }
 
-  const qualToSpheresMaps = { qualDharma: qualDharmaToSpheres, qualThought: qualThoughtToSpheres, qualAction: qualActionToSpheres };
-  const qualByIdMaps = { qualDharma: qualDharmaById, qualThought: qualThoughtById, qualAction: qualActionById };
-  const qualLabels = { qualDharma: 'Quality of dharma', qualThought: 'Quality of thought', qualAction: 'Quality of action' };
+  const qualToSpheresMaps = { qualDharma: qualDharmaToSpheres };
+  const qualByIdMaps = { qualDharma: qualDharmaById };
+  const qualLabels = { qualDharma: 'Quality of dharma' };
   function selectQuality(typeKey, letter){
     const spheres = new Set(qualToSpheresMaps[typeKey].get(letter) || []);
     const cases = new Set();
@@ -1530,8 +1502,6 @@ const SOURCES = {
     else if(type==='sphere') selectSphere(id);
     else if(type==='avacara') selectAvacara(id);
     else if(type==='qualdharma') selectQuality('qualDharma', id);
-    else if(type==='qualthought') selectQuality('qualThought', id);
-    else if(type==='qualaction') selectQuality('qualAction', id);
     else if(type==='content') selectCaseAttr('content', id);
     else if(type==='trancic') selectCaseAttr('trancic', id);
     else if(type==='mental') selectCaseAttr('mental', id);
@@ -1615,6 +1585,8 @@ const SOURCES = {
         + `<br><span class="muted">table-vi</span> quality ${esc(d.quality)} &middot; new at case ${esc(d.owner_case)} (${esc(d.source_case_no)})`
         + (d.xref? ' &middot; cross-ref, shares MS range' : '')
         + (rangeTxt? `<br>MS range: ${rangeTxt}` : '')
+        + ((d.as_in||[]).length? `<br><span class="muted">as in</span> ${d.as_in.map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
+        + ((dharmaAsInBy.get(id)||[]).length? `<br><span class="muted">cited &ldquo;as in&rdquo; by</span> ${dharmaAsInBy.get(id).map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
         + `<br><span class="muted">table-vii</span> in superset(s): ${supersets.length? supersets.sort().join(', ') : '&mdash;'}`;
     }
     if(type==='ms'){
@@ -1637,11 +1609,8 @@ const SOURCES = {
     if(type==='sphere'){
       const s = sphereById.get(id);
       const cases = sphereToCases.get(id) || [];
-      const q = [];
-      if(s.quality_thought) q.push('thought '+s.quality_thought);
-      if(s.quality_action) q.push('action '+s.quality_action);
       return `<b>S${esc(id)}</b> ${esc(s.sphere_pali)}<br><span class="muted">${esc(s.translation)}</span>`
-        + `<br><span class="muted">table-iv</span> avacara ${esc(s.avacara)}${s.avacara_inferred?' &dagger;':''} &middot; dharma-quality ${esc(s.char_dharma)}${q.length? ' &middot; '+q.join(', ') : ''}`
+        + `<br><span class="muted">table-iv</span> avacara ${esc(s.avacara)}${s.avacara_inferred?' &dagger;':''} &middot; dharma-quality ${esc(s.char_dharma)}`
         + `<br>${cases.length} case(s)`;
     }
     if(type==='avacara'){
@@ -1650,8 +1619,8 @@ const SOURCES = {
       const cases = avacaraToCases.get(id) || [];
       return `<b>${esc(id)}</b><br><span class="muted">${esc(a.gloss)}</span><br>${spheres.length} sphere(s) &middot; ${cases.length} case(s)`;
     }
-    if(type==='qualdharma' || type==='qualthought' || type==='qualaction'){
-      const cfg = { qualdharma:[qualDharmaById,qualDharmaToSpheres,'Quality of dharma'], qualthought:[qualThoughtById,qualThoughtToSpheres,'Quality of thought'], qualaction:[qualActionById,qualActionToSpheres,'Quality of action'] }[type];
+    if(type==='qualdharma'){
+      const cfg = [qualDharmaById, qualDharmaToSpheres, 'Quality of dharma'];
       const [byId, toSpheres, label] = cfg;
       const g = byId.get(id);
       const spheres = toSpheres.get(id) || [];
@@ -1764,10 +1733,11 @@ const SOURCES = {
     'count-nomenclature': data.nomenclature.length,
     'count-sphere': data.spheres.length,
     'count-avacara': data.avacaras.length,
-    'count-qualtier': data.quality_dharma.length + data.quality_thought.length + data.quality_action.length,
+    'count-qualtier': data.quality_dharma.length,
     'count-content': data.content.length,
     'count-caseattr': data.trancic.length + data.mental.length + data.sense_objects.length + data.dhyanic_objects.length,
     'count-derivation': data.ms_derivation_edges.length,
+    'count-asin': data.dharma_as_in_edges.length,
   };
   for(const id in legendCounts){
     const el2 = document.getElementById(id);
@@ -1782,8 +1752,6 @@ const SOURCES = {
     'count-ms-er-sphere': data.spheres.length,
     'count-ms-er-avacara': data.avacaras.length,
     'count-ms-er-qualdharma': data.quality_dharma.length,
-    'count-ms-er-qualthought': data.quality_thought.length,
-    'count-ms-er-qualaction': data.quality_action.length,
     'count-ms-er-content': data.content.length,
     'count-ms-er-trancic': data.trancic.length,
     'count-ms-er-mental': data.mental.length,

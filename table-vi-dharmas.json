@@ -8,6 +8,7 @@
           "no": 1,
           "name_pali": "phassa",
           "name_translation": "touch",
+          "as_in": [],
           "ms_range": [
             [
               1,
@@ -19,6 +20,7 @@
           "no": 2,
           "name_pali": "vedanā",
           "name_translation": "sensation",
+          "as_in": [],
           "ms_range": [
             [
               5,
@@ -30,6 +32,7 @@
           "no": 3,
           "name_pali": "saññā",
           "name_translation": "cognition",
+          "as_in": [],
           "ms_range": [
             [
               12,
@@ -41,6 +44,7 @@
           "no": 4,
           "name_pali": "cetanā",
           "name_translation": "intention",
+          "as_in": [],
           "ms_range": [
             [
               15,
@@ -52,6 +56,7 @@
           "no": 5,
           "name_pali": "citta",
           "name_translation": "thought",
+          "as_in": [],
           "ms_range": [
             [
               18,
@@ -71,6 +76,7 @@
           "no": 6,
           "name_pali": "vitakka",
           "name_translation": "reasoning",
+          "as_in": [],
           "ms_range": [
             [
               28,
@@ -82,6 +88,7 @@
           "no": 7,
           "name_pali": "vicāra",
           "name_translation": "reflexion",
+          "as_in": [],
           "ms_range": [
             [
               35,
@@ -93,6 +100,7 @@
           "no": 8,
           "name_pali": "pīti",
           "name_translation": "joy",
+          "as_in": [],
           "ms_range": [
             [
               41,
@@ -104,6 +112,9 @@
           "no": 9,
           "name_pali": "sukha",
           "name_translation": "pleasure",
+          "as_in": [
+            "2"
+          ],
           "ms_range": [
             [
               5,
@@ -116,6 +127,7 @@
           "no": 10,
           "name_pali": "cittassekaggatā",
           "name_translation": "one-directedness of thought",
+          "as_in": [],
           "ms_range": [
             [
               50,
@@ -127,6 +139,7 @@
           "no": 11,
           "name_pali": "saddhindriya",
           "name_translation": "faculty of faith",
+          "as_in": [],
           "ms_range": [
             [
               60,
@@ -146,6 +159,7 @@
           "no": 12,
           "name_pali": "viriyindriya",
           "name_translation": "faculty of energy",
+          "as_in": [],
           "ms_range": [
             [
               66,
@@ -157,6 +171,7 @@
           "no": 13,
           "name_pali": "satindriya",
           "name_translation": "faculty of recollection",
+          "as_in": [],
           "ms_range": [
             [
               83,
@@ -184,6 +199,9 @@
           "no": 14,
           "name_pali": "samādhindriya",
           "name_translation": "faculty of concentration",
+          "as_in": [
+            "10"
+          ],
           "ms_range": [
             [
               50,
@@ -196,6 +214,7 @@
           "no": 15,
           "name_pali": "paññindriya",
           "name_translation": "faculty of wisdom",
+          "as_in": [],
           "ms_range": [
             [
               93,
@@ -223,6 +242,9 @@
           "no": 16,
           "name_pali": "manindriya",
           "name_translation": "faculty of mind",
+          "as_in": [
+            "5"
+          ],
           "ms_range": [
             [
               18,
@@ -235,6 +257,10 @@
           "no": 17,
           "name_pali": "somanassindriya",
           "name_translation": "faculty of mental gladness",
+          "as_in": [
+            "2",
+            "9"
+          ],
           "ms_range": [
             [
               5,
@@ -247,6 +273,7 @@
           "no": 18,
           "name_pali": "jīvitindriya",
           "name_translation": "faculty of living",
+          "as_in": [],
           "ms_range": [
             [
               123,
@@ -258,6 +285,9 @@
           "no": 19,
           "name_pali": "sammādiṭṭhi",
           "name_translation": "correct view",
+          "as_in": [
+            "15"
+          ],
           "ms_range": [
             [
               93,
@@ -270,6 +300,9 @@
           "no": 20,
           "name_pali": "sammāsaṅkappa",
           "name_translation": "correct construing",
+          "as_in": [
+            "6"
+          ],
           "ms_range": [
             [
               28,
@@ -282,6 +315,9 @@
           "no": 21,
           "name_pali": "sammāvāyāma",
           "name_translation": "correct endeavour",
+          "as_in": [
+            "12"
+          ],
           "ms_range": [
             [
               66,
@@ -294,6 +330,9 @@
           "no": 22,
           "name_pali": "sammāsati",
           "name_translation": "correct recollection",
+          "as_in": [
+            "13"
+          ],
           "ms_range": [
             [
               83,
@@ -306,6 +345,10 @@
           "no": 23,
           "name_pali": "sammāsamādhi",
           "name_translation": "correct concentration",
+          "as_in": [
+            "10",
+            "14"
+          ],
           "ms_range": [
             [
               50,
@@ -318,6 +361,9 @@
           "no": 24,
           "name_pali": "saddhābala",
           "name_translation": "power of faith",
+          "as_in": [
+            "11"
+          ],
           "ms_range": [
             [
               60,
@@ -330,6 +376,10 @@
           "no": 25,
           "name_pali": "viriyabala",
           "name_translation": "faculty of energy",
+          "as_in": [
+            "12",
+            "21"
+          ],
           "ms_range": [
             [
               66,
@@ -342,6 +392,10 @@
           "no": 26,
           "name_pali": "satibala",
           "name_translation": "power of recollection",
+          "as_in": [
+            "13",
+            "22"
+          ],
           "ms_range": [
             [
               83,
@@ -354,6 +408,11 @@
           "no": 27,
           "name_pali": "samādhibala",
           "name_translation": "power of concentration",
+          "as_in": [
+            "10",
+            "14",
+            "23"
+          ],
           "ms_range": [
             [
               50,
@@ -366,6 +425,10 @@
           "no": 28,
           "name_pali": "paññābala",
           "name_translation": "power of wisdom",
+          "as_in": [
+            "15",
+            "19"
+          ],
           "ms_range": [
             [
               93,
@@ -378,6 +441,7 @@
           "no": 29,
           "name_pali": "hiribala",
           "name_translation": "power of shame",
+          "as_in": [],
           "ms_range": [
             [
               132,
@@ -389,6 +453,7 @@
           "no": 30,
           "name_pali": "ottappabala",
           "name_translation": "power of remorse",
+          "as_in": [],
           "ms_range": [
             [
               134,
@@ -400,6 +465,7 @@
           "no": 31,
           "name_pali": "alobha",
           "name_translation": "disinterestedness",
+          "as_in": [],
           "ms_range": [
             [
               136,
@@ -411,6 +477,7 @@
           "no": 32,
           "name_pali": "adosa",
           "name_translation": "non-hatred",
+          "as_in": [],
           "ms_range": [
             [
               144,
@@ -422,6 +489,11 @@
           "no": 33,
           "name_pali": "amoha",
           "name_translation": "absence of delusion",
+          "as_in": [
+            "15",
+            "19",
+            "28"
+          ],
           "ms_range": [
             [
               93,
@@ -434,6 +506,9 @@
           "no": 34,
           "name_pali": "anabhijjhā",
           "name_translation": "not being covetous",
+          "as_in": [
+            "31"
+          ],
           "ms_range": [
             [
               136,
@@ -446,6 +521,9 @@
           "no": 35,
           "name_pali": "abyāpāda",
           "name_translation": "unmaliciousness",
+          "as_in": [
+            "32"
+          ],
           "ms_range": [
             [
               144,
@@ -458,6 +536,12 @@
           "no": 36,
           "name_pali": "sammādiṭṭhi",
           "name_translation": "correct view",
+          "as_in": [
+            "15",
+            "19",
+            "28",
+            "33"
+          ],
           "ms_range": [
             [
               93,
@@ -470,6 +554,9 @@
           "no": 37,
           "name_pali": "hiri",
           "name_translation": "shame",
+          "as_in": [
+            "29"
+          ],
           "ms_range": [
             [
               132,
@@ -482,6 +569,9 @@
           "no": 38,
           "name_pali": "ottappa",
           "name_translation": "remorse",
+          "as_in": [
+            "30"
+          ],
           "ms_range": [
             [
               134,
@@ -494,6 +584,7 @@
           "no": 39,
           "name_pali": "kāyapassaddhi",
           "name_translation": "composedness of body",
+          "as_in": [],
           "ms_range": [
             [
               150,
@@ -505,6 +596,7 @@
           "no": 40,
           "name_pali": "cittapassaddhi",
           "name_translation": "composedness of thought",
+          "as_in": [],
           "ms_range": [
             [
               155,
@@ -516,6 +608,7 @@
           "no": 41,
           "name_pali": "kāyalahutā",
           "name_translation": "lightness of body",
+          "as_in": [],
           "ms_range": [
             [
               160,
@@ -527,6 +620,7 @@
           "no": 42,
           "name_pali": "cittalahutā",
           "name_translation": "lightness of thought",
+          "as_in": [],
           "ms_range": [
             [
               164,
@@ -538,6 +632,7 @@
           "no": 43,
           "name_pali": "kāyamudutā",
           "name_translation": "flexibility of body",
+          "as_in": [],
           "ms_range": [
             [
               168,
@@ -549,6 +644,7 @@
           "no": 44,
           "name_pali": "cittamudutā",
           "name_translation": "flexibility of thought",
+          "as_in": [],
           "ms_range": [
             [
               172,
@@ -560,6 +656,7 @@
           "no": 45,
           "name_pali": "kāyakammaññatā",
           "name_translation": "workability of body",
+          "as_in": [],
           "ms_range": [
             [
               176,
@@ -571,6 +668,7 @@
           "no": 46,
           "name_pali": "cittakammaññatā",
           "name_translation": "workability of thought",
+          "as_in": [],
           "ms_range": [
             [
               179,
@@ -582,6 +680,7 @@
           "no": 47,
           "name_pali": "kāyapāguññatā",
           "name_translation": "fitness of body",
+          "as_in": [],
           "ms_range": [
             [
               182,
@@ -593,6 +692,7 @@
           "no": 48,
           "name_pali": "cittapāguññatā",
           "name_translation": "fitness of thought",
+          "as_in": [],
           "ms_range": [
             [
               185,
@@ -604,6 +704,7 @@
           "no": 49,
           "name_pali": "kāyujukatā",
           "name_translation": "straightness of body",
+          "as_in": [],
           "ms_range": [
             [
               188,
@@ -615,6 +716,7 @@
           "no": 50,
           "name_pali": "cittujukatā",
           "name_translation": "straightness of thought",
+          "as_in": [],
           "ms_range": [
             [
               193,
@@ -626,6 +728,11 @@
           "no": 51,
           "name_pali": "sati",
           "name_translation": "recollection",
+          "as_in": [
+            "13",
+            "22",
+            "26"
+          ],
           "ms_range": [
             [
               83,
@@ -638,6 +745,13 @@
           "no": 52,
           "name_pali": "sampajañña",
           "name_translation": "self-awareness",
+          "as_in": [
+            "15",
+            "19",
+            "28",
+            "33",
+            "36"
+          ],
           "ms_range": [
             [
               93,
@@ -650,6 +764,12 @@
           "no": 53,
           "name_pali": "samatha",
           "name_translation": "quietude",
+          "as_in": [
+            "10",
+            "14",
+            "23",
+            "27"
+          ],
           "ms_range": [
             [
               50,
@@ -662,6 +782,14 @@
           "no": 54,
           "name_pali": "vipassanā",
           "name_translation": "intuition",
+          "as_in": [
+            "15",
+            "19",
+            "28",
+            "33",
+            "36",
+            "52"
+          ],
           "ms_range": [
             [
               93,
@@ -674,6 +802,11 @@
           "no": 55,
           "name_pali": "paggāha",
           "name_translation": "grasp",
+          "as_in": [
+            "12",
+            "21",
+            "25"
+          ],
           "ms_range": [
             [
               66,
@@ -686,6 +819,13 @@
           "no": 56,
           "name_pali": "avikkhepa",
           "name_translation": "unperturbedness",
+          "as_in": [
+            "10",
+            "14",
+            "23",
+            "27",
+            "53"
+          ],
           "ms_range": [
             [
               50,
@@ -703,6 +843,7 @@
           "no": "2a",
           "name_pali": "vedanā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               198,
@@ -714,6 +855,9 @@
           "no": 57,
           "name_pali": "upekkhā",
           "name_translation": "indifference",
+          "as_in": [
+            "2a"
+          ],
           "ms_range": [
             [
               198,
@@ -726,6 +870,10 @@
           "no": 58,
           "name_pali": "upekkhindriya",
           "name_translation": "of indifference",
+          "as_in": [
+            "2a",
+            "57"
+          ],
           "ms_range": [
             [
               198,
@@ -743,6 +891,7 @@
           "no": "6a",
           "name_pali": "vitakka",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               28,
@@ -759,6 +908,7 @@
           "no": "8a",
           "name_pali": "pīti",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               41,
@@ -775,6 +925,7 @@
           "no": "10a",
           "name_pali": "cittassekaggatā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               50,
@@ -795,6 +946,7 @@
           "no": "12a",
           "name_pali": "viriyindriya",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               66,
@@ -815,6 +967,7 @@
           "no": "13a",
           "name_pali": "satindriya",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               83,
@@ -835,6 +988,9 @@
           "no": "14a",
           "name_pali": "samādhindriya",
           "name_translation": null,
+          "as_in": [
+            "10a"
+          ],
           "ms_range": [
             [
               50,
@@ -855,6 +1011,7 @@
           "no": "15a",
           "name_pali": "paññindriya",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               93,
@@ -875,6 +1032,7 @@
           "no": 59,
           "name_pali": "anaññātaññassāmītindriya",
           "name_translation": "the faculty [of those who] say: 'I shall know the unknown'",
+          "as_in": [],
           "ms_range": [
             [
               93,
@@ -899,6 +1057,9 @@
           "no": "19a",
           "name_pali": "sammādiṭṭhi",
           "name_translation": null,
+          "as_in": [
+            "15a"
+          ],
           "ms_range": [
             [
               93,
@@ -919,6 +1080,9 @@
           "no": "20a",
           "name_pali": "sammāsaṅkappa",
           "name_translation": null,
+          "as_in": [
+            "6a"
+          ],
           "ms_range": [
             [
               28,
@@ -935,6 +1099,7 @@
           "no": 60,
           "name_pali": "sammāvācā",
           "name_translation": "correct speech",
+          "as_in": [],
           "ms_range": [
             [
               201,
@@ -951,6 +1116,7 @@
           "no": 61,
           "name_pali": "sammākammanta",
           "name_translation": "correct action",
+          "as_in": [],
           "ms_range": [
             [
               201,
@@ -967,6 +1133,7 @@
           "no": 62,
           "name_pali": "sammā ājīva",
           "name_translation": "correct livelihood",
+          "as_in": [],
           "ms_range": [
             [
               201,
@@ -983,6 +1150,9 @@
           "no": "21a",
           "name_pali": "sammāvāyāma",
           "name_translation": null,
+          "as_in": [
+            "12a"
+          ],
           "ms_range": [
             [
               66,
@@ -1003,6 +1173,9 @@
           "no": "22a",
           "name_pali": "sammāsati",
           "name_translation": null,
+          "as_in": [
+            "13a"
+          ],
           "ms_range": [
             [
               83,
@@ -1023,6 +1196,10 @@
           "no": "23a",
           "name_pali": "sammāsamādhi",
           "name_translation": null,
+          "as_in": [
+            "10a",
+            "14a"
+          ],
           "ms_range": [
             [
               50,
@@ -1043,6 +1220,10 @@
           "no": "25a",
           "name_pali": "viriyabala",
           "name_translation": null,
+          "as_in": [
+            "12a",
+            "21a"
+          ],
           "ms_range": [
             [
               66,
@@ -1063,6 +1244,10 @@
           "no": "26a",
           "name_pali": "satibala",
           "name_translation": null,
+          "as_in": [
+            "13a",
+            "22a"
+          ],
           "ms_range": [
             [
               83,
@@ -1083,6 +1268,11 @@
           "no": "27a",
           "name_pali": "samādhibala",
           "name_translation": null,
+          "as_in": [
+            "10a",
+            "14a",
+            "23a"
+          ],
           "ms_range": [
             [
               50,
@@ -1103,6 +1293,10 @@
           "no": "28a",
           "name_pali": "paññābala",
           "name_translation": null,
+          "as_in": [
+            "15a",
+            "19a"
+          ],
           "ms_range": [
             [
               93,
@@ -1123,6 +1317,11 @@
           "no": "33a",
           "name_pali": "amoha",
           "name_translation": null,
+          "as_in": [
+            "15a",
+            "19a",
+            "28a"
+          ],
           "ms_range": [
             [
               93,
@@ -1143,6 +1342,12 @@
           "no": "36a",
           "name_pali": "sammādiṭṭhi",
           "name_translation": null,
+          "as_in": [
+            "15a",
+            "19a",
+            "28a",
+            "33a"
+          ],
           "ms_range": [
             [
               93,
@@ -1163,6 +1368,7 @@
           "no": "39a",
           "name_pali": "kāyapassadhi",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               150,
@@ -1179,6 +1385,7 @@
           "no": "40a",
           "name_pali": "cittapassadhi",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               155,
@@ -1195,6 +1402,11 @@
           "no": "51a",
           "name_pali": "sati",
           "name_translation": null,
+          "as_in": [
+            "13a",
+            "22a",
+            "26a"
+          ],
           "ms_range": [
             [
               83,
@@ -1215,6 +1427,13 @@
           "no": "52a",
           "name_pali": "sampajañña",
           "name_translation": null,
+          "as_in": [
+            "15a",
+            "19a",
+            "28a",
+            "33a",
+            "36a"
+          ],
           "ms_range": [
             [
               93,
@@ -1235,6 +1454,12 @@
           "no": "53a",
           "name_pali": "samatha",
           "name_translation": null,
+          "as_in": [
+            "10a",
+            "14a",
+            "23a",
+            "27a"
+          ],
           "ms_range": [
             [
               50,
@@ -1255,6 +1480,14 @@
           "no": "54a",
           "name_pali": "vipassanā",
           "name_translation": null,
+          "as_in": [
+            "15a",
+            "19a",
+            "28a",
+            "33a",
+            "36a",
+            "52a"
+          ],
           "ms_range": [
             [
               93,
@@ -1275,6 +1508,11 @@
           "no": "55a",
           "name_pali": "paggāha",
           "name_translation": null,
+          "as_in": [
+            "12a",
+            "21a",
+            "25a"
+          ],
           "ms_range": [
             [
               66,
@@ -1295,6 +1533,13 @@
           "no": "56a",
           "name_pali": "avikkhepa",
           "name_translation": null,
+          "as_in": [
+            "10a",
+            "14a",
+            "23a",
+            "27a",
+            "53a"
+          ],
           "ms_range": [
             [
               50,
@@ -1320,6 +1565,9 @@
           "no": 63,
           "name_pali": "aññindriya",
           "name_translation": "faculty of recognition",
+          "as_in": [
+            "59"
+          ],
           "ms_range": [
             [
               208,
@@ -1349,6 +1597,7 @@
           "no": "6b",
           "name_pali": "vitakka",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               28,
@@ -1365,6 +1614,7 @@
           "no": "10b",
           "name_pali": "cittassekaggatā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               50,
@@ -1381,6 +1631,7 @@
           "no": "12b",
           "name_pali": "viriyindriya",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               66,
@@ -1397,6 +1648,9 @@
           "no": "14b",
           "name_pali": "samādhindriya",
           "name_translation": null,
+          "as_in": [
+            "10b"
+          ],
           "ms_range": [
             [
               50,
@@ -1413,6 +1667,7 @@
           "no": 64,
           "name_pali": "micchādiṭṭhi",
           "name_translation": "wrong view",
+          "as_in": [],
           "ms_range": [
             [
               234,
@@ -1424,6 +1679,9 @@
           "no": 65,
           "name_pali": "micchāsaṅkappa",
           "name_translation": "wrong construing",
+          "as_in": [
+            "6b"
+          ],
           "ms_range": [
             [
               28,
@@ -1440,6 +1698,9 @@
           "no": 66,
           "name_pali": "micchāvāyāma",
           "name_translation": "wrong endeavour",
+          "as_in": [
+            "12b"
+          ],
           "ms_range": [
             [
               66,
@@ -1456,6 +1717,10 @@
           "no": 67,
           "name_pali": "micchāsamādhi",
           "name_translation": "wrong concentration",
+          "as_in": [
+            "10b",
+            "14b"
+          ],
           "ms_range": [
             [
               50,
@@ -1472,6 +1737,10 @@
           "no": "25b",
           "name_pali": "viriyabala",
           "name_translation": null,
+          "as_in": [
+            "12b",
+            "66"
+          ],
           "ms_range": [
             [
               66,
@@ -1488,6 +1757,11 @@
           "no": "27b",
           "name_pali": "samādhibala",
           "name_translation": null,
+          "as_in": [
+            "10b",
+            "14b",
+            "67"
+          ],
           "ms_range": [
             [
               50,
@@ -1504,6 +1778,7 @@
           "no": 68,
           "name_pali": "ahirikabala",
           "name_translation": "power of shamelessness",
+          "as_in": [],
           "ms_range": [
             [
               250,
@@ -1515,6 +1790,7 @@
           "no": 69,
           "name_pali": "anottappabala",
           "name_translation": "power of unremorsefulness",
+          "as_in": [],
           "ms_range": [
             [
               252,
@@ -1526,6 +1802,7 @@
           "no": 70,
           "name_pali": "lobha",
           "name_translation": "greed",
+          "as_in": [],
           "ms_range": [
             [
               254,
@@ -1537,6 +1814,7 @@
           "no": 71,
           "name_pali": "moha",
           "name_translation": "delusion",
+          "as_in": [],
           "ms_range": [
             [
               262,
@@ -1548,6 +1826,9 @@
           "no": 72,
           "name_pali": "abhijjhā",
           "name_translation": "covetousness",
+          "as_in": [
+            "70"
+          ],
           "ms_range": [
             [
               254,
@@ -1560,6 +1841,9 @@
           "no": 73,
           "name_pali": "micchādiṭṭhi",
           "name_translation": "wrong view",
+          "as_in": [
+            "64"
+          ],
           "ms_range": [
             [
               234,
@@ -1572,6 +1856,9 @@
           "no": 74,
           "name_pali": "ahirika",
           "name_translation": "shamelessness",
+          "as_in": [
+            "68"
+          ],
           "ms_range": [
             [
               250,
@@ -1584,6 +1871,9 @@
           "no": 75,
           "name_pali": "anottappa",
           "name_translation": "unremorsefulness",
+          "as_in": [
+            "69"
+          ],
           "ms_range": [
             [
               252,
@@ -1596,6 +1886,11 @@
           "no": "53b",
           "name_pali": "samatha",
           "name_translation": null,
+          "as_in": [
+            "10b",
+            "14b",
+            "67"
+          ],
           "ms_range": [
             [
               50,
@@ -1612,6 +1907,11 @@
           "no": "55b",
           "name_pali": "paggāha",
           "name_translation": null,
+          "as_in": [
+            "12b",
+            "25b",
+            "66"
+          ],
           "ms_range": [
             [
               66,
@@ -1628,6 +1928,12 @@
           "no": "56b",
           "name_pali": "avikkhepa",
           "name_translation": null,
+          "as_in": [
+            "10b",
+            "14b",
+            "53b",
+            "67"
+          ],
           "ms_range": [
             [
               50,
@@ -1649,6 +1955,7 @@
           "no": "2b",
           "name_pali": "vedanā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               286,
@@ -1661,6 +1968,9 @@
           "no": 76,
           "name_pali": "dukkha",
           "name_translation": "suffering",
+          "as_in": [
+            "2b"
+          ],
           "ms_range": [
             [
               286,
@@ -1673,6 +1983,10 @@
           "no": 77,
           "name_pali": "domanassindriya",
           "name_translation": "faculty of mental sorrow",
+          "as_in": [
+            "2b",
+            "76"
+          ],
           "ms_range": [
             [
               286,
@@ -1685,6 +1999,7 @@
           "no": 78,
           "name_pali": "dosa",
           "name_translation": "hatred",
+          "as_in": [],
           "ms_range": [
             [
               292,
@@ -1696,6 +2011,9 @@
           "no": 79,
           "name_pali": "byāpāda",
           "name_translation": "maliciousness",
+          "as_in": [
+            "78"
+          ],
           "ms_range": [
             [
               292,
@@ -1713,6 +2031,7 @@
           "no": "10c",
           "name_pali": "cittassekaggatā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               50,
@@ -1725,6 +2044,7 @@
           "no": 80,
           "name_pali": "vicikicchā",
           "name_translation": "perplexity",
+          "as_in": [],
           "ms_range": [
             [
               303,
@@ -1741,6 +2061,7 @@
           "no": 81,
           "name_pali": "uddhacca",
           "name_translation": "excitement",
+          "as_in": [],
           "ms_range": [
             [
               317,
@@ -1757,6 +2078,7 @@
           "no": "2c",
           "name_pali": "vedanā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               199,
@@ -1773,6 +2095,7 @@
           "no": "3a",
           "name_pali": "saññā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               13,
@@ -1789,6 +2112,7 @@
           "no": "4a",
           "name_pali": "cetanā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               16,
@@ -1805,6 +2129,7 @@
           "no": "5a",
           "name_pali": "citta",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               18,
@@ -1821,6 +2146,9 @@
           "no": "16a",
           "name_pali": "manindriya",
           "name_translation": null,
+          "as_in": [
+            "5a"
+          ],
           "ms_range": [
             [
               18,
@@ -1842,6 +2170,7 @@
           "no": "2d",
           "name_pali": "vedanā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               199,
@@ -1858,6 +2187,7 @@
           "no": "3b",
           "name_pali": "saññā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               13,
@@ -1874,6 +2204,7 @@
           "no": "4b",
           "name_pali": "cetanā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               16,
@@ -1890,6 +2221,7 @@
           "no": "5b",
           "name_pali": "citta",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               18,
@@ -1906,6 +2238,9 @@
           "no": "16b",
           "name_pali": "manindriya",
           "name_translation": null,
+          "as_in": [
+            "5b"
+          ],
           "ms_range": [
             [
               18,
@@ -1927,6 +2262,7 @@
           "no": "2e",
           "name_pali": "vedanā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               199,
@@ -1943,6 +2279,7 @@
           "no": "3c",
           "name_pali": "saññā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               13,
@@ -1959,6 +2296,7 @@
           "no": "4c",
           "name_pali": "cetanā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               16,
@@ -1975,6 +2313,7 @@
           "no": "5c",
           "name_pali": "citta",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               18,
@@ -1991,6 +2330,9 @@
           "no": "16c",
           "name_pali": "manindriya",
           "name_translation": null,
+          "as_in": [
+            "5c"
+          ],
           "ms_range": [
             [
               18,
@@ -2012,6 +2354,7 @@
           "no": "2f",
           "name_pali": "vedanā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               199,
@@ -2028,6 +2371,7 @@
           "no": "3d",
           "name_pali": "saññā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               13,
@@ -2044,6 +2388,7 @@
           "no": "4d",
           "name_pali": "cetanā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               16,
@@ -2060,6 +2405,7 @@
           "no": "5d",
           "name_pali": "citta",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               18,
@@ -2076,6 +2422,9 @@
           "no": "16d",
           "name_pali": "manindriya",
           "name_translation": null,
+          "as_in": [
+            "5d"
+          ],
           "ms_range": [
             [
               18,
@@ -2097,6 +2446,7 @@
           "no": "2g",
           "name_pali": "vedanā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               337,
@@ -2108,6 +2458,7 @@
           "no": "3e",
           "name_pali": "saññā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               13,
@@ -2124,6 +2475,7 @@
           "no": "4e",
           "name_pali": "cetanā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               16,
@@ -2140,6 +2492,7 @@
           "no": "5e",
           "name_pali": "citta",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               18,
@@ -2156,6 +2509,9 @@
           "no": "9a",
           "name_pali": "sukha",
           "name_translation": null,
+          "as_in": [
+            "2g"
+          ],
           "ms_range": [
             [
               337,
@@ -2168,6 +2524,9 @@
           "no": "16e",
           "name_pali": "manindriya",
           "name_translation": null,
+          "as_in": [
+            "5e"
+          ],
           "ms_range": [
             [
               18,
@@ -2184,6 +2543,10 @@
           "no": 82,
           "name_pali": "sukhindriya",
           "name_translation": null,
+          "as_in": [
+            "2g",
+            "9a"
+          ],
           "ms_range": [
             [
               337,
@@ -2201,6 +2564,7 @@
           "no": "2h",
           "name_pali": "vedanā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               199,
@@ -2217,6 +2581,7 @@
           "no": "3f",
           "name_pali": "saññā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               13,
@@ -2233,6 +2598,7 @@
           "no": "4f",
           "name_pali": "cetanā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               16,
@@ -2249,6 +2615,7 @@
           "no": "5f",
           "name_pali": "citta",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               18,
@@ -2265,6 +2632,10 @@
           "no": "6c",
           "name_pali": "vitakka",
           "name_translation": null,
+          "as_in": [
+            "6",
+            "34"
+          ],
           "ms_range": [
             [
               28,
@@ -2277,6 +2648,9 @@
           "no": "16f",
           "name_pali": "manindriya",
           "name_translation": null,
+          "as_in": [
+            "5f"
+          ],
           "ms_range": [
             [
               18,
@@ -2298,6 +2672,7 @@
           "no": "2i",
           "name_pali": "vedanā",
           "name_translation": null,
+          "as_in": [],
           "ms_range": [
             [
               350,
@@ -2309,6 +2684,9 @@
           "no": "76a",
           "name_pali": "dukkha",
           "name_translation": null,
+          "as_in": [
+            "2i"
+          ],
           "ms_range": [
             [
               350,
@@ -2321,6 +2699,10 @@
           "no": 83,
           "name_pali": "dukkhindriya",
           "name_translation": "faculty of suffering",
+          "as_in": [
+            "2i",
+            "76a"
+          ],
           "ms_range": [
             [
               350,
