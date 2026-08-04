@@ -1456,6 +1456,14 @@ const SOURCES = {
     case: 4, dharma: 5, ms: 6,
   };
 
+  // Avacara and character of dharmas share row 1, so the rule below would stop
+  // either from reaching the other through a sphere. Exempt that pair: a sphere
+  // is *defined* as one avacara combined with one character, so the two are
+  // orthogonal axes of the same thing rather than siblings. The row-3 dimension
+  // tables are not exempt -- they only ever co-occur on a case, which is the
+  // incidental kind of neighbour the rule exists to suppress.
+  const ROW_EXEMPT = new Set(['avacara|qualDharma', 'qualDharma|avacara']);
+
   function reachFrom(type, id){
     const start = nkey(type, id);
     const startRow = ROW[type];
@@ -1470,7 +1478,8 @@ const SOURCES = {
         // dharma, and one content variant into every other variant of its cases.
         // The first step is exempt, so a dharma still reaches the dharmas it is
         // declared "as in", and a mental state its derivations.
-        if(d > 1 && ROW[n.slice(0, n.indexOf('|'))] === startRow) continue;
+        const nt = n.slice(0, n.indexOf('|'));
+        if(d > 1 && ROW[nt] === startRow && !ROW_EXEMPT.has(type + '|' + nt)) continue;
         dist.set(n, d); next.push(n);
       }
       frontier = next;
