@@ -1,0 +1,6 @@
+# Build stamp for the generated table-vi files (see Makefile). The files it
+# guards are committed; the stamp only records when they were last produced.
+.table-vi.stamp
+
+# Editor swap files
+.*.sw[a-p]
