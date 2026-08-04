@@ -151,8 +151,18 @@
   #erBtn{
     text-decoration:underline dotted;
     text-underline-offset:2px;
-    cursor:default;
+    cursor:pointer;
   }
+  #erBtn:hover{ color:#f0f0f0; }
+  /* Catches clicks outside the panel. Also keeps such a click from reaching the
+     canvas underneath, which would select a node while dismissing the panel. */
+  #erBackdrop{
+    position:fixed; inset:0;
+    z-index:39;
+    background:rgba(0,0,0,.45);
+    display:none;
+  }
+  #erBackdrop.open{ display:block; }
   #erPopup{
     position:fixed;
     top:50%; left:50%;
@@ -162,22 +172,34 @@
     border:1px solid #4a4a4a;
     border-radius:10px;
     box-shadow:0 12px 48px rgba(0,0,0,.55);
-    max-width:min(1100px, 96vw);
-    max-height:92vh;
+    /* A definite size, not just maxima: the SVG has no intrinsic dimensions
+       (viewBox only), so it needs a resolved box to scale itself into. Sized to
+       the diagram's 900:750 ratio, capped by the viewport in both directions. */
+    width:min(1100px, 96vw, calc(92vh * 900 / 750));
+    height:min(92vh, calc(96vw * 750 / 900), calc(1100px * 750 / 900));
     display:none;
     flex-direction:column;
     overflow:hidden;
   }
   #erPopup.open{ display:flex; }
-  #erPopup .er-head{
-    padding:.85rem 1.1rem;
-    border-bottom:1px solid rgba(128,128,128,.3);
-    flex:0 0 auto;
+  #erClose{
+    position:absolute;
+    top:.5rem; right:.5rem;
+    z-index:1;
+    width:1.6rem; height:1.6rem;
+    display:grid; place-items:center;
+    background:transparent;
+    border:1px solid rgba(128,128,128,.35);
+    border-radius:6px;
+    color:#a8a8a8;
+    font:inherit; font-size:1rem; line-height:1;
+    cursor:pointer;
   }
-  #erPopup .er-head h2{ font-size:.95rem; margin:0; font-weight:650; color:#f0f0f0; }
-  #erPopup .er-head p{ font-size:.74rem; color:#a8a8a8; margin:.25rem 0 0; }
-  #erScroll{ overflow:auto; padding:1rem; flex:1 1 auto; }
-  #erSvg{ display:block; margin:0 auto; }
+  #erClose:hover{ color:#f0f0f0; border-color:rgba(128,128,128,.7); }
+  /* min-height:0 lets this flex item shrink below the SVG's natural size;
+     without it the diagram would push the panel taller and scroll instead. */
+  #erScroll{ padding:2.2rem 1rem 1rem; flex:1 1 auto; min-height:0; overflow:hidden; display:grid; place-items:center; }
+  #erSvg{ display:block; width:100%; height:100%; }
   #erSvg .er-bg{ fill:#000000; }
   #erSvg .er-box{ fill:#1c1c1c; stroke:#4a4a4a; stroke-width:1.4px; }
   #erSvg .er-line{ stroke:#8a8a8a; stroke-width:1.2px; fill:none; }
@@ -284,7 +306,7 @@
   <button id="sidebarToggle" title="Show/hide legend &amp; controls">&#9776;</button>
   <div id="sidebar" class="collapsed">
     <p class="desc">Cases of rise of thought in <em>Dhs.</em> as described by the tables (III&ndash;VIII) of Essay 5, &ldquo;Rise of Thought as Phenomenon and System,&rdquo; of Alexander Piatigorsky's <em>The Buddhist Philosophy of Thought: Essays in Interpretation</em> (<a href="https://archive.org/details/buddhistphilosop0000piat" target="_blank" rel="noopener" style="color:var(--text-secondary)">archive.org</a>). The primary source, the <em>Dhammasangani</em> (<em>Dhs.</em>) itself, is on archive.org too (<a href="https://archive.org/details/in.ernet.dli.2015.314228" target="_blank" rel="noopener" style="color:var(--text-secondary)">archive.org</a>).</p>
-    <p class="desc">Six levels, most general at the top: the character of dharmas &amp; avacara (table&#8209;iv) &rarr; sphere of thought (table&#8209;iv) &amp; nomenclature of thought (table&#8209;iii), each combining the two above &rarr; variants of content / trancic variables / sense &amp; dhyanic objects / mental variables (table&#8209;v's dimension tables), each spanning many cases &rarr; cases (table&#8209;v) &rarr; dharmas (&Delta;, many per case, table&#8209;vi) &rarr; mental states (MS, many per dharma, table&#8209;vi). Table&#8209;vii contributes case&ndash;dharma edges too: those it states and table&#8209;vi does not are drawn in green. A few mental states are printed as derivatives of an earlier one (MS&nbsp;122 &lsquo;correct view&rsquo; from MS&nbsp;97, MS&nbsp;113 from MS&nbsp;93), and many dharmas carry an &ldquo;as in dharma&nbsp;X&rdquo; note in their name column (&Delta;76a is &ldquo;as in &Delta;2i&rdquo;); both are drawn as arcs along their own row. Case hover text also cites its <em>Dhs.</em> paragraph &amp; page (table&#8209;viii) where transcribed. Hover <span id="erBtn">ER</span> for the schema&#8209;level entity&ndash;relationship diagram.</p>
+    <p class="desc">Six levels, most general at the top: the character of dharmas &amp; avacara (table&#8209;iv) &rarr; sphere of thought (table&#8209;iv) &amp; nomenclature of thought (table&#8209;iii), each combining the two above &rarr; variants of content / trancic variables / sense &amp; dhyanic objects / mental variables (table&#8209;v's dimension tables), each spanning many cases &rarr; cases (table&#8209;v) &rarr; dharmas (&Delta;, many per case, table&#8209;vi) &rarr; mental states (MS, many per dharma, table&#8209;vi). Table&#8209;vii contributes case&ndash;dharma edges too: those it states and table&#8209;vi does not are drawn in green. A few mental states are printed as derivatives of an earlier one (MS&nbsp;122 &lsquo;correct view&rsquo; from MS&nbsp;97, MS&nbsp;113 from MS&nbsp;93), and many dharmas carry an &ldquo;as in dharma&nbsp;X&rdquo; note in their name column (&Delta;76a is &ldquo;as in &Delta;2i&rdquo;); both are drawn as arcs along their own row. Case hover text also cites its <em>Dhs.</em> paragraph &amp; page (table&#8209;viii) where transcribed. Click <span id="erBtn">ER</span> for the schema&#8209;level entity&ndash;relationship diagram.</p>
     <div class="toolbar">
       <input id="search" type="text" placeholder="Find case / dharma / D-set&hellip;">
       <button id="resetBtn">Reset view</button>
@@ -304,14 +326,12 @@
       <span class="item"><span class="swatch" style="background:var(--derivation)"></span>Dharma &ldquo;as in&rdquo; dharma<span class="count" id="count-asin"></span></span>
     </div>
   </div>
-  <div id="erPopup">
-    <div class="er-head">
-      <h2>ER &mdash; entity&ndash;relationship diagram</h2>
-      <p>Every entity type in this network, and how it relates to the others &mdash; almost always one-to-many (1:N); a few (the table-v dimension tables vs. case, and dharma vs. case, which table-vii extends) are many-to-many (M:N). Two relations are self-referencing: a dharma may be declared &ldquo;as in&rdquo; an earlier dharma, and a mental state may be printed as a derivative of an earlier one.</p>
-    </div>
+  <div id="erBackdrop"></div>
+  <div id="erPopup" role="dialog" aria-modal="true" aria-label="Entity-relationship diagram">
+    <button id="erClose" type="button" aria-label="Close">&times;</button>
     <div id="erScroll">
-      <svg id="erSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 870" width="900" height="870">
-      <rect class="er-bg" x="0" y="0" width="900" height="870" />
+      <svg id="erSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 750">
+      <rect class="er-bg" x="0" y="0" width="900" height="750" />
 <g class="er-lines">
     <line class="er-line" x1="150" y1="40" x2="350" y2="165" />
     <line class="er-line" x1="350" y1="40" x2="350" y2="165" />
@@ -322,14 +342,14 @@
     <line class="er-line" x1="450" y1="450" x2="550" y2="305" />
     <line class="er-line" x1="630" y1="450" x2="550" y2="305" />
     <line class="er-line" x1="810" y1="450" x2="550" y2="305" />
-    <line class="er-line" x1="550" y1="305" x2="480" y2="715" />
-    <line class="er-line" x1="480" y1="715" x2="550" y2="835" />
-        <path class="er-selfloop" d="M 555,704 C 604,699 604,731 555,726" />
-    <text class="er-rel" x="610" y="712">as in</text>
-    <text class="er-rel" x="610" y="723">(M:N)</text>
-    <path class="er-selfloop" d="M 625,824 C 674,819 674,851 625,846" />
-    <text class="er-rel" x="680" y="832">derived from</text>
-    <text class="er-rel" x="680" y="843">(1:N)</text>
+    <line class="er-line" x1="550" y1="305" x2="550" y2="570" />
+    <line class="er-line" x1="550" y1="570" x2="550" y2="690" />
+        <path class="er-selfloop" d="M 625,559 C 674,554 674,586 625,581" />
+    <text class="er-rel" x="680" y="567">as in</text>
+    <text class="er-rel" x="680" y="578">(M:N)</text>
+    <path class="er-selfloop" d="M 625,679 C 674,674 674,706 625,701" />
+    <text class="er-rel" x="680" y="687">derived from</text>
+    <text class="er-rel" x="680" y="698">(1:N)</text>
 </g>
     <g class="er-cardlabels">
     <path class="er-mark" d="M 296.2,131.4 Q 310.8,125.1 315.7,134.2" />
@@ -360,49 +380,49 @@
     <path class="er-mark" d="M 751.3,417.3 Q 752.8,433.0 763.1,433.0" />
     <path class="er-mark" d="M 614.1,340.7 Q 599.9,347.7 594.5,339.0" />
     <path class="er-mark" d="M 614.1,340.7 Q 612.6,325.0 602.3,325.0" />
-    <path class="er-mark" d="M 487.3,672.3 Q 498.6,683.3 492.1,691.4" />
-    <path class="er-mark" d="M 487.3,672.3 Q 473.0,679.0 476.4,688.7" />
-    <path class="er-mark" d="M 526.5,794.7 Q 542.3,795.9 542.5,806.2" />
-    <path class="er-mark" d="M 526.5,794.7 Q 519.8,809.0 528.7,814.3" />
+    <path class="er-mark" d="M 550.0,527.0 Q 563.0,536.0 558.0,545.0" />
+    <path class="er-mark" d="M 550.0,527.0 Q 537.0,536.0 542.0,545.0" />
+    <path class="er-mark" d="M 550.0,647.0 Q 563.0,656.0 558.0,665.0" />
+    <path class="er-mark" d="M 550.0,647.0 Q 537.0,656.0 542.0,665.0" />
     </g>
     <g class="er-boxes">
     <rect class="er-box" x="75.0" y="17.0" width="150" height="46" rx="8" />
-    <circle class="er-swatch" cx="88.0" cy="30.0" r="5" style="fill:var(--avacara)" /><text class="er-label" x="156" y="38" text-anchor="middle">AVACARA</text>
+    <circle class="er-swatch" cx="88.0" cy="30.0" r="5" style="fill:var(--avacara)" /><text class="er-label" x="156" y="38" text-anchor="middle">Avacara</text>
     <text class="er-count" x="150" y="54" text-anchor="middle" id="count-ms-er-avacara"></text>
-    <rect class="er-box" x="275.0" y="17.0" width="150" height="46" rx="8" />
-    <circle class="er-swatch" cx="288.0" cy="30.0" r="5" style="fill:var(--qualtier)" /><text class="er-label" x="356" y="38" text-anchor="middle">CHARACTER OF DHARMAS</text>
+    <rect class="er-box" x="250.0" y="17.0" width="200" height="46" rx="8" />
+    <circle class="er-swatch" cx="263.0" cy="30.0" r="5" style="fill:var(--qualtier)" /><text class="er-label" x="356" y="38" text-anchor="middle">Character of Dharmas</text>
     <text class="er-count" x="350" y="54" text-anchor="middle" id="count-ms-er-qualdharma"></text>
     <rect class="er-box" x="275.0" y="142.0" width="150" height="46" rx="8" />
-    <circle class="er-swatch" cx="288.0" cy="155.0" r="5" style="fill:var(--sphere)" /><text class="er-label" x="356" y="163" text-anchor="middle">SPHERE OF THOUGHT</text>
+    <circle class="er-swatch" cx="288.0" cy="155.0" r="5" style="fill:var(--sphere)" /><text class="er-label" x="356" y="163" text-anchor="middle">Sphere of Thought</text>
     <text class="er-count" x="350" y="179" text-anchor="middle" id="count-ms-er-sphere"></text>
-    <rect class="er-box" x="675.0" y="142.0" width="150" height="46" rx="8" />
-    <circle class="er-swatch" cx="688.0" cy="155.0" r="5" style="fill:var(--nomenclature)" /><text class="er-label" x="756" y="163" text-anchor="middle">NOMENCLATURE</text>
+    <rect class="er-box" x="650.0" y="142.0" width="200" height="46" rx="8" />
+    <circle class="er-swatch" cx="663.0" cy="155.0" r="5" style="fill:var(--nomenclature)" /><text class="er-label" x="756" y="163" text-anchor="middle">Nomenclature of Thought</text>
     <text class="er-count" x="750" y="179" text-anchor="middle" id="count-ms-er-nomenclature"></text>
     <rect class="er-box" x="455.0" y="279.0" width="190" height="52" rx="8" />
-    <circle class="er-swatch" cx="468.0" cy="292.0" r="5" style="fill:var(--case)" /><text class="er-label" x="556" y="303" text-anchor="middle">CASE</text>
+    <circle class="er-swatch" cx="468.0" cy="292.0" r="5" style="fill:var(--case)" /><text class="er-label" x="556" y="303" text-anchor="middle">Case</text>
     <text class="er-count" x="550" y="319" text-anchor="middle" id="count-ms-er-case"></text>
     <rect class="er-box" x="5.0" y="427.0" width="150" height="46" rx="8" />
-    <circle class="er-swatch" cx="18.0" cy="440.0" r="5" style="fill:var(--content)" /><text class="er-label" x="86" y="448" text-anchor="middle">CONTENT VARIANT</text>
+    <circle class="er-swatch" cx="18.0" cy="440.0" r="5" style="fill:var(--content)" /><text class="er-label" x="86" y="448" text-anchor="middle">Content Variant</text>
     <text class="er-count" x="80" y="464" text-anchor="middle" id="count-ms-er-content"></text>
     <rect class="er-box" x="195.0" y="427.0" width="150" height="46" rx="8" />
-    <circle class="er-swatch" cx="208.0" cy="440.0" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="276" y="448" text-anchor="middle">TRANCIC VARIABLE</text>
+    <circle class="er-swatch" cx="208.0" cy="440.0" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="276" y="448" text-anchor="middle">Trancic Variable</text>
     <text class="er-count" x="270" y="464" text-anchor="middle" id="count-ms-er-trancic"></text>
     <rect class="er-box" x="375.0" y="427.0" width="150" height="46" rx="8" />
-    <circle class="er-swatch" cx="388.0" cy="440.0" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="456" y="448" text-anchor="middle">SENSE OBJECT</text>
+    <circle class="er-swatch" cx="388.0" cy="440.0" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="456" y="448" text-anchor="middle">Sense Object</text>
     <text class="er-count" x="450" y="464" text-anchor="middle" id="count-ms-er-senseobj"></text>
     <rect class="er-box" x="555.0" y="427.0" width="150" height="46" rx="8" />
-    <circle class="er-swatch" cx="568.0" cy="440.0" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="636" y="448" text-anchor="middle">DHYANIC OBJECT</text>
+    <circle class="er-swatch" cx="568.0" cy="440.0" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="636" y="448" text-anchor="middle">Dhyanic Object</text>
     <text class="er-count" x="630" y="464" text-anchor="middle" id="count-ms-er-dhyanicobj"></text>
     <rect class="er-box" x="735.0" y="427.0" width="150" height="46" rx="8" />
-    <circle class="er-swatch" cx="748.0" cy="440.0" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="816" y="448" text-anchor="middle">MENTAL VARIABLE</text>
+    <circle class="er-swatch" cx="748.0" cy="440.0" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="816" y="448" text-anchor="middle">Mental Variable</text>
     <text class="er-count" x="810" y="464" text-anchor="middle" id="count-ms-er-mental"></text>
     <text class="er-count" x="750" y="604" text-anchor="middle" id="count-ms-er-superset"></text>
-    <rect class="er-box" x="405.0" y="692.0" width="150" height="46" rx="8" />
-    <circle class="er-swatch" cx="418.0" cy="705.0" r="5" style="fill:var(--dharma)" /><text class="er-label" x="486" y="713" text-anchor="middle">DHARMA (Δ)</text>
-    <text class="er-count" x="480" y="729" text-anchor="middle" id="count-ms-er-dharma"></text>
-    <rect class="er-box" x="475.0" y="812.0" width="150" height="46" rx="8" />
-    <circle class="er-swatch" cx="488.0" cy="825.0" r="5" style="fill:var(--ms)" /><text class="er-label" x="556" y="833" text-anchor="middle">MENTAL STATE</text>
-    <text class="er-count" x="550" y="849" text-anchor="middle" id="count-ms-er-ms"></text>
+    <rect class="er-box" x="475.0" y="547.0" width="150" height="46" rx="8" />
+    <circle class="er-swatch" cx="488.0" cy="560.0" r="5" style="fill:var(--dharma)" /><text class="er-label" x="556" y="568" text-anchor="middle">Dharma (Δ)</text>
+    <text class="er-count" x="550" y="584" text-anchor="middle" id="count-ms-er-dharma"></text>
+    <rect class="er-box" x="475.0" y="667.0" width="150" height="46" rx="8" />
+    <circle class="er-swatch" cx="488.0" cy="680.0" r="5" style="fill:var(--ms)" /><text class="er-label" x="556" y="688" text-anchor="middle">Mental State</text>
+    <text class="er-count" x="550" y="704" text-anchor="middle" id="count-ms-er-ms"></text>
     </g>
         </svg>
       </div>
@@ -1334,15 +1354,28 @@ const SOURCES = {
   const sidebar = document.getElementById('sidebar');
   document.getElementById('sidebarToggle').onclick = ()=>{ sidebar.classList.toggle('collapsed'); };
 
+  // The ER panel is click-to-open and stays open until it is dismissed: by the
+  // close button, by a click on the backdrop, or by Escape. Deliberately no
+  // pointer-leave or blur handling -- it must survive moving the mouse away and
+  // switching to another window, so it can be read side by side with the graph.
   const erPopup = document.getElementById('erPopup');
+  const erBackdrop = document.getElementById('erBackdrop');
   const erBtn = document.getElementById('erBtn');
-  let erHideTimer = null;
-  function erShow(){ if(erHideTimer){ clearTimeout(erHideTimer); erHideTimer = null; } erPopup.classList.add('open'); }
-  function erScheduleHide(){ erHideTimer = setTimeout(()=>{ erPopup.classList.remove('open'); }, 150); }
-  erBtn.addEventListener('mouseenter', erShow);
-  erBtn.addEventListener('mouseleave', erScheduleHide);
-  erPopup.addEventListener('mouseenter', erShow);
-  erPopup.addEventListener('mouseleave', erScheduleHide);
+  const erIsOpen = () => erPopup.classList.contains('open');
+  function erShow(){
+    erPopup.classList.add('open');
+    erBackdrop.classList.add('open');
+  }
+  function erHide(){
+    erPopup.classList.remove('open');
+    erBackdrop.classList.remove('open');
+  }
+  erBtn.addEventListener('click', () => erIsOpen() ? erHide() : erShow());
+  document.getElementById('erClose').addEventListener('click', erHide);
+  erBackdrop.addEventListener('click', erHide);
+  document.addEventListener('keydown', (ev) => {
+    if(ev.key === 'Escape' && erIsOpen()) erHide();
+  });
 
   function panTo(x, y, w){
     const h = w * (fullBox.h/fullBox.w) * (stage.clientHeight/stage.clientWidth || 1);
