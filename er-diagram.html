@@ -1,0 +1,229 @@
+<meta charset="utf-8">
+<title>Entity&ndash;relationship diagram &mdash; Essay 5</title>
+<style>
+  /* Dark is the unconditional default -- not gated behind
+     prefers-color-scheme, since some browsers/environments (e.g. Safari on
+     macOS set to Light appearance) would otherwise silently fall back to
+     a very different-looking light theme instead of matching what every
+     other view of this page shows. */
+  :root{
+    color-scheme: dark;
+    --surface-1:      #000000;
+    --text-primary:   #ffffff;
+    --text-secondary: #c3c2b7;
+    --rule:           #3a3934;
+    --ms:             #4b99f7;
+    --dharma:         #eb6b38;
+    --case:           #f1f0eb;
+    --nomenclature:   #db9712;
+    --sphere:         #129512;
+    --avacara:        #e76393;
+    --qualtier:       #a297fb;
+    --content:        #f87979;
+    --caseattr:       #34e5ff;
+  }
+  :root[data-theme="light"]{
+    color-scheme: light;
+    --surface-1:      #fcfcfb;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --rule:           #dcdad2;
+    --ms:             #2a78d6;
+    --dharma:         #eb6834;
+    --case:           #22201a;
+    --nomenclature:   #eda100;
+    --sphere:         #008300;
+    --avacara:        #e87ba4;
+    --qualtier:       #4a3aa7;
+    --content:        #e34948;
+    --caseattr:       #0891b2;
+  }
+  *{box-sizing:border-box;}
+  html,body{ height:100%; }
+  body{
+    margin:0;
+    background:var(--surface-1);
+    color:var(--text-primary);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    display:flex;
+    flex-direction:column;
+  }
+  header{
+    padding:.9rem 1.2rem;
+    border-bottom:1px solid var(--rule);
+    flex:0 0 auto;
+  }
+  header h1{
+    font-size:1rem;
+    font-weight:650;
+    margin:0 0 .2rem;
+  }
+  header p{
+    margin:0;
+    font-size:.85rem;
+    color:var(--text-secondary);
+  }
+  header a{ color:inherit; }
+  #erWrap{
+    flex:1 1 auto;
+    min-height:0;
+    display:grid;
+    place-items:center;
+    padding:1.2rem;
+  }
+  #erSvg{
+    display:block;
+    width:100%;
+    height:100%;
+    max-width:min(1400px, calc(96vh * 900 / 750));
+    max-height:96vh;
+  }
+  #erSvg .er-bg{ fill:none; }
+  #erSvg .er-box{ fill:var(--surface-1); stroke:#8a8a8a; stroke-width:1.4px; }
+  :root[data-theme="light"] #erSvg .er-box{ fill:#f1f0eb; }
+  #erSvg .er-line{ stroke:#8a8a8a; stroke-width:1.2px; fill:none; }
+  #erSvg .er-label{ font-size:11px; font-weight:650; fill:var(--text-primary); }
+  #erSvg .er-count{ font-size:9.5px; fill:var(--text-secondary); }
+  #erSvg .er-mark{ stroke:#8a8a8a; stroke-width:2px; fill:none; }
+  /* Self-relations: a dharma cites an earlier dharma, an MS derives from an
+     earlier MS. Drawn as a loop off the box's right edge, captioned because a
+     self-loop's meaning is not readable from crow's feet alone. */
+  #erSvg .er-selfloop{ stroke:#8a8a8a; stroke-width:1.2px; fill:none; }
+  #erSvg .er-rel{ font-size:9px; fill:var(--text-secondary); font-style:italic; }
+  #erSvg .er-swatch{ stroke:none; }
+</style>
+<header>
+  <h1>Rise of thought in the <em>Dhammasangani</em> &mdash; entity&ndash;relationship diagram</h1>
+  <p>Structure of the underlying data. See <a href="index.html">index.html</a> for the interactive network diagram.</p>
+</header>
+<div id="erWrap">
+  <svg id="erSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 750">
+  <rect class="er-bg" x="0" y="0" width="900" height="750" />
+<g class="er-lines">
+    <line class="er-line" x1="150" y1="40" x2="350" y2="165" />
+    <line class="er-line" x1="350" y1="40" x2="350" y2="165" />
+    <line class="er-line" x1="350" y1="165" x2="550" y2="305" />
+    <line class="er-line" x1="750" y1="165" x2="550" y2="305" />
+    <line class="er-line" x1="80" y1="450" x2="550" y2="305" />
+    <line class="er-line" x1="270" y1="450" x2="550" y2="305" />
+    <line class="er-line" x1="450" y1="450" x2="550" y2="305" />
+    <line class="er-line" x1="630" y1="450" x2="550" y2="305" />
+    <line class="er-line" x1="810" y1="450" x2="550" y2="305" />
+    <line class="er-line" x1="550" y1="305" x2="550" y2="570" />
+    <line class="er-line" x1="550" y1="570" x2="550" y2="690" />
+        <path class="er-selfloop" d="M 625,559 C 674,554 674,586 625,581" />
+    <text class="er-rel" x="680" y="567">as in</text>
+    <text class="er-rel" x="680" y="578">(M:N)</text>
+    <path class="er-selfloop" d="M 625,679 C 674,674 674,706 625,701" />
+    <text class="er-rel" x="680" y="687">derived from</text>
+    <text class="er-rel" x="680" y="698">(1:N)</text>
+</g>
+    <g class="er-cardlabels">
+    <path class="er-mark" d="M 296.2,131.4 Q 310.8,125.1 315.7,134.2" />
+    <path class="er-mark" d="M 296.2,131.4 Q 297.0,147.2 307.3,147.7" />
+    <path class="er-mark" d="M 350.0,122.0 Q 363.0,131.0 358.0,140.0" />
+    <path class="er-mark" d="M 350.0,122.0 Q 337.0,131.0 342.0,140.0" />
+    <path class="er-mark" d="M 496.5,267.5 Q 511.3,262.0 515.8,271.3" />
+    <path class="er-mark" d="M 496.5,267.5 Q 496.4,283.3 506.6,284.4" />
+    <path class="er-mark" d="M 603.5,267.5 Q 603.6,283.3 593.4,284.4" />
+    <path class="er-mark" d="M 603.5,267.5 Q 588.7,262.0 584.2,271.3" />
+    <path class="er-mark" d="M 173.7,421.1 Q 168.9,436.2 158.8,434.1" />
+    <path class="er-mark" d="M 173.7,421.1 Q 161.2,411.3 154.1,418.8" />
+    <path class="er-mark" d="M 446.6,336.9 Q 451.4,321.8 461.5,323.9" />
+    <path class="er-mark" d="M 446.6,336.9 Q 459.0,346.7 466.2,339.2" />
+    <path class="er-mark" d="M 332.2,417.8 Q 330.2,433.5 319.9,433.2" />
+    <path class="er-mark" d="M 332.2,417.8 Q 318.2,410.4 312.5,419.0" />
+    <path class="er-mark" d="M 482.0,340.2 Q 484.0,324.5 494.3,324.8" />
+    <path class="er-mark" d="M 482.0,340.2 Q 496.0,347.6 501.7,339.0" />
+    <path class="er-mark" d="M 477.2,410.5 Q 482.8,425.3 473.6,429.9" />
+    <path class="er-mark" d="M 477.2,410.5 Q 461.4,410.6 460.4,420.8" />
+    <path class="er-mark" d="M 520.7,347.5 Q 515.1,332.7 524.3,328.1" />
+    <path class="er-mark" d="M 520.7,347.5 Q 536.5,347.4 537.5,337.2" />
+    <path class="er-mark" d="M 607.6,409.5 Q 623.4,411.1 623.3,421.4" />
+    <path class="er-mark" d="M 607.6,409.5 Q 600.6,423.6 609.3,429.1" />
+    <path class="er-mark" d="M 574.0,348.5 Q 558.3,346.9 558.3,336.6" />
+    <path class="er-mark" d="M 574.0,348.5 Q 581.0,334.4 572.3,328.9" />
+    <path class="er-mark" d="M 751.3,417.3 Q 765.5,410.3 770.9,419.0" />
+    <path class="er-mark" d="M 751.3,417.3 Q 752.8,433.0 763.1,433.0" />
+    <path class="er-mark" d="M 614.1,340.7 Q 599.9,347.7 594.5,339.0" />
+    <path class="er-mark" d="M 614.1,340.7 Q 612.6,325.0 602.3,325.0" />
+    <path class="er-mark" d="M 550.0,527.0 Q 563.0,536.0 558.0,545.0" />
+    <path class="er-mark" d="M 550.0,527.0 Q 537.0,536.0 542.0,545.0" />
+    <path class="er-mark" d="M 550.0,647.0 Q 563.0,656.0 558.0,665.0" />
+    <path class="er-mark" d="M 550.0,647.0 Q 537.0,656.0 542.0,665.0" />
+    </g>
+    <g class="er-boxes">
+    <rect class="er-box" x="75.0" y="17.0" width="150" height="46" rx="8" />
+    <circle class="er-swatch" cx="88.0" cy="30.0" r="5" style="fill:var(--avacara)" /><text class="er-label" x="156" y="38" text-anchor="middle">Avacara</text>
+    <text class="er-count" x="150" y="54" text-anchor="middle" id="count-ms-er-avacara"></text>
+    <rect class="er-box" x="250.0" y="17.0" width="200" height="46" rx="8" />
+    <circle class="er-swatch" cx="263.0" cy="30.0" r="5" style="fill:var(--qualtier)" /><text class="er-label" x="356" y="38" text-anchor="middle">Character of Dharmas</text>
+    <text class="er-count" x="350" y="54" text-anchor="middle" id="count-ms-er-qualdharma"></text>
+    <rect class="er-box" x="275.0" y="142.0" width="150" height="46" rx="8" />
+    <circle class="er-swatch" cx="288.0" cy="155.0" r="5" style="fill:var(--sphere)" /><text class="er-label" x="356" y="163" text-anchor="middle">Sphere of Thought</text>
+    <text class="er-count" x="350" y="179" text-anchor="middle" id="count-ms-er-sphere"></text>
+    <rect class="er-box" x="650.0" y="142.0" width="200" height="46" rx="8" />
+    <circle class="er-swatch" cx="663.0" cy="155.0" r="5" style="fill:var(--nomenclature)" /><text class="er-label" x="756" y="163" text-anchor="middle">Nomenclature of Thought</text>
+    <text class="er-count" x="750" y="179" text-anchor="middle" id="count-ms-er-nomenclature"></text>
+    <rect class="er-box" x="455.0" y="279.0" width="190" height="52" rx="8" />
+    <circle class="er-swatch" cx="468.0" cy="292.0" r="5" style="fill:var(--case)" /><text class="er-label" x="556" y="303" text-anchor="middle">Case</text>
+    <text class="er-count" x="550" y="319" text-anchor="middle" id="count-ms-er-case"></text>
+    <rect class="er-box" x="5.0" y="427.0" width="150" height="46" rx="8" />
+    <circle class="er-swatch" cx="18.0" cy="440.0" r="5" style="fill:var(--content)" /><text class="er-label" x="86" y="448" text-anchor="middle">Content Variant</text>
+    <text class="er-count" x="80" y="464" text-anchor="middle" id="count-ms-er-content"></text>
+    <rect class="er-box" x="195.0" y="427.0" width="150" height="46" rx="8" />
+    <circle class="er-swatch" cx="208.0" cy="440.0" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="276" y="448" text-anchor="middle">Trancic Variable</text>
+    <text class="er-count" x="270" y="464" text-anchor="middle" id="count-ms-er-trancic"></text>
+    <rect class="er-box" x="375.0" y="427.0" width="150" height="46" rx="8" />
+    <circle class="er-swatch" cx="388.0" cy="440.0" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="456" y="448" text-anchor="middle">Sense Object</text>
+    <text class="er-count" x="450" y="464" text-anchor="middle" id="count-ms-er-senseobj"></text>
+    <rect class="er-box" x="555.0" y="427.0" width="150" height="46" rx="8" />
+    <circle class="er-swatch" cx="568.0" cy="440.0" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="636" y="448" text-anchor="middle">Dhyanic Object</text>
+    <text class="er-count" x="630" y="464" text-anchor="middle" id="count-ms-er-dhyanicobj"></text>
+    <rect class="er-box" x="735.0" y="427.0" width="150" height="46" rx="8" />
+    <circle class="er-swatch" cx="748.0" cy="440.0" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="816" y="448" text-anchor="middle">Mental Variable</text>
+    <text class="er-count" x="810" y="464" text-anchor="middle" id="count-ms-er-mental"></text>
+    <text class="er-count" x="750" y="604" text-anchor="middle" id="count-ms-er-superset"></text>
+    <rect class="er-box" x="475.0" y="547.0" width="150" height="46" rx="8" />
+    <circle class="er-swatch" cx="488.0" cy="560.0" r="5" style="fill:var(--dharma)" /><text class="er-label" x="556" y="568" text-anchor="middle">Dharma (Δ)</text>
+    <text class="er-count" x="550" y="584" text-anchor="middle" id="count-ms-er-dharma"></text>
+    <rect class="er-box" x="475.0" y="667.0" width="150" height="46" rx="8" />
+    <circle class="er-swatch" cx="488.0" cy="680.0" r="5" style="fill:var(--ms)" /><text class="er-label" x="556" y="688" text-anchor="middle">Mental State</text>
+    <text class="er-count" x="550" y="704" text-anchor="middle" id="count-ms-er-ms"></text>
+    </g>
+  </svg>
+</div>
+<script src="graph-data.js"></script>
+<script>
+(async function(){
+  let data;
+  try {
+    ({data} = await loadGraphData());
+  } catch (err) {
+    document.getElementById('erWrap').innerHTML =
+      '<p style="color:var(--text-secondary)"><b>Could not load the source tables.</b><br>' +
+      String(err.message || err) + '<br>Serve this over HTTP (e.g. ' +
+      '<code>python3 -m http.server</code>) &mdash; fetch() is blocked on file:// URLs.</p>';
+    throw err;
+  }
+
+  const erCounts = {
+    'count-ms-er-ms': data.ms.length,
+    'count-ms-er-dharma': data.dharmas.length,
+    'count-ms-er-case': data.cases.length,
+    'count-ms-er-nomenclature': data.nomenclature.length,
+    'count-ms-er-sphere': data.spheres.length,
+    'count-ms-er-avacara': data.avacaras.length,
+    'count-ms-er-qualdharma': data.quality_dharma.length,
+    'count-ms-er-content': data.content.length,
+    'count-ms-er-trancic': data.trancic.length,
+    'count-ms-er-mental': data.mental.length,
+    'count-ms-er-senseobj': data.sense_objects.length,
+    'count-ms-er-dhyanicobj': data.dhyanic_objects.length,
+  };
+  for(const id in erCounts){
+    const el = document.getElementById(id);
+    if(el) el.textContent = `${erCounts[id]} rows`;
+  }
+})();
+</script>
