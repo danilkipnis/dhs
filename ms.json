@@ -1,0 +1,2141 @@
+{
+  "note": "Mental-state vocabulary for table VI, one row per MS number. Number -> name is a function: no number carries two names. `derived_from` marks an MS the source presents as a derivative of an earlier one (e.g. 113 pannindriya <- 93 panna); it is a property of the MS, not of any case or dharma.",
+  "ms": [
+    {
+      "no": 1,
+      "pali": "phassa",
+      "translation": "touch",
+      "owner_dharma": "1"
+    },
+    {
+      "no": 2,
+      "pali": "phusanā",
+      "translation": "touching",
+      "owner_dharma": "1"
+    },
+    {
+      "no": 3,
+      "pali": "samphusanā",
+      "translation": "contact",
+      "owner_dharma": "1"
+    },
+    {
+      "no": 4,
+      "pali": "samphusitattaṃ",
+      "translation": "(being) contacted",
+      "owner_dharma": "1"
+    },
+    {
+      "no": 5,
+      "pali": "manoviññāṇadhātu samphassajaṃ cetasikaṃ sātaṃ",
+      "translation": "psychical ease born of contact with element of mind-consciousness",
+      "owner_dharma": "2"
+    },
+    {
+      "no": 6,
+      "pali": "cetasikaṃ sukhaṃ",
+      "translation": "psychical(ly) pleasant",
+      "owner_dharma": "2"
+    },
+    {
+      "no": 7,
+      "pali": "cetosamphassajaṃ sātaṃ (vedayitaṃ)",
+      "translation": "ease (experienced as) born of contact with the psychical",
+      "owner_dharma": "2"
+    },
+    {
+      "no": 8,
+      "pali": "(cetosamphassajaṃ) sukhaṃ vedayitaṃ",
+      "translation": "the pleasant experienced as (born of contact with the psychical)",
+      "owner_dharma": "2"
+    },
+    {
+      "no": 9,
+      "pali": "cetosamphassajā sātā (vedanā)",
+      "translation": "(sensation of) ease born of contact with the psychical",
+      "owner_dharma": "2"
+    },
+    {
+      "no": 10,
+      "pali": "(cetosamphassajā) sukhā vedanā",
+      "translation": "sensation of pleasant (born of contact with the psychical)",
+      "owner_dharma": "2"
+    },
+    {
+      "no": 11,
+      "pali": "(vedanā)",
+      "translation": "sensation",
+      "owner_dharma": "2"
+    },
+    {
+      "no": 12,
+      "pali": "manoviññāṇadhātu samphassajā saññā",
+      "translation": "cognition born of contact with element of mind-consciousness",
+      "owner_dharma": "3"
+    },
+    {
+      "no": 13,
+      "pali": "saññānanā",
+      "translation": "cognizing",
+      "owner_dharma": "3"
+    },
+    {
+      "no": 14,
+      "pali": "saññānitattaṃ",
+      "translation": "(being) cognized",
+      "owner_dharma": "3"
+    },
+    {
+      "no": 15,
+      "pali": "manoviññāṇadhātu samphassajā cetanā",
+      "translation": "volition born of contact with element of mind-consciousness",
+      "owner_dharma": "4"
+    },
+    {
+      "no": 16,
+      "pali": "sañcetanā",
+      "translation": "intention",
+      "owner_dharma": "4"
+    },
+    {
+      "no": 17,
+      "pali": "cetayitattaṃ",
+      "translation": "(being) intended",
+      "owner_dharma": "4"
+    },
+    {
+      "no": 18,
+      "pali": "citta",
+      "translation": "thought",
+      "owner_dharma": "5"
+    },
+    {
+      "no": 19,
+      "pali": "mano",
+      "translation": "mind",
+      "owner_dharma": "5"
+    },
+    {
+      "no": 20,
+      "pali": "mānasa",
+      "translation": "mental",
+      "owner_dharma": "5"
+    },
+    {
+      "no": 21,
+      "pali": "hadaya",
+      "translation": "heart",
+      "owner_dharma": "5"
+    },
+    {
+      "no": 22,
+      "pali": "paṇḍara",
+      "translation": "clear (?!)",
+      "owner_dharma": "5"
+    },
+    {
+      "no": 23,
+      "pali": "manāyatana",
+      "translation": "base of mind",
+      "owner_dharma": "5",
+      "derived_from": 19
+    },
+    {
+      "no": 24,
+      "pali": "manindriya",
+      "translation": "faculty of mind",
+      "owner_dharma": "5"
+    },
+    {
+      "no": 25,
+      "pali": "viññāṇa",
+      "translation": "consciousness",
+      "owner_dharma": "5"
+    },
+    {
+      "no": 26,
+      "pali": "viññāṇakkhandha",
+      "translation": "aggregate of consciousness",
+      "owner_dharma": "5"
+    },
+    {
+      "no": 27,
+      "pali": "manoviññāṇadhātu",
+      "translation": "element of mind-consciousness",
+      "owner_dharma": "5"
+    },
+    {
+      "no": 28,
+      "pali": "takka",
+      "translation": "ratiocination",
+      "owner_dharma": "6"
+    },
+    {
+      "no": 29,
+      "pali": "vitakka",
+      "translation": "reasoning",
+      "owner_dharma": "6"
+    },
+    {
+      "no": 30,
+      "pali": "saṅkappa",
+      "translation": "construing",
+      "owner_dharma": "6"
+    },
+    {
+      "no": 31,
+      "pali": "appanā",
+      "translation": "fixation",
+      "owner_dharma": "6"
+    },
+    {
+      "no": 32,
+      "pali": "vyappanā",
+      "translation": "focusing",
+      "owner_dharma": "6"
+    },
+    {
+      "no": 33,
+      "pali": "cetaso abhiniropanā",
+      "translation": "application of psyche",
+      "owner_dharma": "6"
+    },
+    {
+      "no": 34,
+      "pali": "sammāsaṅkappa",
+      "translation": "correct construing",
+      "owner_dharma": "6"
+    },
+    {
+      "no": 35,
+      "pali": "cāra",
+      "translation": "procedure (of reflexion)",
+      "owner_dharma": "7"
+    },
+    {
+      "no": 36,
+      "pali": "vicāra",
+      "translation": "reflexion",
+      "owner_dharma": "7"
+    },
+    {
+      "no": 37,
+      "pali": "anuvicāra",
+      "translation": "application of reflexion",
+      "owner_dharma": "7"
+    },
+    {
+      "no": 38,
+      "pali": "upavicāra",
+      "translation": "approaching reflexion",
+      "owner_dharma": "7"
+    },
+    {
+      "no": 39,
+      "pali": "cittassa anusandhanatā",
+      "translation": "adjustment of thought",
+      "owner_dharma": "7"
+    },
+    {
+      "no": 40,
+      "pali": "anupekkhanatā",
+      "translation": "stabilization (of thought)",
+      "owner_dharma": "7"
+    },
+    {
+      "no": 41,
+      "pali": "pīti",
+      "translation": "joy",
+      "owner_dharma": "8"
+    },
+    {
+      "no": 42,
+      "pali": "pāmojja",
+      "translation": "delightful",
+      "owner_dharma": "8"
+    },
+    {
+      "no": 43,
+      "pali": "āmodanā",
+      "translation": "delight",
+      "owner_dharma": "8"
+    },
+    {
+      "no": 44,
+      "pali": "pamodanā",
+      "translation": "delightfulness",
+      "owner_dharma": "8"
+    },
+    {
+      "no": 45,
+      "pali": "hāsa",
+      "translation": "mirth",
+      "owner_dharma": "8"
+    },
+    {
+      "no": 46,
+      "pali": "pahāsa",
+      "translation": "merriment",
+      "owner_dharma": "8"
+    },
+    {
+      "no": 47,
+      "pali": "vitti",
+      "translation": "felicity",
+      "owner_dharma": "8"
+    },
+    {
+      "no": 48,
+      "pali": "odagya",
+      "translation": "elation",
+      "owner_dharma": "8"
+    },
+    {
+      "no": 49,
+      "pali": "attamanatā cittassa",
+      "translation": "uprisedness of thought",
+      "owner_dharma": "8"
+    },
+    {
+      "no": 50,
+      "pali": "cittassa ṭhiti",
+      "translation": "stasis of thought",
+      "owner_dharma": "10"
+    },
+    {
+      "no": 51,
+      "pali": "(cittassa) saṇṭhiti",
+      "translation": "constancy (of thought)",
+      "owner_dharma": "10"
+    },
+    {
+      "no": 52,
+      "pali": "(cittassa) avaṭṭhiti",
+      "translation": "steadfastness (of thought)",
+      "owner_dharma": "10"
+    },
+    {
+      "no": 53,
+      "pali": "avisāhāra",
+      "translation": "unperturbedness of thought",
+      "owner_dharma": "10"
+    },
+    {
+      "no": 54,
+      "pali": "avikkhepa",
+      "translation": "unperplexity (of thought)",
+      "owner_dharma": "10"
+    },
+    {
+      "no": 55,
+      "pali": "avisāhaṭamānasatā",
+      "translation": "unperturbed mindedness",
+      "owner_dharma": "10"
+    },
+    {
+      "no": 56,
+      "pali": "samatha",
+      "translation": "quietude",
+      "owner_dharma": "10"
+    },
+    {
+      "no": 57,
+      "pali": "samādhindriya",
+      "translation": "faculty of concentration",
+      "owner_dharma": "10"
+    },
+    {
+      "no": 58,
+      "pali": "samādhibala",
+      "translation": "power of concentration",
+      "owner_dharma": "10"
+    },
+    {
+      "no": 59,
+      "pali": "sammāsamādhi",
+      "translation": "correct concentration",
+      "owner_dharma": "10"
+    },
+    {
+      "no": 60,
+      "pali": "saddhā",
+      "translation": "faith",
+      "owner_dharma": "11"
+    },
+    {
+      "no": 61,
+      "pali": "saddahanā",
+      "translation": "having faith",
+      "owner_dharma": "11"
+    },
+    {
+      "no": 62,
+      "pali": "okappanā",
+      "translation": "confidence",
+      "owner_dharma": "11"
+    },
+    {
+      "no": 63,
+      "pali": "abhippasāda",
+      "translation": "assurance",
+      "owner_dharma": "11"
+    },
+    {
+      "no": 64,
+      "pali": "saddhindriya",
+      "translation": "faculty of faith",
+      "owner_dharma": "11",
+      "derived_from": 60
+    },
+    {
+      "no": 65,
+      "pali": "saddhābala",
+      "translation": "power of faith",
+      "owner_dharma": "11"
+    },
+    {
+      "no": 66,
+      "pali": "cetasiko viriyārambho",
+      "translation": "physical inception of energy",
+      "owner_dharma": "12"
+    },
+    {
+      "no": 67,
+      "pali": "nikkama",
+      "translation": "exercise",
+      "owner_dharma": "12"
+    },
+    {
+      "no": 68,
+      "pali": "parakkama",
+      "translation": "exertion",
+      "owner_dharma": "12"
+    },
+    {
+      "no": 69,
+      "pali": "uyyāma",
+      "translation": "strive",
+      "owner_dharma": "12"
+    },
+    {
+      "no": 70,
+      "pali": "vāyāma",
+      "translation": "endeavour",
+      "owner_dharma": "12"
+    },
+    {
+      "no": 71,
+      "pali": "ussāha",
+      "translation": "zeal",
+      "owner_dharma": "12"
+    },
+    {
+      "no": 72,
+      "pali": "ussolhi",
+      "translation": "ardour",
+      "owner_dharma": "12"
+    },
+    {
+      "no": 73,
+      "pali": "thāma",
+      "translation": "stamina",
+      "owner_dharma": "12"
+    },
+    {
+      "no": 74,
+      "pali": "dhiti",
+      "translation": "firmness",
+      "owner_dharma": "12"
+    },
+    {
+      "no": 75,
+      "pali": "asithilaparakkamatā",
+      "translation": "(state of) unfaltering exertion",
+      "owner_dharma": "12"
+    },
+    {
+      "no": 76,
+      "pali": "anikkhittacchandatā",
+      "translation": "(state of) unabated desire",
+      "owner_dharma": "12"
+    },
+    {
+      "no": 77,
+      "pali": "anikkhittadharatā",
+      "translation": "(state of) unabated endurance",
+      "owner_dharma": "12"
+    },
+    {
+      "no": 78,
+      "pali": "dhurasampaggāha",
+      "translation": "strong grip of the burden",
+      "owner_dharma": "12"
+    },
+    {
+      "no": 79,
+      "pali": "viriya",
+      "translation": "energy",
+      "owner_dharma": "12"
+    },
+    {
+      "no": 80,
+      "pali": "viriyindriya",
+      "translation": "faculty of energy",
+      "owner_dharma": "12"
+    },
+    {
+      "no": 81,
+      "pali": "viriyabala",
+      "translation": "power of energy",
+      "owner_dharma": "12"
+    },
+    {
+      "no": 82,
+      "pali": "sammāvāyāma",
+      "translation": "correct endeavour",
+      "owner_dharma": "12"
+    },
+    {
+      "no": 83,
+      "pali": "sati",
+      "translation": "recollection",
+      "owner_dharma": "13"
+    },
+    {
+      "no": 84,
+      "pali": "anussati",
+      "translation": "remembering",
+      "owner_dharma": "13"
+    },
+    {
+      "no": 85,
+      "pali": "paṭissati",
+      "translation": "recalling",
+      "owner_dharma": "13"
+    },
+    {
+      "no": 86,
+      "pali": "saraṇatā",
+      "translation": "remembrance",
+      "owner_dharma": "13",
+      "derived_from": 83
+    },
+    {
+      "no": 87,
+      "pali": "dhāraṇatā",
+      "translation": "mindfulness",
+      "owner_dharma": "13"
+    },
+    {
+      "no": 88,
+      "pali": "apilāpanatā",
+      "translation": "deep penetration (by memory)",
+      "owner_dharma": "13"
+    },
+    {
+      "no": 89,
+      "pali": "asammusanatā",
+      "translation": "unforgetfulness",
+      "owner_dharma": "13"
+    },
+    {
+      "no": 90,
+      "pali": "satindriya",
+      "translation": "faculty of recollection",
+      "owner_dharma": "13",
+      "derived_from": 83
+    },
+    {
+      "no": 91,
+      "pali": "satibala",
+      "translation": "power of recollection",
+      "owner_dharma": "13"
+    },
+    {
+      "no": 92,
+      "pali": "sammāsati",
+      "translation": "correct recollection",
+      "owner_dharma": "13"
+    },
+    {
+      "no": 93,
+      "pali": "paññā",
+      "translation": "wisdom",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 94,
+      "pali": "pajānanā",
+      "translation": "understanding",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 95,
+      "pali": "vicaya",
+      "translation": "search",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 96,
+      "pali": "pavicaya",
+      "translation": "research",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 97,
+      "pali": "dhammavicaya",
+      "translation": "search of Dharma",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 98,
+      "pali": "sallakkhaṇā",
+      "translation": "discernment",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 99,
+      "pali": "upalakkhaṇā",
+      "translation": "discrimination",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 100,
+      "pali": "paccupalakkhaṇā",
+      "translation": "differentiation",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 101,
+      "pali": "paṇḍicca",
+      "translation": "erudition",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 102,
+      "pali": "kosalla",
+      "translation": "proficiency",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 103,
+      "pali": "nepuñña",
+      "translation": "expertise",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 104,
+      "pali": "vebhabyā",
+      "translation": "pondering",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 105,
+      "pali": "cintā",
+      "translation": "thinking",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 106,
+      "pali": "upaparikkhā",
+      "translation": "analytical investigation",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 107,
+      "pali": "bhūri",
+      "translation": "breadth (of wisdom)",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 108,
+      "pali": "medhā",
+      "translation": "sagacity",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 109,
+      "pali": "pariṇāyika",
+      "translation": "(wisdom as) a guide",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 110,
+      "pali": "vipassanā",
+      "translation": "intuition",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 111,
+      "pali": "sampajañña",
+      "translation": "(being) conscious",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 112,
+      "pali": "patoda",
+      "translation": "(wisdom as) a goad",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 113,
+      "pali": "paññindriya",
+      "translation": "faculty of wisdom",
+      "owner_dharma": "15",
+      "derived_from": 93
+    },
+    {
+      "no": 114,
+      "pali": "paññābala",
+      "translation": "power of wisdom",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 115,
+      "pali": "paññāsattha",
+      "translation": "sword of wisdom",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 116,
+      "pali": "paññāpāsāda",
+      "translation": "palace of wisdom",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 117,
+      "pali": "paññāloka",
+      "translation": "lamp of wisdom",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 118,
+      "pali": "paññābhāsa",
+      "translation": "lustre of wisdom",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 119,
+      "pali": "paññāpajjota",
+      "translation": "splendour of wisdom",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 120,
+      "pali": "paññāratana",
+      "translation": "jewel of wisdom",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 121,
+      "pali": "amoha",
+      "translation": "absence of delusion",
+      "owner_dharma": "15"
+    },
+    {
+      "no": 122,
+      "pali": "sammādiṭṭhi",
+      "translation": "correct view",
+      "owner_dharma": "15",
+      "derived_from": 97
+    },
+    {
+      "no": 123,
+      "pali": "arūpinaṃ dhammānaṃ āyu",
+      "translation": "duration of the formless dharmas",
+      "owner_dharma": "18"
+    },
+    {
+      "no": 124,
+      "pali": "ṭhiti",
+      "translation": "(their) stasis",
+      "owner_dharma": "18"
+    },
+    {
+      "no": 125,
+      "pali": "yapanā",
+      "translation": "(their) going on",
+      "owner_dharma": "18"
+    },
+    {
+      "no": 126,
+      "pali": "yāpanā",
+      "translation": "(their) keeping going on",
+      "owner_dharma": "18"
+    },
+    {
+      "no": 127,
+      "pali": "iriyanā",
+      "translation": "(their) progression",
+      "owner_dharma": "18"
+    },
+    {
+      "no": 128,
+      "pali": "vattanā",
+      "translation": "(their) continuance",
+      "owner_dharma": "18"
+    },
+    {
+      "no": 129,
+      "pali": "pālanā",
+      "translation": "(their) conservation",
+      "owner_dharma": "18"
+    },
+    {
+      "no": 130,
+      "pali": "jīvita",
+      "translation": "living",
+      "owner_dharma": "18"
+    },
+    {
+      "no": 131,
+      "pali": "jīvitindriya",
+      "translation": "faculty of life",
+      "owner_dharma": "18"
+    },
+    {
+      "no": 132,
+      "pali": "hirīyati hirīyitabbena",
+      "translation": "(when one) is ashamed of (what one ought to be ashamed)",
+      "owner_dharma": "29"
+    },
+    {
+      "no": 133,
+      "pali": "hirīyati pāpakānaṃ akusalānaṃ dhammānaṃ samāpattiyā",
+      "translation": "(when one is) ashamed of acquisition of sinful and unwholesome dharmas",
+      "owner_dharma": "29"
+    },
+    {
+      "no": 134,
+      "pali": "ottappati ottappitabbena",
+      "translation": "(when one) feels remorse of (what one ought to be remorseful)",
+      "owner_dharma": "30"
+    },
+    {
+      "no": 135,
+      "pali": "ottappati pāpakānaṃ akusalānaṃ dhammānaṃ samāpattiyā",
+      "translation": "(when one) feels remorse of acquisition of sinful and unwholesome dharmas",
+      "owner_dharma": "30"
+    },
+    {
+      "no": 136,
+      "pali": "alobha",
+      "translation": "disinterestedness",
+      "owner_dharma": "31"
+    },
+    {
+      "no": 137,
+      "pali": "alubbhanā",
+      "translation": "(state of) not being greedy",
+      "owner_dharma": "31"
+    },
+    {
+      "no": 138,
+      "pali": "alubbhitattaṃ",
+      "translation": "(state of) not feeling greed",
+      "owner_dharma": "31"
+    },
+    {
+      "no": 139,
+      "pali": "asārāga",
+      "translation": "not infatuated",
+      "owner_dharma": "31"
+    },
+    {
+      "no": 140,
+      "pali": "asārajjanā",
+      "translation": "(state of) not being infatuated",
+      "owner_dharma": "31"
+    },
+    {
+      "no": 141,
+      "pali": "asārajjitattaṃ",
+      "translation": "(state of) not feeling infatuation",
+      "owner_dharma": "31"
+    },
+    {
+      "no": 142,
+      "pali": "anabhijjhā",
+      "translation": "not being covetous",
+      "owner_dharma": "31"
+    },
+    {
+      "no": 143,
+      "pali": "alobho kusala mūlaṃ",
+      "translation": "disinterestedness (as) a wholesome root",
+      "owner_dharma": "31"
+    },
+    {
+      "no": 144,
+      "pali": "adosa",
+      "translation": "non-hatred",
+      "owner_dharma": "32"
+    },
+    {
+      "no": 145,
+      "pali": "adussanā",
+      "translation": "non-hating",
+      "owner_dharma": "32"
+    },
+    {
+      "no": 146,
+      "pali": "adussitattaṃ",
+      "translation": "(state of) not feeling hatred",
+      "owner_dharma": "32"
+    },
+    {
+      "no": 147,
+      "pali": "abyāpāda",
+      "translation": "unmaliciousness",
+      "owner_dharma": "32"
+    },
+    {
+      "no": 148,
+      "pali": "avyāpajja",
+      "translation": "harmless",
+      "owner_dharma": "32"
+    },
+    {
+      "no": 149,
+      "pali": "adoso kusala mūlaṃ",
+      "translation": "non-hatred (as) a wholesome root",
+      "owner_dharma": "32"
+    },
+    {
+      "no": 150,
+      "pali": "vedanākkhandhassa saññākkhandhassa saṅkhārakkhandhassa passaddhi",
+      "translation": "composedness of the aggregate of sensation, of the aggregate of cognition, and of the aggregate of synergies",
+      "owner_dharma": "39"
+    },
+    {
+      "no": 151,
+      "pali": "paṭipassaddhi",
+      "translation": "(their) composure",
+      "owner_dharma": "39"
+    },
+    {
+      "no": 152,
+      "pali": "passambhanā",
+      "translation": "(their) calming down",
+      "owner_dharma": "39"
+    },
+    {
+      "no": 153,
+      "pali": "paṭipassambhanā",
+      "translation": "(their) complete tranquillization",
+      "owner_dharma": "39"
+    },
+    {
+      "no": 154,
+      "pali": "paṭipassambhatattaṃ",
+      "translation": "completely tranquillized",
+      "owner_dharma": "39"
+    },
+    {
+      "no": 155,
+      "pali": "viññāṇakkhandhassa passaddhi",
+      "translation": "composedness of the aggregate of consciousness",
+      "owner_dharma": "40"
+    },
+    {
+      "no": 156,
+      "pali": "paṭipassaddhi",
+      "translation": "(its) composure",
+      "owner_dharma": "40"
+    },
+    {
+      "no": 157,
+      "pali": "passambhanā",
+      "translation": "(its) calming down",
+      "owner_dharma": "40"
+    },
+    {
+      "no": 158,
+      "pali": "paṭipassambhanā",
+      "translation": "(its) complete tranquillization",
+      "owner_dharma": "40"
+    },
+    {
+      "no": 159,
+      "pali": "paṭipassambhatattaṃ",
+      "translation": "completely tranquillized",
+      "owner_dharma": "40"
+    },
+    {
+      "no": 160,
+      "pali": "vedanākkhandhassa saññākkhandhassa saṅkhārakkhandhassa labutā",
+      "translation": "lightness of the aggregate of sensation, of the aggregate of cognition, and of the aggregate of synergies",
+      "owner_dharma": "41"
+    },
+    {
+      "no": 161,
+      "pali": "lahupariṇāmatā",
+      "translation": "(their capacity of) easy transformation",
+      "owner_dharma": "41"
+    },
+    {
+      "no": 162,
+      "pali": "adandhanatā",
+      "translation": "(their) non-sluggishness",
+      "owner_dharma": "41"
+    },
+    {
+      "no": 163,
+      "pali": "avitthanatā",
+      "translation": "(their) non-inertness",
+      "owner_dharma": "41"
+    },
+    {
+      "no": 164,
+      "pali": "viññāṇakkhandhassa lahutā",
+      "translation": "lightness of the aggregate of consciousness",
+      "owner_dharma": "42"
+    },
+    {
+      "no": 165,
+      "pali": "lahupariṇāmatā",
+      "translation": "(its) capacity of easy transformation",
+      "owner_dharma": "42"
+    },
+    {
+      "no": 166,
+      "pali": "adandhanatā",
+      "translation": "(its) non non-sluggishness",
+      "owner_dharma": "42"
+    },
+    {
+      "no": 167,
+      "pali": "avitthanatā",
+      "translation": "(its) non-inertness",
+      "owner_dharma": "42"
+    },
+    {
+      "no": 168,
+      "pali": "vedanākkhandhassa saññākkhandhassa saṅkhārakkhandhassa mudutā",
+      "translation": "flexibility of the aggregate of sensation, of the aggregate of cognition, and of the aggregate of synergies",
+      "owner_dharma": "43"
+    },
+    {
+      "no": 169,
+      "pali": "maddavatā",
+      "translation": "(their) mildness",
+      "owner_dharma": "43"
+    },
+    {
+      "no": 170,
+      "pali": "akakkhalatā",
+      "translation": "(their) non-rigidity",
+      "owner_dharma": "43"
+    },
+    {
+      "no": 171,
+      "pali": "akathinatā",
+      "translation": "(their) non-stiffness",
+      "owner_dharma": "43"
+    },
+    {
+      "no": 172,
+      "pali": "viññāṇakkhandhassa mudutā",
+      "translation": "flexibility of the aggregate of consciousness",
+      "owner_dharma": "44"
+    },
+    {
+      "no": 173,
+      "pali": "maddavatā",
+      "translation": "(its) mildness",
+      "owner_dharma": "44"
+    },
+    {
+      "no": 174,
+      "pali": "akakkhalatā",
+      "translation": "(its) non-rigidity",
+      "owner_dharma": "44"
+    },
+    {
+      "no": 175,
+      "pali": "akathinatā",
+      "translation": "(its) non-stiffness",
+      "owner_dharma": "44"
+    },
+    {
+      "no": 176,
+      "pali": "vedanākkhandhassa saññākkhandhassa saṅkhārakkhandhassa kammaññatā",
+      "translation": "workability of the aggregate of sensation, of the aggregate of cognition, and of the aggregate of synergies",
+      "owner_dharma": "45"
+    },
+    {
+      "no": 177,
+      "pali": "kammaññattaṃ",
+      "translation": "(their) working ability",
+      "owner_dharma": "45"
+    },
+    {
+      "no": 178,
+      "pali": "kammaññabhāva",
+      "translation": "(their) being workable",
+      "owner_dharma": "45"
+    },
+    {
+      "no": 179,
+      "pali": "viññāṇakkhandhassa kammaññatā",
+      "translation": "workability of the aggregate of consciousness",
+      "owner_dharma": "46"
+    },
+    {
+      "no": 180,
+      "pali": "kammaññattaṃ",
+      "translation": "(its) working ability",
+      "owner_dharma": "46"
+    },
+    {
+      "no": 181,
+      "pali": "kammaññabhāva",
+      "translation": "(its) being workable",
+      "owner_dharma": "46"
+    },
+    {
+      "no": 182,
+      "pali": "vedanākkhandhassa saññākkhandhassa saṅkhārakkhandhassa paguṇatā",
+      "translation": "good quality of the aggregate of sensation, of the aggregate of cognition, and of the aggregate of synergies",
+      "owner_dharma": "47"
+    },
+    {
+      "no": 183,
+      "pali": "paguṇattaṃ",
+      "translation": "(their) good quality",
+      "owner_dharma": "47"
+    },
+    {
+      "no": 184,
+      "pali": "paguṇabhāva",
+      "translation": "(their) being of good quality",
+      "owner_dharma": "47"
+    },
+    {
+      "no": 185,
+      "pali": "viññāṇakkhandhassa paguṇatā",
+      "translation": "good quality of the aggregate of consciousness",
+      "owner_dharma": "48"
+    },
+    {
+      "no": 186,
+      "pali": "paguṇattaṃ",
+      "translation": "(its) good quality",
+      "owner_dharma": "48"
+    },
+    {
+      "no": 187,
+      "pali": "paguṇabhāva",
+      "translation": "(its) being of good quality",
+      "owner_dharma": "48"
+    },
+    {
+      "no": 188,
+      "pali": "vedanākkhandhassa saññākkhandhassa saṅkhārakkhandhassa ujukatā",
+      "translation": "straightness of the aggregate of sensation, of the aggregate of cognition, and of the aggregate of synergies",
+      "owner_dharma": "49"
+    },
+    {
+      "no": 189,
+      "pali": "ujutā",
+      "translation": "(their) rectitude",
+      "owner_dharma": "49"
+    },
+    {
+      "no": 190,
+      "pali": "ajimhatā",
+      "translation": "(their) undeflectedness",
+      "owner_dharma": "49"
+    },
+    {
+      "no": 191,
+      "pali": "avaṅkatā",
+      "translation": "(their) uncrookedness",
+      "owner_dharma": "49"
+    },
+    {
+      "no": 192,
+      "pali": "akuṭilatā",
+      "translation": "(their) untwistedness",
+      "owner_dharma": "49"
+    },
+    {
+      "no": 193,
+      "pali": "viññāṇakkhandhassa ujukatā",
+      "translation": "straightness of the aggregate of consciousness",
+      "owner_dharma": "50"
+    },
+    {
+      "no": 194,
+      "pali": "ujutā",
+      "translation": "(its) rectitude",
+      "owner_dharma": "50"
+    },
+    {
+      "no": 195,
+      "pali": "ajimhatā",
+      "translation": "(its) undeflectedness",
+      "owner_dharma": "50"
+    },
+    {
+      "no": 196,
+      "pali": "avaṅkatā",
+      "translation": "(its) uncrookedness",
+      "owner_dharma": "50"
+    },
+    {
+      "no": 197,
+      "pali": "akuṭilatā",
+      "translation": "(its) untwistedness",
+      "owner_dharma": "50"
+    },
+    {
+      "no": 198,
+      "pali": "manoviññāṇadhātusamphassajaṃ cetasikaṃ neva sātaṃ nāsātaṃ",
+      "translation": "neither psychical ease nor unease born of contact with element of mind-consciousness",
+      "owner_dharma": "2a"
+    },
+    {
+      "no": 199,
+      "pali": "cetosamphassajaṃ adukkhamasukhaṃ vedayitaṃ",
+      "translation": "(what is) neither suffering nor pleasure experienced (as) born of contact with the psychical",
+      "owner_dharma": "2a"
+    },
+    {
+      "no": 200,
+      "pali": "cetosamphassajā adukkhamasukhā vedanā",
+      "translation": "sensation of neither suffering nor pleasure born of contact with the psychical",
+      "owner_dharma": "2a"
+    },
+    {
+      "no": 201,
+      "pali": "maggaṅga",
+      "translation": "a component of the Way",
+      "owner_dharma": "6a"
+    },
+    {
+      "no": 202,
+      "pali": "maggapariyāpanna",
+      "translation": "included in the Way",
+      "owner_dharma": "6a"
+    },
+    {
+      "no": 203,
+      "pali": "pītisambojjhaṅga",
+      "translation": "joy (as) a component of Complete Awakening",
+      "owner_dharma": "8a"
+    },
+    {
+      "no": 204,
+      "pali": "samādhisambojjhaṅga",
+      "translation": "concentration (as) a component of Complete Awakening",
+      "owner_dharma": "10a"
+    },
+    {
+      "no": 205,
+      "pali": "viriyasambojjhaṅga",
+      "translation": "energy (as) a compoment of Complete Awakening",
+      "owner_dharma": "12a"
+    },
+    {
+      "no": 206,
+      "pali": "satisambojjhaṅga",
+      "translation": "recollection (as) a component of Complete Awakening",
+      "owner_dharma": "13a"
+    },
+    {
+      "no": 207,
+      "pali": "dhammavicayasambojjhaṅga",
+      "translation": "a search of Dharma (as) a component of Complete Awakening",
+      "owner_dharma": "15a"
+    },
+    {
+      "no": 208,
+      "pali": "dhammānaṃ anaññātānaṃ adiṭṭhānaṃ apattānaṃ aviditānaṃ asacchikatānaṃ sacchikiriyāya paññā",
+      "translation": "the wisdom (that), seeing with (its) own eyes the unrecognized, unseen, unattained, unknown, and unfound dharmas, (says:) \"I shall know the unknown\"",
+      "owner_dharma": "59"
+    },
+    {
+      "no": 209,
+      "pali": "catūhi vaciduccaritehi ārati virati paṭivirati veramaṇī",
+      "translation": "leaving off, abstaining, totally abstaining and refraining from the four deviations of speech",
+      "owner_dharma": "60"
+    },
+    {
+      "no": 210,
+      "pali": "akiriyā",
+      "translation": "leaving (them) undone",
+      "owner_dharma": "60"
+    },
+    {
+      "no": 211,
+      "pali": "akaraṇaṃ",
+      "translation": "(leaving them) unaffected",
+      "owner_dharma": "60"
+    },
+    {
+      "no": 212,
+      "pali": "anajjhāpatti",
+      "translation": "not incurring guilt",
+      "owner_dharma": "60"
+    },
+    {
+      "no": 213,
+      "pali": "velā anatikkamo",
+      "translation": "not trespassing limit",
+      "owner_dharma": "60"
+    },
+    {
+      "no": 214,
+      "pali": "setughāta",
+      "translation": "destroying (their) cause",
+      "owner_dharma": "60"
+    },
+    {
+      "no": 215,
+      "pali": "sammāvācā",
+      "translation": "correct speech",
+      "owner_dharma": "60"
+    },
+    {
+      "no": 216,
+      "pali": "tīhi kāyaduccaritehi ārati virati paṭivirati veramaṇī",
+      "translation": "leaving off, abstaining, totally abstaining and refraining from the three deviations of body",
+      "owner_dharma": "61"
+    },
+    {
+      "no": 217,
+      "pali": "akiriyā",
+      "translation": "leaving (them) undone",
+      "owner_dharma": "61"
+    },
+    {
+      "no": 218,
+      "pali": "akaraṇaṃ",
+      "translation": "(leaving them) unaffected",
+      "owner_dharma": "61"
+    },
+    {
+      "no": 219,
+      "pali": "anajjhāpatti",
+      "translation": "not incurring guilt",
+      "owner_dharma": "61"
+    },
+    {
+      "no": 220,
+      "pali": "velā anatikkamo",
+      "translation": "not trespassing limit",
+      "owner_dharma": "61"
+    },
+    {
+      "no": 221,
+      "pali": "setughāta",
+      "translation": "destroying (their) cause",
+      "owner_dharma": "61"
+    },
+    {
+      "no": 222,
+      "pali": "sammākammanta",
+      "translation": "correct action",
+      "owner_dharma": "61"
+    },
+    {
+      "no": 223,
+      "pali": "micchā ājīvā ārati virati paṭivirati veramaṇī",
+      "translation": "leaving off, abstaining, totally abstaining and refraining from the wrong livelihood",
+      "owner_dharma": "62"
+    },
+    {
+      "no": 224,
+      "pali": "akiriyā",
+      "translation": "leaving (it) undone",
+      "owner_dharma": "62"
+    },
+    {
+      "no": 225,
+      "pali": "akaraṇaṃ",
+      "translation": "(leaving it) unaffected",
+      "owner_dharma": "62"
+    },
+    {
+      "no": 226,
+      "pali": "anajjhāpatti",
+      "translation": "not incurring guilt",
+      "owner_dharma": "62"
+    },
+    {
+      "no": 227,
+      "pali": "velā anatikkama",
+      "translation": "not trespassing limit",
+      "owner_dharma": "62"
+    },
+    {
+      "no": 228,
+      "pali": "setughāta",
+      "translation": "destroying (its) cause",
+      "owner_dharma": "62"
+    },
+    {
+      "no": 229,
+      "pali": "sammā ājīva",
+      "translation": "correct livelihood",
+      "owner_dharma": "62"
+    },
+    {
+      "no": 230,
+      "pali": "passadhisambojjhaṅga",
+      "translation": "composedness as a component of Complete Awakening",
+      "owner_dharma": "39a"
+    },
+    {
+      "no": 231,
+      "pali": "micchāsaṅkappa",
+      "translation": "wrong construing",
+      "owner_dharma": "6b"
+    },
+    {
+      "no": 232,
+      "pali": "micchāsamādhi",
+      "translation": "wrong concentration",
+      "owner_dharma": "10b"
+    },
+    {
+      "no": 233,
+      "pali": "micchāvāyāma",
+      "translation": "wrong endeavour",
+      "owner_dharma": "12b"
+    },
+    {
+      "no": 234,
+      "pali": "diṭṭhi",
+      "translation": "view",
+      "owner_dharma": "64"
+    },
+    {
+      "no": 235,
+      "pali": "diṭṭhigata",
+      "translation": "current views and opinions",
+      "owner_dharma": "64"
+    },
+    {
+      "no": 236,
+      "pali": "diṭṭhigahana",
+      "translation": "thicket of views",
+      "owner_dharma": "64"
+    },
+    {
+      "no": 237,
+      "pali": "diṭṭhikantāra",
+      "translation": "wilderness of views",
+      "owner_dharma": "64"
+    },
+    {
+      "no": 238,
+      "pali": "diṭṭhivisūkāyika",
+      "translation": "distortion of views",
+      "owner_dharma": "64"
+    },
+    {
+      "no": 239,
+      "pali": "diṭṭhivipphandita",
+      "translation": "scuffle of views",
+      "owner_dharma": "64"
+    },
+    {
+      "no": 240,
+      "pali": "diṭṭhisaññojana",
+      "translation": "fetters of views",
+      "owner_dharma": "64"
+    },
+    {
+      "no": 241,
+      "pali": "gāha",
+      "translation": "grasping (of view)",
+      "owner_dharma": "64"
+    },
+    {
+      "no": 242,
+      "pali": "paṭiggāha",
+      "translation": "sticking strongly (to view)",
+      "owner_dharma": "64"
+    },
+    {
+      "no": 243,
+      "pali": "abhinivesa",
+      "translation": "inclination (towards view)",
+      "owner_dharma": "64"
+    },
+    {
+      "no": 244,
+      "pali": "parāmāsa",
+      "translation": "holding as paramount (one's view)",
+      "owner_dharma": "64"
+    },
+    {
+      "no": 245,
+      "pali": "kummagga",
+      "translation": "erroneous way",
+      "owner_dharma": "64"
+    },
+    {
+      "no": 246,
+      "pali": "micchāpatha",
+      "translation": "wrong path",
+      "owner_dharma": "64"
+    },
+    {
+      "no": 247,
+      "pali": "micchatta",
+      "translation": "wrongness",
+      "owner_dharma": "64"
+    },
+    {
+      "no": 248,
+      "pali": "titthāyatana",
+      "translation": "sectarian bias",
+      "owner_dharma": "64"
+    },
+    {
+      "no": 249,
+      "pali": "vipariyāsaggāha",
+      "translation": "grasping of inverted (views)",
+      "owner_dharma": "64"
+    },
+    {
+      "no": 250,
+      "pali": "na hirīyati hirīyitabbena",
+      "translation": "(when one is) not ashamed of (what one ought to be ashamed)",
+      "owner_dharma": "68"
+    },
+    {
+      "no": 251,
+      "pali": "na hirīyati pāpakānaṃ akusalānaṃ dhammānaṃ samāpattiyā",
+      "translation": "(when one is) not ashamed of acquisition of sinful and unwholesome dharmas",
+      "owner_dharma": "68"
+    },
+    {
+      "no": 252,
+      "pali": "na ottappati ottappitabbena",
+      "translation": "(when one) does not feel remorse of (what one ought to be remorseful)",
+      "owner_dharma": "69"
+    },
+    {
+      "no": 253,
+      "pali": "na ottappati pāpakānaṃ akusalānaṃ dhammānaṃ samāpattiyā",
+      "translation": "(when one) does not feel remorse of acquisition of sinful and unwholesome dharmas",
+      "owner_dharma": "69"
+    },
+    {
+      "no": 254,
+      "pali": "lobha",
+      "translation": "greed",
+      "owner_dharma": "70"
+    },
+    {
+      "no": 255,
+      "pali": "lubbhanā",
+      "translation": "(state of) being greedy",
+      "owner_dharma": "70"
+    },
+    {
+      "no": 256,
+      "pali": "lubbhitattaṃ",
+      "translation": "(state of) feeling greed",
+      "owner_dharma": "70"
+    },
+    {
+      "no": 257,
+      "pali": "sārāga",
+      "translation": "infatuated",
+      "owner_dharma": "70"
+    },
+    {
+      "no": 258,
+      "pali": "sārajjanā",
+      "translation": "(state of) being infatuated",
+      "owner_dharma": "70"
+    },
+    {
+      "no": 259,
+      "pali": "sārajitattaṃ",
+      "translation": "(state of) feeling infatuation",
+      "owner_dharma": "70"
+    },
+    {
+      "no": 260,
+      "pali": "abhijjhā",
+      "translation": "covetousness",
+      "owner_dharma": "70"
+    },
+    {
+      "no": 261,
+      "pali": "lobho akusalamūlaṃ",
+      "translation": "greed (as) an unwholesome root",
+      "owner_dharma": "70"
+    },
+    {
+      "no": 262,
+      "pali": "aññāṇa",
+      "translation": "nescience",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 263,
+      "pali": "adassana",
+      "translation": "not-seeing",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 264,
+      "pali": "anabhisamaya",
+      "translation": "un-comprehension",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 265,
+      "pali": "ananubodha",
+      "translation": "not understanding",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 266,
+      "pali": "asambodha",
+      "translation": "unawakened",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 267,
+      "pali": "appaṭivedha",
+      "translation": "non-penetration",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 268,
+      "pali": "asagāhanā",
+      "translation": "non-grasping",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 269,
+      "pali": "apariyogāhanā",
+      "translation": "inability to compare",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 270,
+      "pali": "asamapekkhanā",
+      "translation": "being unobservant",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 271,
+      "pali": "apaccavekkhanā",
+      "translation": "non-consideration",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 272,
+      "pali": "apacakkhakamma",
+      "translation": "inability to demonstrate",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 273,
+      "pali": "dummajjha",
+      "translation": "stupidity",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 274,
+      "pali": "bālya",
+      "translation": "childishness",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 275,
+      "pali": "asampajañña",
+      "translation": "unawareness",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 276,
+      "pali": "moha",
+      "translation": "delusion",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 277,
+      "pali": "pamoha",
+      "translation": "utter delusion",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 278,
+      "pali": "sammoha",
+      "translation": "complete delusion",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 279,
+      "pali": "avijjā",
+      "translation": "ignorance",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 280,
+      "pali": "avijjogha",
+      "translation": "flood of ignorance",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 281,
+      "pali": "avijjāyoga",
+      "translation": "fetters of ignorance",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 282,
+      "pali": "avijjānusaya",
+      "translation": "tendency towards ignorance",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 283,
+      "pali": "avijjāpariyuṭṭhāna",
+      "translation": "obsession with ignorance",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 284,
+      "pali": "avijjālaṅga",
+      "translation": "snares of ignorance",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 285,
+      "pali": "moho akusalamūlaṃ",
+      "translation": "delusion (as) an unwholesome root",
+      "owner_dharma": "71"
+    },
+    {
+      "no": 286,
+      "pali": "manoviññāṇadhātusampassajaṃ cetasikaṃ asātaṃ",
+      "translation": "psychical unease born of contact with element of mind-consciousness",
+      "owner_dharma": "2b"
+    },
+    {
+      "no": 287,
+      "pali": "cetasikaṃ dukkhaṃ",
+      "translation": "psychically unpleasant",
+      "owner_dharma": "2b"
+    },
+    {
+      "no": 288,
+      "pali": "cetosamphassajamasātaṃ (vedayitaṃ)",
+      "translation": "unease (experienced as) born of contact with the psychical",
+      "owner_dharma": "2b"
+    },
+    {
+      "no": 289,
+      "pali": "(cetosamphassajaṃ) dukkhaṃ vedayitaṃ",
+      "translation": "the unpleasant experienced (as born of contact with the psychical)",
+      "owner_dharma": "2b"
+    },
+    {
+      "no": 290,
+      "pali": "cetosamphassajā asātā (vedanā)",
+      "translation": "(sensation of) unease born of contact with the psychical",
+      "owner_dharma": "2b"
+    },
+    {
+      "no": 291,
+      "pali": "(cetosamphassajā) dukkhā vedanā",
+      "translation": "sensation of unpleasant (born of contact with the psychical)",
+      "owner_dharma": "2b"
+    },
+    {
+      "no": 292,
+      "pali": "dosa",
+      "translation": "hatred",
+      "owner_dharma": "78"
+    },
+    {
+      "no": 293,
+      "pali": "dussanā",
+      "translation": "hating",
+      "owner_dharma": "78"
+    },
+    {
+      "no": 294,
+      "pali": "dussitattaṃ",
+      "translation": "(state of) feeling hatred",
+      "owner_dharma": "78"
+    },
+    {
+      "no": 295,
+      "pali": "byāpatti",
+      "translation": "maliciousness",
+      "owner_dharma": "78"
+    },
+    {
+      "no": 296,
+      "pali": "byāpajjanā",
+      "translation": "causing harm",
+      "owner_dharma": "78"
+    },
+    {
+      "no": 297,
+      "pali": "byāpajjitatta",
+      "translation": "harmfulness",
+      "owner_dharma": "78"
+    },
+    {
+      "no": 298,
+      "pali": "virodha",
+      "translation": "enmity",
+      "owner_dharma": "78"
+    },
+    {
+      "no": 299,
+      "pali": "paṭivirodha",
+      "translation": "hostility",
+      "owner_dharma": "78"
+    },
+    {
+      "no": 300,
+      "pali": "caṇḍikka",
+      "translation": "churlishness",
+      "owner_dharma": "78"
+    },
+    {
+      "no": 301,
+      "pali": "asuropa",
+      "translation": "abruptness",
+      "owner_dharma": "78"
+    },
+    {
+      "no": 302,
+      "pali": "anattamanatā cittassa",
+      "translation": "depression of thought",
+      "owner_dharma": "78"
+    },
+    {
+      "no": 303,
+      "pali": "kaṅkhā",
+      "translation": "doubt",
+      "owner_dharma": "80"
+    },
+    {
+      "no": 304,
+      "pali": "kaṅkhāyanā",
+      "translation": "doubting",
+      "owner_dharma": "80"
+    },
+    {
+      "no": 305,
+      "pali": "kaṅkhāyitattaṃ",
+      "translation": "dubiety",
+      "owner_dharma": "80"
+    },
+    {
+      "no": 306,
+      "pali": "vimati",
+      "translation": "puzzlement",
+      "owner_dharma": "80"
+    },
+    {
+      "no": 307,
+      "pali": "vicikicchā",
+      "translation": "perplexity",
+      "owner_dharma": "80"
+    },
+    {
+      "no": 308,
+      "pali": "dvelhaka",
+      "translation": "being in doubt (before two alternatives)",
+      "owner_dharma": "80"
+    },
+    {
+      "no": 309,
+      "pali": "dvedhāpatha",
+      "translation": "standing at crossroads",
+      "owner_dharma": "80"
+    },
+    {
+      "no": 310,
+      "pali": "saṃsaya",
+      "translation": "succumbing (to hesitation)",
+      "owner_dharma": "80"
+    },
+    {
+      "no": 311,
+      "pali": "anekaṃsaggāha",
+      "translation": "uncertainty (indecision)",
+      "owner_dharma": "80"
+    },
+    {
+      "no": 312,
+      "pali": "āsappanā",
+      "translation": "evasion",
+      "owner_dharma": "80"
+    },
+    {
+      "no": 313,
+      "pali": "parisappanā",
+      "translation": "indecisiveness",
+      "owner_dharma": "80"
+    },
+    {
+      "no": 314,
+      "pali": "apariyogāhanā",
+      "translation": "lack of real grasping",
+      "owner_dharma": "80"
+    },
+    {
+      "no": 315,
+      "pali": "thāmbhatattaṃ",
+      "translation": "vacillation",
+      "owner_dharma": "80"
+    },
+    {
+      "no": 316,
+      "pali": "cittassa manovilekha",
+      "translation": "mental perturbation of thought",
+      "owner_dharma": "80"
+    },
+    {
+      "no": 317,
+      "pali": "cittassa uddhacca",
+      "translation": "excitement of thought",
+      "owner_dharma": "81"
+    },
+    {
+      "no": 318,
+      "pali": "avūpasama",
+      "translation": "agitation",
+      "owner_dharma": "81"
+    },
+    {
+      "no": 319,
+      "pali": "cetaso vikkhepo",
+      "translation": "psychical perplexity",
+      "owner_dharma": "81"
+    },
+    {
+      "no": 320,
+      "pali": "bhantattaṃ cittassa",
+      "translation": "turmoil of thought",
+      "owner_dharma": "81"
+    },
+    {
+      "no": 321,
+      "pali": "cakkhuviññāṇadhātusamphassajaṃ cetasikaṃ neva sātaṃ nāsātaṃ",
+      "translation": "neither psychical ease nor unease born of contact with element of eye-consciousness",
+      "owner_dharma": "2c"
+    },
+    {
+      "no": 322,
+      "pali": "cakkhuviññāṇadhātusamphassajā saññā",
+      "translation": "cognition born of contact with element of eye-consciousness",
+      "owner_dharma": "3a"
+    },
+    {
+      "no": 323,
+      "pali": "cakkhuviññāṇadhātusamphassajā cetanā",
+      "translation": "volition born of contact with element of eye-consciousness",
+      "owner_dharma": "4a"
+    },
+    {
+      "no": 324,
+      "pali": "cakkhuviññāṇadhātu",
+      "translation": "element of eye-consciousness",
+      "owner_dharma": "5a"
+    },
+    {
+      "no": 325,
+      "pali": "sotaviññāṇadhātusamphassajaṃ cetasikaṃ neva sātaṃ nāsātaṃ",
+      "translation": "neither psychical ease nor unease born of contact with element of ear-consciousness",
+      "owner_dharma": "2d"
+    },
+    {
+      "no": 326,
+      "pali": "sotaviññāṇadhātusamphassajā saññā",
+      "translation": "cognition born of contact with element of ear-consciousness",
+      "owner_dharma": "3b"
+    },
+    {
+      "no": 327,
+      "pali": "sotaviññāṇadhātusamphassajā cetanā",
+      "translation": "volition born of contact with element of ear-consciousness",
+      "owner_dharma": "4b"
+    },
+    {
+      "no": 328,
+      "pali": "sotaviññāṇadhātu",
+      "translation": "element of ear-consciousness",
+      "owner_dharma": "5b"
+    },
+    {
+      "no": 329,
+      "pali": "ghānaviññāṇadhātusamphassajaṃ cetasikaṃ neva sātaṃ nāsātaṃ",
+      "translation": "neither psychical ease nor unease born of contact with element of smell-consciousness",
+      "owner_dharma": "2e"
+    },
+    {
+      "no": 330,
+      "pali": "ghānaviññāṇadhātusamphassajā saññā",
+      "translation": "cognition born of contact with element of smell-consciousness",
+      "owner_dharma": "3c"
+    },
+    {
+      "no": 331,
+      "pali": "ghānaviññāṇadhātusamphassajā cetanā",
+      "translation": "volition born of contact with element of smell-consciousness",
+      "owner_dharma": "4c"
+    },
+    {
+      "no": 332,
+      "pali": "ghānaviññāṇadhātu",
+      "translation": "element of smell-consciousness",
+      "owner_dharma": "5c"
+    },
+    {
+      "no": 333,
+      "pali": "jivhāviññāṇadhātusamphassajaṃ cetasikaṃ neva sātaṃ nāsātaṃ",
+      "translation": "neither psychical ease nor unease born of contact with element of taste-consciousness",
+      "owner_dharma": "2f"
+    },
+    {
+      "no": 334,
+      "pali": "jivhāviññāṇadhātusamphassajā saññā",
+      "translation": "cognition born of contact with element of taste-consciousness",
+      "owner_dharma": "3d"
+    },
+    {
+      "no": 335,
+      "pali": "jivhāviññāṇadhātusamphassajā cetanā",
+      "translation": "volition born of contact with element of taste consciousness",
+      "owner_dharma": "4d"
+    },
+    {
+      "no": 336,
+      "pali": "jivhāviññāṇadhātu",
+      "translation": "element of taste-consciousness",
+      "owner_dharma": "5d"
+    },
+    {
+      "no": 337,
+      "pali": "kāyaviññāṇadhātusamphassajaṃ kāyikaṃ sātaṃ",
+      "translation": "bodily ease born of contact with element of body-consciousness",
+      "owner_dharma": "2g"
+    },
+    {
+      "no": 338,
+      "pali": "kāyikaṃ sukhaṃ",
+      "translation": "bodily pleasant",
+      "owner_dharma": "2g"
+    },
+    {
+      "no": 339,
+      "pali": "kāyasamphassajaṃ sātaṃ (vedayitaṃ)",
+      "translation": "ease (experienced as) born of contact with body",
+      "owner_dharma": "2g"
+    },
+    {
+      "no": 340,
+      "pali": "(kāyasamphassajaṃ) sukhaṃ vedayitaṃ",
+      "translation": "the pleasant experienced (as born of contact with body)",
+      "owner_dharma": "2g"
+    },
+    {
+      "no": 341,
+      "pali": "kāyasamphassajā sātā (vedanā)",
+      "translation": "(sensation of) ease born of contact with body",
+      "owner_dharma": "2g"
+    },
+    {
+      "no": 342,
+      "pali": "(kāyasamphassajā) sukhā vedanā",
+      "translation": "sensation of pleasant (born of contact with body)",
+      "owner_dharma": "2g"
+    },
+    {
+      "no": 343,
+      "pali": "kāyaviññāṇadhātusamphassajā saññā",
+      "translation": "cognition born of contact with element of body-consciousness",
+      "owner_dharma": "3e"
+    },
+    {
+      "no": 344,
+      "pali": "kāyaviññāṇadhātusamphassajā cetanā",
+      "translation": "volition born of contact with element of body-consciousness",
+      "owner_dharma": "4e"
+    },
+    {
+      "no": 345,
+      "pali": "kāyaviññāṇadhātu",
+      "translation": "element of body-consciousness",
+      "owner_dharma": "5e"
+    },
+    {
+      "no": 346,
+      "pali": "manodhātusamphassajaṃ cetasikaṃ neva sātaṃ nāsātaṃ",
+      "translation": "neither psychical ease nor unease born of contact with element of mind",
+      "owner_dharma": "2h"
+    },
+    {
+      "no": 347,
+      "pali": "manodhātusamphassajā saññā",
+      "translation": "cognition born of contact with element of mind",
+      "owner_dharma": "3f"
+    },
+    {
+      "no": 348,
+      "pali": "manodhātusamphassajā cetanā",
+      "translation": "volition born of contact with element of mind",
+      "owner_dharma": "4f"
+    },
+    {
+      "no": 349,
+      "pali": "manodhātu",
+      "translation": "element of mind",
+      "owner_dharma": "5f"
+    },
+    {
+      "no": 350,
+      "pali": "kāyaviññāṇadhātusamphassajaṃ kāyikaṃ asātaṃ",
+      "translation": "bodily unease born of contact with element of body-consciousness",
+      "owner_dharma": "2i"
+    },
+    {
+      "no": 351,
+      "pali": "kāyikaṃ dukkhaṃ",
+      "translation": "bodily unpleasant",
+      "owner_dharma": "2i"
+    },
+    {
+      "no": 352,
+      "pali": "kāyasamphassajaṃ asātaṃ (vedayitaṃ)",
+      "translation": "unease (experienced as) born of contact with body",
+      "owner_dharma": "2i"
+    },
+    {
+      "no": 353,
+      "pali": "(kāyasamphassajaṃ) dukkhaṃ (vedayitaṃ)",
+      "translation": "the unpleasant experienced (as born of contact with body)",
+      "owner_dharma": "2i"
+    },
+    {
+      "no": 354,
+      "pali": "kāyasamphassajā asātā (vedanā)",
+      "translation": "(sensation of) unease born of contact with body",
+      "owner_dharma": "2i"
+    },
+    {
+      "no": 355,
+      "pali": "(kāyasamphassajā) dukkhā vedanā",
+      "translation": "sensation of unpleasant (born of contact with body)",
+      "owner_dharma": "2i"
+    }
+  ]
+}

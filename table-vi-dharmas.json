@@ -1,0 +1,2335 @@
+{
+  "note": "Cases and their dharma instances, with MS nesting removed. Join to ms-membership.json on (case_no, dharma_no).",
+  "cases": [
+    {
+      "case_no": "1A",
+      "dharmas": [
+        {
+          "no": 1,
+          "name_pali": "phassa",
+          "name_translation": "touch",
+          "ms_range": [
+            [
+              1,
+              4
+            ]
+          ]
+        },
+        {
+          "no": 2,
+          "name_pali": "vedanā",
+          "name_translation": "sensation",
+          "ms_range": [
+            [
+              5,
+              11
+            ]
+          ]
+        },
+        {
+          "no": 3,
+          "name_pali": "saññā",
+          "name_translation": "cognition",
+          "ms_range": [
+            [
+              12,
+              14
+            ]
+          ]
+        },
+        {
+          "no": 4,
+          "name_pali": "cetanā",
+          "name_translation": "intention",
+          "ms_range": [
+            [
+              15,
+              17
+            ]
+          ]
+        },
+        {
+          "no": 5,
+          "name_pali": "citta",
+          "name_translation": "thought",
+          "ms_range": [
+            [
+              18,
+              22
+            ],
+            [
+              19,
+              19
+            ],
+            [
+              23,
+              27
+            ]
+          ]
+        },
+        {
+          "no": 6,
+          "name_pali": "vitakka",
+          "name_translation": "reasoning",
+          "ms_range": [
+            [
+              28,
+              34
+            ]
+          ]
+        },
+        {
+          "no": 7,
+          "name_pali": "vicāra",
+          "name_translation": "reflexion",
+          "ms_range": [
+            [
+              35,
+              40
+            ]
+          ]
+        },
+        {
+          "no": 8,
+          "name_pali": "pīti",
+          "name_translation": "joy",
+          "ms_range": [
+            [
+              41,
+              49
+            ]
+          ]
+        },
+        {
+          "no": 9,
+          "name_pali": "sukha",
+          "name_translation": "pleasure",
+          "ms_range": [
+            [
+              5,
+              11
+            ]
+          ],
+          "note": "as in dharma 2 (vedanā); MS names not repeated in source"
+        },
+        {
+          "no": 10,
+          "name_pali": "cittassekaggatā",
+          "name_translation": "one-directedness of thought",
+          "ms_range": [
+            [
+              50,
+              59
+            ]
+          ]
+        },
+        {
+          "no": 11,
+          "name_pali": "saddhindriya",
+          "name_translation": "faculty of faith",
+          "ms_range": [
+            [
+              60,
+              63
+            ],
+            [
+              60,
+              60
+            ],
+            [
+              64,
+              65
+            ]
+          ]
+        },
+        {
+          "no": 12,
+          "name_pali": "viriyindriya",
+          "name_translation": "faculty of energy",
+          "ms_range": [
+            [
+              66,
+              82
+            ]
+          ]
+        },
+        {
+          "no": 13,
+          "name_pali": "satindriya",
+          "name_translation": "faculty of recollection",
+          "ms_range": [
+            [
+              83,
+              85
+            ],
+            [
+              83,
+              83
+            ],
+            [
+              86,
+              89
+            ],
+            [
+              83,
+              83
+            ],
+            [
+              90,
+              92
+            ]
+          ]
+        },
+        {
+          "no": 14,
+          "name_pali": "samādhindriya",
+          "name_translation": "faculty of concentration",
+          "ms_range": [
+            [
+              50,
+              59
+            ]
+          ],
+          "note": "as in dharma 10 (cittassekaggatā); MS names not repeated in source"
+        },
+        {
+          "no": 15,
+          "name_pali": "paññindriya",
+          "name_translation": "faculty of wisdom",
+          "ms_range": [
+            [
+              93,
+              112
+            ],
+            [
+              93,
+              93
+            ],
+            [
+              113,
+              121
+            ],
+            [
+              97,
+              97
+            ],
+            [
+              122,
+              122
+            ]
+          ]
+        },
+        {
+          "no": 16,
+          "name_pali": "manindriya",
+          "name_translation": "faculty of mind",
+          "ms_range": [
+            [
+              18,
+              27
+            ]
+          ],
+          "note": "as in dharma 5 (citta); MS names not repeated in source"
+        },
+        {
+          "no": 17,
+          "name_pali": "somanassindriya",
+          "name_translation": "faculty of mental gladness",
+          "ms_range": [
+            [
+              5,
+              11
+            ]
+          ],
+          "note": "as in dharmas 2 (vedanā) and 9 (sukha); MS names not repeated in source"
+        },
+        {
+          "no": 18,
+          "name_pali": "jīvitindriya",
+          "name_translation": "faculty of living",
+          "ms_range": [
+            [
+              123,
+              131
+            ]
+          ]
+        },
+        {
+          "no": 19,
+          "name_pali": "sammādiṭṭhi",
+          "name_translation": "correct view",
+          "ms_range": [
+            [
+              93,
+              122
+            ]
+          ],
+          "note": "as in dharma 15 (paññindriya); MS names not repeated in source"
+        },
+        {
+          "no": 20,
+          "name_pali": "sammāsaṅkappa",
+          "name_translation": "correct construing",
+          "ms_range": [
+            [
+              28,
+              34
+            ]
+          ],
+          "note": "as in dharma 6 (vitakka); MS names not repeated in source"
+        },
+        {
+          "no": 21,
+          "name_pali": "sammāvāyāma",
+          "name_translation": "correct endeavour",
+          "ms_range": [
+            [
+              66,
+              82
+            ]
+          ],
+          "note": "as in dharma 12 (viriyindriya); MS names not repeated in source"
+        },
+        {
+          "no": 22,
+          "name_pali": "sammāsati",
+          "name_translation": "correct recollection",
+          "ms_range": [
+            [
+              83,
+              92
+            ]
+          ],
+          "note": "as in dharma 13 (satindriya); MS names not repeated in source"
+        },
+        {
+          "no": 23,
+          "name_pali": "sammāsamādhi",
+          "name_translation": "correct concentration",
+          "ms_range": [
+            [
+              50,
+              59
+            ]
+          ],
+          "note": "as in dharmas 10 (cittassekaggatā) and 14 (samādhindriya); MS names not repeated in source"
+        },
+        {
+          "no": 24,
+          "name_pali": "saddhābala",
+          "name_translation": "power of faith",
+          "ms_range": [
+            [
+              60,
+              65
+            ]
+          ],
+          "note": "as in dharma 11 (saddhindriya); MS names not repeated in source"
+        },
+        {
+          "no": 25,
+          "name_pali": "viriyabala",
+          "name_translation": "faculty of energy",
+          "ms_range": [
+            [
+              66,
+              82
+            ]
+          ],
+          "note": "as in dharmas 12 (viriyindriya) and 21 (sammāvāyāma); MS names not repeated in source"
+        },
+        {
+          "no": 26,
+          "name_pali": "satibala",
+          "name_translation": "power of recollection",
+          "ms_range": [
+            [
+              83,
+              92
+            ]
+          ],
+          "note": "as in dharmas 13 (satindriya) and 22 (sammāsati); MS names not repeated in source"
+        },
+        {
+          "no": 27,
+          "name_pali": "samādhibala",
+          "name_translation": "power of concentration",
+          "ms_range": [
+            [
+              50,
+              59
+            ]
+          ],
+          "note": "as in dharmas 10 (cittassekaggatā), 14 (samādhindriya), and 23 (sammāsamādhi); MS names not repeated in source"
+        },
+        {
+          "no": 28,
+          "name_pali": "paññābala",
+          "name_translation": "power of wisdom",
+          "ms_range": [
+            [
+              93,
+              122
+            ]
+          ],
+          "note": "as in dharmas 15 (paññindriya) and 19 (sammādiṭṭhi); MS names not repeated in source"
+        },
+        {
+          "no": 29,
+          "name_pali": "hiribala",
+          "name_translation": "power of shame",
+          "ms_range": [
+            [
+              132,
+              133
+            ]
+          ]
+        },
+        {
+          "no": 30,
+          "name_pali": "ottappabala",
+          "name_translation": "power of remorse",
+          "ms_range": [
+            [
+              134,
+              135
+            ]
+          ]
+        },
+        {
+          "no": 31,
+          "name_pali": "alobha",
+          "name_translation": "disinterestedness",
+          "ms_range": [
+            [
+              136,
+              143
+            ]
+          ]
+        },
+        {
+          "no": 32,
+          "name_pali": "adosa",
+          "name_translation": "non-hatred",
+          "ms_range": [
+            [
+              144,
+              149
+            ]
+          ]
+        },
+        {
+          "no": 33,
+          "name_pali": "amoha",
+          "name_translation": "absence of delusion",
+          "ms_range": [
+            [
+              93,
+              122
+            ]
+          ],
+          "note": "as in dharmas 15 (paññindriya), 19 (sammādiṭṭhi), and 28 (paññābala); MS names not repeated in source"
+        },
+        {
+          "no": 34,
+          "name_pali": "anabhijjhā",
+          "name_translation": "not being covetous",
+          "ms_range": [
+            [
+              136,
+              143
+            ]
+          ],
+          "note": "as in dharma 31 (alobha); MS names not repeated in source"
+        },
+        {
+          "no": 35,
+          "name_pali": "abyāpāda",
+          "name_translation": "unmaliciousness",
+          "ms_range": [
+            [
+              144,
+              149
+            ]
+          ],
+          "note": "as in dharma 32 (adosa); MS names not repeated in source"
+        },
+        {
+          "no": 36,
+          "name_pali": "sammādiṭṭhi",
+          "name_translation": "correct view",
+          "ms_range": [
+            [
+              93,
+              122
+            ]
+          ],
+          "note": "as in dharmas 15 (paññindriya), 19 (sammādiṭṭhi), 28 (paññābala), and 33 (amoha); MS names not repeated in source"
+        },
+        {
+          "no": 37,
+          "name_pali": "hiri",
+          "name_translation": "shame",
+          "ms_range": [
+            [
+              132,
+              133
+            ]
+          ],
+          "note": "as in dharma 29 (hiribala); MS names not repeated in source"
+        },
+        {
+          "no": 38,
+          "name_pali": "ottappa",
+          "name_translation": "remorse",
+          "ms_range": [
+            [
+              134,
+              135
+            ]
+          ],
+          "note": "as in dharma 30 (ottappabala); MS names not repeated in source"
+        },
+        {
+          "no": 39,
+          "name_pali": "kāyapassaddhi",
+          "name_translation": "composedness of body",
+          "ms_range": [
+            [
+              150,
+              154
+            ]
+          ]
+        },
+        {
+          "no": 40,
+          "name_pali": "cittapassaddhi",
+          "name_translation": "composedness of thought",
+          "ms_range": [
+            [
+              155,
+              159
+            ]
+          ]
+        },
+        {
+          "no": 41,
+          "name_pali": "kāyalahutā",
+          "name_translation": "lightness of body",
+          "ms_range": [
+            [
+              160,
+              163
+            ]
+          ]
+        },
+        {
+          "no": 42,
+          "name_pali": "cittalahutā",
+          "name_translation": "lightness of thought",
+          "ms_range": [
+            [
+              164,
+              167
+            ]
+          ]
+        },
+        {
+          "no": 43,
+          "name_pali": "kāyamudutā",
+          "name_translation": "flexibility of body",
+          "ms_range": [
+            [
+              168,
+              171
+            ]
+          ]
+        },
+        {
+          "no": 44,
+          "name_pali": "cittamudutā",
+          "name_translation": "flexibility of thought",
+          "ms_range": [
+            [
+              172,
+              175
+            ]
+          ]
+        },
+        {
+          "no": 45,
+          "name_pali": "kāyakammaññatā",
+          "name_translation": "workability of body",
+          "ms_range": [
+            [
+              176,
+              178
+            ]
+          ]
+        },
+        {
+          "no": 46,
+          "name_pali": "cittakammaññatā",
+          "name_translation": "workability of thought",
+          "ms_range": [
+            [
+              179,
+              181
+            ]
+          ]
+        },
+        {
+          "no": 47,
+          "name_pali": "kāyapāguññatā",
+          "name_translation": "fitness of body",
+          "ms_range": [
+            [
+              182,
+              184
+            ]
+          ]
+        },
+        {
+          "no": 48,
+          "name_pali": "cittapāguññatā",
+          "name_translation": "fitness of thought",
+          "ms_range": [
+            [
+              185,
+              187
+            ]
+          ]
+        },
+        {
+          "no": 49,
+          "name_pali": "kāyujukatā",
+          "name_translation": "straightness of body",
+          "ms_range": [
+            [
+              188,
+              192
+            ]
+          ]
+        },
+        {
+          "no": 50,
+          "name_pali": "cittujukatā",
+          "name_translation": "straightness of thought",
+          "ms_range": [
+            [
+              193,
+              197
+            ]
+          ]
+        },
+        {
+          "no": 51,
+          "name_pali": "sati",
+          "name_translation": "recollection",
+          "ms_range": [
+            [
+              83,
+              92
+            ]
+          ],
+          "note": "as in dharmas 13 (satindriya), 22 (sammāsati), and 26 (satibala); MS names not repeated in source"
+        },
+        {
+          "no": 52,
+          "name_pali": "sampajañña",
+          "name_translation": "self-awareness",
+          "ms_range": [
+            [
+              93,
+              122
+            ]
+          ],
+          "note": "as in dharmas 15 (paññindriya), 19 (sammādiṭṭhi), 28 (paññābala), 33 (amoha), and 36 (sammādiṭṭhi); MS names not repeated in source"
+        },
+        {
+          "no": 53,
+          "name_pali": "samatha",
+          "name_translation": "quietude",
+          "ms_range": [
+            [
+              50,
+              59
+            ]
+          ],
+          "note": "as in dharmas 10 (cittassekaggatā), 14 (samādhindriya), 23 (sammāsamādhi), and 27 (samādhibala); MS names not repeated in source"
+        },
+        {
+          "no": 54,
+          "name_pali": "vipassanā",
+          "name_translation": "intuition",
+          "ms_range": [
+            [
+              93,
+              122
+            ]
+          ],
+          "note": "as in dharmas 15 (paññindriya), 19 (sammādiṭṭhi), 28 (paññābala), 33 (amoha), 36 (sammādiṭṭhi), and 52 (sampajañña); MS names not repeated in source"
+        },
+        {
+          "no": 55,
+          "name_pali": "paggāha",
+          "name_translation": "grasp",
+          "ms_range": [
+            [
+              66,
+              82
+            ]
+          ],
+          "note": "as in dharmas 12 (viriyindriya), 21 (sammāvāyāma), and 25 (viriyabala); MS names not repeated in source"
+        },
+        {
+          "no": 56,
+          "name_pali": "avikkhepa",
+          "name_translation": "unperturbedness",
+          "ms_range": [
+            [
+              50,
+              59
+            ]
+          ],
+          "note": "as in dharmas 10 (cittassekaggatā), 14 (samādhindriya), 23 (sammāsamādhi), 27 (samādhibala), and 53 (samatha); MS names not repeated in source"
+        }
+      ]
+    },
+    {
+      "case_no": "5A",
+      "dharmas": [
+        {
+          "no": "2a",
+          "name_pali": "vedanā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              198,
+              200
+            ]
+          ]
+        },
+        {
+          "no": 57,
+          "name_pali": "upekkhā",
+          "name_translation": "indifference",
+          "ms_range": [
+            [
+              198,
+              200
+            ]
+          ],
+          "note": "as in dharma 2a (vedanā); MS names not repeated in source"
+        },
+        {
+          "no": 58,
+          "name_pali": "upekkhindriya",
+          "name_translation": "of indifference",
+          "ms_range": [
+            [
+              198,
+              200
+            ]
+          ],
+          "note": "as in dharmas 2a (vedanā) and 57 (upekkhā); MS names not repeated in source"
+        }
+      ]
+    },
+    {
+      "case_no": "119A",
+      "dharmas": [
+        {
+          "no": "6a",
+          "name_pali": "vitakka",
+          "name_translation": null,
+          "ms_range": [
+            [
+              28,
+              34
+            ],
+            [
+              201,
+              202
+            ]
+          ],
+          "note": "MS 28-34 as in dharma 6 (vitakka); MS names not repeated in source for that span"
+        },
+        {
+          "no": "8a",
+          "name_pali": "pīti",
+          "name_translation": null,
+          "ms_range": [
+            [
+              41,
+              49
+            ],
+            [
+              203,
+              203
+            ]
+          ],
+          "note": "MS 41-49 as in dharma 8 (pīti); MS names not repeated in source for that span"
+        },
+        {
+          "no": "10a",
+          "name_pali": "cittassekaggatā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              50,
+              59
+            ],
+            [
+              201,
+              202
+            ],
+            [
+              204,
+              204
+            ]
+          ],
+          "note": "MS 50-59 as in dharma 10 (cittassekaggatā), MS 201-202 as in dharma 6a (vitakka); MS names not repeated in source for those spans"
+        },
+        {
+          "no": "12a",
+          "name_pali": "viriyindriya",
+          "name_translation": null,
+          "ms_range": [
+            [
+              66,
+              82
+            ],
+            [
+              201,
+              202
+            ],
+            [
+              205,
+              205
+            ]
+          ],
+          "note": "MS 66-82 as in dharma 12 (viriyindriya), MS 201-202 as in dharma 6a (vitakka); MS names not repeated in source for those spans"
+        },
+        {
+          "no": "13a",
+          "name_pali": "satindriya",
+          "name_translation": null,
+          "ms_range": [
+            [
+              83,
+              92
+            ],
+            [
+              201,
+              202
+            ],
+            [
+              206,
+              206
+            ]
+          ],
+          "note": "MS 83-92 as in dharma 13 (satindriya), MS 201-202 as in dharma 6a (vitakka); MS names not repeated in source for those spans"
+        },
+        {
+          "no": "14a",
+          "name_pali": "samādhindriya",
+          "name_translation": null,
+          "ms_range": [
+            [
+              50,
+              59
+            ],
+            [
+              201,
+              202
+            ],
+            [
+              204,
+              204
+            ]
+          ],
+          "note": "as in dharma 10a (cittassekaggatā); MS names not repeated in source"
+        },
+        {
+          "no": "15a",
+          "name_pali": "paññindriya",
+          "name_translation": null,
+          "ms_range": [
+            [
+              93,
+              122
+            ],
+            [
+              201,
+              202
+            ],
+            [
+              207,
+              207
+            ]
+          ],
+          "note": "MS 93-122 as in dharma 15 (paññindriya), MS 201-202 as in dharma 6a (vitakka); MS names not repeated in source for those spans. Source header prints this span as '83-122', which appears to be a typo for '93-122' — corrected here based on the numeric MS column and consistency with dharma 15 elsewhere."
+        },
+        {
+          "no": 59,
+          "name_pali": "anaññātaññassāmītindriya",
+          "name_translation": "the faculty [of those who] say: 'I shall know the unknown'",
+          "ms_range": [
+            [
+              93,
+              122
+            ],
+            [
+              201,
+              202
+            ],
+            [
+              207,
+              207
+            ],
+            [
+              208,
+              208
+            ]
+          ],
+          "note": "MS 93-122 as in dharma 15 (paññindriya), MS 201-202 as in dharma 6a (vitakka), MS 207 as in dharma 15a (paññindriya); MS names not repeated in source for those spans"
+        },
+        {
+          "no": "19a",
+          "name_pali": "sammādiṭṭhi",
+          "name_translation": null,
+          "ms_range": [
+            [
+              93,
+              122
+            ],
+            [
+              207,
+              207
+            ],
+            [
+              201,
+              202
+            ]
+          ],
+          "note": "as in dharma 15a (paññindriya); MS names not repeated in source"
+        },
+        {
+          "no": "20a",
+          "name_pali": "sammāsaṅkappa",
+          "name_translation": null,
+          "ms_range": [
+            [
+              28,
+              34
+            ],
+            [
+              201,
+              202
+            ]
+          ],
+          "note": "as in dharma 6a (vitakka); MS names not repeated in source"
+        },
+        {
+          "no": 60,
+          "name_pali": "sammāvācā",
+          "name_translation": "correct speech",
+          "ms_range": [
+            [
+              201,
+              202
+            ],
+            [
+              209,
+              215
+            ]
+          ],
+          "note": "MS 201-202 as in dharma 6a (vitakka); MS names not repeated in source for that span"
+        },
+        {
+          "no": 61,
+          "name_pali": "sammākammanta",
+          "name_translation": "correct action",
+          "ms_range": [
+            [
+              201,
+              202
+            ],
+            [
+              216,
+              222
+            ]
+          ],
+          "note": "MS 201-202 as in dharma 6a (vitakka); MS names not repeated in source for that span. Source prints the fifth item's index as '211' (repeating the number already used in dharma 60 for akaraṇaṃ), which appears to be a typo for '221' given the surrounding sequence 216-220, 222 — corrected here."
+        },
+        {
+          "no": 62,
+          "name_pali": "sammā ājīva",
+          "name_translation": "correct livelihood",
+          "ms_range": [
+            [
+              201,
+              202
+            ],
+            [
+              223,
+              229
+            ]
+          ],
+          "note": "MS 201-202 as in dharma 6a (vitakka); MS names not repeated in source for that span"
+        },
+        {
+          "no": "21a",
+          "name_pali": "sammāvāyāma",
+          "name_translation": null,
+          "ms_range": [
+            [
+              66,
+              82
+            ],
+            [
+              205,
+              205
+            ],
+            [
+              201,
+              202
+            ]
+          ],
+          "note": "as in dharma 12a (viriyindriya); MS names not repeated in source"
+        },
+        {
+          "no": "22a",
+          "name_pali": "sammāsati",
+          "name_translation": null,
+          "ms_range": [
+            [
+              83,
+              92
+            ],
+            [
+              206,
+              206
+            ],
+            [
+              201,
+              202
+            ]
+          ],
+          "note": "as in dharma 13a (satindriya); MS names not repeated in source"
+        },
+        {
+          "no": "23a",
+          "name_pali": "sammāsamādhi",
+          "name_translation": null,
+          "ms_range": [
+            [
+              50,
+              59
+            ],
+            [
+              201,
+              202
+            ],
+            [
+              204,
+              204
+            ]
+          ],
+          "note": "as in dharmas 10a (cittassekaggatā) and 14a (samādhindriya); MS names not repeated in source"
+        },
+        {
+          "no": "25a",
+          "name_pali": "viriyabala",
+          "name_translation": null,
+          "ms_range": [
+            [
+              66,
+              82
+            ],
+            [
+              205,
+              205
+            ],
+            [
+              201,
+              202
+            ]
+          ],
+          "note": "as in dharmas 12a (viriyindriya) and 21a (sammāvāyāma); MS names not repeated in source"
+        },
+        {
+          "no": "26a",
+          "name_pali": "satibala",
+          "name_translation": null,
+          "ms_range": [
+            [
+              83,
+              92
+            ],
+            [
+              206,
+              206
+            ],
+            [
+              201,
+              202
+            ]
+          ],
+          "note": "as in dharmas 13a (satindriya) and 22a (sammāsati); MS names not repeated in source"
+        },
+        {
+          "no": "27a",
+          "name_pali": "samādhibala",
+          "name_translation": null,
+          "ms_range": [
+            [
+              50,
+              59
+            ],
+            [
+              201,
+              202
+            ],
+            [
+              204,
+              204
+            ]
+          ],
+          "note": "as in dharmas 10a (cittassekaggatā), 14a (samādhindriya), and 23a (sammāsamādhi); MS names not repeated in source"
+        },
+        {
+          "no": "28a",
+          "name_pali": "paññābala",
+          "name_translation": null,
+          "ms_range": [
+            [
+              93,
+              122
+            ],
+            [
+              207,
+              207
+            ],
+            [
+              201,
+              202
+            ]
+          ],
+          "note": "as in dharmas 15a (paññindriya) and 19a (sammādiṭṭhi); MS names not repeated in source"
+        },
+        {
+          "no": "33a",
+          "name_pali": "amoha",
+          "name_translation": null,
+          "ms_range": [
+            [
+              93,
+              122
+            ],
+            [
+              207,
+              207
+            ],
+            [
+              201,
+              202
+            ]
+          ],
+          "note": "as in dharmas 15a (paññindriya), 19a (sammādiṭṭhi), and 28a (paññābala); MS names not repeated in source"
+        },
+        {
+          "no": "36a",
+          "name_pali": "sammādiṭṭhi",
+          "name_translation": null,
+          "ms_range": [
+            [
+              93,
+              122
+            ],
+            [
+              207,
+              207
+            ],
+            [
+              201,
+              202
+            ]
+          ],
+          "note": "as in dharmas 15a (paññindriya), 19a (sammādiṭṭhi), 28a (paññābala), and 33a (amoha); MS names not repeated in source"
+        },
+        {
+          "no": "39a",
+          "name_pali": "kāyapassadhi",
+          "name_translation": null,
+          "ms_range": [
+            [
+              150,
+              154
+            ],
+            [
+              230,
+              230
+            ]
+          ],
+          "note": "MS 150-154 as in dharma 39 (kāyapassaddhi); MS names not repeated in source for that span"
+        },
+        {
+          "no": "40a",
+          "name_pali": "cittapassadhi",
+          "name_translation": null,
+          "ms_range": [
+            [
+              155,
+              159
+            ],
+            [
+              230,
+              230
+            ]
+          ],
+          "note": "MS 155-159 as in dharma 40 (cittapassaddhi), MS 230 as in dharma 39a (kāyapassadhi); MS names not repeated in source"
+        },
+        {
+          "no": "51a",
+          "name_pali": "sati",
+          "name_translation": null,
+          "ms_range": [
+            [
+              83,
+              92
+            ],
+            [
+              206,
+              206
+            ],
+            [
+              201,
+              202
+            ]
+          ],
+          "note": "as in dharmas 13a (satindriya), 22a (sammāsati), and 26a (satibala); MS names not repeated in source"
+        },
+        {
+          "no": "52a",
+          "name_pali": "sampajañña",
+          "name_translation": null,
+          "ms_range": [
+            [
+              93,
+              122
+            ],
+            [
+              207,
+              207
+            ],
+            [
+              201,
+              202
+            ]
+          ],
+          "note": "as in dharmas 15a (paññindriya), 19a (sammādiṭṭhi), 28a (paññābala), 33a (amoha), and 36a (sammādiṭṭhi); MS names not repeated in source"
+        },
+        {
+          "no": "53a",
+          "name_pali": "samatha",
+          "name_translation": null,
+          "ms_range": [
+            [
+              50,
+              59
+            ],
+            [
+              201,
+              202
+            ],
+            [
+              204,
+              204
+            ]
+          ],
+          "note": "as in dharmas 10a (cittassekaggatā), 14a (samādhindriya), 23a (sammāsamādhi), and 27a (samādhibala); MS names not repeated in source"
+        },
+        {
+          "no": "54a",
+          "name_pali": "vipassanā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              93,
+              122
+            ],
+            [
+              207,
+              207
+            ],
+            [
+              201,
+              202
+            ]
+          ],
+          "note": "as in dharmas 15a (paññindriya), 19a (sammādiṭṭhi), 28a (paññābala), 33a (amoha), 36a (sammādiṭṭhi), and 52a (sampajañña); MS names not repeated in source"
+        },
+        {
+          "no": "55a",
+          "name_pali": "paggāha",
+          "name_translation": null,
+          "ms_range": [
+            [
+              66,
+              82
+            ],
+            [
+              205,
+              205
+            ],
+            [
+              201,
+              202
+            ]
+          ],
+          "note": "as in dharmas 12a (viriyindriya), 21a (sammāvāyāma), and 25a (viriyabala); MS names not repeated in source"
+        },
+        {
+          "no": "56a",
+          "name_pali": "avikkhepa",
+          "name_translation": null,
+          "ms_range": [
+            [
+              50,
+              59
+            ],
+            [
+              204,
+              204
+            ],
+            [
+              201,
+              202
+            ]
+          ],
+          "note": "as in dharmas 10a (cittassekaggatā), 14a (samādhindriya), 23a (sammāsamādhi), 27a (samādhibala), and 53a (samatha); MS names not repeated in source"
+        }
+      ]
+    },
+    {
+      "case_no": "144A",
+      "dharmas": [
+        {
+          "no": 63,
+          "name_pali": "aññindriya",
+          "name_translation": "faculty of recognition",
+          "ms_range": [
+            [
+              208,
+              208
+            ],
+            [
+              93,
+              122
+            ],
+            [
+              207,
+              207
+            ],
+            [
+              201,
+              202
+            ]
+          ],
+          "note": "as in dharma 59 (anaññātaññassāmītindriya); MS names not repeated in source"
+        }
+      ]
+    },
+    {
+      "case_no": "145B",
+      "dharmas": [
+        {
+          "no": "6b",
+          "name_pali": "vitakka",
+          "name_translation": null,
+          "ms_range": [
+            [
+              28,
+              33
+            ],
+            [
+              231,
+              231
+            ]
+          ],
+          "note": "MS 28-33 as in dharma 6 (vitakka), a subset excluding MS 34 (sammāsaṅkappa, the 'correct' variant); MS names not repeated in source for that span"
+        },
+        {
+          "no": "10b",
+          "name_pali": "cittassekaggatā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              50,
+              58
+            ],
+            [
+              232,
+              232
+            ]
+          ],
+          "note": "MS 50-58 as in dharma 10 (cittassekaggatā), a subset excluding MS 59 (sammāsamādhi, the 'correct' variant); MS names not repeated in source for that span"
+        },
+        {
+          "no": "12b",
+          "name_pali": "viriyindriya",
+          "name_translation": null,
+          "ms_range": [
+            [
+              66,
+              81
+            ],
+            [
+              233,
+              233
+            ]
+          ],
+          "note": "MS 66-81 as in dharma 12 (viriyindriya), a subset excluding MS 82 (sammāvāyāma, the 'correct' variant); MS names not repeated in source for that span"
+        },
+        {
+          "no": "14b",
+          "name_pali": "samādhindriya",
+          "name_translation": null,
+          "ms_range": [
+            [
+              50,
+              58
+            ],
+            [
+              232,
+              232
+            ]
+          ],
+          "note": "as in dharma 10b (cittassekaggatā); MS names not repeated in source"
+        },
+        {
+          "no": 64,
+          "name_pali": "micchādiṭṭhi",
+          "name_translation": "wrong view",
+          "ms_range": [
+            [
+              234,
+              249
+            ]
+          ]
+        },
+        {
+          "no": 65,
+          "name_pali": "micchāsaṅkappa",
+          "name_translation": "wrong construing",
+          "ms_range": [
+            [
+              28,
+              33
+            ],
+            [
+              231,
+              231
+            ]
+          ],
+          "note": "as in dharma 6b (vitakka); MS names not repeated in source"
+        },
+        {
+          "no": 66,
+          "name_pali": "micchāvāyāma",
+          "name_translation": "wrong endeavour",
+          "ms_range": [
+            [
+              66,
+              81
+            ],
+            [
+              233,
+              233
+            ]
+          ],
+          "note": "as in dharma 12b (viriyindriya); MS names not repeated in source"
+        },
+        {
+          "no": 67,
+          "name_pali": "micchāsamādhi",
+          "name_translation": "wrong concentration",
+          "ms_range": [
+            [
+              50,
+              58
+            ],
+            [
+              232,
+              232
+            ]
+          ],
+          "note": "as in dharmas 10b (cittassekaggatā) and 14b (samādhindriya); MS names not repeated in source"
+        },
+        {
+          "no": "25b",
+          "name_pali": "viriyabala",
+          "name_translation": null,
+          "ms_range": [
+            [
+              66,
+              81
+            ],
+            [
+              233,
+              233
+            ]
+          ],
+          "note": "as in dharmas 12b (viriyindriya) and 66 (micchāvāyāma); MS names not repeated in source"
+        },
+        {
+          "no": "27b",
+          "name_pali": "samādhibala",
+          "name_translation": null,
+          "ms_range": [
+            [
+              50,
+              58
+            ],
+            [
+              232,
+              232
+            ]
+          ],
+          "note": "as in dharmas 10b (cittassekaggatā), 14b (samādhindriya), and 67 (micchāsamādhi); MS names not repeated in source"
+        },
+        {
+          "no": 68,
+          "name_pali": "ahirikabala",
+          "name_translation": "power of shamelessness",
+          "ms_range": [
+            [
+              250,
+              251
+            ]
+          ]
+        },
+        {
+          "no": 69,
+          "name_pali": "anottappabala",
+          "name_translation": "power of unremorsefulness",
+          "ms_range": [
+            [
+              252,
+              253
+            ]
+          ]
+        },
+        {
+          "no": 70,
+          "name_pali": "lobha",
+          "name_translation": "greed",
+          "ms_range": [
+            [
+              254,
+              261
+            ]
+          ]
+        },
+        {
+          "no": 71,
+          "name_pali": "moha",
+          "name_translation": "delusion",
+          "ms_range": [
+            [
+              262,
+              285
+            ]
+          ]
+        },
+        {
+          "no": 72,
+          "name_pali": "abhijjhā",
+          "name_translation": "covetousness",
+          "ms_range": [
+            [
+              254,
+              261
+            ]
+          ],
+          "note": "as in dharma 70 (lobha); MS names not repeated in source"
+        },
+        {
+          "no": 73,
+          "name_pali": "micchādiṭṭhi",
+          "name_translation": "wrong view",
+          "ms_range": [
+            [
+              234,
+              249
+            ]
+          ],
+          "note": "as in dharma 64 (micchādiṭṭhi); MS names not repeated in source"
+        },
+        {
+          "no": 74,
+          "name_pali": "ahirika",
+          "name_translation": "shamelessness",
+          "ms_range": [
+            [
+              250,
+              251
+            ]
+          ],
+          "note": "as in dharma 68 (ahirikabala); MS names not repeated in source"
+        },
+        {
+          "no": 75,
+          "name_pali": "anottappa",
+          "name_translation": "unremorsefulness",
+          "ms_range": [
+            [
+              252,
+              253
+            ]
+          ],
+          "note": "as in dharma 69 (anottappabala); MS names not repeated in source"
+        },
+        {
+          "no": "53b",
+          "name_pali": "samatha",
+          "name_translation": null,
+          "ms_range": [
+            [
+              50,
+              58
+            ],
+            [
+              232,
+              232
+            ]
+          ],
+          "note": "as in dharmas 10b (cittassekaggatā), 14b (samādhindriya), and 67 (micchāsamādhi); MS names not repeated in source"
+        },
+        {
+          "no": "55b",
+          "name_pali": "paggāha",
+          "name_translation": null,
+          "ms_range": [
+            [
+              66,
+              81
+            ],
+            [
+              233,
+              233
+            ]
+          ],
+          "note": "as in dharmas 12b (viriyindriya), 25b (viriyabala), and 66 (micchāvāyāma); MS names not repeated in source"
+        },
+        {
+          "no": "56b",
+          "name_pali": "avikkhepa",
+          "name_translation": null,
+          "ms_range": [
+            [
+              50,
+              58
+            ],
+            [
+              232,
+              232
+            ]
+          ],
+          "note": "as in dharmas 10b (cittassekaggatā), 14b (samādhindriya), 53b (samatha), and 67 (micchāsamādhi); MS names not repeated in source"
+        }
+      ]
+    },
+    {
+      "case_no": "153B",
+      "dharmas": [
+        {
+          "no": "2b",
+          "name_pali": "vedanā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              286,
+              291
+            ]
+          ],
+          "note": "MS list continues on next page"
+        },
+        {
+          "no": 76,
+          "name_pali": "dukkha",
+          "name_translation": "suffering",
+          "ms_range": [
+            [
+              286,
+              291
+            ]
+          ],
+          "note": "as in dharma 2b (vedanā); MS names not repeated in source"
+        },
+        {
+          "no": 77,
+          "name_pali": "domanassindriya",
+          "name_translation": "faculty of mental sorrow",
+          "ms_range": [
+            [
+              286,
+              291
+            ]
+          ],
+          "note": "as in dharmas 2b (vedanā) and 76 (dukkha); MS names not repeated in source"
+        },
+        {
+          "no": 78,
+          "name_pali": "dosa",
+          "name_translation": "hatred",
+          "ms_range": [
+            [
+              292,
+              302
+            ]
+          ]
+        },
+        {
+          "no": 79,
+          "name_pali": "byāpāda",
+          "name_translation": "maliciousness",
+          "ms_range": [
+            [
+              292,
+              302
+            ]
+          ],
+          "note": "as in dharma 78 (dosa); MS names not repeated in source"
+        }
+      ]
+    },
+    {
+      "case_no": "155B",
+      "dharmas": [
+        {
+          "no": "10c",
+          "name_pali": "cittassekaggatā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              50,
+              50
+            ]
+          ],
+          "note": "MS 50 as in dharma 10 (cittassekaggatā); MS name not repeated in source"
+        },
+        {
+          "no": 80,
+          "name_pali": "vicikicchā",
+          "name_translation": "perplexity",
+          "ms_range": [
+            [
+              303,
+              316
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "case_no": "156B",
+      "dharmas": [
+        {
+          "no": 81,
+          "name_pali": "uddhacca",
+          "name_translation": "excitement",
+          "ms_range": [
+            [
+              317,
+              320
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "case_no": "157C",
+      "dharmas": [
+        {
+          "no": "2c",
+          "name_pali": "vedanā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              199,
+              200
+            ],
+            [
+              321,
+              321
+            ]
+          ],
+          "note": "MS 199-200 as in dharma 2a (vedanā, case 5A); MS name not repeated in source for that span"
+        },
+        {
+          "no": "3a",
+          "name_pali": "saññā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              13,
+              14
+            ],
+            [
+              322,
+              322
+            ]
+          ],
+          "note": "MS 13-14 as in dharma 3 (saññā); MS names not repeated in source for that span"
+        },
+        {
+          "no": "4a",
+          "name_pali": "cetanā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              16,
+              17
+            ],
+            [
+              323,
+              323
+            ]
+          ],
+          "note": "MS 16-17 as in dharma 4 (cetanā); MS names not repeated in source for that span"
+        },
+        {
+          "no": "5a",
+          "name_pali": "citta",
+          "name_translation": null,
+          "ms_range": [
+            [
+              18,
+              26
+            ],
+            [
+              324,
+              324
+            ]
+          ],
+          "note": "MS 18-26 as in dharma 5 (citta), a subset excluding MS 27 (manoviññāṇadhātu, replaced here by cakkhuviññāṇadhātu); MS names not repeated in source for that span"
+        },
+        {
+          "no": "16a",
+          "name_pali": "manindriya",
+          "name_translation": null,
+          "ms_range": [
+            [
+              18,
+              26
+            ],
+            [
+              324,
+              324
+            ]
+          ],
+          "note": "as in dharma 5a (citta); MS names not repeated in source"
+        }
+      ]
+    },
+    {
+      "case_no": "158C",
+      "dharmas": [
+        {
+          "no": "2d",
+          "name_pali": "vedanā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              199,
+              200
+            ],
+            [
+              325,
+              325
+            ]
+          ],
+          "note": "MS 199-200 as in dharma 2a (vedanā, case 5A); MS name not repeated in source for that span"
+        },
+        {
+          "no": "3b",
+          "name_pali": "saññā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              13,
+              14
+            ],
+            [
+              326,
+              326
+            ]
+          ],
+          "note": "MS 13-14 as in dharma 3 (saññā); MS names not repeated in source for that span"
+        },
+        {
+          "no": "4b",
+          "name_pali": "cetanā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              16,
+              17
+            ],
+            [
+              327,
+              327
+            ]
+          ],
+          "note": "MS 16-17 as in dharma 4 (cetanā); MS names not repeated in source for that span"
+        },
+        {
+          "no": "5b",
+          "name_pali": "citta",
+          "name_translation": null,
+          "ms_range": [
+            [
+              18,
+              26
+            ],
+            [
+              328,
+              328
+            ]
+          ],
+          "note": "MS 18-26 as in dharma 5 (citta), a subset excluding MS 27 (manoviññāṇadhātu, replaced here by sotaviññāṇadhātu); MS names not repeated in source for that span"
+        },
+        {
+          "no": "16b",
+          "name_pali": "manindriya",
+          "name_translation": null,
+          "ms_range": [
+            [
+              18,
+              26
+            ],
+            [
+              328,
+              328
+            ]
+          ],
+          "note": "as in dharma 5b (citta); MS names not repeated in source"
+        }
+      ]
+    },
+    {
+      "case_no": "159C",
+      "dharmas": [
+        {
+          "no": "2e",
+          "name_pali": "vedanā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              199,
+              200
+            ],
+            [
+              329,
+              329
+            ]
+          ],
+          "note": "MS 199-200 as in dharma 2a (vedanā, case 5A); MS name not repeated in source for that span"
+        },
+        {
+          "no": "3c",
+          "name_pali": "saññā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              13,
+              14
+            ],
+            [
+              330,
+              330
+            ]
+          ],
+          "note": "MS 13-14 as in dharma 3 (saññā); MS names not repeated in source for that span"
+        },
+        {
+          "no": "4c",
+          "name_pali": "cetanā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              16,
+              17
+            ],
+            [
+              331,
+              331
+            ]
+          ],
+          "note": "MS 16-17 as in dharma 4 (cetanā); MS names not repeated in source for that span"
+        },
+        {
+          "no": "5c",
+          "name_pali": "citta",
+          "name_translation": null,
+          "ms_range": [
+            [
+              18,
+              26
+            ],
+            [
+              332,
+              332
+            ]
+          ],
+          "note": "MS 18-26 as in dharma 5 (citta), a subset excluding MS 27 (manoviññāṇadhātu, replaced here by ghānaviññāṇadhātu); MS names not repeated in source for that span"
+        },
+        {
+          "no": "16c",
+          "name_pali": "manindriya",
+          "name_translation": null,
+          "ms_range": [
+            [
+              18,
+              26
+            ],
+            [
+              332,
+              332
+            ]
+          ],
+          "note": "as in dharma 5c (citta); MS names not repeated in source"
+        }
+      ]
+    },
+    {
+      "case_no": "160C",
+      "dharmas": [
+        {
+          "no": "2f",
+          "name_pali": "vedanā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              199,
+              200
+            ],
+            [
+              333,
+              333
+            ]
+          ],
+          "note": "MS 199-200 as in dharma 2a (vedanā, case 5A); MS name not repeated in source for that span"
+        },
+        {
+          "no": "3d",
+          "name_pali": "saññā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              13,
+              14
+            ],
+            [
+              334,
+              334
+            ]
+          ],
+          "note": "MS 13-14 as in dharma 3 (saññā); MS names not repeated in source for that span"
+        },
+        {
+          "no": "4d",
+          "name_pali": "cetanā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              16,
+              17
+            ],
+            [
+              335,
+              335
+            ]
+          ],
+          "note": "MS 16-17 as in dharma 4 (cetanā); MS names not repeated in source for that span"
+        },
+        {
+          "no": "5d",
+          "name_pali": "citta",
+          "name_translation": null,
+          "ms_range": [
+            [
+              18,
+              26
+            ],
+            [
+              336,
+              336
+            ]
+          ],
+          "note": "MS 18-26 as in dharma 5 (citta), a subset excluding MS 27 (manoviññāṇadhātu, replaced here by jivhāviññāṇadhātu); MS names not repeated in source for that span"
+        },
+        {
+          "no": "16d",
+          "name_pali": "manindriya",
+          "name_translation": null,
+          "ms_range": [
+            [
+              18,
+              26
+            ],
+            [
+              336,
+              336
+            ]
+          ],
+          "note": "as in dharma 5d (citta); MS names not repeated in source"
+        }
+      ]
+    },
+    {
+      "case_no": "161C",
+      "dharmas": [
+        {
+          "no": "2g",
+          "name_pali": "vedanā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              337,
+              342
+            ]
+          ]
+        },
+        {
+          "no": "3e",
+          "name_pali": "saññā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              13,
+              14
+            ],
+            [
+              343,
+              343
+            ]
+          ],
+          "note": "MS 13-14 as in dharma 3 (saññā); MS names not repeated in source for that span"
+        },
+        {
+          "no": "4e",
+          "name_pali": "cetanā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              16,
+              17
+            ],
+            [
+              344,
+              344
+            ]
+          ],
+          "note": "MS 16-17 as in dharma 4 (cetanā); MS names not repeated in source for that span. Source prints this MS 344 entry as 'kāyaviññāndhātusamphassajā cetanā', apparently missing an 'a' (kāyaviññāṇa-) relative to the consistent spelling used for the analogous entries elsewhere on this and surrounding pages — rendered here as 'kāyaviññāṇadhātusamphassajā cetanā'."
+        },
+        {
+          "no": "5e",
+          "name_pali": "citta",
+          "name_translation": null,
+          "ms_range": [
+            [
+              18,
+              26
+            ],
+            [
+              345,
+              345
+            ]
+          ],
+          "note": "MS 18-26 as in dharma 5 (citta), a subset excluding MS 27 (manoviññāṇadhātu, replaced here by kāyaviññāṇadhātu); MS names not repeated in source for that span"
+        },
+        {
+          "no": "9a",
+          "name_pali": "sukha",
+          "name_translation": null,
+          "ms_range": [
+            [
+              337,
+              342
+            ]
+          ],
+          "note": "as in dharma 2g (vedanā); MS names not repeated in source"
+        },
+        {
+          "no": "16e",
+          "name_pali": "manindriya",
+          "name_translation": null,
+          "ms_range": [
+            [
+              18,
+              26
+            ],
+            [
+              345,
+              345
+            ]
+          ],
+          "note": "as in dharma 5e (citta); MS names not repeated in source"
+        },
+        {
+          "no": 82,
+          "name_pali": "sukhindriya",
+          "name_translation": null,
+          "ms_range": [
+            [
+              337,
+              342
+            ]
+          ],
+          "note": "as in dharmas 2g (vedanā) and 9a (sukha); MS names not repeated in source"
+        }
+      ]
+    },
+    {
+      "case_no": "162C",
+      "dharmas": [
+        {
+          "no": "2h",
+          "name_pali": "vedanā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              199,
+              200
+            ],
+            [
+              346,
+              346
+            ]
+          ],
+          "note": "MS 199-200 as in dharma 2a (vedanā, case 5A); MS name not repeated in source for that span"
+        },
+        {
+          "no": "3f",
+          "name_pali": "saññā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              13,
+              14
+            ],
+            [
+              347,
+              347
+            ]
+          ],
+          "note": "MS 13-14 as in dharma 3 (saññā); MS names not repeated in source for that span"
+        },
+        {
+          "no": "4f",
+          "name_pali": "cetanā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              16,
+              17
+            ],
+            [
+              348,
+              348
+            ]
+          ],
+          "note": "MS 16-17 as in dharma 4 (cetanā); MS names not repeated in source for that span"
+        },
+        {
+          "no": "5f",
+          "name_pali": "citta",
+          "name_translation": null,
+          "ms_range": [
+            [
+              18,
+              26
+            ],
+            [
+              349,
+              349
+            ]
+          ],
+          "note": "MS 18-26 as in dharma 5 (citta), a subset excluding MS 27 (manoviññāṇadhātu, replaced here by manodhātu); MS names not repeated in source for that span"
+        },
+        {
+          "no": "6c",
+          "name_pali": "vitakka",
+          "name_translation": null,
+          "ms_range": [
+            [
+              28,
+              33
+            ]
+          ],
+          "note": "as in dharma 6 (vitakka), a subset excluding MS 34 (sammāsaṅkappa); MS names not repeated in source"
+        },
+        {
+          "no": "16f",
+          "name_pali": "manindriya",
+          "name_translation": null,
+          "ms_range": [
+            [
+              18,
+              26
+            ],
+            [
+              349,
+              349
+            ]
+          ],
+          "note": "as in dharma 5f (citta); MS names not repeated in source"
+        }
+      ]
+    },
+    {
+      "case_no": "222C",
+      "dharmas": [
+        {
+          "no": "2i",
+          "name_pali": "vedanā",
+          "name_translation": null,
+          "ms_range": [
+            [
+              350,
+              355
+            ]
+          ]
+        },
+        {
+          "no": "76a",
+          "name_pali": "dukkha",
+          "name_translation": null,
+          "ms_range": [
+            [
+              350,
+              355
+            ]
+          ],
+          "note": "as in dharma 2i (vedanā); MS names not repeated in source"
+        },
+        {
+          "no": 83,
+          "name_pali": "dukkhindriya",
+          "name_translation": "faculty of suffering",
+          "ms_range": [
+            [
+              350,
+              355
+            ]
+          ],
+          "note": "as in dharmas 2i (vedanā) and 76a (dukkha); MS names not repeated in source"
+        }
+      ]
+    }
+  ]
+}
