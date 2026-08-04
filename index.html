@@ -994,10 +994,13 @@
     applyViewBox();
   }, {passive:false});
 
-  let dragging = false, lastX=0, lastY=0;
+  // dragMoved distinguishes a pan from a plain click: mouseup after a drag
+  // still fires a native click on the background, which would otherwise hit
+  // the stage click handler below and clear the highlight mid-pan.
+  let dragging = false, dragMoved = false, lastX=0, lastY=0;
   stage.addEventListener('mousedown', (ev)=>{
     if(ev.target.closest('.node')) return;
-    dragging = true; lastX = ev.clientX; lastY = ev.clientY;
+    dragging = true; dragMoved = false; lastX = ev.clientX; lastY = ev.clientY;
     stage.classList.add('grabbing');
   });
   window.addEventListener('mousemove', (ev)=>{
@@ -1005,6 +1008,7 @@
     const rect = stage.getBoundingClientRect();
     const dx = (ev.clientX-lastX) * (vb.w/rect.width);
     const dy = (ev.clientY-lastY) * (vb.h/rect.height);
+    if(Math.abs(ev.clientX-lastX) > 2 || Math.abs(ev.clientY-lastY) > 2) dragMoved = true;
     vb.x -= dx; vb.y -= dy;
     lastX = ev.clientX; lastY = ev.clientY;
     applyViewBox();
@@ -1278,6 +1282,7 @@
   });
 
   stage.addEventListener('click', (ev)=>{
+    if(dragMoved){ dragMoved = false; return; }
     if(!ev.target.closest('.node')){ clearHighlight(); describe(''); }
   });
 
