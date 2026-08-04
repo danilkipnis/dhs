@@ -101,8 +101,7 @@ terms, the paragraph and page references — is Piatigorsky's work, from the 198
 book ([archive.org](https://archive.org/details/buddhistphilosop0000piat)); the
 primary source is
 [there too](https://archive.org/details/in.ernet.dli.2015.314228).
-No claim is made over any of it. The diagram, the entity–relationship model and
-the conversion script are mine.
+No claim is made over any of it.
 
 If you hold rights in the book and would like something here changed or removed,
 please open an issue.
