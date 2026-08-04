@@ -30,3 +30,5 @@
     2), etc.
 13. Make it usable on mobile
 14. deutsch
+15. don't print "(archive.org)" twice in the first paragraph of description.
+    Instead underline "too" and make it to a link.
