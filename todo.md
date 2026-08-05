@@ -18,13 +18,5 @@
     dharmasets in table vii. If it is required two additional entities would
     have to be introduced in order to cover for that. Or one. (exactly one
     layer "subsets" inbetween cases and dharmas)
-9.  We can take any finite object from a dimention one higher and describe it
-    in the lower dimention in its entirety. The same way a set of 3D points
-    can be described in a 2D table.
-10. Fix zooming on mobile. There is a limit which blocks further zoom. Disable
+11. Fix zooming on mobile. There is a limit which blocks further zoom. Disable
     it.
-11. Write howto. E.g. Pick a point, click on it, read the text, pick the next
-    point. Vertically, horizontally, distance 1 (level 1), distance 2 (level
-    2), etc.
-12. Make it usable on mobile
-13. deutsch
