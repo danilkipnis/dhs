@@ -13,20 +13,18 @@
     in the book)
 6.  Iterate on search function
 7.  Transcribe tables  XI - XIV (pp. 165 - 167)
-8.  Move the block character of dharma, avacara, sphere of thought a little bit
-    down in the index.html
-9.  Add a note that the graph is potentially a simplification because nowhere
+8.  Add a note that the graph is potentially a simplification because nowhere
     in the text does it say that dharmasets from vi are strict subsets of the
     dharmasets in table vii. If it is required two additional entities would
     have to be introduced in order to cover for that. Or one. (exactly one
     layer "subsets" inbetween cases and dharmas)
-10. We can take any finite object from a dimention one higher and describe it
+9.  We can take any finite object from a dimention one higher and describe it
     in the lower dimention in its entirety. The same way a set of 3D points
     can be described in a 2D table.
-11. Fix zooming on mobile. There is a limit which blocks further zoom. Disable
+10. Fix zooming on mobile. There is a limit which blocks further zoom. Disable
     it.
-12. Write howto. E.g. Pick a point, click on it, read the text, pick the next
+11. Write howto. E.g. Pick a point, click on it, read the text, pick the next
     point. Vertically, horizontally, distance 1 (level 1), distance 2 (level
     2), etc.
-13. Make it usable on mobile
-14. deutsch
+12. Make it usable on mobile
+13. deutsch

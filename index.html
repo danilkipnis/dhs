@@ -518,7 +518,8 @@
   const W_MS = 10, W_MIN_DHARMA = 26, GAP_DHARMA = 6, W_MIN_CASE = 22, GAP_CASE = 10;
   // Six levels, each LAYER_GAP apart, most general at the top:
   //   1  avacara, character of dharmas   (what a sphere is made of)
-  //   2  sphere of thought, nomenclature of thought
+  //   2  nomenclature of thought
+  //   2b sphere of thought               (own row, nudged below nomenclature)
   //   3  the table-v dimension tables    (content, trancic, objects, mental)
   //   4  cases
   //   5  dharmas
@@ -530,8 +531,13 @@
   // are the axes a sphere combines, so they belong closer together than the steps
   // further down, which cross between different kinds of entity.
   const L1_L2_GAP = LAYER_GAP / 2;
-  const Y_L1 = 20;
-  const Y_L2 = Y_L1 + L1_L2_GAP;
+  const Y_L2 = 20 + L1_L2_GAP;
+  // Level 1 and sphere of thought straddle level 2 symmetrically, each
+  // L1_SPHERE_GAP from it -- a quarter closer than L1_L2_GAP, the half-gap
+  // that separates level 2 from level 3 below.
+  const L1_SPHERE_GAP = L1_L2_GAP * 0.75;
+  const Y_L1 = Y_L2 - L1_SPHERE_GAP;
+  const Y_SPHERE = Y_L2 + L1_SPHERE_GAP;
   const Y_L3 = Y_L2 + LAYER_GAP;
   const Y_CASE = Y_L3 + LAYER_GAP;
   const Y_DHARMA = Y_CASE + LAYER_GAP;
@@ -589,7 +595,7 @@
   // order as the ER diagram.
   const [SPHERE_X0, SPHERE_X1] = seg(0.06, 0.46);
   const [NOM_X0, NOM_X1] = seg(0.56, 0.88);
-  const sphereX = rowSegment(data.spheres, 'sphere_id', Y_L2, SPHERE_X0, SPHERE_X1);
+  const sphereX = rowSegment(data.spheres, 'sphere_id', Y_SPHERE, SPHERE_X0, SPHERE_X1);
   const nomenclatureX = rowSegment(data.nomenclature, 'term_id', Y_L2, NOM_X0, NOM_X1);
 
   // Level 1: character of dharmas | avacara — the two axes a sphere combines,
@@ -779,7 +785,7 @@
   }
   colLabel((QD_X0+QD_X1)/2, Y_L1, 'CHARACTER OF DHARMAS (IV)');
   colLabel((AVACARA_X0+AVACARA_X1)/2, Y_L1, 'AVACARA (IV)');
-  colLabel((SPHERE_X0+SPHERE_X1)/2, Y_L2, 'SPHERE OF THOUGHT (IV)');
+  colLabel((SPHERE_X0+SPHERE_X1)/2, Y_SPHERE, 'SPHERE OF THOUGHT (IV)');
   colLabel((NOM_X0+NOM_X1)/2, Y_L2, 'NOMENCLATURE OF THOUGHT (III)');
   colLabel((CONTENT_X0+CONTENT_X1)/2, Y_L3, 'VARIANTS OF CONTENT (V-C)');
   colLabel((TRANCIC_X0+TRANCIC_X1)/2, Y_L3, 'TRANCIC VARIABLES (V-TV)');
