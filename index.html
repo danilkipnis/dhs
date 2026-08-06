@@ -1,4 +1,5 @@
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Essay 5</title>
 <style>
   /* Dark is the unconditional default -- not gated behind
@@ -213,7 +214,7 @@
   #erSvg .er-rel{ font-size:9px; fill:#a8a8a8; font-style:italic; }
   #erSvg .er-swatch{ stroke:none; }
   .stage.grabbing{ cursor:grabbing; }
-  svg#canvas{ position:absolute; top:0; left:0; width:100%; height:100%; }
+  svg#canvas{ position:absolute; top:0; left:0; width:100%; height:100%; touch-action:none; }
   .node-case circle{ fill:var(--case); }
   .node-case.stub circle{ fill:var(--case-stub); }
   .node-dharma circle{ fill:var(--dharma); }
@@ -1022,6 +1023,59 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     applyViewBox();
   });
   window.addEventListener('mouseup', ()=>{ dragging=false; stage.classList.remove('grabbing'); });
+
+  // Touch: one finger pans (mirrors mousedown/mousemove above), two fingers
+  // pinch-zoom against the same vb the wheel handler drives. touch-action:none
+  // on the SVG stops the browser's own page-zoom from fighting this -- without
+  // it, mobile has no way to reach the wheel handler's zoom range at all and
+  // is stuck with the browser's own, much shallower, pinch limit.
+  let touchMode = null, pinchDist = 0, pinchVb = null;
+  const touchPt = (t, rect) => ({ x: t.clientX-rect.left, y: t.clientY-rect.top });
+  stage.addEventListener('touchstart', (ev)=>{
+    if(ev.target.closest('.node')) return;
+    const rect = stage.getBoundingClientRect();
+    if(ev.touches.length === 1){
+      touchMode = 'pan'; dragMoved = false;
+      lastX = ev.touches[0].clientX; lastY = ev.touches[0].clientY;
+    } else if(ev.touches.length === 2){
+      touchMode = 'pinch'; dragMoved = true;
+      const [a,b] = [...ev.touches].map(t=>touchPt(t,rect));
+      pinchDist = Math.hypot(a.x-b.x, a.y-b.y);
+      pinchVb = { ...vb };
+    }
+  }, {passive:true});
+  stage.addEventListener('touchmove', (ev)=>{
+    if(!touchMode) return;
+    ev.preventDefault();
+    const rect = stage.getBoundingClientRect();
+    if(touchMode === 'pan' && ev.touches.length === 1){
+      const t = ev.touches[0];
+      const dx = (t.clientX-lastX) * (vb.w/rect.width);
+      const dy = (t.clientY-lastY) * (vb.h/rect.height);
+      if(Math.abs(t.clientX-lastX) > 2 || Math.abs(t.clientY-lastY) > 2) dragMoved = true;
+      vb.x -= dx; vb.y -= dy;
+      lastX = t.clientX; lastY = t.clientY;
+      applyViewBox();
+    } else if(touchMode === 'pinch' && ev.touches.length === 2){
+      const [a,b] = [...ev.touches].map(t=>touchPt(t,rect));
+      const dist = Math.hypot(a.x-b.x, a.y-b.y);
+      const mx = (a.x+b.x)/2, my = (a.y+b.y)/2;
+      const px = pinchVb.x + (mx/rect.width)*pinchVb.w;
+      const py = pinchVb.y + (my/rect.height)*pinchVb.h;
+      const scale = pinchDist / dist;
+      const newW = Math.min(fullBox.w*3, Math.max(fullBox.w*0.02, pinchVb.w*scale));
+      const newH = newW * (pinchVb.h/pinchVb.w);
+      vb = { x: px-(mx/rect.width)*newW, y: py-(my/rect.height)*newH, w:newW, h:newH };
+      applyViewBox();
+    }
+  }, {passive:false});
+  stage.addEventListener('touchend', (ev)=>{
+    if(ev.touches.length === 0) touchMode = null;
+    else if(ev.touches.length === 1){
+      touchMode = 'pan';
+      lastX = ev.touches[0].clientX; lastY = ev.touches[0].clientY;
+    }
+  }, {passive:true});
 
   document.getElementById('zoomIn').onclick = ()=> zoomBtn(0.8);
   document.getElementById('zoomOut').onclick = ()=> zoomBtn(1.25);
