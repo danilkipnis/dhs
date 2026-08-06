@@ -245,7 +245,6 @@
      and share a hue that no cross-row edge uses -- that, plus the arc shape, is
      what tells them apart from the lines leaving the row. */
   .edge.ms-derivation{ stroke-width:1.1px; opacity:.75; stroke:var(--derivation); fill:none; }
-  .edge.dharma-as-in{ stroke-width:1.1px; opacity:.7; stroke:var(--derivation); fill:none; }
   .edge.dharma-case{ stroke-width:1px; opacity:.5; }
   /* The same case-dharma relation, but stated by table-vii rather than table-vi.
      Solid like its table-vi counterpart, distinguished by colour. There are ~4x
@@ -325,7 +324,6 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       <span class="item"><span class="swatch" style="background:var(--content)"></span>Variants of content (table&#8209;v&#8209;c)<span class="count" id="count-content"></span></span>
       <span class="item"><span class="swatch" style="background:var(--caseattr)"></span>Trancic / mental / object variables<span class="count" id="count-caseattr"></span></span>
       <span class="item"><span class="swatch" style="background:var(--derivation)"></span>MS derived from MS<span class="count" id="count-derivation"></span></span>
-      <span class="item"><span class="swatch" style="background:var(--derivation)"></span>Dharma &ldquo;as in&rdquo; dharma<span class="count" id="count-asin"></span></span>
     </div>
   </div>
   <div id="erBackdrop"></div>
@@ -801,7 +799,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
 
   // ---------- edges ----------
   const edgeEls = {
-    msDharma: [], dharmaCase: [], dharmaCaseVii: [], dharmaAsIn: [],
+    msDharma: [], dharmaCase: [], dharmaCaseVii: [],
     nomCase: [], sphereCase: [], avSphere: [],
     qdSphere: [],
     contentCase: [], trancicCase: [], mentalCase: [], senseObjCase: [], dhyanicObjCase: [],
@@ -823,14 +821,9 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     return `M${x1},${y1} C${x1},${midY} ${x2},${midY} ${x2},${y2}`;
   }
 
-  for(const e of data.dharma_as_in_edges){
-    const al = dharmaLayout.get(e.from.replace('dh-','')),
-          bl = dharmaLayout.get(e.to.replace('dh-',''));
-    if(!al || !bl) continue;
-    const p = el('path', {class:'edge dharma-as-in', d: curve(al.x, Y_DHARMA, bl.x, Y_DHARMA)}, edgeLayer);
-    edgeEls.dharmaAsIn.push({el:p, from:e.from.replace('dh-',''), to:e.to.replace('dh-','')});
-  }
-
+  // dharma_as_in_edges are not drawn: an "as in" dharma already carries its
+  // own dharma-MS edges (borrowed via ms_range), so the pair already shares
+  // visible MS connections -- a horizontal link here would only restate that.
   for(const e of data.ms_derivation_edges){
     const pl = msLayout.get(e.from), cl = msLayout.get(e.to);
     if(!pl || !cl) continue;
@@ -1243,7 +1236,6 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     };
     for(const e of edgeEls.msDharma)       e.el.classList.toggle('hl', pair('ms', e.ms, 'dharma', e.dharma));
     for(const e of edgeEls.msDerivation)   e.el.classList.toggle('hl', pair('ms', e.parent, 'ms', e.child));
-    for(const e of edgeEls.dharmaAsIn)     e.el.classList.toggle('hl', pair('dharma', e.from, 'dharma', e.to));
     for(const e of edgeEls.dharmaCase)     e.el.classList.toggle('hl', pair('dharma', e.dharma, 'case', e.case));
     for(const e of edgeEls.dharmaCaseVii)  e.el.classList.toggle('hl', pair('dharma', e.dharma, 'case', e.case));
     for(const e of edgeEls.nomCase)        e.el.classList.toggle('hl', pair('nomenclature', e.nom, 'case', e.case));
@@ -1572,7 +1564,6 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     'count-content': data.content.length,
     'count-caseattr': data.trancic.length + data.mental.length + data.sense_objects.length + data.dhyanic_objects.length,
     'count-derivation': data.ms_derivation_edges.length,
-    'count-asin': data.dharma_as_in_edges.length,
   };
   for(const id in legendCounts){
     const el2 = document.getElementById(id);
