@@ -200,7 +200,7 @@
   /* min-height:0 lets this flex item shrink below the SVG's natural size;
      without it the diagram would push the panel taller and scroll instead. */
   #erScroll{ padding:2.2rem 1rem 1rem; flex:1 1 auto; min-height:0; overflow:hidden; display:grid; place-items:center; }
-  #erSvg{ display:block; width:100%; height:100%; }
+  #erSvg{ display:block; width:100%; height:100%; touch-action:none; }
   #erSvg .er-bg{ fill:#000000; }
   #erSvg .er-box{ fill:#1c1c1c; stroke:#4a4a4a; stroke-width:1.4px; }
   #erSvg .er-line{ stroke:#8a8a8a; stroke-width:1.2px; fill:none; }
@@ -1105,6 +1105,97 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   document.addEventListener('keydown', (ev) => {
     if(ev.key === 'Escape' && erIsOpen()) erHide();
   });
+
+  // ---------- ER panel pan/zoom ----------
+  // Same wheel/drag/pinch scheme as the main stage above, against the ER
+  // SVG's own viewBox instead of the graph's. Reset on every open so the
+  // panel never reopens mid-zoom from a previous session.
+  const erSvg = document.getElementById('erSvg');
+  const erFullBox = { x:0, y:0, w:900, h:750 };
+  let erVbState = { ...erFullBox };
+  function erApplyViewBox(){
+    erSvg.setAttribute('viewBox', `${erVbState.x} ${erVbState.y} ${erVbState.w} ${erVbState.h}`);
+  }
+  const erShowBase = erShow;
+  erShow = function(){
+    erVbState = { ...erFullBox };
+    erApplyViewBox();
+    erShowBase();
+  };
+
+  erSvg.addEventListener('wheel', (ev)=>{
+    ev.preventDefault();
+    const rect = erSvg.getBoundingClientRect();
+    const mx = ev.clientX - rect.left, my = ev.clientY - rect.top;
+    const px = erVbState.x + (mx/rect.width)*erVbState.w;
+    const py = erVbState.y + (my/rect.height)*erVbState.h;
+    const scale = Math.exp(ev.deltaY * 0.0016);
+    const newW = Math.min(erFullBox.w*3, Math.max(erFullBox.w*0.2, erVbState.w*scale));
+    const newH = newW * (erVbState.h/erVbState.w);
+    erVbState = { x: px - (mx/rect.width)*newW, y: py - (my/rect.height)*newH, w:newW, h:newH };
+    erApplyViewBox();
+  }, {passive:false});
+
+  let erDragging = false, erLastX = 0, erLastY = 0;
+  erSvg.addEventListener('mousedown', (ev)=>{
+    erDragging = true; erLastX = ev.clientX; erLastY = ev.clientY;
+    erSvg.style.cursor = 'grabbing';
+  });
+  window.addEventListener('mousemove', (ev)=>{
+    if(!erDragging) return;
+    const rect = erSvg.getBoundingClientRect();
+    const dx = (ev.clientX-erLastX) * (erVbState.w/rect.width);
+    const dy = (ev.clientY-erLastY) * (erVbState.h/rect.height);
+    erVbState.x -= dx; erVbState.y -= dy;
+    erLastX = ev.clientX; erLastY = ev.clientY;
+    erApplyViewBox();
+  });
+  window.addEventListener('mouseup', ()=>{ erDragging = false; erSvg.style.cursor = ''; });
+
+  let erTouchMode = null, erPinchDist = 0, erPinchVb = null;
+  erSvg.addEventListener('touchstart', (ev)=>{
+    const rect = erSvg.getBoundingClientRect();
+    if(ev.touches.length === 1){
+      erTouchMode = 'pan';
+      erLastX = ev.touches[0].clientX; erLastY = ev.touches[0].clientY;
+    } else if(ev.touches.length === 2){
+      erTouchMode = 'pinch';
+      const [a,b] = [...ev.touches].map(t=>({x:t.clientX-rect.left, y:t.clientY-rect.top}));
+      erPinchDist = Math.hypot(a.x-b.x, a.y-b.y);
+      erPinchVb = { ...erVbState };
+    }
+  }, {passive:true});
+  erSvg.addEventListener('touchmove', (ev)=>{
+    if(!erTouchMode) return;
+    ev.preventDefault();
+    const rect = erSvg.getBoundingClientRect();
+    if(erTouchMode === 'pan' && ev.touches.length === 1){
+      const t = ev.touches[0];
+      const dx = (t.clientX-erLastX) * (erVbState.w/rect.width);
+      const dy = (t.clientY-erLastY) * (erVbState.h/rect.height);
+      erVbState.x -= dx; erVbState.y -= dy;
+      erLastX = t.clientX; erLastY = t.clientY;
+      erApplyViewBox();
+    } else if(erTouchMode === 'pinch' && ev.touches.length === 2){
+      const [a,b] = [...ev.touches].map(t=>({x:t.clientX-rect.left, y:t.clientY-rect.top}));
+      const dist = Math.hypot(a.x-b.x, a.y-b.y);
+      const mx = (a.x+b.x)/2, my = (a.y+b.y)/2;
+      const px = erPinchVb.x + (mx/rect.width)*erPinchVb.w;
+      const py = erPinchVb.y + (my/rect.height)*erPinchVb.h;
+      const scale = erPinchDist / dist;
+      const newW = Math.min(erFullBox.w*3, Math.max(erFullBox.w*0.2, erPinchVb.w*scale));
+      const newH = newW * (erPinchVb.h/erPinchVb.w);
+      erVbState = { x: px-(mx/rect.width)*newW, y: py-(my/rect.height)*newH, w:newW, h:newH };
+      erApplyViewBox();
+    }
+  }, {passive:false});
+  erSvg.addEventListener('touchend', (ev)=>{
+    if(ev.touches.length === 0) erTouchMode = null;
+    else if(ev.touches.length === 1){
+      erTouchMode = 'pan';
+      erLastX = ev.touches[0].clientX; erLastY = ev.touches[0].clientY;
+    }
+  }, {passive:true});
 
   function panTo(x, y, w){
     const h = w * (fullBox.h/fullBox.w) * (stage.clientHeight/stage.clientWidth || 1);
