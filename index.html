@@ -500,22 +500,12 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
 
   // Reverse of ms.derived_from, so an MS can name its derivatives as well as
   // its parent (MS 93 lists 113; MS 97 lists 122).
-  // Reverse of dharma.as_in, so a dharma can name the later dharmas that
-  // declare themselves identical to it, not just the earlier one it copies.
   const homonymByDharma = new Map(Object.entries(data.homonyms_by_dharma || {}));
   const synonymByDharma = new Map(Object.entries(data.synonyms_by_dharma || {}));
   const isotopeByDharma = new Map(Object.entries(data.isotopes_by_dharma || {}));
   const xivByDharma = new Map(Object.entries(data.xiv_by_dharma || {}));
   const xivSign = s => s==='-' ? `<span style="color:var(--quality-a)">&minus;</span>`
     : s==='+' ? `<span style="color:var(--quality-b)">+</span>` : esc(s);
-
-  const dharmaAsInBy = new Map();
-  for(const d of data.dharmas){
-    for(const t of (d.as_in || [])){
-      if(!dharmaAsInBy.has(t)) dharmaAsInBy.set(t, []);
-      dharmaAsInBy.get(t).push(d.dharma_id);
-    }
-  }
 
   const msDerivedFrom = new Map();
   for(const m of data.ms){
@@ -1527,7 +1517,6 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
         + `<br><span class="muted">VI</span> ${esc(d.quality)}${glossTxt? `(${esc(glossTxt)})` : ''}, case ${esc(d.owner_case)}`
         + (d.xref? ' &middot; cross-ref, shares MS range' : '')
         + ((d.as_in||[]).length? `<br><span class="muted">as in</span> ${d.as_in.map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
-        + ((dharmaAsInBy.get(id)||[]).length? `<br><span class="muted">cited &ldquo;as in&rdquo; by</span> ${dharmaAsInBy.get(id).map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
         + ((homonymByDharma.get(id)||[]).length? `<br><span class="muted">homonyms (XI, &alpha;)</span> ${homonymByDharma.get(id).map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
         + ((synonymByDharma.get(id)||[]).length? `<br><span class="muted">synonyms (XII, &beta;)</span> ${synonymByDharma.get(id).map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
         + ((isotopeByDharma.get(id)||[]).length? `<br><span class="muted">isotops (XIII, &gamma;)</span> ${isotopeByDharma.get(id).map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
