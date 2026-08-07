@@ -1,0 +1,1 @@
+- Pinned popup drifts vertically (horizontal stays glued) while dragging near node V-C 16.
