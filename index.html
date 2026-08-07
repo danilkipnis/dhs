@@ -301,6 +301,14 @@
     background:var(--surface-2); border:1px solid var(--rule); color:var(--text-primary);
     cursor:pointer; font-size:.9rem;
   }
+  #zoomctrl button[aria-pressed="true"]{
+    background:var(--highlight); color:var(--surface-1);
+  }
+  #soundToggle, #soundToggle[aria-pressed="true"]{ display:flex; align-items:center; justify-content:center; background:var(--surface-2); color:var(--text-primary); }
+  #soundToggle svg{ width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  #soundToggle .snd-waves, #soundToggle .snd-mute{ display:none; }
+  #soundToggle[aria-pressed="true"] .snd-waves{ display:inline; }
+  #soundToggle[aria-pressed="false"] .snd-mute{ display:inline; }
 </style>
 
 <div class="viz-root">
@@ -311,6 +319,13 @@
     <div id="zoomctrl">
       <button id="zoomIn">+</button>
       <button id="zoomOut">&minus;</button>
+      <button id="soundToggle" title="Toggle sound" aria-pressed="false">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <polygon points="10 5 5.5 8.5 2 8.5 2 15.5 5.5 15.5 10 19" stroke-width="2"/>
+          <g class="snd-waves"><path d="M14.5 8a5 5 0 0 1 0 8"/></g>
+          <g class="snd-mute"><line x1="22" y1="9" x2="15" y2="16"/><line x1="15" y1="9" x2="22" y2="16"/></g>
+        </svg>
+      </button>
     </div>
     <div id="tooltip"></div>
   </div>
@@ -558,6 +573,14 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   const Y_CASE = Y_L3 + LAYER_GAP;
   const Y_DHARMA = Y_CASE + LAYER_GAP;
   const Y_MS = Y_DHARMA + LAYER_GAP;
+  // Top-to-bottom order of the row Ys above, for finding "one layer above /
+  // below" a node during nav-travel zoom-out (see animateNavTo).
+  const LAYER_YS = [Y_L1, Y_L2, Y_SPHERE, Y_L3, Y_CASE, Y_DHARMA, Y_MS];
+  function layerIndex(y){
+    let bi = 0, bd = Infinity;
+    LAYER_YS.forEach((ly,i)=>{ const d = Math.abs(ly-y); if(d<bd){ bd=d; bi=i; } });
+    return bi;
+  }
 
   let cursor = 0;
   const dharmaLayout = new Map();
@@ -1095,6 +1118,35 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   }
   document.getElementById('resetBtn').onclick = ()=>{ fitToStage(); clearHighlight(); };
 
+  document.getElementById('soundToggle').onclick = (ev)=>{
+    const btn = ev.currentTarget;
+    btn.setAttribute('aria-pressed', btn.getAttribute('aria-pressed') !== 'true');
+  };
+
+  // Chime played whenever V-O:2 (sound-objects) is involved, gated on
+  // #soundToggle -- a little wink at that node's own gloss.
+  let chimeCtx = null;
+  function playChime(){
+    const ctx = chimeCtx || (chimeCtx = new (window.AudioContext||window.webkitAudioContext)());
+    if(ctx.state === 'suspended') ctx.resume();
+    // Short, crisp tick similar to a laptop's volume-change blip: a brief
+    // sine burst with a fast attack and fast decay, not a sustained tone.
+    const t0 = ctx.currentTime;
+    const osc = ctx.createOscillator(), gain = ctx.createGain();
+    osc.type = 'sine'; osc.frequency.setValueAtTime(1200, t0);
+    gain.gain.setValueAtTime(0, t0);
+    gain.gain.linearRampToValueAtTime(0.35, t0+0.008);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0+0.09);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(t0); osc.stop(t0+0.1);
+  }
+  function maybeChime(type, id){
+    const isVO2 = type==='senseobj' && String(id)==='2';
+    const isCaseOfVO2 = type==='case' && (caseToSenseObj.get(String(id))||[]).includes('2');
+    if(!isVO2 && !isCaseOfVO2) return;
+    if(document.getElementById('soundToggle').getAttribute('aria-pressed')==='true') playChime();
+  }
+
   const sidebar = document.getElementById('sidebar');
   document.getElementById('sidebarToggle').onclick = ()=>{ sidebar.classList.toggle('collapsed'); };
 
@@ -1423,6 +1475,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   function describe(){ /* bottom status line removed */ }
 
   function selectByType(type, id){
+    maybeChime(type, id);
     if(type==='case') selectCase(id);
     else if(type==='dharma') selectDharma(id);
     else if(type==='ms') selectMs(id);
@@ -1454,29 +1507,69 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     return m ? {x:+m[1], y:+m[2]} : null;
   }
 
-  // Eases the viewBox from wherever it is to centred-on-(x,y) at its current
-  // zoom, ballooning out to a wider box at the midpoint and back down --
-  // "zoom out, pan, zoom in" -- so a jump across the diagram reads as travel
-  // rather than a disorienting teleport. onDone fires with the box already
-  // settled, so a caller can place the tooltip against final screen coords.
+  // Three-phase "zoom out, pause, zoom in" travel so a jump across the
+  // diagram reads as a journey rather than a disorienting teleport:
+  //   - T/2 ms zooming out, decelerating, to the smallest box that still
+  //     shows both the start and end points (i.e. "both are visible")
+  //   - P ms paused on that box
+  //   - T/2 ms zooming in, accelerating, from that box to the destination
+  //     centred at the original zoom ratio
+  // onDone fires once settled, so a caller can place the tooltip against
+  // final screen coords.
+  const NAV_ZOOM_MS = 4500, NAV_PAUSE_MS = 500;
   let navRaf = null;
   function animateNavTo(x, y, onDone){
     if(navRaf) cancelAnimationFrame(navRaf);
     const startCx = vb.x + vb.w/2, startCy = vb.y + vb.h/2;
     const w0 = vb.w, h0 = vb.h;
-    const peakW = Math.min(fullBox.w, w0*1.6);
-    const peakH = peakW * (h0/w0);
-    const duration = 480;
+    const ar = h0/w0;
+
+    // Smallest same-aspect box that contains both the start and end centres
+    // horizontally, and vertically spans at least one row above the
+    // topmost of the two and one row below the bottommost -- so a jump
+    // between adjacent rows (e.g. dharma -> case) always previews the
+    // neighbouring rows on both sides, not just a crop around the two dots.
+    const midCx = (startCx+x)/2;
+    const loIdx = Math.max(0, Math.min(layerIndex(startCy), layerIndex(y)) - 1);
+    const hiIdx = Math.min(LAYER_YS.length-1, Math.max(layerIndex(startCy), layerIndex(y)) + 1);
+    const rowTopY = LAYER_YS[loIdx], rowBotY = LAYER_YS[hiIdx];
+    const padX = w0*0.15, padY = h0*0.15;
+    const midCy = (rowTopY+rowBotY)/2;
+    const neededH = (rowBotY-rowTopY) + 2*padY;
+    const neededW = Math.max(w0, Math.abs(x-startCx)+2*padX, neededH/ar);
+    const peakW = Math.min(fullBox.w, neededW);
+    const peakH = peakW*ar;
+
+    const outMs = NAV_ZOOM_MS/2, pauseMs = NAV_PAUSE_MS, inMs = NAV_ZOOM_MS/2;
+    const totalMs = outMs+pauseMs+inMs;
+    // Acceleration is sinusoidal rather than the constant accel a quadratic
+    // ease gives: |accel(u)| is maximal at u=0, eases to exactly zero at
+    // u=1 -- and, mirrored, back to maximal at the far end of the return
+    // leg -- so speed peaks at the very start/end of the whole trip and the
+    // motion comes to rest, accel-free, at the turnaround. The (pi-2)
+    // divisor is the amplitude that makes decelEase(0)=0, decelEase(1)=1
+    // fall out exactly, for any T.
+    const decelEase = u => (Math.PI*u + 2*Math.cos(Math.PI*u/2) - 2) / (Math.PI-2);
+    const easeOut = decelEase;                          // decelerating
+    const easeIn  = u => 1 - decelEase(1-u);            // accelerating (mirrored)
     const t0 = performance.now();
-    const ease = t => t<0.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2;
     (function step(now){
-      const t = Math.min(1, (now-t0)/duration);
-      const et = ease(t), hump = Math.sin(Math.PI*t);
-      const cx = startCx + (x-startCx)*et, cy = startCy + (y-startCy)*et;
-      const w = w0 + (peakW-w0)*hump, h = h0 + (peakH-h0)*hump;
+      const elapsed = Math.min(now-t0, totalMs);
+      let cx, cy, w, h;
+      if(elapsed <= outMs){
+        const et = easeOut(outMs===0 ? 1 : elapsed/outMs);
+        cx = startCx + (midCx-startCx)*et; cy = startCy + (midCy-startCy)*et;
+        w = w0 + (peakW-w0)*et; h = h0 + (peakH-h0)*et;
+      } else if(elapsed <= outMs+pauseMs){
+        cx = midCx; cy = midCy; w = peakW; h = peakH;
+      } else {
+        const et = easeIn(inMs===0 ? 1 : (elapsed-outMs-pauseMs)/inMs);
+        cx = midCx + (x-midCx)*et; cy = midCy + (y-midCy)*et;
+        w = peakW + (w0-peakW)*et; h = peakH + (h0-peakH)*et;
+      }
       vb = {x:cx-w/2, y:cy-h/2, w, h};
       applyViewBox();
-      if(t<1) navRaf = requestAnimationFrame(step);
+      if(elapsed<totalMs) navRaf = requestAnimationFrame(step);
       else { navRaf = null; if(onDone) onDone(); }
     })(t0);
   }
@@ -1544,13 +1637,13 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       if(nomIds.length){
         rows += `<br><span class="muted">III</span> ` + nomIds.map(nid=>{
           const n = nomenclatureById.get(nid);
-          return n ? `${esc(n.term_pali)} (${esc(n.translation)})` : `T${esc(nid)}`;
+          return n ? ttLink('nomenclature', nid, `${esc(n.term_pali)} (${esc(n.translation)})`) : `T${esc(nid)}`;
         }).join(', ');
       }
       if(sphIds.length){
         rows += `<br><span class="muted">IV</span> ` + sphIds.map(sid=>{
           const s = sphereById.get(sid);
-          return s ? `${esc(s.sphere_pali)} (${esc(s.translation)})` : `S${esc(sid)}`;
+          return s ? ttLink('sphere', sid, `${esc(s.sphere_pali)} (${esc(s.translation)})`) : `S${esc(sid)}`;
         }).join(', ');
       }
       if(!c.stub && Array.isArray(c.content_ids) && c.content_ids.length){
@@ -1558,7 +1651,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
           const cd = contentDefs[cidRaw];
           if(!cd) return esc(cidRaw);
           const star = contentFootnoteSet.has(id+'|'+cidRaw) ? '*' : '';
-          return `${esc(cd.pali)}${star} (${esc(cd.translation)})`;
+          return ttLink('content', cidRaw, `${esc(cd.pali)}${star} (${esc(cd.translation)})`);
         });
         rows += `<br><span class="muted">V (content)</span> ` + parts.join('; ');
       }
@@ -1566,17 +1659,17 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
         const objIds = caseToSenseObj.get(id) || [];
         const dhyIds = caseToDhyanicObj.get(id) || [];
         if(objIds.length || dhyIds.length){
-          const objParts = objIds.map(o=>{ const so=senseObjById.get(o); return so? esc(so.translation) : 'O'+esc(o); });
-          const dhyParts = dhyIds.map(o=>{ const d=dhyanicObjById.get(o); return d? `${esc(d.pali)} (${esc(d.translation)})` : 'D'+esc(o); });
+          const objParts = objIds.map(o=>{ const so=senseObjById.get(o); return so? ttLink('senseobj', o, esc(so.translation)) : 'O'+esc(o); });
+          const dhyParts = dhyIds.map(o=>{ const d=dhyanicObjById.get(o); return d? ttLink('dhyanicobj', o, `${esc(d.pali)} (${esc(d.translation)})`) : 'D'+esc(o); });
           rows += `<br><span class="muted">V-O</span> ` + [...objParts, ...dhyParts].join(', ');
         }
         const mentIds = caseToMental.get(id) || [];
         if(mentIds.length){
-          rows += `<br><span class="muted">V-MV</span> ` + mentIds.map(m=>{ const mv=mentalById.get(m); return mv? `${esc(mv.pali)} (${esc(mv.translation)})` : 'MV'+esc(m); }).join(', ');
+          rows += `<br><span class="muted">V-MV</span> ` + mentIds.map(m=>{ const mv=mentalById.get(m); return mv? ttLink('mental', m, `${esc(mv.pali)} (${esc(mv.translation)})`) : 'MV'+esc(m); }).join(', ');
         }
         const trIds = caseToTrancic.get(id) || [];
         if(trIds.length){
-          rows += `<br><span class="muted">V-TV</span> ` + trIds.map(t=>{ const tv=trancicById.get(t); return tv? `${esc(tv.pali)} (${esc(tv.translation)})` : 'TV'+esc(t); }).join(', ');
+          rows += `<br><span class="muted">V-TV</span> ` + trIds.map(t=>{ const tv=trancicById.get(t); return tv? ttLink('trancic', t, `${esc(tv.pali)} (${esc(tv.translation)})`) : 'TV'+esc(t); }).join(', ');
         }
       } else {
         rows += `<br><span class="muted">not present in V</span>`;
@@ -1614,11 +1707,15 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       const supersets = msToSupersets.get(id) || [];
       const parent = m.derived_from != null ? msById.get('ms-' + m.derived_from) : null;
       const kids = (msDerivedFrom.get(m.no) || []);
+      const supersetLinks = supersets.sort().map(sId=>{
+        const s = supersetById.get(sId);
+        return s ? ttLink('case', s.case_num, esc(sId)) : esc(sId);
+      });
       return `<b>MS ${esc(m.no)}</b> ${esc(m.pali)}<br><span class="muted">&lsquo;${esc(m.translation)}&rsquo;</span>`
-        + (parent? `<br><span class="muted">derived from</span> MS ${esc(parent.no)} ${esc(parent.pali)} &lsquo;${esc(parent.translation)}&rsquo;` : '')
-        + (kids.length? `<br><span class="muted">derivative(s)</span> ${kids.map(k=>`MS ${esc(k.no)} ${esc(k.pali)}`).join(', ')}` : '')
-        + `<br><span class="muted">VI</span> dharma(s): ${dharmas.map(d=>'&Delta;'+esc(d)).join(', ')}`
-        + `<br><span class="muted">VII</span> in sets: ${supersets.length? supersets.sort().join(', ') : '&mdash;'}`;
+        + (parent? `<br><span class="muted">derived from</span> ${ttLink('ms', parent.id, `MS ${esc(parent.no)} ${esc(parent.pali)} &lsquo;${esc(parent.translation)}&rsquo;`)}` : '')
+        + (kids.length? `<br><span class="muted">derivative(s)</span> ${kids.map(k=>ttLink('ms', k.id, `MS ${esc(k.no)} ${esc(k.pali)}`)).join(', ')}` : '')
+        + `<br><span class="muted">VI</span> dharma(s): ${dharmas.map(d=>ttLink('dharma', d, '&Delta;'+esc(d))).join(', ')}`
+        + `<br><span class="muted">VII</span> in sets: ${supersetLinks.length? supersetLinks.join(', ') : '&mdash;'}`;
     }
     if(type==='nomenclature'){
       const n = nomenclatureById.get(id);
@@ -1629,7 +1726,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       const s = sphereById.get(id);
       const cases = sphereToCases.get(id) || [];
       return `<b>S${esc(id)}</b> ${esc(s.sphere_pali)}<br><span class="muted">${esc(s.translation)}</span>`
-        + `<br><span class="muted">IV</span> avacara ${esc(s.avacara)}${s.avacara_inferred?' &dagger;':''} &middot; character of dharmas ${esc(s.char_dharma)}`
+        + `<br><span class="muted">IV</span> avacara ${ttLink('avacara', s.avacara, esc(s.avacara))}${s.avacara_inferred?' &dagger;':''} &middot; character of dharmas ${ttLink('qualdharma', s.char_dharma, esc(s.char_dharma))}`
         + `<br>${cases.length} case(s)`;
     }
     if(type==='avacara'){
@@ -1657,7 +1754,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       const item = byId.get(id);
       const cases = toCases.get(id) || [];
       const nameLine = item ? (item.pali ? `${esc(item.pali)}<br><span class="muted">${esc(item.translation||'')}</span>` : esc(item.translation||'')) : '';
-      const parentLine = (item && item.parent_id) ? `<br><span class="muted">closes/qualifies content ${esc(item.parent_id)}</span>` : '';
+      const parentLine = (item && item.parent_id) ? `<br><span class="muted">closes/qualifies content</span> ${ttLink('content', item.parent_id, esc(item.parent_id))}` : '';
       return `<b>${esc(label)} ${esc(id)}</b><br>${nameLine}${parentLine}<br>${cases.length} case(s)`;
     }
     return '';
