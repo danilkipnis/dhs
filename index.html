@@ -301,6 +301,14 @@
     background:var(--surface-2); border:1px solid var(--rule); color:var(--text-primary);
     cursor:pointer; font-size:.9rem;
   }
+  #zoomctrl button[aria-pressed="true"]{
+    background:var(--highlight); color:var(--surface-1);
+  }
+  #soundToggle{ display:flex; align-items:center; justify-content:center; }
+  #soundToggle svg{ width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  #soundToggle .snd-waves, #soundToggle .snd-mute{ display:none; }
+  #soundToggle[aria-pressed="true"] .snd-waves{ display:inline; }
+  #soundToggle[aria-pressed="false"] .snd-mute{ display:inline; }
 </style>
 
 <div class="viz-root">
@@ -311,6 +319,13 @@
     <div id="zoomctrl">
       <button id="zoomIn">+</button>
       <button id="zoomOut">&minus;</button>
+      <button id="soundToggle" title="Toggle sound" aria-pressed="false">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <polygon points="10 5 5.5 8.5 2 8.5 2 15.5 5.5 15.5 10 19" stroke-width="2"/>
+          <g class="snd-waves"><path d="M14.5 8a5 5 0 0 1 0 8"/></g>
+          <g class="snd-mute"><line x1="22" y1="9" x2="15" y2="16"/><line x1="15" y1="9" x2="22" y2="16"/></g>
+        </svg>
+      </button>
     </div>
     <div id="tooltip"></div>
   </div>
@@ -1102,6 +1117,11 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     applyViewBox();
   }
   document.getElementById('resetBtn').onclick = ()=>{ fitToStage(); clearHighlight(); };
+
+  document.getElementById('soundToggle').onclick = (ev)=>{
+    const btn = ev.currentTarget;
+    btn.setAttribute('aria-pressed', btn.getAttribute('aria-pressed') !== 'true');
+  };
 
   const sidebar = document.getElementById('sidebar');
   document.getElementById('sidebarToggle').onclick = ()=>{ sidebar.classList.toggle('collapsed'); };
