@@ -1454,29 +1454,53 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     return m ? {x:+m[1], y:+m[2]} : null;
   }
 
-  // Eases the viewBox from wherever it is to centred-on-(x,y) at its current
-  // zoom, ballooning out to a wider box at the midpoint and back down --
-  // "zoom out, pan, zoom in" -- so a jump across the diagram reads as travel
-  // rather than a disorienting teleport. onDone fires with the box already
-  // settled, so a caller can place the tooltip against final screen coords.
+  // Three-phase "zoom out, pause, zoom in" travel so a jump across the
+  // diagram reads as a journey rather than a disorienting teleport:
+  //   - T/2 ms zooming out, decelerating, to the smallest box that still
+  //     shows both the start and end points (i.e. "both are visible")
+  //   - P ms paused on that box
+  //   - T/2 ms zooming in, accelerating, from that box to the destination
+  //     centred at the original zoom ratio
+  // onDone fires once settled, so a caller can place the tooltip against
+  // final screen coords.
+  const NAV_ZOOM_MS = 4000, NAV_PAUSE_MS = 0;
   let navRaf = null;
   function animateNavTo(x, y, onDone){
     if(navRaf) cancelAnimationFrame(navRaf);
     const startCx = vb.x + vb.w/2, startCy = vb.y + vb.h/2;
     const w0 = vb.w, h0 = vb.h;
-    const peakW = Math.min(fullBox.w, w0*1.6);
-    const peakH = peakW * (h0/w0);
-    const duration = 480;
+    const ar = h0/w0;
+
+    // Smallest same-aspect box that contains both the start and end centres,
+    // plus a little padding so neither point sits flush against the edge.
+    const midCx = (startCx+x)/2, midCy = (startCy+y)/2;
+    const padX = w0*0.15, padY = h0*0.15;
+    const neededW = Math.max(w0, Math.abs(x-startCx)+2*padX, (Math.abs(y-startCy)+2*padY)/ar);
+    const peakW = Math.min(fullBox.w, neededW);
+    const peakH = peakW*ar;
+
+    const outMs = NAV_ZOOM_MS/2, pauseMs = NAV_PAUSE_MS, inMs = NAV_ZOOM_MS/2;
+    const totalMs = outMs+pauseMs+inMs;
+    const easeOut = t => 1-Math.pow(1-t,2);   // decelerating
+    const easeIn  = t => t*t;                 // accelerating
     const t0 = performance.now();
-    const ease = t => t<0.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2;
     (function step(now){
-      const t = Math.min(1, (now-t0)/duration);
-      const et = ease(t), hump = Math.sin(Math.PI*t);
-      const cx = startCx + (x-startCx)*et, cy = startCy + (y-startCy)*et;
-      const w = w0 + (peakW-w0)*hump, h = h0 + (peakH-h0)*hump;
+      const elapsed = Math.min(now-t0, totalMs);
+      let cx, cy, w, h;
+      if(elapsed <= outMs){
+        const et = easeOut(outMs===0 ? 1 : elapsed/outMs);
+        cx = startCx + (midCx-startCx)*et; cy = startCy + (midCy-startCy)*et;
+        w = w0 + (peakW-w0)*et; h = h0 + (peakH-h0)*et;
+      } else if(elapsed <= outMs+pauseMs){
+        cx = midCx; cy = midCy; w = peakW; h = peakH;
+      } else {
+        const et = easeIn(inMs===0 ? 1 : (elapsed-outMs-pauseMs)/inMs);
+        cx = midCx + (x-midCx)*et; cy = midCy + (y-midCy)*et;
+        w = peakW + (w0-peakW)*et; h = peakH + (h0-peakH)*et;
+      }
       vb = {x:cx-w/2, y:cy-h/2, w, h};
       applyViewBox();
-      if(t<1) navRaf = requestAnimationFrame(step);
+      if(elapsed<totalMs) navRaf = requestAnimationFrame(step);
       else { navRaf = null; if(onDone) onDone(); }
     })(t0);
   }
