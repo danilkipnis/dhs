@@ -322,8 +322,51 @@ const SOURCES = {
   t5m:'table-v-mental.json', t5o:'table-v-objects.json',
   t5s:'table-v-sphere.json', t5t:'table-v-thought.json',
   t5tr:'table-v-trancic.json', t7:'table-vii.json', t8:'Table-viii.json',
+  t11:'table-xi.json',
   vocab:'ms.json', membership:'ms-membership.json', dharmaFile:'table-vi-dharmas.json',
 };
+
+// --- Table-xi's homonym groups, as dharma_id -> [other dharma_ids sharing a
+// name]. Each entry's parent+children form one mutually-homonymous group; a
+// "see" entry (dharma 36) carries no children of its own and instead points
+// at the entry that already lists it, so its group is borrowed from there. ---
+function dharmaSortKey(idStr){
+  const m = String(idStr).match(/^(\d+)([a-zA-Z]*)$/);
+  if(!m) return [1e9, String(idStr)];
+  return [parseInt(m[1],10), m[2]];
+}
+function dharmaCmpKey(a,b){
+  const ka = dharmaSortKey(a), kb = dharmaSortKey(b);
+  if(ka[0]!==kb[0]) return ka[0]-kb[0];
+  return ka[1]<kb[1] ? -1 : ka[1]>kb[1] ? 1 : 0;
+}
+function buildHomonymGroups(table){
+  const links = new Map();     // id -> Set of homonymous ids
+  const seeTargets = new Map(); // id -> id it defers to
+  function link(a,b){
+    if(a===b) return;
+    if(!links.has(a)) links.set(a, new Set());
+    if(!links.has(b)) links.set(b, new Set());
+    links.get(a).add(b);
+    links.get(b).add(a);
+  }
+  for(const e of table.entries){
+    if(e.see){ seeTargets.set(e.parent, e.see); continue; }
+    const group = [e.parent, ...e.children];
+    for(let i=0;i<group.length;i++){
+      for(let j=i+1;j<group.length;j++) link(group[i], group[j]);
+    }
+  }
+  for(const [id, target] of seeTargets){
+    for(const t of (links.get(target) || [])) link(id, t);
+    link(id, target);
+  }
+  const out = {};
+  for(const [id, set] of links){
+    out[id] = Array.from(set).sort(dharmaCmpKey);
+  }
+  return out;
+}
 
 // Fetches every source table and returns the fully built graph data
 // ({data, warn}), so any page that needs the tables -- the main diagram, the
@@ -337,5 +380,6 @@ async function loadGraphData(){
   const F = Object.fromEntries(entries);
   const built = buildGraphData(F);
   buildTableVi(built.data, F.vocab, F.membership, F.dharmaFile);
+  built.data.homonyms_by_dharma = buildHomonymGroups(F.t11);
   return {data: built.data, warn: built.warn, F};
 }

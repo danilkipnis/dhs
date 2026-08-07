@@ -492,6 +492,8 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   // its parent (MS 93 lists 113; MS 97 lists 122).
   // Reverse of dharma.as_in, so a dharma can name the later dharmas that
   // declare themselves identical to it, not just the earlier one it copies.
+  const homonymByDharma = new Map(Object.entries(data.homonyms_by_dharma || {}));
+
   const dharmaAsInBy = new Map();
   for(const d of data.dharmas){
     for(const t of (d.as_in || [])){
@@ -1505,6 +1507,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
         + (rangeTxt? `<br>MS range: ${rangeTxt}` : '')
         + ((d.as_in||[]).length? `<br><span class="muted">as in</span> ${d.as_in.map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
         + ((dharmaAsInBy.get(id)||[]).length? `<br><span class="muted">cited &ldquo;as in&rdquo; by</span> ${dharmaAsInBy.get(id).map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
+        + ((homonymByDharma.get(id)||[]).length? `<br><span class="muted">homonyms (XI, &alpha;)</span> ${homonymByDharma.get(id).map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
         + `<br><span class="muted">table-vii</span> in superset(s): ${supersets.length? supersets.sort().join(', ') : '&mdash;'}`;
     }
     if(type==='ms'){
