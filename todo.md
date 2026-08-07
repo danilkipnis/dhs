@@ -15,3 +15,4 @@
     dharmasets in table vii. If it is required two additional entities would
     have to be introduced in order to cover for that. Or one. (exactly one
     layer "subsets" inbetween cases and dharmas)
+7.  Die Gewichtung
