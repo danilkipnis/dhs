@@ -1517,11 +1517,11 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
         + `<br><span class="muted">VI</span> ${esc(d.quality)}${glossTxt? `(${esc(glossTxt)})` : ''}, case ${esc(d.owner_case)}`
         + (d.xref? ' &middot; cross-ref, shares MS range' : '')
         + ((d.as_in||[]).length? `<br><span class="muted">as in</span> ${d.as_in.map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
+        + `<br><span class="muted">VII</span> in sets: ${supersets.length? supersets.sort().join(', ') : '&mdash;'}`
         + ((homonymByDharma.get(id)||[]).length? `<br><span class="muted">homonyms (XI, &alpha;)</span> ${homonymByDharma.get(id).map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
         + ((synonymByDharma.get(id)||[]).length? `<br><span class="muted">synonyms (XII, &beta;)</span> ${synonymByDharma.get(id).map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
         + ((isotopeByDharma.get(id)||[]).length? `<br><span class="muted">isotops (XIII, &gamma;)</span> ${isotopeByDharma.get(id).map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
-        + (xivByDharma.has(id)? `<br><span class="muted">XIV</span> ${xivSign(xivByDharma.get(id).x)} ${xivSign(xivByDharma.get(id).y)}` : '')
-        + `<br><span class="muted">VII</span> in sets: ${supersets.length? supersets.sort().join(', ') : '&mdash;'}`;
+        + (xivByDharma.has(id)? `<br><span class="muted">XIV</span> ${xivSign(xivByDharma.get(id).x)} ${xivSign(xivByDharma.get(id).y)}` : '');
     }
     if(type==='ms'){
       const m = msById.get(id);
