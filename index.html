@@ -494,6 +494,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   // declare themselves identical to it, not just the earlier one it copies.
   const homonymByDharma = new Map(Object.entries(data.homonyms_by_dharma || {}));
   const synonymByDharma = new Map(Object.entries(data.synonyms_by_dharma || {}));
+  const isotopeByDharma = new Map(Object.entries(data.isotopes_by_dharma || {}));
 
   const dharmaAsInBy = new Map();
   for(const d of data.dharmas){
@@ -1510,6 +1511,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
         + ((dharmaAsInBy.get(id)||[]).length? `<br><span class="muted">cited &ldquo;as in&rdquo; by</span> ${dharmaAsInBy.get(id).map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
         + ((homonymByDharma.get(id)||[]).length? `<br><span class="muted">homonyms (XI, &alpha;)</span> ${homonymByDharma.get(id).map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
         + ((synonymByDharma.get(id)||[]).length? `<br><span class="muted">synonyms (XII, &beta;)</span> ${synonymByDharma.get(id).map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
+        + ((isotopeByDharma.get(id)||[]).length? `<br><span class="muted">isotops (XIII, &gamma;)</span> ${isotopeByDharma.get(id).map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
         + `<br><span class="muted">VII</span> in superset(s): ${supersets.length? supersets.sort().join(', ') : '&mdash;'}`;
     }
     if(type==='ms'){

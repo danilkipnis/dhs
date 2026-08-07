@@ -322,7 +322,7 @@ const SOURCES = {
   t5m:'table-v-mental.json', t5o:'table-v-objects.json',
   t5s:'table-v-sphere.json', t5t:'table-v-thought.json',
   t5tr:'table-v-trancic.json', t7:'table-vii.json', t8:'Table-viii.json',
-  t11:'table-xi.json', t12:'table-xii.json',
+  t11:'table-xi.json', t12:'table-xii.json', t13:'table-xiii.json',
   vocab:'ms.json', membership:'ms-membership.json', dharmaFile:'table-vi-dharmas.json',
 };
 
@@ -375,11 +375,12 @@ function buildHomonymGroups(table){
   return linksToMap(links);
 }
 
-// Table-xii: synonym entries are split into groups (A/B/C in the source),
-// but a dharma's synonyms only ever come from its own group, so linking each
-// group's entries separately (rather than flattening them all together) is
-// equivalent and keeps the source structure legible.
-function buildSynonymGroups(table){
+// Tables xii and xiii (synonyms, isotopes) both split their entries into
+// named groups (A/B/C, I/II/III...), but a dharma's synonyms/isotopes only
+// ever come from its own group, so linking each group's entries separately
+// (rather than flattening them all together) is equivalent and keeps the
+// source structure legible.
+function buildGroupedDharmaGroups(table){
   const links = new Map();
   for(const grp of table.groups) linkDharmaGroups(grp.entries, links);
   return linksToMap(links);
@@ -398,6 +399,7 @@ async function loadGraphData(){
   const built = buildGraphData(F);
   buildTableVi(built.data, F.vocab, F.membership, F.dharmaFile);
   built.data.homonyms_by_dharma = buildHomonymGroups(F.t11);
-  built.data.synonyms_by_dharma = buildSynonymGroups(F.t12);
+  built.data.synonyms_by_dharma = buildGroupedDharmaGroups(F.t12);
+  built.data.isotopes_by_dharma = buildGroupedDharmaGroups(F.t13);
   return {data: built.data, warn: built.warn, F};
 }
