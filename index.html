@@ -1592,13 +1592,13 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       if(nomIds.length){
         rows += `<br><span class="muted">III</span> ` + nomIds.map(nid=>{
           const n = nomenclatureById.get(nid);
-          return n ? `${esc(n.term_pali)} (${esc(n.translation)})` : `T${esc(nid)}`;
+          return n ? ttLink('nomenclature', nid, `${esc(n.term_pali)} (${esc(n.translation)})`) : `T${esc(nid)}`;
         }).join(', ');
       }
       if(sphIds.length){
         rows += `<br><span class="muted">IV</span> ` + sphIds.map(sid=>{
           const s = sphereById.get(sid);
-          return s ? `${esc(s.sphere_pali)} (${esc(s.translation)})` : `S${esc(sid)}`;
+          return s ? ttLink('sphere', sid, `${esc(s.sphere_pali)} (${esc(s.translation)})`) : `S${esc(sid)}`;
         }).join(', ');
       }
       if(!c.stub && Array.isArray(c.content_ids) && c.content_ids.length){
@@ -1606,7 +1606,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
           const cd = contentDefs[cidRaw];
           if(!cd) return esc(cidRaw);
           const star = contentFootnoteSet.has(id+'|'+cidRaw) ? '*' : '';
-          return `${esc(cd.pali)}${star} (${esc(cd.translation)})`;
+          return ttLink('content', cidRaw, `${esc(cd.pali)}${star} (${esc(cd.translation)})`);
         });
         rows += `<br><span class="muted">V (content)</span> ` + parts.join('; ');
       }
@@ -1614,17 +1614,17 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
         const objIds = caseToSenseObj.get(id) || [];
         const dhyIds = caseToDhyanicObj.get(id) || [];
         if(objIds.length || dhyIds.length){
-          const objParts = objIds.map(o=>{ const so=senseObjById.get(o); return so? esc(so.translation) : 'O'+esc(o); });
-          const dhyParts = dhyIds.map(o=>{ const d=dhyanicObjById.get(o); return d? `${esc(d.pali)} (${esc(d.translation)})` : 'D'+esc(o); });
+          const objParts = objIds.map(o=>{ const so=senseObjById.get(o); return so? ttLink('senseobj', o, esc(so.translation)) : 'O'+esc(o); });
+          const dhyParts = dhyIds.map(o=>{ const d=dhyanicObjById.get(o); return d? ttLink('dhyanicobj', o, `${esc(d.pali)} (${esc(d.translation)})`) : 'D'+esc(o); });
           rows += `<br><span class="muted">V-O</span> ` + [...objParts, ...dhyParts].join(', ');
         }
         const mentIds = caseToMental.get(id) || [];
         if(mentIds.length){
-          rows += `<br><span class="muted">V-MV</span> ` + mentIds.map(m=>{ const mv=mentalById.get(m); return mv? `${esc(mv.pali)} (${esc(mv.translation)})` : 'MV'+esc(m); }).join(', ');
+          rows += `<br><span class="muted">V-MV</span> ` + mentIds.map(m=>{ const mv=mentalById.get(m); return mv? ttLink('mental', m, `${esc(mv.pali)} (${esc(mv.translation)})`) : 'MV'+esc(m); }).join(', ');
         }
         const trIds = caseToTrancic.get(id) || [];
         if(trIds.length){
-          rows += `<br><span class="muted">V-TV</span> ` + trIds.map(t=>{ const tv=trancicById.get(t); return tv? `${esc(tv.pali)} (${esc(tv.translation)})` : 'TV'+esc(t); }).join(', ');
+          rows += `<br><span class="muted">V-TV</span> ` + trIds.map(t=>{ const tv=trancicById.get(t); return tv? ttLink('trancic', t, `${esc(tv.pali)} (${esc(tv.translation)})`) : 'TV'+esc(t); }).join(', ');
         }
       } else {
         rows += `<br><span class="muted">not present in V</span>`;
@@ -1662,11 +1662,15 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       const supersets = msToSupersets.get(id) || [];
       const parent = m.derived_from != null ? msById.get('ms-' + m.derived_from) : null;
       const kids = (msDerivedFrom.get(m.no) || []);
+      const supersetLinks = supersets.sort().map(sId=>{
+        const s = supersetById.get(sId);
+        return s ? ttLink('case', s.case_num, esc(sId)) : esc(sId);
+      });
       return `<b>MS ${esc(m.no)}</b> ${esc(m.pali)}<br><span class="muted">&lsquo;${esc(m.translation)}&rsquo;</span>`
-        + (parent? `<br><span class="muted">derived from</span> MS ${esc(parent.no)} ${esc(parent.pali)} &lsquo;${esc(parent.translation)}&rsquo;` : '')
-        + (kids.length? `<br><span class="muted">derivative(s)</span> ${kids.map(k=>`MS ${esc(k.no)} ${esc(k.pali)}`).join(', ')}` : '')
-        + `<br><span class="muted">VI</span> dharma(s): ${dharmas.map(d=>'&Delta;'+esc(d)).join(', ')}`
-        + `<br><span class="muted">VII</span> in sets: ${supersets.length? supersets.sort().join(', ') : '&mdash;'}`;
+        + (parent? `<br><span class="muted">derived from</span> ${ttLink('ms', parent.id, `MS ${esc(parent.no)} ${esc(parent.pali)} &lsquo;${esc(parent.translation)}&rsquo;`)}` : '')
+        + (kids.length? `<br><span class="muted">derivative(s)</span> ${kids.map(k=>ttLink('ms', k.id, `MS ${esc(k.no)} ${esc(k.pali)}`)).join(', ')}` : '')
+        + `<br><span class="muted">VI</span> dharma(s): ${dharmas.map(d=>ttLink('dharma', d, '&Delta;'+esc(d))).join(', ')}`
+        + `<br><span class="muted">VII</span> in sets: ${supersetLinks.length? supersetLinks.join(', ') : '&mdash;'}`;
     }
     if(type==='nomenclature'){
       const n = nomenclatureById.get(id);
@@ -1677,7 +1681,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       const s = sphereById.get(id);
       const cases = sphereToCases.get(id) || [];
       return `<b>S${esc(id)}</b> ${esc(s.sphere_pali)}<br><span class="muted">${esc(s.translation)}</span>`
-        + `<br><span class="muted">IV</span> avacara ${esc(s.avacara)}${s.avacara_inferred?' &dagger;':''} &middot; character of dharmas ${esc(s.char_dharma)}`
+        + `<br><span class="muted">IV</span> avacara ${ttLink('avacara', s.avacara, esc(s.avacara))}${s.avacara_inferred?' &dagger;':''} &middot; character of dharmas ${ttLink('qualdharma', s.char_dharma, esc(s.char_dharma))}`
         + `<br>${cases.length} case(s)`;
     }
     if(type==='avacara'){
@@ -1705,7 +1709,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       const item = byId.get(id);
       const cases = toCases.get(id) || [];
       const nameLine = item ? (item.pali ? `${esc(item.pali)}<br><span class="muted">${esc(item.translation||'')}</span>` : esc(item.translation||'')) : '';
-      const parentLine = (item && item.parent_id) ? `<br><span class="muted">closes/qualifies content ${esc(item.parent_id)}</span>` : '';
+      const parentLine = (item && item.parent_id) ? `<br><span class="muted">closes/qualifies content</span> ${ttLink('content', item.parent_id, esc(item.parent_id))}` : '';
       return `<b>${esc(label)} ${esc(id)}</b><br>${nameLine}${parentLine}<br>${cases.length} case(s)`;
     }
     return '';
