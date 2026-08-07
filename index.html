@@ -558,6 +558,14 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   const Y_CASE = Y_L3 + LAYER_GAP;
   const Y_DHARMA = Y_CASE + LAYER_GAP;
   const Y_MS = Y_DHARMA + LAYER_GAP;
+  // Top-to-bottom order of the row Ys above, for finding "one layer above /
+  // below" a node during nav-travel zoom-out (see animateNavTo).
+  const LAYER_YS = [Y_L1, Y_L2, Y_SPHERE, Y_L3, Y_CASE, Y_DHARMA, Y_MS];
+  function layerIndex(y){
+    let bi = 0, bd = Infinity;
+    LAYER_YS.forEach((ly,i)=>{ const d = Math.abs(ly-y); if(d<bd){ bd=d; bi=i; } });
+    return bi;
+  }
 
   let cursor = 0;
   const dharmaLayout = new Map();
@@ -1463,7 +1471,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   //     centred at the original zoom ratio
   // onDone fires once settled, so a caller can place the tooltip against
   // final screen coords.
-  const NAV_ZOOM_MS = 4000, NAV_PAUSE_MS = 0;
+  const NAV_ZOOM_MS = 4500, NAV_PAUSE_MS = 500;
   let navRaf = null;
   function animateNavTo(x, y, onDone){
     if(navRaf) cancelAnimationFrame(navRaf);
@@ -1471,11 +1479,19 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     const w0 = vb.w, h0 = vb.h;
     const ar = h0/w0;
 
-    // Smallest same-aspect box that contains both the start and end centres,
-    // plus a little padding so neither point sits flush against the edge.
-    const midCx = (startCx+x)/2, midCy = (startCy+y)/2;
+    // Smallest same-aspect box that contains both the start and end centres
+    // horizontally, and vertically spans at least one row above the
+    // topmost of the two and one row below the bottommost -- so a jump
+    // between adjacent rows (e.g. dharma -> case) always previews the
+    // neighbouring rows on both sides, not just a crop around the two dots.
+    const midCx = (startCx+x)/2;
+    const loIdx = Math.max(0, Math.min(layerIndex(startCy), layerIndex(y)) - 1);
+    const hiIdx = Math.min(LAYER_YS.length-1, Math.max(layerIndex(startCy), layerIndex(y)) + 1);
+    const rowTopY = LAYER_YS[loIdx], rowBotY = LAYER_YS[hiIdx];
     const padX = w0*0.15, padY = h0*0.15;
-    const neededW = Math.max(w0, Math.abs(x-startCx)+2*padX, (Math.abs(y-startCy)+2*padY)/ar);
+    const midCy = (rowTopY+rowBotY)/2;
+    const neededH = (rowBotY-rowTopY) + 2*padY;
+    const neededW = Math.max(w0, Math.abs(x-startCx)+2*padX, neededH/ar);
     const peakW = Math.min(fullBox.w, neededW);
     const peakH = peakW*ar;
 
