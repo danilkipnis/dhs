@@ -279,6 +279,16 @@
   }
   #tooltip b{ color:var(--text-primary); }
   #tooltip .muted{ color:var(--text-muted); }
+  /* Pinned by a click rather than hover: stays open past mouseleave, so it
+     needs its own close affordance and has to accept pointer events to be
+     clickable (a hovering tooltip stays click-through). */
+  #tooltip.pinned{ pointer-events:auto; padding-right:1.5rem; }
+  #tooltip .tt-close{
+    position:absolute; top:.25rem; right:.4rem;
+    cursor:pointer; color:var(--text-muted); font-size:1rem; line-height:1;
+    padding:.05rem .25rem;
+  }
+  #tooltip .tt-close:hover{ color:var(--text-primary); }
   #zoomctrl{
     position:absolute; top:.8rem; left:.8rem;
     display:flex; gap:.3rem;
@@ -1431,11 +1441,16 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     else if(type==='mental') selectCaseAttr('mental', id);
     else if(type==='senseobj') selectCaseAttr('senseObj', id);
     else if(type==='dhyanicobj') selectCaseAttr('dhyanicObj', id);
+    pinTooltip(type, id, ev.clientX+14, ev.clientY+14);
   });
 
   stage.addEventListener('click', (ev)=>{
     if(dragMoved){ dragMoved = false; return; }
-    if(!ev.target.closest('.node')){ clearHighlight(); describe(''); }
+    if(ev.target.closest('#tooltip')){
+      if(ev.target.closest('.tt-close')) unpinTooltip();
+      return;
+    }
+    if(!ev.target.closest('.node')){ clearHighlight(); describe(''); unpinTooltip(); }
   });
 
   // ---------- tooltip ----------
@@ -1581,7 +1596,26 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     }
     return '';
   }
+  // A click pins the tooltip open (with a close button) until it is
+  // explicitly closed or the user clicks away; until then hover no longer
+  // moves or overwrites it.
+  let pinned = false;
+  function pinTooltip(type, id, x, y){
+    pinned = true;
+    tooltip.innerHTML = tooltipFor(type, id) + '<span class="tt-close" title="Close">&times;</span>';
+    tooltip.classList.add('pinned');
+    tooltip.style.left = x+'px';
+    tooltip.style.top = y+'px';
+    tooltip.style.display = 'block';
+  }
+  function unpinTooltip(){
+    if(!pinned) return;
+    pinned = false;
+    tooltip.classList.remove('pinned');
+    tooltip.style.display = 'none';
+  }
   nodeLayer.addEventListener('mousemove', (ev)=>{
+    if(pinned) return;
     const g = ev.target.closest('.node');
     if(!g){ tooltip.style.display='none'; return; }
     const type = g.getAttribute('data-type'), id = g.getAttribute('data-id');
@@ -1590,7 +1624,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     tooltip.style.left = (ev.clientX+14)+'px';
     tooltip.style.top = (ev.clientY+14)+'px';
   });
-  nodeLayer.addEventListener('mouseleave', ()=>{ tooltip.style.display='none'; });
+  nodeLayer.addEventListener('mouseleave', ()=>{ if(!pinned) tooltip.style.display='none'; });
 
   // ---------- search ----------
   const searchInput = document.getElementById('search');
