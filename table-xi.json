@@ -1,0 +1,41 @@
+{
+  "letter": "α",
+  "name": "The list of homonymous dharmas",
+  "entries": [
+    { "parent": "2", "children": ["2a","2b","2c","2d","2e","2f","2g","2h","2i"] },
+    { "parent": "3", "children": ["3a","3b","3c","3d","3e","3f"] },
+    { "parent": "4", "children": ["4a","4b","4c","4d","4e","4f"] },
+    { "parent": "5", "children": ["5a","5b","5c","5d","5e","5f"] },
+    { "parent": "6", "children": ["6a","6b","6c"] },
+    { "parent": "8", "children": ["8a"] },
+    { "parent": "9", "children": ["9a"] },
+    { "parent": "10", "children": ["10a","10b","10c"] },
+    { "parent": "12", "children": ["12a","12b"] },
+    { "parent": "13", "children": ["13a"] },
+    { "parent": "14", "children": ["14a","14b"] },
+
+    { "parent": "15", "children": ["15a"] },
+    { "parent": "16", "children": ["16a","16b","16c","16d","16e","16f"] },
+    { "parent": "19", "children": ["36","19a","36a"] },
+    { "parent": "20", "children": ["20a"] },
+    { "parent": "21", "children": ["21a"] },
+    { "parent": "22", "children": ["22a"] },
+    { "parent": "23", "children": ["23a"] },
+    { "parent": "25", "children": ["25a","25b"] },
+    { "parent": "26", "children": ["26a"] },
+    { "parent": "27", "children": ["27a","27b"] },
+    { "parent": "28", "children": ["28a"] },
+
+    { "parent": "33", "children": ["33a"] },
+    { "parent": "36", "children": [], "see": "19" },
+    { "parent": "39", "children": ["39a"] },
+    { "parent": "40", "children": ["40a"] },
+    { "parent": "51", "children": ["51a"] },
+    { "parent": "52", "children": ["52a"] },
+    { "parent": "53", "children": ["53a","53b"] },
+    { "parent": "54", "children": ["54a"] },
+    { "parent": "55", "children": ["55a","55b"] },
+    { "parent": "56", "children": ["56a","56b"] },
+    { "parent": "76", "children": ["76a"] }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "title": "Table XIV",
+  "columns": ["Δ", "X", "Y"],
+  "groups": [
+    {
+      "group": "I",
+      "rows": [
+        { "dharma": "1", "x": "-", "y": "-" },
+        { "dharma": "2", "x": "-", "y": "+" },
+        { "dharma": "3", "x": "-", "y": "+" },
+        { "dharma": "4", "x": "-", "y": "+" },
+        { "dharma": "5", "x": "-", "y": "+" }
+      ]
+    },
+    {
+      "group": "II",
+      "rows": [
+        { "dharma": "6",  "x": "+", "y": "+" },
+        { "dharma": "7",  "x": "+", "y": "-" },
+        { "dharma": "8",  "x": "+", "y": "+" },
+        { "dharma": "9",  "x": "+", "y": "+" },
+        { "dharma": "10", "x": "-", "y": "+" }
+      ]
+    },
+    {
+      "group": "III",
+      "rows": [
+        { "dharma": "11", "x": "+", "y": "-" },
+        { "dharma": "12", "x": "+", "y": "+" },
+        { "dharma": "13", "x": "+", "y": "+" },
+        { "dharma": "14", "x": "+", "y": "+" },
+        { "dharma": "15", "x": "+", "y": "+" },
+        { "dharma": "16", "x": "-", "y": "+" },
+        { "dharma": "17", "x": "+", "y": "+" },
+        { "dharma": "18", "x": "-", "y": "-" }
+      ]
+    },
+    {
+      "group": "IV",
+      "rows": [
+        { "dharma": "19", "x": "+", "y": "+" }
+      ]
+    },
+    {
+      "group": "IV-cont",
+      "note": "Continuation of dharmas 20-23 under group IV heading, second column of source table",
+      "rows": [
+        { "dharma": "20", "x": "+", "y": "+" },
+        { "dharma": "21", "x": "+", "y": "+" },
+        { "dharma": "22", "x": "+", "y": "+" },
+        { "dharma": "23", "x": "+", "y": "+" }
+      ]
+    },
+    {
+      "group": "V",
+      "rows": [
+        { "dharma": "24", "x": "+", "y": "-" },
+        { "dharma": "25", "x": "+", "y": "+" },
+        { "dharma": "26", "x": "+", "y": "+" },
+        { "dharma": "27", "x": "+", "y": "+" },
+        { "dharma": "28", "x": "+", "y": "+" },
+        { "dharma": "29", "x": "+", "y": "-" },
+        { "dharma": "30", "x": "+", "y": "-" }
+      ]
+    },
+    {
+      "group": "VI",
+      "rows": [
+        { "dharma": "31", "x": "+", "y": "+" },
+        { "dharma": "32", "x": "+", "y": "-" },
+        { "dharma": "33", "x": "+", "y": "+" },
+        { "dharma": "34", "x": "+", "y": "+" },
+        { "dharma": "35", "x": "+", "y": "-" },
+        { "dharma": "36", "x": "+", "y": "+" }
+      ]
+    },
+    {
+      "group": "VII",
+      "rows": [
+        { "dharma": "37", "x": "+", "y": "+" },
+        { "dharma": "38", "x": "+", "y": "+" }
+      ]
+    },
+    {
+      "group": "VIII",
+      "rows": [
+        { "dharma": "39", "x": "+", "y": "+" }
+      ]
+    },
+    {
+      "group": "VIII-cont",
+      "note": "Continuation of dharmas 40-50 under group VIII heading, third column of source table",
+      "rows": [
+        { "dharma": "40", "x": "+", "y": "+" },
+        { "dharma": "41", "x": "+", "y": "-" },
+        { "dharma": "42", "x": "+", "y": "-" },
+        { "dharma": "43", "x": "+", "y": "-" },
+        { "dharma": "44", "x": "+", "y": "-" },
+        { "dharma": "45", "x": "+", "y": "-" },
+        { "dharma": "46", "x": "+", "y": "-" },
+        { "dharma": "47", "x": "+", "y": "-" },
+        { "dharma": "48", "x": "+", "y": "-" },
+        { "dharma": "49", "x": "+", "y": "-" },
+        { "dharma": "50", "x": "+", "y": "-" }
+      ]
+    },
+    {
+      "group": "IX",
+      "rows": [
+        { "dharma": "51", "x": "+", "y": "+" },
+        { "dharma": "52", "x": "+", "y": "+" }
+      ]
+    },
+    {
+      "group": "X",
+      "rows": [
+        { "dharma": "53", "x": "+", "y": "+" },
+        { "dharma": "54", "x": "+", "y": "+" }
+      ]
+    },
+    {
+      "group": "XI",
+      "rows": [
+        { "dharma": "55", "x": "+", "y": "+" },
+        { "dharma": "56", "x": "+", "y": "+" }
+      ]
+    }
+  ]
+}
