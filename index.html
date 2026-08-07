@@ -304,7 +304,7 @@
   #zoomctrl button[aria-pressed="true"]{
     background:var(--highlight); color:var(--surface-1);
   }
-  #soundToggle{ display:flex; align-items:center; justify-content:center; }
+  #soundToggle, #soundToggle[aria-pressed="true"]{ display:flex; align-items:center; justify-content:center; background:var(--surface-2); color:var(--text-primary); }
   #soundToggle svg{ width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
   #soundToggle .snd-waves, #soundToggle .snd-mute{ display:none; }
   #soundToggle[aria-pressed="true"] .snd-waves{ display:inline; }
@@ -1123,6 +1123,28 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     btn.setAttribute('aria-pressed', btn.getAttribute('aria-pressed') !== 'true');
   };
 
+  // Chime played whenever V-O:2 (sound-objects) is involved, gated on
+  // #soundToggle -- a little wink at that node's own gloss.
+  let chimeCtx = null;
+  function playChime(){
+    const ctx = chimeCtx || (chimeCtx = new (window.AudioContext||window.webkitAudioContext)());
+    if(ctx.state === 'suspended') ctx.resume();
+    // Short, crisp tick similar to a laptop's volume-change blip: a brief
+    // sine burst with a fast attack and fast decay, not a sustained tone.
+    const t0 = ctx.currentTime;
+    const osc = ctx.createOscillator(), gain = ctx.createGain();
+    osc.type = 'sine'; osc.frequency.setValueAtTime(1200, t0);
+    gain.gain.setValueAtTime(0, t0);
+    gain.gain.linearRampToValueAtTime(0.35, t0+0.008);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0+0.09);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(t0); osc.stop(t0+0.1);
+  }
+  function maybeChime(type, id){
+    if(type!=='senseobj' || String(id)!=='2') return;
+    if(document.getElementById('soundToggle').getAttribute('aria-pressed')==='true') playChime();
+  }
+
   const sidebar = document.getElementById('sidebar');
   document.getElementById('sidebarToggle').onclick = ()=>{ sidebar.classList.toggle('collapsed'); };
 
@@ -1451,6 +1473,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   function describe(){ /* bottom status line removed */ }
 
   function selectByType(type, id){
+    maybeChime(type, id);
     if(type==='case') selectCase(id);
     else if(type==='dharma') selectDharma(id);
     else if(type==='ms') selectMs(id);
