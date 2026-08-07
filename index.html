@@ -289,6 +289,8 @@
     padding:.05rem .25rem;
   }
   #tooltip .tt-close:hover{ color:var(--text-primary); }
+  #tooltip .tt-link{ cursor:pointer; text-decoration:underline dotted; text-underline-offset:2px; }
+  #tooltip .tt-link:hover{ color:var(--highlight); }
   #zoomctrl{
     position:absolute; top:.8rem; left:.8rem;
     display:flex; gap:.3rem;
@@ -1414,11 +1416,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
 
   function describe(){ /* bottom status line removed */ }
 
-  nodeLayer.addEventListener('click', (ev)=>{
-    const g = ev.target.closest('.node');
-    if(!g) return;
-    const type = g.getAttribute('data-type');
-    const id = g.getAttribute('data-id');
+  function selectByType(type, id){
     if(type==='case') selectCase(id);
     else if(type==='dharma') selectDharma(id);
     else if(type==='ms') selectMs(id);
@@ -1431,13 +1429,27 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     else if(type==='mental') selectCaseAttr('mental', id);
     else if(type==='senseobj') selectCaseAttr('senseObj', id);
     else if(type==='dhyanicobj') selectCaseAttr('dhyanicObj', id);
+  }
+
+  nodeLayer.addEventListener('click', (ev)=>{
+    const g = ev.target.closest('.node');
+    if(!g) return;
+    const type = g.getAttribute('data-type');
+    const id = g.getAttribute('data-id');
+    selectByType(type, id);
     pinTooltip(type, id, ev.clientX+14, ev.clientY+14);
   });
 
   stage.addEventListener('click', (ev)=>{
     if(dragMoved){ dragMoved = false; return; }
     if(ev.target.closest('#tooltip')){
-      if(ev.target.closest('.tt-close')) unpinTooltip();
+      if(ev.target.closest('.tt-close')){ unpinTooltip(); return; }
+      const link = ev.target.closest('.tt-link');
+      if(link){
+        const type = link.getAttribute('data-type'), id = link.getAttribute('data-id');
+        selectByType(type, id);
+        pinTooltip(type, id, ev.clientX+14, ev.clientY+14);
+      }
       return;
     }
     if(!ev.target.closest('.node')){ clearHighlight(); describe(''); unpinTooltip(); }
@@ -1447,6 +1459,13 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   function esc(s){
     if(s===null||s===undefined) return '';
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  // Wraps a popup value in a clickable span so lists inside a pinned tooltip
+  // can jump straight to the node they name (e.g. a homonym Δ, a VII set's
+  // source case) without closing the popup and hunting for it on the canvas.
+  function ttLink(type, id, html){
+    return `<span class="tt-link" data-type="${esc(type)}" data-id="${esc(id)}">${html}</span>`;
   }
 
   function tooltipFor(type, id){
@@ -1513,14 +1532,19 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       const qd = qualDharmaById.get(d.quality);
       const glossMatch = qd && /'([^']+)'/.exec(qd.gloss);
       const glossTxt = glossMatch ? glossMatch[1] : '';
+      const dLink = t => ttLink('dharma', t, '&Delta;'+esc(t));
+      const supersetLinks = supersets.sort().map(sId=>{
+        const s = supersetById.get(sId);
+        return s ? ttLink('case', s.case_num, esc(sId)) : esc(sId);
+      });
       return `<b>&Delta;${esc(d.dharma_id)}</b> &mdash; ${esc(d.name_pali)}<br><span class="muted">${esc(d.name_translation)}</span>`
-        + `<br><span class="muted">VI</span> ${esc(d.quality)}${glossTxt? `(${esc(glossTxt)})` : ''}, case ${esc(d.owner_case)}`
+        + `<br><span class="muted">VI</span> ${ttLink('qualdharma', d.quality, esc(d.quality))}${glossTxt? `(${esc(glossTxt)})` : ''}, case ${ttLink('case', d.owner_case, esc(d.owner_case))}`
         + (d.xref? ' &middot; cross-ref, shares MS range' : '')
-        + ((d.as_in||[]).length? `<br><span class="muted">as in</span> ${d.as_in.map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
-        + `<br><span class="muted">VII</span> in sets: ${supersets.length? supersets.sort().join(', ') : '&mdash;'}`
-        + ((homonymByDharma.get(id)||[]).length? `<br><span class="muted">homonyms (XI, &alpha;)</span> ${homonymByDharma.get(id).map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
-        + ((synonymByDharma.get(id)||[]).length? `<br><span class="muted">synonyms (XII, &beta;)</span> ${synonymByDharma.get(id).map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
-        + ((isotopeByDharma.get(id)||[]).length? `<br><span class="muted">isotops (XIII, &gamma;)</span> ${isotopeByDharma.get(id).map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
+        + ((d.as_in||[]).length? `<br><span class="muted">as in</span> ${d.as_in.map(dLink).join(', ')}` : '')
+        + `<br><span class="muted">VII</span>: ${supersetLinks.length? supersetLinks.join(', ') : '&mdash;'}`
+        + ((homonymByDharma.get(id)||[]).length? `<br><span class="muted">homonyms (XI, &alpha;)</span> ${homonymByDharma.get(id).map(dLink).join(', ')}` : '')
+        + ((synonymByDharma.get(id)||[]).length? `<br><span class="muted">synonyms (XII, &beta;)</span> ${synonymByDharma.get(id).map(dLink).join(', ')}` : '')
+        + ((isotopeByDharma.get(id)||[]).length? `<br><span class="muted">isotops (XIII, &gamma;)</span> ${isotopeByDharma.get(id).map(dLink).join(', ')}` : '')
         + (xivByDharma.has(id)? `<br><span class="muted">XIV</span> ${xivSign(xivByDharma.get(id).x)} ${xivSign(xivByDharma.get(id).y)}` : '');
     }
     if(type==='ms'){
