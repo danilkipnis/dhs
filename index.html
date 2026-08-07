@@ -246,8 +246,8 @@
      what tells them apart from the lines leaving the row. */
   .edge.ms-derivation{ stroke-width:1.1px; opacity:.75; stroke:var(--derivation); fill:none; }
   .edge.dharma-case{ stroke-width:1px; opacity:.5; }
-  /* The same case-dharma relation, but stated by table-vii rather than table-vi.
-     Solid like its table-vi counterpart, distinguished by colour. There are ~4x
+  /* The same case-dharma relation, but stated by VII rather than VI.
+     Solid like its VI counterpart, distinguished by colour. There are ~4x
      as many of these, so the opacity is pulled back a little. */
   .edge.dharma-case-vii{ stroke-width:1px; opacity:.32; stroke:var(--tablevii); }
   .edge.nom-case{ stroke-width:.8px; opacity:.28; stroke:var(--nomenclature); }
@@ -523,7 +523,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   //   1  avacara, character of dharmas   (what a sphere is made of)
   //   2  nomenclature of thought
   //   2b sphere of thought               (own row, nudged below nomenclature)
-  //   3  the table-v dimension tables    (content, trancic, objects, mental)
+  //   3  the V dimension tables    (content, trancic, objects, mental)
   //   4  cases
   //   5  dharmas
   //   6  mental states
@@ -629,7 +629,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   const qualDharmaX = rowSegment(data.quality_dharma, 'letter', Y_L1, QD_X0, QD_X1);
   const avacaraX = rowSegment(data.avacaras, 'key', Y_L1, AVACARA_X0, AVACARA_X1);
 
-  // Level 3: the table-v dimension tables, spread across the full width in
+  // Level 3: the V dimension tables, spread across the full width in
   // reading order and roughly in proportion to how many entries each holds.
   const [CONTENT_X0, CONTENT_X1] = seg(0.02, 0.30);
   const [TRANCIC_X0, TRANCIC_X1] = seg(0.34, 0.50);
@@ -656,7 +656,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     if(!dharmaToMs.has(dId)) dharmaToMs.set(dId, []);
     dharmaToMs.get(dId).push(msId);
   }
-  // Dharma sets (table-vi) and supersets (table-vii) are both sets of
+  // Dharma sets (VI) and supersets (VII) are both sets of
   // *dharmas*, so they have no direct relation to a mental state -- an MS
   // reaches them only through the dharma that holds it. No MS-to-set edges are
   // drawn; these maps exist purely so tooltips can report the reachable MS
@@ -739,7 +739,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   }
   // Avacara reaches a case only through a sphere, so no avacara->case edge is
   // drawn. Composing the two hops reproduces the direct relation exactly (234
-  // pairs either way -- both come from the same table-iv rows), and the map is
+  // pairs either way -- both come from the same IV rows), and the map is
   // still wanted for the avacara tooltip and for highlighting on selection.
   const avacaraToCases = new Map();
   for(const [aid, sids] of avacaraToSpheres){
@@ -1232,7 +1232,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   // One undirected adjacency list over typed keys ("type|id"), built from exactly
   // the relations the diagram draws. Clicking a node then means "walk out N steps
   // from here", so the rule is one number per entity type instead of a bespoke
-  // set of neighbours written out in each handler -- which is how the table-vii
+  // set of neighbours written out in each handler -- which is how the VII
   // case-dharma edges came to be left unhighlighted when a dharma was clicked.
   const adj = new Map();
   const nkey = (t, id) => t + '|' + id;

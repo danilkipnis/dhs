@@ -1,5 +1,5 @@
-// The table-vi half of the graph: MS vocabulary, dharma instances, and every
-// edge incident on an MS node, all derived from the normalized table-vi files
+// The VI half of the graph: MS vocabulary, dharma instances, and every
+// edge incident on an MS node, all derived from the normalized VI files
 // so table-vi.json stays the single source of truth.
 //
 // Membership comes from ms-membership.json, which is expanded from `ms_range`.
@@ -25,8 +25,8 @@ function buildGraphData(F){
   };
 
   // ---------- case-id universe ----------
-  // No single table lists every case: table-v has the fully-described ones,
-  // Table-viii adds those with only a paragraph cite, and table-iii/iv add
+  // No single table lists every case: V has the fully-described ones,
+  // VIII adds those with only a paragraph cite, and III/IV add
   // letter-suffixed ones (222a/222b appear nowhere else).
   const t5byCase = new Map(t5.rows.map(r => [String(r.case_id), r]));
   const t8byCase = new Map(), t8range = new Map();
@@ -51,12 +51,12 @@ function buildGraphData(F){
     return ka[0]!==kb[0] ? ka[0]-kb[0] : (ka[1]<kb[1] ? -1 : ka[1]>kb[1] ? 1 : 0);
   });
 
-  // table-vii labels a case "1A"/"119A"; the numeric/letter stem is the case.
+  // VII labels a case "1A"/"119A"; the numeric/letter stem is the case.
   const REF = /^(\d+[a-z]?)([A-Z])$/;
   const variants = new Map();
   for(const e of t7.entries){
     const m = REF.exec(e.case_ref);
-    if(!m){ warn.push(`table-vii case_ref not parseable: ${e.case_ref}`); continue; }
+    if(!m){ warn.push(`VII case_ref not parseable: ${e.case_ref}`); continue; }
     if(!variants.has(m[1])) variants.set(m[1], []);
     variants.get(m[1]).push(e.case_ref);
   }
@@ -66,7 +66,7 @@ function buildGraphData(F){
     const r = t5byCase.get(cid);
     const c = {
       id: 'case-'+cid, case_id: cid, label: cid,
-      stub: !r,                                   // no table-v row: cite only
+      stub: !r,                                   // no V row: cite only
       nomenclature_id: r ? r.nomenclature_id : null,
       sphere_id:       r ? r.sphere_id       : null,
       content_ids:     r ? r.content_ids     : null,
@@ -83,12 +83,12 @@ function buildGraphData(F){
     return c;
   });
 
-  // ---------- table-iii / table-iv ----------
+  // ---------- III / IV ----------
   data.nomenclature = t3.rows.map(r => ({
     id:'nom-'+r.term_id, term_id:String(r.term_id), term_pali:r.term, translation:r.translation,
   }));
 
-  // Only char_dharma is an actual table-iv field. The thought/action qualities
+  // Only char_dharma is an actual IV field. The thought/action qualities
   // the diagram used to show were parsed out of the English translation, which
   // is guesswork rather than data, so they are not derived at all.
   data.spheres = t4.rows.map(r => ({
@@ -101,7 +101,7 @@ function buildGraphData(F){
   data.quality_dharma = Object.entries(t4.lookups.char_dharma)
     .map(([k,v]) => ({id:'qd-'+k, letter:k, gloss:v}));
 
-  // ---------- table-v dimension tables ----------
+  // ---------- V dimension tables ----------
   data.content = t5c.rows.map(r => ({
     id:'ct-'+r.id, content_id:r.id, pali:r.pali, translation:r.translation,
     label: r.label ?? null, parent_id: r.parent_id ?? null,
@@ -114,7 +114,7 @@ function buildGraphData(F){
   data.sense_objects   = t5o.sense_objects.map(r => ({id:'so-'+r.id, object_id:String(r.id), translation:r.translation}));
   data.dhyanic_objects = t5o.dhyanic_objects.map(r => ({id:'do-'+r.id, object_id:String(r.id), pali:r.pali, translation:r.translation}));
 
-  // ---------- table-vii supersets ----------
+  // ---------- VII supersets ----------
   data.supersets = t7.entries.map(e => ({
     id:'sup-'+e.id, label:e.id, case_ref:e.case_ref, case_num:caseOf(e.case_ref),
     count:e.count, transcribed_in_table_vi:e.transcribed_in_table_vi, note: e.note ?? null,
@@ -259,10 +259,10 @@ function buildTableVi(data, vocab, membership, dharmaFile){
 
   // --- Table-vii's contribution, as case->dharma edges rather than a row of
   // superset nodes. A superset Dn is just "the dharmas of case X", so it says
-  // the same kind of thing the table-vi edges do and belongs on the same two
-  // rows. Pairs table-vi already states are skipped -- drawing a dashed line
+  // the same kind of thing the VI edges do and belongs on the same two
+  // rows. Pairs VI already states are skipped -- drawing a dashed line
   // over an identical solid one would only thicken it. What is left is exactly
-  // what table-vii adds: cases table-vi never transcribed, and dharmas beyond
+  // what VII adds: cases VI never transcribed, and dharmas beyond
   // the ones it did. ---
   const viPairs = new Set(data.dharma_case_edges.map(e => e.to + '|' + e.from));
   const supersetCase = new Map(
