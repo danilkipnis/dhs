@@ -322,7 +322,7 @@ const SOURCES = {
   t5m:'table-v-mental.json', t5o:'table-v-objects.json',
   t5s:'table-v-sphere.json', t5t:'table-v-thought.json',
   t5tr:'table-v-trancic.json', t7:'table-vii.json', t8:'Table-viii.json',
-  t11:'table-xi.json', t12:'table-xii.json', t13:'table-xiii.json',
+  t11:'table-xi.json', t12:'table-xii.json', t13:'table-xiii.json', t14:'table-xiv.json',
   vocab:'ms.json', membership:'ms-membership.json', dharmaFile:'table-vi-dharmas.json',
 };
 
@@ -386,6 +386,15 @@ function buildGroupedDharmaGroups(table){
   return linksToMap(links);
 }
 
+// Table-xiv: two +/- columns (X, Y) per dharma, as dharma_id -> {x, y}.
+function buildXivByDharma(table){
+  const out = {};
+  for(const grp of table.groups){
+    for(const r of grp.rows) out[r.dharma] = {x: r.x, y: r.y};
+  }
+  return out;
+}
+
 // Fetches every source table and returns the fully built graph data
 // ({data, warn}), so any page that needs the tables -- the main diagram, the
 // standalone ER diagram -- shares this one pipeline instead of re-deriving it.
@@ -401,5 +410,6 @@ async function loadGraphData(){
   built.data.homonyms_by_dharma = buildHomonymGroups(F.t11);
   built.data.synonyms_by_dharma = buildGroupedDharmaGroups(F.t12);
   built.data.isotopes_by_dharma = buildGroupedDharmaGroups(F.t13);
+  built.data.xiv_by_dharma = buildXivByDharma(F.t14);
   return {data: built.data, warn: built.warn, F};
 }
