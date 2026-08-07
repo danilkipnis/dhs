@@ -1444,6 +1444,15 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
 
+  // "D1(1^A)": the superset label followed by the case it's drawn from,
+  // stem and quality letter (character of dharma) split apart.
+  function formatSuperset(sId){
+    const s = supersetById.get(sId);
+    const ref = s ? s.case_ref : '';
+    const m = /^(.+?)([A-Z])$/.exec(ref || '');
+    return m ? `${esc(sId)}(${esc(m[1])}^${esc(m[2])})` : esc(sId);
+  }
+
   function tooltipFor(type, id){
     if(type==='case'){
       const c = caseById.get(id);
@@ -1516,7 +1525,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
         + ((synonymByDharma.get(id)||[]).length? `<br><span class="muted">synonyms (XII, &beta;)</span> ${synonymByDharma.get(id).map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
         + ((isotopeByDharma.get(id)||[]).length? `<br><span class="muted">isotops (XIII, &gamma;)</span> ${isotopeByDharma.get(id).map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
         + (xivByDharma.has(id)? `<br><span class="muted">XIV</span> ${xivSign(xivByDharma.get(id).x)} ${xivSign(xivByDharma.get(id).y)}` : '')
-        + `<br><span class="muted">VII</span> in superset(s): ${supersets.length? supersets.sort().join(', ') : '&mdash;'}`;
+        + `<br><span class="muted">VII</span> in sets: ${supersets.length? supersets.sort().map(formatSuperset).join(', ') : '&mdash;'}`;
     }
     if(type==='ms'){
       const m = msById.get(id);
@@ -1528,7 +1537,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
         + (parent? `<br><span class="muted">derived from</span> MS ${esc(parent.no)} ${esc(parent.pali)} &lsquo;${esc(parent.translation)}&rsquo;` : '')
         + (kids.length? `<br><span class="muted">derivative(s)</span> ${kids.map(k=>`MS ${esc(k.no)} ${esc(k.pali)}`).join(', ')}` : '')
         + `<br><span class="muted">VI</span> dharma(s): ${dharmas.map(d=>'&Delta;'+esc(d)).join(', ')}`
-        + `<br><span class="muted">VII</span> in superset(s): ${supersets.length? supersets.sort().join(', ') : '&mdash;'}`;
+        + `<br><span class="muted">VII</span> in sets: ${supersets.length? supersets.sort().map(formatSuperset).join(', ') : '&mdash;'}`;
     }
     if(type==='nomenclature'){
       const n = nomenclatureById.get(id);
