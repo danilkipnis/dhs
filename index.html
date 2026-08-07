@@ -1481,8 +1481,16 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
 
     const outMs = NAV_ZOOM_MS/2, pauseMs = NAV_PAUSE_MS, inMs = NAV_ZOOM_MS/2;
     const totalMs = outMs+pauseMs+inMs;
-    const easeOut = t => 1-Math.pow(1-t,2);   // decelerating
-    const easeIn  = t => t*t;                 // accelerating
+    // Acceleration is sinusoidal rather than the constant accel a quadratic
+    // ease gives: |accel(u)| is maximal at u=0, eases to exactly zero at
+    // u=1 -- and, mirrored, back to maximal at the far end of the return
+    // leg -- so speed peaks at the very start/end of the whole trip and the
+    // motion comes to rest, accel-free, at the turnaround. The (pi-2)
+    // divisor is the amplitude that makes decelEase(0)=0, decelEase(1)=1
+    // fall out exactly, for any T.
+    const decelEase = u => (Math.PI*u + 2*Math.cos(Math.PI*u/2) - 2) / (Math.PI-2);
+    const easeOut = decelEase;                          // decelerating
+    const easeIn  = u => 1 - decelEase(1-u);            // accelerating (mirrored)
     const t0 = performance.now();
     (function step(now){
       const elapsed = Math.min(now-t0, totalMs);
