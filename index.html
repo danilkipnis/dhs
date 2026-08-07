@@ -1520,11 +1520,12 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     if(type==='dharma'){
       const d = dharmaById.get(id);
       const supersets = dharmaToSupersets.get(id) || [];
-      const rangeTxt = (d.ms_range||[]).map(p=> p[0]===p[1]? String(p[0]) : `${p[0]}–${p[1]}`).join(', ');
+      const qd = qualDharmaById.get(d.quality);
+      const glossMatch = qd && /'([^']+)'/.exec(qd.gloss);
+      const glossTxt = glossMatch ? glossMatch[1] : '';
       return `<b>&Delta;${esc(d.dharma_id)}</b> &mdash; ${esc(d.name_pali)}<br><span class="muted">${esc(d.name_translation)}</span>`
-        + `<br><span class="muted">VI</span> quality ${esc(d.quality)} &middot; new at case ${esc(d.owner_case)} (${esc(d.source_case_no)})`
+        + `<br><span class="muted">VI</span> ${esc(d.quality)}${glossTxt? `(${esc(glossTxt)})` : ''}, case ${esc(d.owner_case)}`
         + (d.xref? ' &middot; cross-ref, shares MS range' : '')
-        + (rangeTxt? `<br>MS range: ${rangeTxt}` : '')
         + ((d.as_in||[]).length? `<br><span class="muted">as in</span> ${d.as_in.map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
         + ((dharmaAsInBy.get(id)||[]).length? `<br><span class="muted">cited &ldquo;as in&rdquo; by</span> ${dharmaAsInBy.get(id).map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
         + ((homonymByDharma.get(id)||[]).length? `<br><span class="muted">homonyms (XI, &alpha;)</span> ${homonymByDharma.get(id).map(t=>'&Delta;'+esc(t)).join(', ')}` : '')
