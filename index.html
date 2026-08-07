@@ -1431,6 +1431,65 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     else if(type==='dhyanicobj') selectCaseAttr('dhyanicObj', id);
   }
 
+  // data-type strings (as read off the DOM / written into ttLink) to the
+  // camelCase keys nodeEls/select() actually use -- they only differ for the
+  // three multi-word entities.
+  const NODE_TYPE_KEY = {
+    case:'case', dharma:'dharma', ms:'ms', nomenclature:'nomenclature',
+    sphere:'sphere', avacara:'avacara', qualdharma:'qualDharma',
+    content:'content', trancic:'trancic', mental:'mental',
+    senseobj:'senseObj', dhyanicobj:'dhyanicObj',
+  };
+  function nodeCenter(type, id){
+    const map = nodeEls[NODE_TYPE_KEY[type]];
+    const g = map && map.get(id);
+    if(!g) return null;
+    const m = /translate\(([-\d.]+)[ ,]+([-\d.]+)\)/.exec(g.getAttribute('transform') || '');
+    return m ? {x:+m[1], y:+m[2]} : null;
+  }
+
+  // Eases the viewBox from wherever it is to centred-on-(x,y) at its current
+  // zoom, ballooning out to a wider box at the midpoint and back down --
+  // "zoom out, pan, zoom in" -- so a jump across the diagram reads as travel
+  // rather than a disorienting teleport. onDone fires with the box already
+  // settled, so a caller can place the tooltip against final screen coords.
+  let navRaf = null;
+  function animateNavTo(x, y, onDone){
+    if(navRaf) cancelAnimationFrame(navRaf);
+    const startCx = vb.x + vb.w/2, startCy = vb.y + vb.h/2;
+    const w0 = vb.w, h0 = vb.h;
+    const peakW = Math.min(fullBox.w, w0*1.6);
+    const peakH = peakW * (h0/w0);
+    const duration = 480;
+    const t0 = performance.now();
+    const ease = t => t<0.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2;
+    (function step(now){
+      const t = Math.min(1, (now-t0)/duration);
+      const et = ease(t), hump = Math.sin(Math.PI*t);
+      const cx = startCx + (x-startCx)*et, cy = startCy + (y-startCy)*et;
+      const w = w0 + (peakW-w0)*hump, h = h0 + (peakH-h0)*hump;
+      vb = {x:cx-w/2, y:cy-h/2, w, h};
+      applyViewBox();
+      if(t<1) navRaf = requestAnimationFrame(step);
+      else { navRaf = null; if(onDone) onDone(); }
+    })(t0);
+  }
+
+  // Used by tooltip links to jump to and click the node they name: same
+  // zoom factor, animated, then re-pin the tooltip over the node's new
+  // screen position.
+  function navigateAndPin(type, id){
+    selectByType(type, id);
+    const c = nodeCenter(type, id);
+    if(!c){ pinTooltip(type, id, window.innerWidth/2, window.innerHeight/2); return; }
+    animateNavTo(c.x, c.y, ()=>{
+      const rect = stage.getBoundingClientRect();
+      const sx = rect.left + ((c.x-vb.x)/vb.w)*rect.width;
+      const sy = rect.top + ((c.y-vb.y)/vb.h)*rect.height;
+      pinTooltip(type, id, sx+14, sy+14);
+    });
+  }
+
   nodeLayer.addEventListener('click', (ev)=>{
     const g = ev.target.closest('.node');
     if(!g) return;
@@ -1445,11 +1504,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     if(ev.target.closest('#tooltip')){
       if(ev.target.closest('.tt-close')){ unpinTooltip(); return; }
       const link = ev.target.closest('.tt-link');
-      if(link){
-        const type = link.getAttribute('data-type'), id = link.getAttribute('data-id');
-        selectByType(type, id);
-        pinTooltip(type, id, ev.clientX+14, ev.clientY+14);
-      }
+      if(link) navigateAndPin(link.getAttribute('data-type'), link.getAttribute('data-id'));
       return;
     }
     if(!ev.target.closest('.node')){ clearHighlight(); describe(''); unpinTooltip(); }
