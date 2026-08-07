@@ -322,14 +322,13 @@ const SOURCES = {
   t5m:'table-v-mental.json', t5o:'table-v-objects.json',
   t5s:'table-v-sphere.json', t5t:'table-v-thought.json',
   t5tr:'table-v-trancic.json', t7:'table-vii.json', t8:'Table-viii.json',
-  t11:'table-xi.json',
+  t11:'table-xi.json', t12:'table-xii.json',
   vocab:'ms.json', membership:'ms-membership.json', dharmaFile:'table-vi-dharmas.json',
 };
 
-// --- Table-xi's homonym groups, as dharma_id -> [other dharma_ids sharing a
-// name]. Each entry's parent+children form one mutually-homonymous group; a
-// "see" entry (dharma 36) carries no children of its own and instead points
-// at the entry that already lists it, so its group is borrowed from there. ---
+// --- Shared by table-xi's homonym groups and table-xii's synonym groups:
+// each entry's parent+children form one mutually-related group of dharmas,
+// linked pairwise into an id -> [other ids] map. ---
 function dharmaSortKey(idStr){
   const m = String(idStr).match(/^(\d+)([a-zA-Z]*)$/);
   if(!m) return [1e9, String(idStr)];
@@ -340,9 +339,7 @@ function dharmaCmpKey(a,b){
   if(ka[0]!==kb[0]) return ka[0]-kb[0];
   return ka[1]<kb[1] ? -1 : ka[1]>kb[1] ? 1 : 0;
 }
-function buildHomonymGroups(table){
-  const links = new Map();     // id -> Set of homonymous ids
-  const seeTargets = new Map(); // id -> id it defers to
+function linkDharmaGroups(entries, links){
   function link(a,b){
     if(a===b) return;
     if(!links.has(a)) links.set(a, new Set());
@@ -350,9 +347,10 @@ function buildHomonymGroups(table){
     links.get(a).add(b);
     links.get(b).add(a);
   }
-  for(const e of table.entries){
+  const seeTargets = new Map(); // id -> id it defers to, for "see" entries
+  for(const e of entries){
     if(e.see){ seeTargets.set(e.parent, e.see); continue; }
-    const group = [e.parent, ...e.children];
+    const group = [...new Set([e.parent, ...e.children])];
     for(let i=0;i<group.length;i++){
       for(let j=i+1;j<group.length;j++) link(group[i], group[j]);
     }
@@ -361,11 +359,30 @@ function buildHomonymGroups(table){
     for(const t of (links.get(target) || [])) link(id, t);
     link(id, target);
   }
+}
+function linksToMap(links){
   const out = {};
   for(const [id, set] of links){
     out[id] = Array.from(set).sort(dharmaCmpKey);
   }
   return out;
+}
+
+// Table-xi: a single flat list of homonym entries.
+function buildHomonymGroups(table){
+  const links = new Map();
+  linkDharmaGroups(table.entries, links);
+  return linksToMap(links);
+}
+
+// Table-xii: synonym entries are split into groups (A/B/C in the source),
+// but a dharma's synonyms only ever come from its own group, so linking each
+// group's entries separately (rather than flattening them all together) is
+// equivalent and keeps the source structure legible.
+function buildSynonymGroups(table){
+  const links = new Map();
+  for(const grp of table.groups) linkDharmaGroups(grp.entries, links);
+  return linksToMap(links);
 }
 
 // Fetches every source table and returns the fully built graph data
@@ -381,5 +398,6 @@ async function loadGraphData(){
   const built = buildGraphData(F);
   buildTableVi(built.data, F.vocab, F.membership, F.dharmaFile);
   built.data.homonyms_by_dharma = buildHomonymGroups(F.t11);
+  built.data.synonyms_by_dharma = buildSynonymGroups(F.t12);
   return {data: built.data, warn: built.warn, F};
 }
