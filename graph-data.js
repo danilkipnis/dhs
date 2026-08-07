@@ -1,5 +1,5 @@
-// The table-vi half of the graph: MS vocabulary, dharma instances, and every
-// edge incident on an MS node, all derived from the normalized table-vi files
+// The VI half of the graph: MS vocabulary, dharma instances, and every
+// edge incident on an MS node, all derived from the normalized VI files
 // so table-vi.json stays the single source of truth.
 //
 // Membership comes from ms-membership.json, which is expanded from `ms_range`.
@@ -25,8 +25,8 @@ function buildGraphData(F){
   };
 
   // ---------- case-id universe ----------
-  // No single table lists every case: table-v has the fully-described ones,
-  // Table-viii adds those with only a paragraph cite, and table-iii/iv add
+  // No single table lists every case: V has the fully-described ones,
+  // VIII adds those with only a paragraph cite, and III/IV add
   // letter-suffixed ones (222a/222b appear nowhere else).
   const t5byCase = new Map(t5.rows.map(r => [String(r.case_id), r]));
   const t8byCase = new Map(), t8range = new Map();
@@ -51,12 +51,12 @@ function buildGraphData(F){
     return ka[0]!==kb[0] ? ka[0]-kb[0] : (ka[1]<kb[1] ? -1 : ka[1]>kb[1] ? 1 : 0);
   });
 
-  // table-vii labels a case "1A"/"119A"; the numeric/letter stem is the case.
+  // VII labels a case "1A"/"119A"; the numeric/letter stem is the case.
   const REF = /^(\d+[a-z]?)([A-Z])$/;
   const variants = new Map();
   for(const e of t7.entries){
     const m = REF.exec(e.case_ref);
-    if(!m){ warn.push(`table-vii case_ref not parseable: ${e.case_ref}`); continue; }
+    if(!m){ warn.push(`VII case_ref not parseable: ${e.case_ref}`); continue; }
     if(!variants.has(m[1])) variants.set(m[1], []);
     variants.get(m[1]).push(e.case_ref);
   }
@@ -66,7 +66,7 @@ function buildGraphData(F){
     const r = t5byCase.get(cid);
     const c = {
       id: 'case-'+cid, case_id: cid, label: cid,
-      stub: !r,                                   // no table-v row: cite only
+      stub: !r,                                   // no V row: cite only
       nomenclature_id: r ? r.nomenclature_id : null,
       sphere_id:       r ? r.sphere_id       : null,
       content_ids:     r ? r.content_ids     : null,
@@ -83,12 +83,12 @@ function buildGraphData(F){
     return c;
   });
 
-  // ---------- table-iii / table-iv ----------
+  // ---------- III / IV ----------
   data.nomenclature = t3.rows.map(r => ({
     id:'nom-'+r.term_id, term_id:String(r.term_id), term_pali:r.term, translation:r.translation,
   }));
 
-  // Only char_dharma is an actual table-iv field. The thought/action qualities
+  // Only char_dharma is an actual IV field. The thought/action qualities
   // the diagram used to show were parsed out of the English translation, which
   // is guesswork rather than data, so they are not derived at all.
   data.spheres = t4.rows.map(r => ({
@@ -101,7 +101,7 @@ function buildGraphData(F){
   data.quality_dharma = Object.entries(t4.lookups.char_dharma)
     .map(([k,v]) => ({id:'qd-'+k, letter:k, gloss:v}));
 
-  // ---------- table-v dimension tables ----------
+  // ---------- V dimension tables ----------
   data.content = t5c.rows.map(r => ({
     id:'ct-'+r.id, content_id:r.id, pali:r.pali, translation:r.translation,
     label: r.label ?? null, parent_id: r.parent_id ?? null,
@@ -114,7 +114,7 @@ function buildGraphData(F){
   data.sense_objects   = t5o.sense_objects.map(r => ({id:'so-'+r.id, object_id:String(r.id), translation:r.translation}));
   data.dhyanic_objects = t5o.dhyanic_objects.map(r => ({id:'do-'+r.id, object_id:String(r.id), pali:r.pali, translation:r.translation}));
 
-  // ---------- table-vii supersets ----------
+  // ---------- VII supersets ----------
   data.supersets = t7.entries.map(e => ({
     id:'sup-'+e.id, label:e.id, case_ref:e.case_ref, case_num:caseOf(e.case_ref),
     count:e.count, transcribed_in_table_vi:e.transcribed_in_table_vi, note: e.note ?? null,
@@ -259,10 +259,10 @@ function buildTableVi(data, vocab, membership, dharmaFile){
 
   // --- Table-vii's contribution, as case->dharma edges rather than a row of
   // superset nodes. A superset Dn is just "the dharmas of case X", so it says
-  // the same kind of thing the table-vi edges do and belongs on the same two
-  // rows. Pairs table-vi already states are skipped -- drawing a dashed line
+  // the same kind of thing the VI edges do and belongs on the same two
+  // rows. Pairs VI already states are skipped -- drawing a dashed line
   // over an identical solid one would only thicken it. What is left is exactly
-  // what table-vii adds: cases table-vi never transcribed, and dharmas beyond
+  // what VII adds: cases VI never transcribed, and dharmas beyond
   // the ones it did. ---
   const viPairs = new Set(data.dharma_case_edges.map(e => e.to + '|' + e.from));
   const supersetCase = new Map(
@@ -322,8 +322,78 @@ const SOURCES = {
   t5m:'table-v-mental.json', t5o:'table-v-objects.json',
   t5s:'table-v-sphere.json', t5t:'table-v-thought.json',
   t5tr:'table-v-trancic.json', t7:'table-vii.json', t8:'Table-viii.json',
+  t11:'table-xi.json', t12:'table-xii.json', t13:'table-xiii.json', t14:'table-xiv.json',
   vocab:'ms.json', membership:'ms-membership.json', dharmaFile:'table-vi-dharmas.json',
 };
+
+// --- Shared by table-xi's homonym groups and table-xii's synonym groups:
+// each entry's parent+children form one mutually-related group of dharmas,
+// linked pairwise into an id -> [other ids] map. ---
+function dharmaSortKey(idStr){
+  const m = String(idStr).match(/^(\d+)([a-zA-Z]*)$/);
+  if(!m) return [1e9, String(idStr)];
+  return [parseInt(m[1],10), m[2]];
+}
+function dharmaCmpKey(a,b){
+  const ka = dharmaSortKey(a), kb = dharmaSortKey(b);
+  if(ka[0]!==kb[0]) return ka[0]-kb[0];
+  return ka[1]<kb[1] ? -1 : ka[1]>kb[1] ? 1 : 0;
+}
+function linkDharmaGroups(entries, links){
+  function link(a,b){
+    if(a===b) return;
+    if(!links.has(a)) links.set(a, new Set());
+    if(!links.has(b)) links.set(b, new Set());
+    links.get(a).add(b);
+    links.get(b).add(a);
+  }
+  const seeTargets = new Map(); // id -> id it defers to, for "see" entries
+  for(const e of entries){
+    if(e.see){ seeTargets.set(e.parent, e.see); continue; }
+    const group = [...new Set([e.parent, ...e.children])];
+    for(let i=0;i<group.length;i++){
+      for(let j=i+1;j<group.length;j++) link(group[i], group[j]);
+    }
+  }
+  for(const [id, target] of seeTargets){
+    for(const t of (links.get(target) || [])) link(id, t);
+    link(id, target);
+  }
+}
+function linksToMap(links){
+  const out = {};
+  for(const [id, set] of links){
+    out[id] = Array.from(set).sort(dharmaCmpKey);
+  }
+  return out;
+}
+
+// Table-xi: a single flat list of homonym entries.
+function buildHomonymGroups(table){
+  const links = new Map();
+  linkDharmaGroups(table.entries, links);
+  return linksToMap(links);
+}
+
+// Tables xii and xiii (synonyms, isotopes) both split their entries into
+// named groups (A/B/C, I/II/III...), but a dharma's synonyms/isotopes only
+// ever come from its own group, so linking each group's entries separately
+// (rather than flattening them all together) is equivalent and keeps the
+// source structure legible.
+function buildGroupedDharmaGroups(table){
+  const links = new Map();
+  for(const grp of table.groups) linkDharmaGroups(grp.entries, links);
+  return linksToMap(links);
+}
+
+// Table-xiv: two +/- columns (X, Y) per dharma, as dharma_id -> {x, y}.
+function buildXivByDharma(table){
+  const out = {};
+  for(const grp of table.groups){
+    for(const r of grp.rows) out[r.dharma] = {x: r.x, y: r.y};
+  }
+  return out;
+}
 
 // Fetches every source table and returns the fully built graph data
 // ({data, warn}), so any page that needs the tables -- the main diagram, the
@@ -337,5 +407,9 @@ async function loadGraphData(){
   const F = Object.fromEntries(entries);
   const built = buildGraphData(F);
   buildTableVi(built.data, F.vocab, F.membership, F.dharmaFile);
+  built.data.homonyms_by_dharma = buildHomonymGroups(F.t11);
+  built.data.synonyms_by_dharma = buildGroupedDharmaGroups(F.t12);
+  built.data.isotopes_by_dharma = buildGroupedDharmaGroups(F.t13);
+  built.data.xiv_by_dharma = buildXivByDharma(F.t14);
   return {data: built.data, warn: built.warn, F};
 }
