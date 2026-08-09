@@ -299,7 +299,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       <button id="resetBtn">Reset view</button>
     </div>
     <div id="erInline">
-      <svg id="erSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 720"></svg>
+      <svg id="erSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 688"></svg>
     </div>
     <p class="desc"><a id="erLink" href="er.html" target="_blank" rel="noopener">Full ER diagram &#8599;</a></p>
   </div>
@@ -1018,7 +1018,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   // SVG's own viewBox instead of the graph's.
   const erSvg = document.getElementById('erSvg');
   erSvg.innerHTML = erSvgMarkup;
-  const erFullBox = { x:0, y:0, w:560, h:720 };
+  const erFullBox = { x:0, y:0, w:560, h:688 };
   let erVbState = { ...erFullBox };
   function erApplyViewBox(){
     erSvg.setAttribute('viewBox', `${erVbState.x} ${erVbState.y} ${erVbState.w} ${erVbState.h}`);

@@ -1,4 +1,4 @@
-  <rect class="er-bg" x="0" y="0" width="560" height="720" />
+  <rect class="er-bg" x="0" y="0" width="560" height="688" />
 <g class="er-lines">
     <line class="er-line" x1="175" y1="64" x2="180" y2="140" />
     <line class="er-line" x1="365" y1="64" x2="180" y2="140" />
@@ -9,20 +9,20 @@
     <line class="er-line" x1="280" y1="316" x2="120" y2="380" />
     <line class="er-line" x1="280" y1="316" x2="280" y2="380" />
     <line class="er-line" x1="280" y1="316" x2="440" y2="380" />
-    <path class="er-line" d="M 280,316 C 280,345 200,345 200,380 L 200,424 C 200,460 280,460 280,520" />
-    <line class="er-line" x1="280" y1="566" x2="280" y2="640" />
-    <path class="er-selfloop" d="M 360,532 C 409,527 409,559 360,554" />
-    <text class="er-rel" x="414" y="540">as in</text>
-    <text class="er-rel" x="414" y="551">(M:N)</text>
-    <path class="er-selfloop" d="M 360,652 C 409,647 409,679 360,674" />
-    <text class="er-rel" x="414" y="660">derived from</text>
-    <text class="er-rel" x="414" y="671">(1:N)</text>
-    <path class="er-selfloop" d="M 200,524 C 151,521 151,539 200,536" />
-    <text class="er-rel" x="145" y="533" text-anchor="end">&alpha; (1:N)</text>
-    <path class="er-selfloop" d="M 200,538 C 151,535 151,553 200,550" />
-    <text class="er-rel" x="145" y="547" text-anchor="end">&beta; (1:N)</text>
-    <path class="er-selfloop" d="M 200,552 C 151,549 151,567 200,564" />
-    <text class="er-rel" x="145" y="561" text-anchor="end">&gamma; (1:N)</text>
+    <path class="er-line" d="M 280,316 C 280,345 200,345 200,380 L 200,424 C 200,462 280,462 280,500" />
+    <line class="er-line" x1="280" y1="546" x2="280" y2="622" />
+    <path class="er-selfloop" d="M 360,512 C 409,507 409,539 360,534" />
+    <text class="er-rel" x="414" y="520">as in</text>
+    <text class="er-rel" x="414" y="531">(M:N)</text>
+    <path class="er-selfloop" d="M 360,634 C 409,629 409,661 360,656" />
+    <text class="er-rel" x="414" y="642">derived from</text>
+    <text class="er-rel" x="414" y="653">(1:N)</text>
+    <path class="er-selfloop" d="M 200,504 C 151,501 151,519 200,516" />
+    <text class="er-rel" x="145" y="513" text-anchor="end">&alpha; (1:N)</text>
+    <path class="er-selfloop" d="M 200,518 C 151,515 151,533 200,530" />
+    <text class="er-rel" x="145" y="527" text-anchor="end">&beta; (1:N)</text>
+    <path class="er-selfloop" d="M 200,532 C 151,529 151,547 200,544" />
+    <text class="er-rel" x="145" y="541" text-anchor="end">&gamma; (1:N)</text>
 </g>
 <g class="er-boxes">
     <g class="er-node" data-type="avacara" tabindex="0" role="button" aria-label="Jump to Avacara">
@@ -66,11 +66,11 @@
       <circle class="er-swatch" cx="383" cy="393" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="440" y="406" text-anchor="middle">Dhyanic Object</text>
     </g>
     <g class="er-node" data-type="dharma" tabindex="0" role="button" aria-label="Jump to Dharma">
-      <rect class="er-box" x="200" y="520" width="160" height="46" rx="8" />
-      <circle class="er-swatch" cx="213" cy="533" r="5" style="fill:var(--dharma)" /><text class="er-label" x="280" y="546" text-anchor="middle">Dharma (&Delta;)</text>
+      <rect class="er-box" x="200" y="500" width="160" height="46" rx="8" />
+      <circle class="er-swatch" cx="213" cy="513" r="5" style="fill:var(--dharma)" /><text class="er-label" x="280" y="526" text-anchor="middle">Dharma (&Delta;)</text>
     </g>
     <g class="er-node" data-type="ms" tabindex="0" role="button" aria-label="Jump to Mental State">
-      <rect class="er-box" x="200" y="640" width="160" height="46" rx="8" />
-      <circle class="er-swatch" cx="213" cy="653" r="5" style="fill:var(--ms)" /><text class="er-label" x="280" y="666" text-anchor="middle">Mental State</text>
+      <rect class="er-box" x="200" y="622" width="160" height="46" rx="8" />
+      <circle class="er-swatch" cx="213" cy="635" r="5" style="fill:var(--ms)" /><text class="er-label" x="280" y="648" text-anchor="middle">Mental State</text>
     </g>
 </g>
