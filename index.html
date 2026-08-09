@@ -112,6 +112,12 @@
     color:var(--text-secondary);
     line-height:1.45;
   }
+  #erLink{
+    color:var(--text-secondary);
+    text-decoration:underline dotted;
+    text-underline-offset:2px;
+  }
+  #erLink:hover{ color:var(--text-primary); }
   .toolbar{
     display:flex; flex-direction:column; gap:.5rem;
     margin-bottom:1.1rem;
@@ -163,6 +169,10 @@
   #erSvg .er-selfloop{ stroke:#8a8a8a; stroke-width:1.2px; fill:none; }
   #erSvg .er-rel{ font-size:9px; fill:#a8a8a8; font-style:italic; }
   #erSvg .er-swatch{ stroke:none; }
+  #erSvg .er-node{ cursor:pointer; }
+  #erSvg .er-node .er-box{ transition:fill .12s, stroke .12s; }
+  #erSvg .er-node:hover .er-box, #erSvg .er-node:focus-visible .er-box{ fill:#2a2a2a; stroke:#8a8a8a; }
+  #erSvg .er-node:focus-visible{ outline:none; }
   .stage.grabbing{ cursor:grabbing; }
   svg#canvas{ position:absolute; top:0; left:0; width:100%; height:100%; touch-action:none; }
   .node-case circle{ fill:var(--case); }
@@ -291,6 +301,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     <div id="erInline">
       <svg id="erSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 720"></svg>
     </div>
+    <p class="desc"><a id="erLink" href="er.html" target="_blank" rel="noopener">Full ER diagram &#8599;</a></p>
   </div>
 </div>
 <script src="graph-data.js"></script>
@@ -1029,6 +1040,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
 
   let erDragging = false, erLastX = 0, erLastY = 0;
   erSvg.addEventListener('mousedown', (ev)=>{
+    if(ev.target.closest('.er-node')) return;
     erDragging = true; erLastX = ev.clientX; erLastY = ev.clientY;
     erSvg.classList.add('grabbing');
   });
@@ -1045,6 +1057,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
 
   let erTouchMode = null, erPinchDist = 0, erPinchVb = null;
   erSvg.addEventListener('touchstart', (ev)=>{
+    if(ev.target.closest('.er-node')) return;
     const rect = erSvg.getBoundingClientRect();
     if(ev.touches.length === 1){
       erTouchMode = 'pan';
@@ -1087,6 +1100,43 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       erLastX = ev.touches[0].clientX; erLastY = ev.touches[0].clientY;
     }
   }, {passive:true});
+
+  // ---------- ER diagram: click/tap a box to jump to its node group ----------
+  // Nodes of a given type share a row (single Y for case/dharma/ms, a
+  // near-constant Y for the smaller row types), so the bounding box of all
+  // their <g transform="translate(x,y)"> centers is enough to frame the
+  // whole group without hand-picking a Y per type.
+  function boundsOfType(type){
+    const map = nodeEls[type];
+    if(!map || !map.size) return null;
+    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+    for(const g of map.values()){
+      const m = /translate\(([-\d.]+),([-\d.]+)\)/.exec(g.getAttribute('transform'));
+      if(!m) continue;
+      const x = parseFloat(m[1]), y = parseFloat(m[2]);
+      if(x < minX) minX = x; if(x > maxX) maxX = x;
+      if(y < minY) minY = y; if(y > maxY) maxY = y;
+    }
+    return minX === Infinity ? null : {minX, maxX, minY, maxY};
+  }
+  function jumpToType(type){
+    const b = boundsOfType(type);
+    if(!b) return;
+    panTo((b.minX+b.maxX)/2, (b.minY+b.maxY)/2, Math.max(b.maxX-b.minX+140, 140));
+    for(const g of allNodeGroups) g.classList.remove('active');
+    for(const e of allEdges) e.el.classList.remove('hl');
+    dimAllExceptMap({ [type]: new Set(nodeEls[type].keys()) });
+    // Collapse the sidebar so the jump is actually visible -- on a narrow
+    // (mobile) screen it otherwise covers most of the canvas it just panned.
+    sidebar.classList.add('collapsed');
+  }
+  erSvg.querySelectorAll('.er-node').forEach(node => {
+    const type = node.getAttribute('data-type');
+    node.addEventListener('click', () => jumpToType(type));
+    node.addEventListener('keydown', (ev) => {
+      if(ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); jumpToType(type); }
+    });
+  });
 
   function panTo(x, y, w){
     const h = w * (fullBox.h/fullBox.w) * (stage.clientHeight/stage.clientWidth || 1);
