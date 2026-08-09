@@ -46,3 +46,6 @@ Ostalgia, Frivolous
 [film] Жил был певчий дрозд. Иосселиани
 
 [audio] Joseph Haydn "Trumpet Concerto in E flat Major" Timofei Dokshizer
+
+[audio] Alle die mit uns auf Kaperfahrt fahren
+
