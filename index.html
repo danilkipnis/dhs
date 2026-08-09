@@ -138,70 +138,19 @@
     width:100%;
   }
   .toolbar button:hover{ background:var(--rule); }
-  .legend{
-    display:flex;
-    flex-direction:column;
-    gap:.55rem;
-    font-size:.76rem;
-    color:var(--text-secondary);
-  }
-  .legend .item{ display:flex; align-items:center; gap:.5rem; }
-  .legend .swatch{ width:.68rem; height:.68rem; border-radius:50%; display:inline-block; flex:0 0 auto; }
-  .legend .swatch.sq{ border-radius:2px; }
-  .legend .count{ color:var(--text-muted); margin-left:.15rem; }
-
-  #erBtn{
-    text-decoration:underline dotted;
-    text-underline-offset:2px;
-    cursor:pointer;
-  }
-  #erBtn:hover{ color:#f0f0f0; }
-  /* Catches clicks outside the panel. Also keeps such a click from reaching the
-     canvas underneath, which would select a node while dismissing the panel. */
-  #erBackdrop{
-    position:fixed; inset:0;
-    z-index:39;
-    background:rgba(0,0,0,.45);
-    display:none;
-  }
-  #erBackdrop.open{ display:block; }
-  #erPopup{
-    position:fixed;
-    top:50%; left:50%;
-    transform:translate(-50%,-50%);
-    z-index:40;
-    background:#000000;
+  /* The ER diagram sits directly in the sidebar now, in the legend's old
+     spot -- a fixed-height box (rather than "grow to fill") so it doesn't
+     crowd out the search/reset toolbar above it. */
+  #erInline{
+    width:100%;
+    height:min(60vh, 420px);
     border:1px solid #4a4a4a;
-    border-radius:10px;
-    box-shadow:0 12px 48px rgba(0,0,0,.55);
-    /* A definite size, not just maxima: the SVG has no intrinsic dimensions
-       (viewBox only), so it needs a resolved box to scale itself into. Sized to
-       the diagram's 900:750 ratio, capped by the viewport in both directions. */
-    width:min(1100px, 96vw, calc(92vh * 900 / 750));
-    height:min(92vh, calc(96vw * 750 / 900), calc(1100px * 750 / 900));
-    display:none;
-    flex-direction:column;
+    border-radius:8px;
+    background:#000000;
     overflow:hidden;
   }
-  #erPopup.open{ display:flex; }
-  #erClose{
-    position:absolute;
-    top:.5rem; right:.5rem;
-    z-index:1;
-    width:1.6rem; height:1.6rem;
-    display:grid; place-items:center;
-    background:transparent;
-    border:1px solid rgba(128,128,128,.35);
-    border-radius:6px;
-    color:#a8a8a8;
-    font:inherit; font-size:1rem; line-height:1;
-    cursor:pointer;
-  }
-  #erClose:hover{ color:#f0f0f0; border-color:rgba(128,128,128,.7); }
-  /* min-height:0 lets this flex item shrink below the SVG's natural size;
-     without it the diagram would push the panel taller and scroll instead. */
-  #erScroll{ padding:2.2rem 1rem 1rem; flex:1 1 auto; min-height:0; overflow:hidden; display:grid; place-items:center; }
-  #erSvg{ display:block; width:100%; height:100%; touch-action:none; }
+  #erSvg{ display:block; width:100%; height:100%; touch-action:none; cursor:grab; }
+  #erSvg.grabbing{ cursor:grabbing; }
   #erSvg .er-bg{ fill:#000000; }
   #erSvg .er-box{ fill:#1c1c1c; stroke:#4a4a4a; stroke-width:1.4px; }
   #erSvg .er-line{ stroke:#8a8a8a; stroke-width:1.2px; fill:none; }
@@ -335,32 +284,14 @@
     <p class="desc">Tables III&ndash;VIII, XI&ndash;XIV of Essay 5, &ldquo;Rise of Thought as
 Phenomenon and System,&rdquo; in Alexander Piatigorsky's <em>The Buddhist
 Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 1984), pp. 92 to 145, 165 to 167.</p>
-    <p class="desc"><span id="erBtn">ER</span></p>
     <div class="toolbar">
       <input id="search" type="text" placeholder="Find case / dharma / D-set&hellip;">
       <button id="resetBtn">Reset view</button>
     </div>
-    <div class="legend">
-      <span class="item"><span class="swatch" style="background:var(--ms)"></span>Mental state<span class="count" id="count-ms"></span></span>
-      <span class="item"><span class="swatch" style="background:var(--dharma)"></span>Dharma &Delta;<span class="count" id="count-dharma"></span></span>
-      <span class="item"><span class="swatch" style="background:var(--case)"></span>Case (V)<span class="count" id="count-case"></span></span>
-      <span class="item"><span class="swatch" style="background:var(--tablevii)"></span>Case &ndash; dharma (VII only)<span class="count" id="count-dharmacasevii"></span></span>
-      <span class="item"><span class="swatch" style="background:var(--nomenclature)"></span>Nomenclature of Thought (III)<span class="count" id="count-nomenclature"></span></span>
-      <span class="item"><span class="swatch" style="background:var(--sphere)"></span>Sphere of thought (IV)<span class="count" id="count-sphere"></span></span>
-      <span class="item"><span class="swatch" style="background:var(--avacara)"></span>Avacara<span class="count" id="count-avacara"></span></span>
-      <span class="item"><span class="swatch" style="background:var(--qualtier)"></span>Character of dharmas (IV)<span class="count" id="count-qualtier"></span></span>
-      <span class="item"><span class="swatch" style="background:var(--content)"></span>Variants of content (V-C)<span class="count" id="count-content"></span></span>
-      <span class="item"><span class="swatch" style="background:var(--caseattr)"></span>Trancic / mental / object variables<span class="count" id="count-caseattr"></span></span>
-      <span class="item"><span class="swatch" style="background:var(--derivation)"></span>MS derived from MS<span class="count" id="count-derivation"></span></span>
+    <div id="erInline">
+      <svg id="erSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 750"></svg>
     </div>
   </div>
-  <div id="erBackdrop"></div>
-  <div id="erPopup" role="dialog" aria-modal="true" aria-label="Entity-relationship diagram">
-    <button id="erClose" type="button" aria-label="Close">&times;</button>
-    <div id="erScroll">
-      <svg id="erSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 750"></svg>
-      </div>
-    </div>
 </div>
 <script src="graph-data.js"></script>
 <script>
