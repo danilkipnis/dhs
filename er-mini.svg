@@ -17,6 +17,12 @@
     <path class="er-selfloop" d="M 360,652 C 409,647 409,679 360,674" />
     <text class="er-rel" x="414" y="660">derived from</text>
     <text class="er-rel" x="414" y="671">(1:N)</text>
+    <path class="er-selfloop" d="M 200,524 C 151,521 151,539 200,536" />
+    <text class="er-rel" x="145" y="533" text-anchor="end">&alpha; (1:N)</text>
+    <path class="er-selfloop" d="M 200,538 C 151,535 151,553 200,550" />
+    <text class="er-rel" x="145" y="547" text-anchor="end">&beta; (1:N)</text>
+    <path class="er-selfloop" d="M 200,552 C 151,549 151,567 200,564" />
+    <text class="er-rel" x="145" y="561" text-anchor="end">&gamma; (1:N)</text>
 </g>
 <g class="er-boxes">
     <rect class="er-box" x="100" y="20" width="150" height="44" rx="8" />
