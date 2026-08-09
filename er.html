@@ -106,7 +106,7 @@
   try {
     const [gd, svgText] = await Promise.all([
       loadGraphData(),
-      fetch('er-diagram-svg.html').then(r => r.text())
+      fetch('er.svg').then(r => r.text())
     ]);
     data = gd.data;
     erSvgMarkup = svgText;
