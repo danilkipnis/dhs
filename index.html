@@ -279,7 +279,7 @@
     </div>
     <div id="tooltip"></div>
   </div>
-  <button id="sidebarToggle" title="Show/hide legend &amp; controls">&#9776;</button>
+  <button id="sidebarToggle" title="Show/hide controls &amp; ER diagram">&#9776;</button>
   <div id="sidebar">
     <p class="desc">Tables III&ndash;VIII, XI&ndash;XIV of Essay 5, &ldquo;Rise of Thought as
 Phenomenon and System,&rdquo; in Alexander Piatigorsky's <em>The Buddhist
@@ -289,7 +289,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       <button id="resetBtn">Reset view</button>
     </div>
     <div id="erInline">
-      <svg id="erSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 750"></svg>
+      <svg id="erSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 720"></svg>
     </div>
   </div>
 </div>
@@ -301,7 +301,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   try {
     const [gd, svgText] = await Promise.all([
       loadGraphData(),
-      fetch('er.svg').then(r => r.text())
+      fetch('er-mini.svg').then(r => r.text())
     ]);
     ({data, warn, F} = gd);
     erSvgMarkup = svgText;
@@ -1002,46 +1002,17 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   const sidebar = document.getElementById('sidebar');
   document.getElementById('sidebarToggle').onclick = ()=>{ sidebar.classList.toggle('collapsed'); };
 
-  // The ER panel is click-to-open and stays open until it is dismissed: by the
-  // close button, by a click on the backdrop, or by Escape. Deliberately no
-  // pointer-leave or blur handling -- it must survive moving the mouse away and
-  // switching to another window, so it can be read side by side with the graph.
-  const erPopup = document.getElementById('erPopup');
-  const erBackdrop = document.getElementById('erBackdrop');
-  const erBtn = document.getElementById('erBtn');
-  const erIsOpen = () => erPopup.classList.contains('open');
-  function erShow(){
-    erPopup.classList.add('open');
-    erBackdrop.classList.add('open');
-  }
-  function erHide(){
-    erPopup.classList.remove('open');
-    erBackdrop.classList.remove('open');
-  }
-  erBtn.addEventListener('click', () => erIsOpen() ? erHide() : erShow());
-  document.getElementById('erClose').addEventListener('click', erHide);
-  erBackdrop.addEventListener('click', erHide);
-  document.addEventListener('keydown', (ev) => {
-    if(ev.key === 'Escape' && erIsOpen()) erHide();
-  });
-
-  // ---------- ER panel pan/zoom ----------
+  // ---------- ER diagram (inline in sidebar) ----------
   // Same wheel/drag/pinch scheme as the main stage above, against the ER
-  // SVG's own viewBox instead of the graph's. Reset on every open so the
-  // panel never reopens mid-zoom from a previous session.
+  // SVG's own viewBox instead of the graph's.
   const erSvg = document.getElementById('erSvg');
   erSvg.innerHTML = erSvgMarkup;
-  const erFullBox = { x:0, y:0, w:900, h:750 };
+  const erFullBox = { x:0, y:0, w:560, h:720 };
   let erVbState = { ...erFullBox };
   function erApplyViewBox(){
     erSvg.setAttribute('viewBox', `${erVbState.x} ${erVbState.y} ${erVbState.w} ${erVbState.h}`);
   }
-  const erShowBase = erShow;
-  erShow = function(){
-    erVbState = { ...erFullBox };
-    erApplyViewBox();
-    erShowBase();
-  };
+  erApplyViewBox();
 
   erSvg.addEventListener('wheel', (ev)=>{
     ev.preventDefault();
@@ -1059,7 +1030,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   let erDragging = false, erLastX = 0, erLastY = 0;
   erSvg.addEventListener('mousedown', (ev)=>{
     erDragging = true; erLastX = ev.clientX; erLastY = ev.clientY;
-    erSvg.style.cursor = 'grabbing';
+    erSvg.classList.add('grabbing');
   });
   window.addEventListener('mousemove', (ev)=>{
     if(!erDragging) return;
@@ -1070,7 +1041,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     erLastX = ev.clientX; erLastY = ev.clientY;
     erApplyViewBox();
   });
-  window.addEventListener('mouseup', ()=>{ erDragging = false; erSvg.style.cursor = ''; });
+  window.addEventListener('mouseup', ()=>{ erDragging = false; erSvg.classList.remove('grabbing'); });
 
   let erTouchMode = null, erPinchDist = 0, erPinchVb = null;
   erSvg.addEventListener('touchstart', (ev)=>{
@@ -1714,42 +1685,5 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     describe(`No match for "${q}".`);
   });
 
-  // ---------- legend entity counts ----------
-  const legendCounts = {
-    'count-ms': data.ms.length,
-    'count-dharma': data.dharmas.length,
-    'count-case': data.cases.filter(c=>!c.stub).length,
-    'count-dharmacasevii': data.dharma_case_vii_edges.length,
-    'count-nomenclature': data.nomenclature.length,
-    'count-sphere': data.spheres.length,
-    'count-avacara': data.avacaras.length,
-    'count-qualtier': data.quality_dharma.length,
-    'count-content': data.content.length,
-    'count-caseattr': data.trancic.length + data.mental.length + data.sense_objects.length + data.dhyanic_objects.length,
-    'count-derivation': data.ms_derivation_edges.length,
-  };
-  for(const id in legendCounts){
-    const el2 = document.getElementById(id);
-    if(el2) el2.textContent = ` (${legendCounts[id]})`;
-  }
-
-  const erCounts = {
-    'count-ms-er-ms': data.ms.length,
-    'count-ms-er-dharma': data.dharmas.length,
-    'count-ms-er-case': data.cases.length,
-    'count-ms-er-nomenclature': data.nomenclature.length,
-    'count-ms-er-sphere': data.spheres.length,
-    'count-ms-er-avacara': data.avacaras.length,
-    'count-ms-er-qualdharma': data.quality_dharma.length,
-    'count-ms-er-content': data.content.length,
-    'count-ms-er-trancic': data.trancic.length,
-    'count-ms-er-mental': data.mental.length,
-    'count-ms-er-senseobj': data.sense_objects.length,
-    'count-ms-er-dhyanicobj': data.dhyanic_objects.length,
-  };
-  for(const id in erCounts){
-    const el3 = document.getElementById(id);
-    if(el3) el3.textContent = `${erCounts[id]} rows`;
-  }
 })();
 </script>
