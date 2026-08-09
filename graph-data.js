@@ -321,7 +321,7 @@ const SOURCES = {
   t5c:'table-v-content.json', t5cf:'table-v-content-footnotes.json',
   t5m:'table-v-mental.json', t5o:'table-v-objects.json',
   t5s:'table-v-sphere.json', t5t:'table-v-thought.json',
-  t5tr:'table-v-trancic.json', t7:'table-vii.json', t8:'Table-viii.json',
+  t5tr:'table-v-trancic.json', t7:'table-vii.json', t8:'table-viii.json',
   t11:'table-xi.json', t12:'table-xii.json', t13:'table-xiii.json', t14:'table-xiv.json',
   vocab:'ms.json', membership:'ms-membership.json', dharmaFile:'table-vi-dharmas.json',
 };
