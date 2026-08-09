@@ -1533,16 +1533,23 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   // Used by tooltip links to jump to and click the node they name: same
   // zoom factor, animated, then re-pin the tooltip over the node's new
   // screen position.
-  function navigateAndPin(type, id){
+  function navigateAndPin(type, id, animate){
     selectByType(type, id);
     const c = nodeCenter(type, id);
     if(!c){ pinTooltip(type, id, window.innerWidth/2, window.innerHeight/2); return; }
-    animateNavTo(c.x, c.y, ()=>{
+    const place = () => {
       const rect = stage.getBoundingClientRect();
       const sx = rect.left + ((c.x-vb.x)/vb.w)*rect.width;
       const sy = rect.top + ((c.y-vb.y)/vb.h)*rect.height;
       pinTooltip(type, id, sx+14, sy+14);
-    });
+    };
+    if(animate === false){
+      vb = { x: c.x-vb.w/2, y: c.y-vb.h/2, w: vb.w, h: vb.h };
+      applyViewBox();
+      place();
+    } else {
+      animateNavTo(c.x, c.y, place);
+    }
   }
 
   nodeLayer.addEventListener('click', (ev)=>{
@@ -1561,8 +1568,9 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       const dirBtn = ev.target.closest('.tt-dir');
       if(dirBtn){
         if(dirBtn.disabled) return;
-        const n = neighborFor(pinnedType, pinnedId, dirBtn.getAttribute('data-dir'));
-        if(n) navigateAndPin(n.type, n.id);
+        const dir = dirBtn.getAttribute('data-dir');
+        const n = neighborFor(pinnedType, pinnedId, dir);
+        if(n) navigateAndPin(n.type, n.id, dir !== 'left' && dir !== 'right');
         return;
       }
       const link = ev.target.closest('.tt-link');
