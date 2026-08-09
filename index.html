@@ -369,7 +369,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   try {
     const [gd, svgText] = await Promise.all([
       loadGraphData(),
-      fetch('er-diagram-svg.html').then(r => r.text())
+      fetch('er.svg').then(r => r.text())
     ]);
     ({data, warn, F} = gd);
     erSvgMarkup = svgText;
