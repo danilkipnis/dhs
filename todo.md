@@ -18,7 +18,6 @@
 7.  Die Gewichtung
 9.  Table IX, p. 152
 10. Table X, p. 155
-11. Cleaup js code
-12. Cleanup claude's notes in json
+11. Cleanup js code
+12. Cleanup Claude's notes in json
 13. QA OCR
-
