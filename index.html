@@ -255,6 +255,32 @@
   #tooltip .tt-close:hover{ color:var(--text-primary); }
   #tooltip .tt-link{ cursor:pointer; text-decoration:underline dotted; text-underline-offset:2px; }
   #tooltip .tt-link:hover{ color:var(--highlight); }
+  #tooltip .tt-nav{
+    display:grid;
+    grid-template-columns:1.5rem 1.5rem 1.5rem;
+    grid-template-rows:1.5rem 1.5rem 1.5rem;
+    justify-content:center;
+    gap:2px;
+    margin-top:.5rem;
+  }
+  #tooltip .tt-dir{
+    display:flex; align-items:center; justify-content:center;
+    background:var(--surface-1);
+    border:1px solid var(--rule);
+    border-radius:4px;
+    color:var(--text-primary);
+    font-size:.7rem;
+    line-height:1;
+    cursor:pointer;
+    padding:0;
+  }
+  #tooltip .tt-dir:hover{ background:var(--rule); }
+  #tooltip .tt-dir[data-dir="up"]{ grid-column:2; grid-row:1; }
+  #tooltip .tt-dir[data-dir="left"]{ grid-column:1; grid-row:2; }
+  #tooltip .tt-dir[data-dir="right"]{ grid-column:3; grid-row:2; }
+  #tooltip .tt-dir[data-dir="down"]{ grid-column:2; grid-row:3; }
+  #tooltip .tt-dir:disabled{ opacity:.25; cursor:default; }
+  #tooltip .tt-dir:disabled:hover{ background:var(--surface-1); }
   #zoomctrl{
     position:absolute; top:.8rem; left:.8rem;
     display:flex; gap:.3rem;
@@ -1385,6 +1411,59 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     return m ? {x:+m[1], y:+m[2]} : null;
   }
 
+  // The reverse of NODE_TYPE_KEY: nodeEls/adj/ROW key -> DOM data-type string.
+  const DATA_TYPE_OF = Object.fromEntries(Object.entries(NODE_TYPE_KEY).map(([k,v]) => [v,k]));
+
+  // ---------- popup cross-nav: up/down/left/right to a neighbouring node ----------
+  // Left/right walk along the same type's own row, ordered by x position.
+  // Up/down follow the adjacency graph (the same one clicking a node uses to
+  // highlight its neighbours) to a connected node one row up or down, picking
+  // whichever candidate sits closest in x when more than one qualifies.
+  function typeIdsSortedByX(type){
+    const camelType = NODE_TYPE_KEY[type];
+    return [...nodeEls[camelType].keys()]
+      .map(id => ({id, c: nodeCenter(type, id)}))
+      .filter(o => o.c)
+      .sort((a,b) => a.c.x - b.c.x)
+      .map(o => o.id);
+  }
+  function neighborLeftRight(type, id, dir){
+    const ids = typeIdsSortedByX(type);
+    const i = ids.indexOf(id);
+    if(i < 0) return null;
+    const j = dir === 'left' ? i-1 : i+1;
+    return j >= 0 && j < ids.length ? {type, id: ids[j]} : null;
+  }
+  function neighborUpDown(type, id, dir){
+    const camelType = NODE_TYPE_KEY[type];
+    const myRow = ROW[camelType];
+    const neighbors = adj.get(nkey(camelType, id));
+    if(!neighbors) return null;
+    const candidates = [];
+    for(const key of neighbors){
+      const i = key.indexOf('|');
+      const nCamelType = key.slice(0, i), nId = key.slice(i+1);
+      const nRow = ROW[nCamelType];
+      if(nRow === undefined) continue;
+      if(dir === 'up' ? nRow >= myRow : nRow <= myRow) continue;
+      candidates.push({type: DATA_TYPE_OF[nCamelType], id: nId});
+    }
+    if(!candidates.length) return null;
+    return candidates[Math.floor(Math.random() * candidates.length)];
+  }
+  function neighborFor(type, id, dir){
+    return (dir === 'left' || dir === 'right')
+      ? neighborLeftRight(type, id, dir)
+      : neighborUpDown(type, id, dir);
+  }
+  const DIR_ARROW = {up:'&#9650;', left:'&#9664;', right:'&#9654;', down:'&#9660;'};
+  function navCrossHtml(type, id){
+    return '<div class="tt-nav">' + ['up','left','right','down'].map(dir => {
+      const has = !!neighborFor(type, id, dir);
+      return `<button class="tt-dir" data-dir="${dir}"${has ? '' : ' disabled'} aria-label="${dir}" title="${dir}">${DIR_ARROW[dir]}</button>`;
+    }).join('') + '</div>';
+  }
+
   // Three-phase "zoom out, pause, zoom in" travel so a jump across the
   // diagram reads as a journey rather than a disorienting teleport:
   //   - T/2 ms zooming out, decelerating, to the smallest box that still
@@ -1479,6 +1558,13 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     if(dragMoved){ dragMoved = false; return; }
     if(ev.target.closest('#tooltip')){
       if(ev.target.closest('.tt-close')){ unpinTooltip(); return; }
+      const dirBtn = ev.target.closest('.tt-dir');
+      if(dirBtn){
+        if(dirBtn.disabled) return;
+        const n = neighborFor(pinnedType, pinnedId, dirBtn.getAttribute('data-dir'));
+        if(n) navigateAndPin(n.type, n.id);
+        return;
+      }
       const link = ev.target.closest('.tt-link');
       if(link) navigateAndPin(link.getAttribute('data-type'), link.getAttribute('data-id'));
       return;
@@ -1643,7 +1729,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     pinned = true;
     pinnedType = type;
     pinnedId = id;
-    tooltip.innerHTML = tooltipFor(type, id) + '<span class="tt-close" title="Close">&times;</span>';
+    tooltip.innerHTML = tooltipFor(type, id) + navCrossHtml(type, id) + '<span class="tt-close" title="Close">&times;</span>';
     tooltip.classList.add('pinned');
     tooltip.style.left = x+'px';
     tooltip.style.top = y+'px';
