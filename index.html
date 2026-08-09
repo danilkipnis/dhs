@@ -144,6 +144,9 @@
     width:100%;
   }
   .toolbar button:hover{ background:var(--rule); }
+  .search-row{ display:flex; gap:.4rem; }
+  .search-row input{ flex:1 1 auto; min-width:0; width:auto; }
+  .search-row button{ flex:0 0 auto; width:auto; padding:.4rem .55rem; }
   /* The ER diagram sits directly in the sidebar now, in the legend's old
      spot -- a fixed-height box (rather than "grow to fill") so it doesn't
      crowd out the search/reset toolbar above it. */
@@ -295,7 +298,10 @@
 Phenomenon and System,&rdquo; in Alexander Piatigorsky's <em>The Buddhist
 Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 1984), pp. 92 to 145, 165 to 167.</p>
     <div class="toolbar">
-      <input id="search" type="text" placeholder="Find case / dharma / D-set&hellip;">
+      <div class="search-row">
+        <input id="search" type="text" placeholder="Find case / dharma / D-set&hellip;">
+        <button id="searchBtn" type="button" title="Search" aria-label="Search">&#128269;</button>
+      </div>
     </div>
     <div id="erInline">
       <svg id="erSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 688"></svg>
@@ -1664,8 +1670,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
 
   // ---------- search ----------
   const searchInput = document.getElementById('search');
-  searchInput.addEventListener('keydown', (ev)=>{
-    if(ev.key !== 'Enter') return;
+  function runSearch(){
     const q = searchInput.value.trim().toLowerCase();
     if(!q) return;
     if(caseById.has(q)){
@@ -1730,7 +1735,9 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       }
     }
     describe(`No match for "${q}".`);
-  });
+  }
+  searchInput.addEventListener('keydown', (ev)=>{ if(ev.key === 'Enter') runSearch(); });
+  document.getElementById('searchBtn').addEventListener('click', runSearch);
 
 })();
 </script>
