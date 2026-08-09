@@ -2,14 +2,14 @@
 <g class="er-lines">
     <line class="er-line" x1="175" y1="64" x2="180" y2="140" />
     <line class="er-line" x1="365" y1="64" x2="180" y2="140" />
-    <line class="er-line" x1="180" y1="184" x2="280" y2="380" />
-    <line class="er-line" x1="370" y1="184" x2="280" y2="380" />
-    <line class="er-line" x1="120" y1="304" x2="280" y2="380" />
-    <line class="er-line" x1="280" y1="304" x2="280" y2="380" />
-    <line class="er-line" x1="440" y1="304" x2="280" y2="380" />
-    <line class="er-line" x1="175" y1="402" x2="195" y2="408" />
-    <line class="er-line" x1="385" y1="402" x2="365" y2="408" />
-    <line class="er-line" x1="280" y1="436" x2="280" y2="520" />
+    <line class="er-line" x1="180" y1="184" x2="280" y2="260" />
+    <line class="er-line" x1="370" y1="184" x2="280" y2="260" />
+    <line class="er-line" x1="175" y1="282" x2="195" y2="288" />
+    <line class="er-line" x1="385" y1="282" x2="365" y2="288" />
+    <line class="er-line" x1="280" y1="316" x2="120" y2="380" />
+    <line class="er-line" x1="280" y1="316" x2="280" y2="380" />
+    <line class="er-line" x1="280" y1="316" x2="440" y2="380" />
+    <path class="er-line" d="M 280,316 C 280,345 200,345 200,380 L 200,424 C 200,460 280,460 280,520" />
     <line class="er-line" x1="280" y1="566" x2="280" y2="640" />
     <path class="er-selfloop" d="M 360,532 C 409,527 409,559 360,554" />
     <text class="er-rel" x="414" y="540">as in</text>
@@ -41,29 +41,29 @@
       <rect class="er-box" x="280" y="140" width="180" height="44" rx="8" />
       <circle class="er-swatch" cx="293" cy="153" r="5" style="fill:var(--nomenclature)" /><text class="er-label" x="370" y="166" text-anchor="middle">Nomenclature of Thought</text>
     </g>
-    <g class="er-node" data-type="trancic" tabindex="0" role="button" aria-label="Jump to Trancic Variable">
-      <rect class="er-box" x="50" y="260" width="140" height="44" rx="8" />
-      <circle class="er-swatch" cx="63" cy="273" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="120" y="286" text-anchor="middle">Trancic Variable</text>
-    </g>
-    <g class="er-node" data-type="senseObj" tabindex="0" role="button" aria-label="Jump to Sense Object">
-      <rect class="er-box" x="210" y="260" width="140" height="44" rx="8" />
-      <circle class="er-swatch" cx="223" cy="273" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="280" y="286" text-anchor="middle">Sense Object</text>
-    </g>
-    <g class="er-node" data-type="dhyanicObj" tabindex="0" role="button" aria-label="Jump to Dhyanic Object">
-      <rect class="er-box" x="370" y="260" width="140" height="44" rx="8" />
-      <circle class="er-swatch" cx="383" cy="273" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="440" y="286" text-anchor="middle">Dhyanic Object</text>
-    </g>
     <g class="er-node" data-type="content" tabindex="0" role="button" aria-label="Jump to Content Variant">
-      <rect class="er-box" x="45" y="380" width="130" height="44" rx="8" />
-      <circle class="er-swatch" cx="58" cy="393" r="5" style="fill:var(--content)" /><text class="er-label" x="110" y="406" text-anchor="middle">Content Variant</text>
+      <rect class="er-box" x="45" y="260" width="130" height="44" rx="8" />
+      <circle class="er-swatch" cx="58" cy="273" r="5" style="fill:var(--content)" /><text class="er-label" x="110" y="286" text-anchor="middle">Content Variant</text>
     </g>
     <g class="er-node" data-type="case" tabindex="0" role="button" aria-label="Jump to Case">
-      <rect class="er-box" x="195" y="380" width="170" height="56" rx="8" />
-      <circle class="er-swatch" cx="208" cy="393" r="5" style="fill:var(--case)" /><text class="er-label" x="280" y="412" text-anchor="middle">Case</text>
+      <rect class="er-box" x="195" y="260" width="170" height="56" rx="8" />
+      <circle class="er-swatch" cx="208" cy="273" r="5" style="fill:var(--case)" /><text class="er-label" x="280" y="292" text-anchor="middle">Case</text>
     </g>
     <g class="er-node" data-type="mental" tabindex="0" role="button" aria-label="Jump to Mental Variable">
-      <rect class="er-box" x="385" y="380" width="130" height="44" rx="8" />
-      <circle class="er-swatch" cx="398" cy="393" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="450" y="406" text-anchor="middle">Mental Variable</text>
+      <rect class="er-box" x="385" y="260" width="130" height="44" rx="8" />
+      <circle class="er-swatch" cx="398" cy="273" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="450" y="286" text-anchor="middle">Mental Variable</text>
+    </g>
+    <g class="er-node" data-type="trancic" tabindex="0" role="button" aria-label="Jump to Trancic Variable">
+      <rect class="er-box" x="50" y="380" width="140" height="44" rx="8" />
+      <circle class="er-swatch" cx="63" cy="393" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="120" y="406" text-anchor="middle">Trancic Variable</text>
+    </g>
+    <g class="er-node" data-type="senseObj" tabindex="0" role="button" aria-label="Jump to Sense Object">
+      <rect class="er-box" x="210" y="380" width="140" height="44" rx="8" />
+      <circle class="er-swatch" cx="223" cy="393" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="280" y="406" text-anchor="middle">Sense Object</text>
+    </g>
+    <g class="er-node" data-type="dhyanicObj" tabindex="0" role="button" aria-label="Jump to Dhyanic Object">
+      <rect class="er-box" x="370" y="380" width="140" height="44" rx="8" />
+      <circle class="er-swatch" cx="383" cy="393" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="440" y="406" text-anchor="middle">Dhyanic Object</text>
     </g>
     <g class="er-node" data-type="dharma" tabindex="0" role="button" aria-label="Jump to Dharma">
       <rect class="er-box" x="200" y="520" width="160" height="46" rx="8" />
