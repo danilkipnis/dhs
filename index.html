@@ -296,7 +296,6 @@ Phenomenon and System,&rdquo; in Alexander Piatigorsky's <em>The Buddhist
 Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 1984), pp. 92 to 145, 165 to 167.</p>
     <div class="toolbar">
       <input id="search" type="text" placeholder="Find case / dharma / D-set&hellip;">
-      <button id="resetBtn">Reset view</button>
     </div>
     <div id="erInline">
       <svg id="erSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 688"></svg>
@@ -979,8 +978,6 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     vb = { x: cx-newW/2, y: cy-newH/2, w:newW, h:newH };
     applyViewBox();
   }
-  document.getElementById('resetBtn').onclick = ()=>{ fitToStage(); clearHighlight(); describe(''); unpinTooltip(); sidebar.classList.add('collapsed'); };
-
   document.getElementById('soundToggle').onclick = (ev)=>{
     const btn = ev.currentTarget;
     btn.setAttribute('aria-pressed', btn.getAttribute('aria-pressed') !== 'true');
