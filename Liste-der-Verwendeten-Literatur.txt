@@ -90,3 +90,5 @@ Kровосток, Злые голуби
 
 Denis Grünemeier, Licht im Film, Zur Ästhetik der Beleuchtung, [transcript]
 Film
+
+git@github.com:torvalds/linux.git
