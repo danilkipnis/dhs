@@ -1,3 +1,5 @@
+GPL-2.0
+
 Констриктор Б. "Жуть - это суть", Музей нонконформистского искусства,
 Санкт-Петербург, 2025/2026.
 
@@ -73,3 +75,5 @@ Easy way to stop smocking, Alen Carr
 Иду, курю - группа Ноль, Федор Чистяков
 
 Keine Sterne in Athen (Videoclip), LaBrassBanda
+
+rеf: #БIЛI_КРОСИ
