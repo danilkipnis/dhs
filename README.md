@@ -1,7 +1,7 @@
 
-**→ [index](https://danilkipnis.github.io/dhs/index.html)**
+** [index](https://danilkipnis.github.io/dhs/index.html)**
 
-**→ [ER](https://danilkipnis.github.io/dhs/er.html)**
+** [ER](https://danilkipnis.github.io/dhs/er.html)**
 
 ### Table VI is normalized by a script
 
