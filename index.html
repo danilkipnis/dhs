@@ -1702,16 +1702,13 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     }
     if(type==='avacara'){
       const a = avacaraById.get(id);
-      const spheres = avacaraToSpheres.get(id) || [];
-      const cases = avacaraToCases.get(id) || [];
-      return `<b>${esc(id)}</b><br><span class="muted">${esc(a.gloss)}</span><br>${spheres.length} sphere(s) &middot; ${cases.length} case(s)`;
+      return `<b>${esc(id)}</b><br><span class="muted">${esc(a.gloss)}</span>`;
     }
     if(type==='qualdharma'){
       const cfg = [qualDharmaById, qualDharmaToSpheres, 'Character of dharmas'];
-      const [byId, toSpheres, label] = cfg;
+      const [byId, , label] = cfg;
       const g = byId.get(id);
-      const spheres = toSpheres.get(id) || [];
-      return `<b>${esc(label)} ${esc(id)}</b><br><span class="muted">${esc(g?g.gloss:'')}</span><br>${spheres.length} sphere(s)`;
+      return `<b>${esc(label)} ${esc(id)}</b><br><span class="muted">${esc(g?g.gloss:'')}</span>`;
     }
     if(type==='content' || type==='trancic' || type==='mental' || type==='senseobj' || type==='dhyanicobj'){
       const cfg = {
@@ -1723,10 +1720,9 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       }[type];
       const [byId, toCases, label] = cfg;
       const item = byId.get(id);
-      const cases = toCases.get(id) || [];
       const nameLine = item ? (item.pali ? `${esc(item.pali)}<br><span class="muted">${esc(item.translation||'')}</span>` : esc(item.translation||'')) : '';
       const parentLine = (item && item.parent_id) ? `<br><span class="muted">closes/qualifies content</span> ${ttLink('content', item.parent_id, esc(item.parent_id))}` : '';
-      return `<b>${esc(label)} ${esc(id)}</b><br>${nameLine}${parentLine}<br>${cases.length} case(s)`;
+      return `<b>${esc(label)} ${esc(id)}</b><br>${nameLine}${parentLine}`;
     }
     return '';
   }
