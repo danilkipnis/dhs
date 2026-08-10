@@ -1596,7 +1596,6 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   function tooltipFor(type, id){
     if(type==='case'){
       const c = caseById.get(id);
-      const dharmas = caseToDharmas.get(id) || [];
       const supersets = caseToSupersets.get(id) || [];
       const nomIds = caseToNomenclature.get(id) || [];
       const sphIds = caseToSphere.get(id) || [];
@@ -1648,7 +1647,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       if(c.case_no_variants && c.case_no_variants.length){
         rows += `<br><span class="muted">VI</span> quality case(s): ${c.case_no_variants.join(', ')}`;
       }
-      rows += `<br>${dharmas.length} dharma(s) new in VI &middot; ${supersets.length} VII superset(s)`;
+      rows += `<br>${supersets.length} VII superset(s)`;
       return `<b>Case ${esc(c.case_id)}</b>${rows}`;
     }
     if(type==='dharma'){
