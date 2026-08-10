@@ -1690,15 +1690,12 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     }
     if(type==='nomenclature'){
       const n = nomenclatureById.get(id);
-      const cases = nomenclatureToCases.get(id) || [];
-      return `<b>T${esc(id)}</b> ${esc(n.term_pali)}<br><span class="muted">${esc(n.translation)}</span><br><span class="muted">III</span> ${cases.length} case(s)`;
+      return `<b>T${esc(id)}</b> ${esc(n.term_pali)}<br><span class="muted">${esc(n.translation)}</span>`;
     }
     if(type==='sphere'){
       const s = sphereById.get(id);
-      const cases = sphereToCases.get(id) || [];
       return `<b>S${esc(id)}</b> ${esc(s.sphere_pali)}<br><span class="muted">${esc(s.translation)}</span>`
-        + `<br><span class="muted">IV</span> avacara ${ttLink('avacara', s.avacara, esc(s.avacara))}${s.avacara_inferred?' &dagger;':''} &middot; character of dharmas ${ttLink('qualdharma', s.char_dharma, esc(s.char_dharma))}`
-        + `<br>${cases.length} case(s)`;
+        + `<br><span class="muted">IV</span> avacara ${ttLink('avacara', s.avacara, esc(s.avacara))}${s.avacara_inferred?' &dagger;':''} &middot; character of dharmas ${ttLink('qualdharma', s.char_dharma, esc(s.char_dharma))}`;
     }
     if(type==='avacara'){
       const a = avacaraById.get(id);
