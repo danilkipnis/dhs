@@ -1679,17 +1679,22 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     tooltip.classList.remove('pinned');
     tooltip.style.display = 'none';
   }
+  let hoveredKey = null;
   nodeLayer.addEventListener('mousemove', (ev)=>{
     if(pinned) return;
     const g = ev.target.closest('.node');
-    if(!g){ tooltip.style.display='none'; return; }
+    if(!g){ hoveredKey = null; tooltip.style.display='none'; return; }
     const type = g.getAttribute('data-type'), id = g.getAttribute('data-id');
-    tooltip.innerHTML = tooltipFor(type, id);
+    const key = type+'|'+id;
+    if(key !== hoveredKey){
+      hoveredKey = key;
+      tooltip.innerHTML = tooltipFor(type, id);
+    }
     tooltip.style.display = 'block';
     tooltip.style.left = (ev.clientX+14)+'px';
     tooltip.style.top = (ev.clientY+14)+'px';
   });
-  nodeLayer.addEventListener('mouseleave', ()=>{ if(!pinned) tooltip.style.display='none'; });
+  nodeLayer.addEventListener('mouseleave', ()=>{ hoveredKey = null; if(!pinned) tooltip.style.display='none'; });
 
   // ---------- search ----------
   const searchInput = document.getElementById('search');
