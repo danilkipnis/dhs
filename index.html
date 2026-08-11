@@ -910,9 +910,26 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     tooltip.style.left = (sx+14)+'px';
     tooltip.style.top = (sy+14)+'px';
   }
-  function applyViewBox(){
+  // Writing viewBox invalidates the raster of the whole diagram (~900 node
+  // groups and ~3.6k edge paths), so it must happen at most once per frame.
+  // Wheel and mousemove both fire faster than the display refresh, and every
+  // extra write in the same frame is a full re-raster that is then thrown
+  // away -- so callers only ever request a write, and the rAF callback
+  // commits whatever vb ended up being.
+  let vbRaf = null;
+  function commitViewBox(){
     svg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
     updatePinnedTooltipPosition();
+  }
+  function applyViewBox(){
+    if(vbRaf !== null) return;
+    vbRaf = requestAnimationFrame(()=>{ vbRaf = null; commitViewBox(); });
+  }
+  // For the cases that must be on screen before the next paint (initial fit,
+  // resize): skip the queue rather than showing a stale/unset viewBox.
+  function flushViewBox(){
+    if(vbRaf !== null){ cancelAnimationFrame(vbRaf); vbRaf = null; }
+    commitViewBox();
   }
   function fitToStage(){
     refreshStageRect();
@@ -921,7 +938,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     let w = fullBox.w, h = fullBox.h;
     if(w/h > aspect){ h = w/aspect; } else { w = h*aspect; }
     vb = { x: fullBox.x - (w-fullBox.w)/2, y: fullBox.y - (h-fullBox.h)/2, w, h };
-    applyViewBox();
+    flushViewBox();
   }
   fitToStage();
   window.addEventListener('resize', fitToStage);
