@@ -1653,7 +1653,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       const [byId, toCases, label] = cfg;
       const item = byId.get(id);
       const nameLine = item ? (item.pali ? `${esc(item.pali)}<br><span class="muted">${esc(item.translation||'')}</span>` : esc(item.translation||'')) : '';
-      const parentLine = (item && item.parent_id) ? `<br><span class="muted">closes/qualifies content</span> ${ttLink('content', item.parent_id, esc(item.parent_id))}` : '';
+      const parentLine = (item && item.parent_id) ? `<br><span class="muted">&#8594;</span> ${ttLink('content', item.parent_id, esc(item.parent_id))}` : '';
       return `<b>${esc(label)} ${esc(id)}</b><br>${nameLine}${parentLine}`;
     }
     return '';
