@@ -112,7 +112,18 @@
     color:var(--text-secondary);
     line-height:1.45;
   }
+  /* Sits inside the mini-ER box, over the diagram's bottom-right corner. The
+     backdrop keeps it legible when an ER box is panned underneath it, and the
+     .4rem inset clears the box's own rounded corner. */
   #erLink{
+    position:absolute;
+    right:.4rem;
+    bottom:.4rem;
+    z-index:1;
+    padding:.15rem .35rem;
+    border-radius:4px;
+    background:rgba(0,0,0,.72);
+    font-size:.72rem;
     color:var(--text-secondary);
     text-decoration:underline dotted;
     text-underline-offset:2px;
@@ -149,6 +160,7 @@
      spot -- a fixed-height box (rather than "grow to fill") so it doesn't
      crowd out the search/reset toolbar above it. */
   #erInline{
+    position:relative;      /* anchors #erLink to the box's bottom-right */
     width:100%;
     height:min(60vh, 420px);
     border:1px solid #4a4a4a;
@@ -335,6 +347,7 @@ Phenomenon and System,&rdquo; in Alexander Piatigorsky's <em>The Buddhist
 Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 1984), pp. 92 to 145, 165 to 167.</p>
     <div id="erInline">
       <svg id="erSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 688"></svg>
+      <a id="erLink" href="er.html">Full ER</a>
     </div>
     <div class="toolbar">
       <div class="search-row">
@@ -342,7 +355,6 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
         <button id="searchBtn" type="button" title="Search" aria-label="Search">&#128269;</button>
       </div>
     </div>
-    <p class="desc"><a id="erLink" href="er.html">Full ER diagram</a></p>
   </div>
 </div>
 <script src="graph-data.js"></script>
