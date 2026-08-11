@@ -388,6 +388,8 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   const mentalById = new Map(data.mental.map(m=>[m.mental_id, m]));
   const senseObjById = new Map(data.sense_objects.map(o=>[o.object_id, o]));
   const dhyanicObjById = new Map(data.dhyanic_objects.map(o=>[o.object_id, o]));
+  const thoughtById = new Map(data.thought.map(t=>[t.thought_id, t]));
+  const sphereThoughtById = new Map(data.sphere_thought.map(t=>[t.sphere_thought_id, t]));
 
   const dharmasByCase = new Map();
   for(const d of data.dharmas){
@@ -681,6 +683,8 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   const { itemToCases: mentalToCases, caseToItems: caseToMental } = buildCaseAttrMaps(data.mental_case_edges, 'mv-');
   const { itemToCases: senseObjToCases, caseToItems: caseToSenseObj } = buildCaseAttrMaps(data.sense_object_case_edges, 'so-');
   const { itemToCases: dhyanicObjToCases, caseToItems: caseToDhyanicObj } = buildCaseAttrMaps(data.dhyanic_object_case_edges, 'do-');
+  const { caseToItems: caseToThought } = buildCaseAttrMaps(data.thought_case_edges, 'th-');
+  const { caseToItems: caseToSphereThought } = buildCaseAttrMaps(data.sphere_thought_case_edges, 'st-');
 
   // ---------- SVG helpers ----------
   function el(tag, attrs, parent){
@@ -1591,13 +1595,50 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   function tooltipFor(type, id){
     if(type==='case'){
       const c = caseById.get(id);
-      const supersets = caseToSupersets.get(id) || [];
       const nomIds = caseToNomenclature.get(id) || [];
       const sphIds = caseToSphere.get(id) || [];
+      const thoughtIds = caseToThought.get(id) || [];
+      const sphThoughtIds = caseToSphereThought.get(id) || [];
       let rows = '';
-      if(c.paragraph || c.pages){
-        const rangeNote = c.paragraph_case_range ? ` <span class="muted">(shared with cases ${esc(c.paragraph_case_range)})</span>` : '';
-        rows += `<br><span class="muted">VIII</span> &sect;${esc(c.paragraph)}, p.${esc(c.pages)}${rangeNote}`;
+      if(thoughtIds.length){
+        rows += `<br><span class="muted">V-NT</span> ` + thoughtIds.map(tid=>{
+          const t = thoughtById.get(tid);
+          return t ? `${esc(t.pali)} (${esc(t.translation)})` : `NT${esc(tid)}`;
+        }).join(', ');
+      }
+      if(sphThoughtIds.length){
+        rows += `<br><span class="muted">V-ST</span> ` + sphThoughtIds.map(sid=>{
+          const s = sphereThoughtById.get(sid);
+          return s ? `${esc(s.pali)} (${esc(s.translation)})` : `ST${esc(sid)}`;
+        }).join(', ');
+      }
+      if(!c.stub && Array.isArray(c.content_ids) && c.content_ids.length){
+        const parts = c.content_ids.map(cidRaw=>{
+          const cd = contentDefs[cidRaw];
+          if(!cd) return esc(cidRaw);
+          const star = contentFootnoteSet.has(id+'|'+cidRaw) ? '*' : '';
+          return ttLink('content', cidRaw, `${esc(cd.pali)}${star} (${esc(cd.translation)})`);
+        });
+        rows += `<br><span class="muted">V-C</span> ` + parts.join('; ');
+      }
+      if(!c.stub){
+        const trIds = caseToTrancic.get(id) || [];
+        if(trIds.length){
+          rows += `<br><span class="muted">V-TV</span> ` + trIds.map(t=>{ const tv=trancicById.get(t); return tv? ttLink('trancic', t, `${esc(tv.pali)} (${esc(tv.translation)})`) : 'TV'+esc(t); }).join(', ');
+        }
+        const objIds = caseToSenseObj.get(id) || [];
+        const dhyIds = caseToDhyanicObj.get(id) || [];
+        if(objIds.length || dhyIds.length){
+          const objParts = objIds.map(o=>{ const so=senseObjById.get(o); return so? ttLink('senseobj', o, esc(so.translation)) : 'O'+esc(o); });
+          const dhyParts = dhyIds.map(o=>{ const d=dhyanicObjById.get(o); return d? ttLink('dhyanicobj', o, `${esc(d.pali)} (${esc(d.translation)})`) : 'D'+esc(o); });
+          rows += `<br><span class="muted">V-O</span> ` + [...objParts, ...dhyParts].join(', ');
+        }
+        const mentIds = caseToMental.get(id) || [];
+        if(mentIds.length){
+          rows += `<br><span class="muted">V-MV</span> ` + mentIds.map(m=>{ const mv=mentalById.get(m); return mv? ttLink('mental', m, `${esc(mv.pali)} (${esc(mv.translation)})`) : 'MV'+esc(m); }).join(', ');
+        }
+      } else {
+        rows += `<br><span class="muted">not present in V</span>`;
       }
       if(nomIds.length){
         rows += `<br><span class="muted">III</span> ` + nomIds.map(nid=>{
@@ -1611,38 +1652,10 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
           return s ? ttLink('sphere', sid, `${esc(s.sphere_pali)} (${esc(s.translation)})`) : `S${esc(sid)}`;
         }).join(', ');
       }
-      if(!c.stub && Array.isArray(c.content_ids) && c.content_ids.length){
-        const parts = c.content_ids.map(cidRaw=>{
-          const cd = contentDefs[cidRaw];
-          if(!cd) return esc(cidRaw);
-          const star = contentFootnoteSet.has(id+'|'+cidRaw) ? '*' : '';
-          return ttLink('content', cidRaw, `${esc(cd.pali)}${star} (${esc(cd.translation)})`);
-        });
-        rows += `<br><span class="muted">V (content)</span> ` + parts.join('; ');
+      if(c.paragraph || c.pages){
+        const rangeNote = c.paragraph_case_range ? ` <span class="muted">(shared with cases ${esc(c.paragraph_case_range)})</span>` : '';
+        rows += `<br><span class="muted">VIII</span> &sect;${esc(c.paragraph)}, p.${esc(c.pages)}${rangeNote}`;
       }
-      if(!c.stub){
-        const objIds = caseToSenseObj.get(id) || [];
-        const dhyIds = caseToDhyanicObj.get(id) || [];
-        if(objIds.length || dhyIds.length){
-          const objParts = objIds.map(o=>{ const so=senseObjById.get(o); return so? ttLink('senseobj', o, esc(so.translation)) : 'O'+esc(o); });
-          const dhyParts = dhyIds.map(o=>{ const d=dhyanicObjById.get(o); return d? ttLink('dhyanicobj', o, `${esc(d.pali)} (${esc(d.translation)})`) : 'D'+esc(o); });
-          rows += `<br><span class="muted">V-O</span> ` + [...objParts, ...dhyParts].join(', ');
-        }
-        const mentIds = caseToMental.get(id) || [];
-        if(mentIds.length){
-          rows += `<br><span class="muted">V-MV</span> ` + mentIds.map(m=>{ const mv=mentalById.get(m); return mv? ttLink('mental', m, `${esc(mv.pali)} (${esc(mv.translation)})`) : 'MV'+esc(m); }).join(', ');
-        }
-        const trIds = caseToTrancic.get(id) || [];
-        if(trIds.length){
-          rows += `<br><span class="muted">V-TV</span> ` + trIds.map(t=>{ const tv=trancicById.get(t); return tv? ttLink('trancic', t, `${esc(tv.pali)} (${esc(tv.translation)})`) : 'TV'+esc(t); }).join(', ');
-        }
-      } else {
-        rows += `<br><span class="muted">not present in V</span>`;
-      }
-      if(c.case_no_variants && c.case_no_variants.length){
-        rows += `<br><span class="muted">VI</span> quality case(s): ${c.case_no_variants.join(', ')}`;
-      }
-      rows += `<br>${supersets.length} VII superset(s)`;
       return `<b>Case ${esc(c.case_id)}</b>${rows}`;
     }
     if(type==='dharma'){

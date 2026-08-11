@@ -114,6 +114,13 @@ function buildGraphData(F){
   data.sense_objects   = t5o.sense_objects.map(r => ({id:'so-'+r.id, object_id:String(r.id), translation:r.translation}));
   data.dhyanic_objects = t5o.dhyanic_objects.map(r => ({id:'do-'+r.id, object_id:String(r.id), pali:r.pali, translation:r.translation}));
 
+  // Nomenclature of thought / sphere of thought: each row already lists its
+  // own cases directly (no range or bracket notation), one case per row.
+  data.thought = t5t.map((r,i) => ({id:'th-'+i, thought_id:String(i), pali:r.pali, translation:r.translation}));
+  data.sphere_thought = t5s.map((r,i) => ({id:'st-'+i, sphere_thought_id:String(i), pali:r.pali, translation:r.translation}));
+  data.thought_case_edges = t5t.flatMap((r,i) => (r.cases||[]).map(c => ({from:'th-'+i, to:'case-'+c})));
+  data.sphere_thought_case_edges = t5s.flatMap((r,i) => (r.cases||[]).map(c => ({from:'st-'+i, to:'case-'+c})));
+
   // ---------- VII supersets ----------
   data.supersets = t7.entries.map(e => ({
     id:'sup-'+e.id, label:e.id, case_ref:e.case_ref, case_num:caseOf(e.case_ref),
