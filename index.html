@@ -202,7 +202,13 @@
     transition:opacity .15s;
   }
   .label.ms-no{ font-size:6px; }
-  .edge{ stroke:var(--text-secondary); fill:none; transition:opacity .15s, stroke .15s, stroke-width .15s; }
+  /* Deliberately not transitioned, unlike .node/.label above: there are ~3.6k
+     edge paths, and highlighting toggles .hl across all of them at once. A
+     transition here means thousands of concurrent animations on stroke and
+     opacity -- SVG paint properties the browser animates on the main thread,
+     not the compositor -- which stalls the frame on every click. The ~900
+     nodes and labels are few enough to still afford theirs. */
+  .edge{ stroke:var(--text-secondary); fill:none; }
   .edge.ms-dharma{ stroke-width:.8px; opacity:.4; }
   /* The two same-row relations: MS derived from an earlier MS, and a dharma
      declared "as in" an earlier dharma. Both bow into an arc along their own row,
