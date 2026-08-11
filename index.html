@@ -256,15 +256,14 @@
   #tooltip .tt-link{ cursor:pointer; text-decoration:underline dotted; text-underline-offset:2px; }
   #tooltip .tt-link:hover{ color:var(--highlight); }
   #tooltip .tt-nav{
-    display:grid;
-    grid-template-columns:1.5rem 1.5rem 1.5rem;
-    grid-template-rows:1.5rem 1.5rem 1.5rem;
+    display:flex;
     justify-content:center;
     gap:2px;
     margin-top:.5rem;
   }
   #tooltip .tt-dir{
     display:flex; align-items:center; justify-content:center;
+    width:1.5rem; height:1.5rem;
     background:var(--surface-1);
     border:1px solid var(--rule);
     border-radius:4px;
@@ -275,10 +274,6 @@
     padding:0;
   }
   #tooltip .tt-dir:hover{ background:var(--rule); }
-  #tooltip .tt-dir[data-dir="up"]{ grid-column:2; grid-row:1; }
-  #tooltip .tt-dir[data-dir="left"]{ grid-column:1; grid-row:2; }
-  #tooltip .tt-dir[data-dir="right"]{ grid-column:3; grid-row:2; }
-  #tooltip .tt-dir[data-dir="down"]{ grid-column:2; grid-row:3; }
   #tooltip .tt-dir:disabled{ opacity:.25; cursor:default; }
   #tooltip .tt-dir:disabled:hover{ background:var(--surface-1); }
   #zoomctrl{
@@ -1458,7 +1453,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   }
   const DIR_ARROW = {up:'&#9650;', left:'&#9664;', right:'&#9654;', down:'&#9660;'};
   function navCrossHtml(type, id){
-    return '<div class="tt-nav">' + ['up','left','right','down'].map(dir => {
+    return '<div class="tt-nav">' + ['left','right'].map(dir => {
       const has = !!neighborFor(type, id, dir);
       return `<button class="tt-dir" data-dir="${dir}"${has ? '' : ' disabled'} aria-label="${dir}" title="${dir}">${DIR_ARROW[dir]}</button>`;
     }).join('') + '</div>';
@@ -1729,7 +1724,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     pinned = true;
     pinnedType = type;
     pinnedId = id;
-    tooltip.innerHTML = tooltipFor(type, id) + '<span class="tt-close" title="Close">&times;</span>';
+    tooltip.innerHTML = tooltipFor(type, id) + navCrossHtml(type, id) + '<span class="tt-close" title="Close">&times;</span>';
     tooltip.classList.add('pinned');
     tooltip.style.left = x+'px';
     tooltip.style.top = y+'px';
