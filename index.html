@@ -1599,6 +1599,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       const sphIds = caseToSphere.get(id) || [];
       const thoughtIds = caseToThought.get(id) || [];
       const sphThoughtIds = caseToSphereThought.get(id) || [];
+      const charDharmaLetter = sphIds.map(sid=>sphereById.get(sid)).find(s=>s&&s.char_dharma)?.char_dharma;
       let rows = '';
       if(thoughtIds.length){
         rows += `<br><span class="muted">V-NT</span> ` + thoughtIds.map(tid=>{
@@ -1650,7 +1651,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
         rows += `<br><span class="muted">IV</span> ` + sphIds.map(sid=>{
           const s = sphereById.get(sid);
           return s ? ttLink('sphere', sid, `${esc(s.sphere_pali)} (${esc(s.translation)})`) : `S${esc(sid)}`;
-        }).join(', ');
+        }).join(', ') + (charDharmaLetter ? ` (${esc(charDharmaLetter)})` : '');
       }
       if(c.paragraph || c.pages){
         const rangeNote = c.paragraph_case_range ? ` <span class="muted">(shared with cases ${esc(c.paragraph_case_range)})</span>` : '';
