@@ -835,6 +835,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       const t = el('text', {class:'label', y:-8, 'text-anchor':'middle'}, g);
       t.textContent = c.case_id;
     }
+    g._cx = l.x; g._cy = Y_CASE;
     nodeEls.case.set(c.case_id, g);
   }
 
@@ -847,6 +848,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       const t = el('text', {class:'label', y:16, 'text-anchor':'middle'}, g);
       t.textContent = 'Δ' + d.dharma_id;
     }
+    g._cx = l.x; g._cy = Y_DHARMA;
     nodeEls.dharma.set(d.dharma_id, g);
   }
 
@@ -856,6 +858,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     const g = el('g', {class:'node node-ms', 'data-type':'ms', 'data-id':m.id, transform:`translate(${l.x},${Y_MS})`}, nodeLayer);
     el('circle', {r: 2.1}, g);
     el('text', {class:'label ms-no', y:-6, 'text-anchor':'middle'}, g).textContent = m.no;
+    g._cx = l.x; g._cy = Y_MS;
     nodeEls.ms.set(m.id, g);
   }
 
@@ -871,6 +874,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       if(layoutMap.size <= 50){
         el('text', {class:'label', y:-8, 'text-anchor':'middle'}, g).textContent = prefix + item[idKey];
       }
+      g._cx = pos.x; g._cy = pos.y;
       nodeEls[typeKey].set(item[idKey], g);
     }
   }
@@ -1161,9 +1165,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     if(!map || !map.size) return null;
     let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
     for(const g of map.values()){
-      const m = /translate\(([-\d.]+),([-\d.]+)\)/.exec(g.getAttribute('transform'));
-      if(!m) continue;
-      const x = parseFloat(m[1]), y = parseFloat(m[2]);
+      const x = g._cx, y = g._cy;
       if(x < minX) minX = x; if(x > maxX) maxX = x;
       if(y < minY) minY = y; if(y > maxY) maxY = y;
     }
@@ -1426,9 +1428,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   function nodeCenter(type, id){
     const map = nodeEls[NODE_TYPE_KEY[type]];
     const g = map && map.get(id);
-    if(!g) return null;
-    const m = /translate\(([-\d.]+)[ ,]+([-\d.]+)\)/.exec(g.getAttribute('transform') || '');
-    return m ? {x:+m[1], y:+m[2]} : null;
+    return g ? {x:g._cx, y:g._cy} : null;
   }
 
   // The reverse of NODE_TYPE_KEY: nodeEls/adj/ROW key -> DOM data-type string.
