@@ -1439,13 +1439,20 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   // Up/down follow the adjacency graph (the same one clicking a node uses to
   // highlight its neighbours) to a connected node one row up or down, picking
   // whichever candidate sits closest in x when more than one qualifies.
+  // Node x-positions are fixed once the diagram is built, so each type's
+  // sorted id list is computed once and cached rather than re-sorted on
+  // every navCrossHtml() call (every tooltip open/nav) and dirBtn click.
+  const typeIdsSortedByXCache = new Map();
   function typeIdsSortedByX(type){
+    if(typeIdsSortedByXCache.has(type)) return typeIdsSortedByXCache.get(type);
     const camelType = NODE_TYPE_KEY[type];
-    return [...nodeEls[camelType].keys()]
+    const ids = [...nodeEls[camelType].keys()]
       .map(id => ({id, c: nodeCenter(type, id)}))
       .filter(o => o.c)
       .sort((a,b) => a.c.x - b.c.x)
       .map(o => o.id);
+    typeIdsSortedByXCache.set(type, ids);
+    return ids;
   }
   function neighborLeftRight(type, id, dir){
     const ids = typeIdsSortedByX(type);
