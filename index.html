@@ -1625,7 +1625,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       if(!c.stub){
         const trIds = caseToTrancic.get(id) || [];
         if(trIds.length){
-          rows += `<br><span class="muted">V-TV</span> ` + trIds.map(t=>{ const tv=trancicById.get(t); return tv? ttLink('trancic', t, `${esc(tv.pali)} (${esc(tv.translation)})`) : 'TV'+esc(t); }).join(', ');
+          rows += `<br><span class="muted">V-TV</span> ` + trIds.map(t=>{ const tv=trancicById.get(t); return tv? ttLink('trancic', t, `${esc(t)} ${esc(tv.pali)} (${esc(tv.translation)})`) : 'TV'+esc(t); }).join(', ');
         }
         const objIds = caseToSenseObj.get(id) || [];
         const dhyIds = caseToDhyanicObj.get(id) || [];
