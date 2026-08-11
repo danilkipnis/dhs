@@ -891,11 +891,16 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   // keep a pinned popup glued to its node's screen position while the view
   // pans or zooms, instead of stranding it at the click coordinates.
   let pinned = false, pinnedType = null, pinnedId = null;
+  // getBoundingClientRect() forces a layout flush; the stage only actually
+  // moves/resizes on window resize or a sidebar toggle, so it's cached here
+  // rather than re-read on every wheel/drag/tooltip-position event.
+  let stageRect = stage.getBoundingClientRect();
+  function refreshStageRect(){ stageRect = stage.getBoundingClientRect(); }
   function updatePinnedTooltipPosition(){
     if(!pinned || !pinnedType) return;
     const c = nodeCenter(pinnedType, pinnedId);
     if(!c) return;
-    const rect = stage.getBoundingClientRect();
+    const rect = stageRect;
     const sx = rect.left + ((c.x-vb.x)/vb.w)*rect.width;
     const sy = rect.top + ((c.y-vb.y)/vb.h)*rect.height;
     tooltip.style.left = (sx+14)+'px';
@@ -906,7 +911,8 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     updatePinnedTooltipPosition();
   }
   function fitToStage(){
-    const rect = stage.getBoundingClientRect();
+    refreshStageRect();
+    const rect = stageRect;
     const aspect = rect.width / rect.height;
     let w = fullBox.w, h = fullBox.h;
     if(w/h > aspect){ h = w/aspect; } else { w = h*aspect; }
@@ -918,7 +924,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
 
   stage.addEventListener('wheel', (ev)=>{
     ev.preventDefault();
-    const rect = stage.getBoundingClientRect();
+    const rect = stageRect;
     const mx = ev.clientX - rect.left, my = ev.clientY - rect.top;
     const px = vb.x + (mx/rect.width)*vb.w;
     const py = vb.y + (my/rect.height)*vb.h;
@@ -935,12 +941,13 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   let dragging = false, dragMoved = false, lastX=0, lastY=0;
   stage.addEventListener('mousedown', (ev)=>{
     if(ev.target.closest('.node')) return;
+    refreshStageRect();
     dragging = true; dragMoved = false; lastX = ev.clientX; lastY = ev.clientY;
     stage.classList.add('grabbing');
   });
   window.addEventListener('mousemove', (ev)=>{
     if(!dragging) return;
-    const rect = stage.getBoundingClientRect();
+    const rect = stageRect;
     const dx = (ev.clientX-lastX) * (vb.w/rect.width);
     const dy = (ev.clientY-lastY) * (vb.h/rect.height);
     if(Math.abs(ev.clientX-lastX) > 2 || Math.abs(ev.clientY-lastY) > 2) dragMoved = true;
@@ -959,7 +966,8 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   const touchPt = (t, rect) => ({ x: t.clientX-rect.left, y: t.clientY-rect.top });
   stage.addEventListener('touchstart', (ev)=>{
     if(ev.target.closest('.node')) return;
-    const rect = stage.getBoundingClientRect();
+    refreshStageRect();
+    const rect = stageRect;
     if(ev.touches.length === 1){
       touchMode = 'pan'; dragMoved = false;
       lastX = ev.touches[0].clientX; lastY = ev.touches[0].clientY;
@@ -973,7 +981,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   stage.addEventListener('touchmove', (ev)=>{
     if(!touchMode) return;
     ev.preventDefault();
-    const rect = stage.getBoundingClientRect();
+    const rect = stageRect;
     if(touchMode === 'pan' && ev.touches.length === 1){
       const t = ev.touches[0];
       const dx = (t.clientX-lastX) * (vb.w/rect.width);
@@ -1041,7 +1049,12 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   }
 
   const sidebar = document.getElementById('sidebar');
-  document.getElementById('sidebarToggle').onclick = ()=>{ sidebar.classList.toggle('collapsed'); };
+  document.getElementById('sidebarToggle').onclick = ()=>{
+    sidebar.classList.toggle('collapsed');
+    // #sidebar slides via a .22s CSS transform; erSvg's on-screen position
+    // moves with it, so its cached rect needs a refresh once settled.
+    setTimeout(()=>{ refreshStageRect(); refreshErRect(); }, 240);
+  };
 
   // ---------- ER diagram (inline in sidebar) ----------
   // Same wheel/drag/pinch scheme as the main stage above, against the ER
@@ -1054,10 +1067,15 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     erSvg.setAttribute('viewBox', `${erVbState.x} ${erVbState.y} ${erVbState.w} ${erVbState.h}`);
   }
   erApplyViewBox();
+  // Cached like stageRect above -- erSvg lives inside the sidebar, so this
+  // is also refreshed on sidebarToggle (see below), not just on resize.
+  let erRect = erSvg.getBoundingClientRect();
+  function refreshErRect(){ erRect = erSvg.getBoundingClientRect(); }
+  window.addEventListener('resize', refreshErRect);
 
   erSvg.addEventListener('wheel', (ev)=>{
     ev.preventDefault();
-    const rect = erSvg.getBoundingClientRect();
+    const rect = erRect;
     const mx = ev.clientX - rect.left, my = ev.clientY - rect.top;
     const px = erVbState.x + (mx/rect.width)*erVbState.w;
     const py = erVbState.y + (my/rect.height)*erVbState.h;
@@ -1071,12 +1089,13 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   let erDragging = false, erLastX = 0, erLastY = 0;
   erSvg.addEventListener('mousedown', (ev)=>{
     if(ev.target.closest('.er-node')) return;
+    refreshErRect();
     erDragging = true; erLastX = ev.clientX; erLastY = ev.clientY;
     erSvg.classList.add('grabbing');
   });
   window.addEventListener('mousemove', (ev)=>{
     if(!erDragging) return;
-    const rect = erSvg.getBoundingClientRect();
+    const rect = erRect;
     const dx = (ev.clientX-erLastX) * (erVbState.w/rect.width);
     const dy = (ev.clientY-erLastY) * (erVbState.h/rect.height);
     erVbState.x -= dx; erVbState.y -= dy;
@@ -1088,7 +1107,8 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   let erTouchMode = null, erPinchDist = 0, erPinchVb = null;
   erSvg.addEventListener('touchstart', (ev)=>{
     if(ev.target.closest('.er-node')) return;
-    const rect = erSvg.getBoundingClientRect();
+    refreshErRect();
+    const rect = erRect;
     if(ev.touches.length === 1){
       erTouchMode = 'pan';
       erLastX = ev.touches[0].clientX; erLastY = ev.touches[0].clientY;
@@ -1102,7 +1122,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   erSvg.addEventListener('touchmove', (ev)=>{
     if(!erTouchMode) return;
     ev.preventDefault();
-    const rect = erSvg.getBoundingClientRect();
+    const rect = erRect;
     if(erTouchMode === 'pan' && ev.touches.length === 1){
       const t = ev.touches[0];
       const dx = (t.clientX-erLastX) * (erVbState.w/rect.width);
@@ -1472,7 +1492,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     if(!c){ pinTooltip(type, id, window.innerWidth/2, window.innerHeight/2); return; }
     vb = { x: c.x-vb.w/2, y: c.y-vb.h/2, w: vb.w, h: vb.h };
     applyViewBox();
-    const rect = stage.getBoundingClientRect();
+    const rect = stageRect;
     const sx = rect.left + ((c.x-vb.x)/vb.w)*rect.width;
     const sy = rect.top + ((c.y-vb.y)/vb.h)*rect.height;
     pinTooltip(type, id, sx+14, sy+14);
