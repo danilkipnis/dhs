@@ -460,15 +460,6 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   const Y_CASE = Y_L3 + LAYER_GAP;
   const Y_DHARMA = Y_CASE + LAYER_GAP;
   const Y_MS = Y_DHARMA + LAYER_GAP;
-  // Top-to-bottom order of the row Ys above, for finding "one layer above /
-  // below" a node during nav-travel zoom-out (see animateNavTo).
-  const LAYER_YS = [Y_L1, Y_L2, Y_SPHERE, Y_L3, Y_CASE, Y_DHARMA, Y_MS];
-  function layerIndex(y){
-    let bi = 0, bd = Infinity;
-    LAYER_YS.forEach((ly,i)=>{ const d = Math.abs(ly-y); if(d<bd){ bd=d; bi=i; } });
-    return bi;
-  }
-
   let cursor = 0;
   const dharmaLayout = new Map();
   const caseLayout = new Map();
@@ -1473,92 +1464,18 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     }).join('') + '</div>';
   }
 
-  // Three-phase "zoom out, pause, zoom in" travel so a jump across the
-  // diagram reads as a journey rather than a disorienting teleport:
-  //   - T/2 ms zooming out, decelerating, to the smallest box that still
-  //     shows both the start and end points (i.e. "both are visible")
-  //   - P ms paused on that box
-  //   - T/2 ms zooming in, accelerating, from that box to the destination
-  //     centred at the original zoom ratio
-  // onDone fires once settled, so a caller can place the tooltip against
-  // final screen coords.
-  const NAV_ZOOM_MS = 4500, NAV_PAUSE_MS = 500;
-  let navRaf = null;
-  function animateNavTo(x, y, onDone){
-    if(navRaf) cancelAnimationFrame(navRaf);
-    const startCx = vb.x + vb.w/2, startCy = vb.y + vb.h/2;
-    const w0 = vb.w, h0 = vb.h;
-    const ar = h0/w0;
-
-    // Smallest same-aspect box that contains both the start and end centres
-    // horizontally, and vertically spans at least one row above the
-    // topmost of the two and one row below the bottommost -- so a jump
-    // between adjacent rows (e.g. dharma -> case) always previews the
-    // neighbouring rows on both sides, not just a crop around the two dots.
-    const midCx = (startCx+x)/2;
-    const loIdx = Math.max(0, Math.min(layerIndex(startCy), layerIndex(y)) - 1);
-    const hiIdx = Math.min(LAYER_YS.length-1, Math.max(layerIndex(startCy), layerIndex(y)) + 1);
-    const rowTopY = LAYER_YS[loIdx], rowBotY = LAYER_YS[hiIdx];
-    const padX = w0*0.15, padY = h0*0.15;
-    const midCy = (rowTopY+rowBotY)/2;
-    const neededH = (rowBotY-rowTopY) + 2*padY;
-    const neededW = Math.max(w0, Math.abs(x-startCx)+2*padX, neededH/ar);
-    const peakW = Math.min(fullBox.w, neededW);
-    const peakH = peakW*ar;
-
-    const outMs = NAV_ZOOM_MS/2, pauseMs = NAV_PAUSE_MS, inMs = NAV_ZOOM_MS/2;
-    const totalMs = outMs+pauseMs+inMs;
-    // Acceleration is logarithmic rather than the constant accel a quadratic
-    // ease gives: speed drops steeply right from u=0 and keeps easing off
-    // for the rest of the leg, so most of the deceleration happens early
-    // instead of being saved for the approach to the turnaround. The
-    // (e-1) scale is what makes decelEase(0)=0, decelEase(1)=1 fall out
-    // exactly, for any T.
-    const decelEase = u => Math.log(1 + (Math.E-1)*u);
-    const easeOut = decelEase;                          // decelerating
-    const easeIn  = u => 1 - decelEase(1-u);            // accelerating (mirrored)
-    const t0 = performance.now();
-    (function step(now){
-      const elapsed = Math.min(now-t0, totalMs);
-      let cx, cy, w, h;
-      if(elapsed <= outMs){
-        const et = easeOut(outMs===0 ? 1 : elapsed/outMs);
-        cx = startCx + (midCx-startCx)*et; cy = startCy + (midCy-startCy)*et;
-        w = w0 + (peakW-w0)*et; h = h0 + (peakH-h0)*et;
-      } else if(elapsed <= outMs+pauseMs){
-        cx = midCx; cy = midCy; w = peakW; h = peakH;
-      } else {
-        const et = easeIn(inMs===0 ? 1 : (elapsed-outMs-pauseMs)/inMs);
-        cx = midCx + (x-midCx)*et; cy = midCy + (y-midCy)*et;
-        w = peakW + (w0-peakW)*et; h = peakH + (h0-peakH)*et;
-      }
-      vb = {x:cx-w/2, y:cy-h/2, w, h};
-      applyViewBox();
-      if(elapsed<totalMs) navRaf = requestAnimationFrame(step);
-      else { navRaf = null; if(onDone) onDone(); }
-    })(t0);
-  }
-
-  // Used by tooltip links to jump to and click the node they name: same
-  // zoom factor, animated, then re-pin the tooltip over the node's new
-  // screen position.
-  function navigateAndPin(type, id, animate){
+  // Used by tooltip links to jump to and click the node they name, then
+  // re-pin the tooltip over the node's new screen position.
+  function navigateAndPin(type, id){
     selectByType(type, id);
     const c = nodeCenter(type, id);
     if(!c){ pinTooltip(type, id, window.innerWidth/2, window.innerHeight/2); return; }
-    const place = () => {
-      const rect = stage.getBoundingClientRect();
-      const sx = rect.left + ((c.x-vb.x)/vb.w)*rect.width;
-      const sy = rect.top + ((c.y-vb.y)/vb.h)*rect.height;
-      pinTooltip(type, id, sx+14, sy+14);
-    };
-    if(animate === false){
-      vb = { x: c.x-vb.w/2, y: c.y-vb.h/2, w: vb.w, h: vb.h };
-      applyViewBox();
-      place();
-    } else {
-      animateNavTo(c.x, c.y, place);
-    }
+    vb = { x: c.x-vb.w/2, y: c.y-vb.h/2, w: vb.w, h: vb.h };
+    applyViewBox();
+    const rect = stage.getBoundingClientRect();
+    const sx = rect.left + ((c.x-vb.x)/vb.w)*rect.width;
+    const sy = rect.top + ((c.y-vb.y)/vb.h)*rect.height;
+    pinTooltip(type, id, sx+14, sy+14);
   }
 
   nodeLayer.addEventListener('click', (ev)=>{
@@ -1579,7 +1496,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
         if(dirBtn.disabled) return;
         const dir = dirBtn.getAttribute('data-dir');
         const n = neighborFor(pinnedType, pinnedId, dir);
-        if(n) navigateAndPin(n.type, n.id, dir !== 'left' && dir !== 'right');
+        if(n) navigateAndPin(n.type, n.id);
         return;
       }
       const link = ev.target.closest('.tt-link');
