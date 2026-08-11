@@ -255,6 +255,16 @@
   #tooltip .tt-close:hover{ color:var(--text-primary); }
   #tooltip .tt-link{ cursor:pointer; text-decoration:underline dotted; text-underline-offset:2px; }
   #tooltip .tt-link:hover{ color:var(--highlight); }
+  #tooltip .tt-link[data-type="content"],
+  #tooltip .tt-link[data-type="trancic"],
+  #tooltip .tt-link[data-type="senseobj"],
+  #tooltip .tt-link[data-type="dhyanicobj"],
+  #tooltip .tt-link[data-type="mental"]{ text-decoration:none; }
+  #tooltip .tt-link[data-type="content"] .tt-id,
+  #tooltip .tt-link[data-type="trancic"] .tt-id,
+  #tooltip .tt-link[data-type="senseobj"] .tt-id,
+  #tooltip .tt-link[data-type="dhyanicobj"] .tt-id,
+  #tooltip .tt-link[data-type="mental"] .tt-id{ text-decoration:underline dotted; text-underline-offset:2px; }
   #tooltip .tt-nav{
     display:flex;
     justify-content:center;
@@ -1618,25 +1628,25 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
           const cd = contentDefs[cidRaw];
           if(!cd) return esc(cidRaw);
           const star = contentFootnoteSet.has(id+'|'+cidRaw) ? '*' : '';
-          return ttLink('content', cidRaw, `${esc(cidRaw)} ${esc(cd.pali)}${star} (${esc(cd.translation)})`);
+          return ttLink('content', cidRaw, `<span class="tt-id">${esc(cidRaw)}</span> ${esc(cd.pali)}${star} (${esc(cd.translation)})`);
         });
         rows += `<br><span class="muted">V-C</span> ` + parts.join('; ');
       }
       if(!c.stub){
         const trIds = caseToTrancic.get(id) || [];
         if(trIds.length){
-          rows += `<br><span class="muted">V-TV</span> ` + trIds.map(t=>{ const tv=trancicById.get(t); return tv? ttLink('trancic', t, `${esc(t)} ${esc(tv.pali)} (${esc(tv.translation)})`) : 'TV'+esc(t); }).join(', ');
+          rows += `<br><span class="muted">V-TV</span> ` + trIds.map(t=>{ const tv=trancicById.get(t); return tv? ttLink('trancic', t, `<span class="tt-id">${esc(t)}</span> ${esc(tv.pali)} (${esc(tv.translation)})`) : 'TV'+esc(t); }).join(', ');
         }
         const objIds = caseToSenseObj.get(id) || [];
         const dhyIds = caseToDhyanicObj.get(id) || [];
         if(objIds.length || dhyIds.length){
-          const objParts = objIds.map(o=>{ const so=senseObjById.get(o); return so? ttLink('senseobj', o, `${esc(o)} ${esc(so.translation)}`) : 'O'+esc(o); });
-          const dhyParts = dhyIds.map(o=>{ const d=dhyanicObjById.get(o); return d? ttLink('dhyanicobj', o, `[${esc(o)}] ${esc(d.pali)} (${esc(d.translation)})`) : 'D'+esc(o); });
+          const objParts = objIds.map(o=>{ const so=senseObjById.get(o); return so? ttLink('senseobj', o, `<span class="tt-id">${esc(o)}</span> ${esc(so.translation)}`) : 'O'+esc(o); });
+          const dhyParts = dhyIds.map(o=>{ const d=dhyanicObjById.get(o); return d? ttLink('dhyanicobj', o, `[<span class="tt-id">${esc(o)}</span>] ${esc(d.pali)} (${esc(d.translation)})`) : 'D'+esc(o); });
           rows += `<br><span class="muted">V-O</span> ` + [...objParts, ...dhyParts].join(', ');
         }
         const mentIds = caseToMental.get(id) || [];
         if(mentIds.length){
-          rows += `<br><span class="muted">V-MV</span> ` + mentIds.map(m=>{ const mv=mentalById.get(m); return mv? ttLink('mental', m, `${esc(m)} ${esc(mv.pali)} (${esc(mv.translation)})`) : 'MV'+esc(m); }).join(', ');
+          rows += `<br><span class="muted">V-MV</span> ` + mentIds.map(m=>{ const mv=mentalById.get(m); return mv? ttLink('mental', m, `<span class="tt-id">${esc(m)}</span> ${esc(mv.pali)} (${esc(mv.translation)})`) : 'MV'+esc(m); }).join(', ');
         }
       } else {
         rows += `<br><span class="muted">not present in V</span>`;
