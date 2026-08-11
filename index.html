@@ -1644,7 +1644,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     }
     if(type==='content' || type==='trancic' || type==='mental' || type==='senseobj' || type==='dhyanicobj'){
       const cfg = {
-        content:[contentById,contentToCases,'Variant of content (V-C)'],
+        content:[contentById,contentToCases,'Variant of content V-C:'],
         trancic:[trancicById,trancicToCases,'Trancic variable (V-TV)'],
         mental:[mentalById,mentalToCases,'Mental variable (V-MV)'],
         senseobj:[senseObjById,senseObjToCases,'Sense object (V-O)'],
@@ -1654,7 +1654,8 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       const item = byId.get(id);
       const nameLine = item ? (item.pali ? `${esc(item.pali)}<br><span class="muted">${esc(item.translation||'')}</span>` : esc(item.translation||'')) : '';
       const parentLine = (item && item.parent_id) ? `<br><span class="muted">&#8594;</span> ${ttLink('content', item.parent_id, esc(item.parent_id))}` : '';
-      return `<b>${esc(label)} ${esc(id)}</b><br>${nameLine}${parentLine}`;
+      const sep = type==='content' ? '' : ' ';
+      return `<b>${esc(label)}${sep}${esc(id)}</b><br>${nameLine}${parentLine}`;
     }
     return '';
   }
