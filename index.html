@@ -1630,13 +1630,13 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
         const objIds = caseToSenseObj.get(id) || [];
         const dhyIds = caseToDhyanicObj.get(id) || [];
         if(objIds.length || dhyIds.length){
-          const objParts = objIds.map(o=>{ const so=senseObjById.get(o); return so? ttLink('senseobj', o, esc(so.translation)) : 'O'+esc(o); });
-          const dhyParts = dhyIds.map(o=>{ const d=dhyanicObjById.get(o); return d? ttLink('dhyanicobj', o, `${esc(d.pali)} (${esc(d.translation)})`) : 'D'+esc(o); });
+          const objParts = objIds.map(o=>{ const so=senseObjById.get(o); return so? ttLink('senseobj', o, `${esc(o)} ${esc(so.translation)}`) : 'O'+esc(o); });
+          const dhyParts = dhyIds.map(o=>{ const d=dhyanicObjById.get(o); return d? ttLink('dhyanicobj', o, `[${esc(o)}] ${esc(d.pali)} (${esc(d.translation)})`) : 'D'+esc(o); });
           rows += `<br><span class="muted">V-O</span> ` + [...objParts, ...dhyParts].join(', ');
         }
         const mentIds = caseToMental.get(id) || [];
         if(mentIds.length){
-          rows += `<br><span class="muted">V-MV</span> ` + mentIds.map(m=>{ const mv=mentalById.get(m); return mv? ttLink('mental', m, `${esc(mv.pali)} (${esc(mv.translation)})`) : 'MV'+esc(m); }).join(', ');
+          rows += `<br><span class="muted">V-MV</span> ` + mentIds.map(m=>{ const mv=mentalById.get(m); return mv? ttLink('mental', m, `${esc(m)} ${esc(mv.pali)} (${esc(mv.translation)})`) : 'MV'+esc(m); }).join(', ');
         }
       } else {
         rows += `<br><span class="muted">not present in V</span>`;
