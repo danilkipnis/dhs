@@ -942,6 +942,15 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   // dragMoved distinguishes a pan from a plain click: mouseup after a drag
   // still fires a native click on the background, which would otherwise hit
   // the stage click handler below and clear the highlight mid-pan.
+  // Both the main stage and the inline ER diagram drag against `window`
+  // (so a drag continues even if the pointer leaves the source element);
+  // registering through here keeps that as one pair of window listeners
+  // instead of one per draggable surface.
+  const dragMoveHandlers = [], dragEndHandlers = [];
+  function onWindowDrag(onMove, onEnd){ dragMoveHandlers.push(onMove); dragEndHandlers.push(onEnd); }
+  window.addEventListener('mousemove', ev => { for(const h of dragMoveHandlers) h(ev); });
+  window.addEventListener('mouseup', ev => { for(const h of dragEndHandlers) h(ev); });
+
   let dragging = false, dragMoved = false, lastX=0, lastY=0;
   stage.addEventListener('mousedown', (ev)=>{
     if(ev.target.closest('.node')) return;
@@ -949,7 +958,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     dragging = true; dragMoved = false; lastX = ev.clientX; lastY = ev.clientY;
     stage.classList.add('grabbing');
   });
-  window.addEventListener('mousemove', (ev)=>{
+  onWindowDrag(ev => {
     if(!dragging) return;
     const rect = stageRect;
     const dx = (ev.clientX-lastX) * (vb.w/rect.width);
@@ -958,8 +967,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     vb.x -= dx; vb.y -= dy;
     lastX = ev.clientX; lastY = ev.clientY;
     applyViewBox();
-  });
-  window.addEventListener('mouseup', ()=>{ dragging=false; stage.classList.remove('grabbing'); });
+  }, () => { dragging=false; stage.classList.remove('grabbing'); });
 
   // Touch: one finger pans (mirrors mousedown/mousemove above), two fingers
   // pinch-zoom against the same vb the wheel handler drives. touch-action:none
@@ -1097,7 +1105,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     erDragging = true; erLastX = ev.clientX; erLastY = ev.clientY;
     erSvg.classList.add('grabbing');
   });
-  window.addEventListener('mousemove', (ev)=>{
+  onWindowDrag(ev => {
     if(!erDragging) return;
     const rect = erRect;
     const dx = (ev.clientX-erLastX) * (erVbState.w/rect.width);
@@ -1105,8 +1113,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     erVbState.x -= dx; erVbState.y -= dy;
     erLastX = ev.clientX; erLastY = ev.clientY;
     erApplyViewBox();
-  });
-  window.addEventListener('mouseup', ()=>{ erDragging = false; erSvg.classList.remove('grabbing'); });
+  }, () => { erDragging = false; erSvg.classList.remove('grabbing'); });
 
   let erTouchMode = null, erPinchDist = 0, erPinchVb = null;
   erSvg.addEventListener('touchstart', (ev)=>{
