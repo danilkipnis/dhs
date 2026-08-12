@@ -1668,6 +1668,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
         + `<br><span class="muted">VI</span> ${ttLink('qualdharma', d.quality, esc(d.quality))}${glossTxt? `(${esc(glossTxt)})` : ''}, case ${ttLink('case', d.owner_case, esc(d.owner_case))}`
         + (d.xref? ' &middot; cross-ref, shares MS range' : '')
         + ((d.as_in||[]).length? `<br><span class="muted">as in</span> ${d.as_in.map(dLink).join(', ')}` : '')
+        + ((dharmaToMs.get(id)||[]).length? `<br><span class="muted">VI-MS</span> ${dharmaToMs.get(id).map(mId=>{ const m=msById.get(mId); return m? ttLink('ms', mId, `MS ${esc(m.no)}`) : esc(mId); }).join(', ')}` : '')
         + `<br><span class="muted">VII</span>: ${supersetLinks.length? supersetLinks.join(', ') : '&mdash;'}`
         + ((homonymByDharma.get(id)||[]).length? `<br><span class="muted">homonyms (XI, &alpha;)</span> ${homonymByDharma.get(id).map(dLink).join(', ')}` : '')
         + ((synonymByDharma.get(id)||[]).length? `<br><span class="muted">synonyms (XII, &beta;)</span> ${synonymByDharma.get(id).map(dLink).join(', ')}` : '')
