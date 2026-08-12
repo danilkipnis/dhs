@@ -24,6 +24,8 @@
     <text class="er-rel" x="420" y="574" text-anchor="end">&beta; (1:N)</text>
     <path class="er-selfloop" d="M 475,579 C 426,576 426,594 475,591" />
     <text class="er-rel" x="420" y="588" text-anchor="end">&gamma; (1:N)</text>
+    <path class="er-selfloop" d="M 65,328 C 60,376 100,376 95,328" />
+    <text class="er-rel" x="105" y="356">(1:N)</text>
 </g>
 <g class="er-cardlabels">
     <path class="er-mark" d="M 296.2,131.4 Q 310.8,125.1 315.7,134.2" />

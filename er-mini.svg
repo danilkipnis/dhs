@@ -23,6 +23,8 @@
     <text class="er-rel" x="145" y="527" text-anchor="end">&beta; (1:N)</text>
     <path class="er-selfloop" d="M 200,532 C 151,529 151,547 200,544" />
     <text class="er-rel" x="145" y="541" text-anchor="end">&gamma; (1:N)</text>
+    <path class="er-selfloop" d="M 95,304 C 90,352 130,352 125,304" />
+    <text class="er-rel" x="135" y="332">(1:N)</text>
 </g>
 <g class="er-boxes">
     <g class="er-node" data-type="avacara" tabindex="0" role="button" aria-label="Jump to Avacara">
