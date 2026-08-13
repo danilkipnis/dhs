@@ -281,18 +281,11 @@
     padding:.05rem .25rem;
   }
   #tooltip .tt-close:hover{ color:var(--text-primary); }
-  #tooltip .tt-link{ cursor:pointer; text-decoration:underline dotted; text-underline-offset:2px; }
+  /* No underline: the hover colour change already marks these as clickable,
+     and a dotted underline under IDs and the "III, ..." case-ref lines made
+     the popup harder to read than it needed to be. */
+  #tooltip .tt-link{ cursor:pointer; }
   #tooltip .tt-link:hover{ color:var(--highlight); }
-  #tooltip .tt-link[data-type="content"],
-  #tooltip .tt-link[data-type="trancic"],
-  #tooltip .tt-link[data-type="senseobj"],
-  #tooltip .tt-link[data-type="dhyanicobj"],
-  #tooltip .tt-link[data-type="mental"]{ text-decoration:none; }
-  #tooltip .tt-link[data-type="content"] .tt-id,
-  #tooltip .tt-link[data-type="trancic"] .tt-id,
-  #tooltip .tt-link[data-type="senseobj"] .tt-id,
-  #tooltip .tt-link[data-type="dhyanicobj"] .tt-id,
-  #tooltip .tt-link[data-type="mental"] .tt-id{ text-decoration:underline dotted; text-underline-offset:2px; }
   #tooltip .tt-nav{
     display:flex;
     justify-content:center;
