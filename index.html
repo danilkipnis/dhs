@@ -162,6 +162,9 @@
   .search-row{ display:flex; gap:.4rem; }
   .search-row input{ flex:1 1 auto; min-width:0; width:auto; }
   .search-row button{ flex:0 0 auto; width:auto; padding:.4rem .55rem; }
+  .edge-filters{ display:flex; gap:.9rem; font-size:.8rem; color:var(--text-secondary); }
+  .edge-filters label{ display:flex; align-items:center; gap:.3rem; cursor:pointer; }
+  .edge-filters input{ width:auto; margin:0; }
   /* The ER diagram sits directly in the sidebar now, in the legend's old
      spot -- a fixed-height box (rather than "grow to fill") so it doesn't
      crowd out the search/reset toolbar above it. */
@@ -241,6 +244,12 @@
   .edge.dharma-homonym{ stroke-width:1px; opacity:.55; stroke:var(--homonym); fill:none; }
   .edge.dharma-synonym{ stroke-width:1px; opacity:.55; stroke:var(--synonym); fill:none; }
   .edge.dharma-isotope{ stroke-width:1px; opacity:.55; stroke:var(--isotope); fill:none; }
+  /* Hidden by default behind the sidebar's alpha/beta/gamma checkboxes: these
+     three relations are dense enough to clutter the DHARMAS row when all on. */
+  .edge.dharma-homonym, .edge.dharma-synonym, .edge.dharma-isotope{ display:none; }
+  .edge.dharma-homonym.shown{ display:inline; }
+  .edge.dharma-synonym.shown{ display:inline; }
+  .edge.dharma-isotope.shown{ display:inline; }
   .edge.dharma-case{ stroke-width:1px; opacity:.5; }
   /* The same case-dharma relation, but stated by VII rather than VI.
      Solid like its VI counterpart, distinguished by colour. There are ~4x
@@ -366,6 +375,11 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       <a id="erLink" href="er.html">Full ER</a>
     </div>
     <div class="toolbar">
+      <div class="edge-filters">
+        <label title="Homonyms (XI)"><input type="checkbox" id="toggleHomonym">&alpha;</label>
+        <label title="Synonyms (XII)"><input type="checkbox" id="toggleSynonym">&beta;</label>
+        <label title="Isotopes (XIII)"><input type="checkbox" id="toggleIsotope">&gamma;</label>
+      </div>
       <div class="search-row">
         <input id="search" type="text" placeholder="Find case / dharma / D-set&hellip;">
         <button id="searchBtn" type="button" title="Search" aria-label="Search">&#128269;</button>
@@ -796,6 +810,18 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   drawDharmaRelationEdges(homonymByDharma, 'dharma-homonym', 'dharmaHomonym');
   drawDharmaRelationEdges(synonymByDharma, 'dharma-synonym', 'dharmaSynonym');
   drawDharmaRelationEdges(isotopeByDharma, 'dharma-isotope', 'dharmaIsotope');
+
+  // Off by default (see the base .edge.dharma-* display:none rule); each
+  // checkbox reveals its own relation by adding 'shown' to its edges.
+  function wireEdgeFilter(checkboxId, bucket){
+    const cb = document.getElementById(checkboxId);
+    cb.addEventListener('change', () => {
+      for(const e of edgeEls[bucket]) e.el.classList.toggle('shown', cb.checked);
+    });
+  }
+  wireEdgeFilter('toggleHomonym', 'dharmaHomonym');
+  wireEdgeFilter('toggleSynonym', 'dharmaSynonym');
+  wireEdgeFilter('toggleIsotope', 'dharmaIsotope');
 
   for(const e of data.ms_derivation_edges){
     const pl = msLayout.get(e.from), cl = msLayout.get(e.to);
