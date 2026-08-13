@@ -736,7 +736,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   colLabel((CONTENT_X0+CONTENT_X1)/2, Y_L3, 'VARIANTS OF CONTENT (V-C)');
   colLabel((TRANCIC_X0+TRANCIC_X1)/2, Y_L3, 'TRANCIC VARIABLES (V-TV)');
   colLabel((SENSEOBJ_X0+SENSEOBJ_X1)/2, Y_L3, 'SENSE OBJECTS (V-O)');
-  colLabel((DHYANICOBJ_X0+DHYANICOBJ_X1)/2, Y_L3, 'DHYANIC OBJECTS (V-O)');
+  colLabel((DHYANICOBJ_X0+DHYANICOBJ_X1)/2, Y_L3, 'DHYĀNIC OBJECTS (V-O)');
   colLabel((MENTAL_X0+MENTAL_X1)/2, Y_L3, 'MENTAL VARIABLES (V-MV)');
   el('text', {class:'row-label', x:-10, y:Y_CASE+4, 'text-anchor':'end'}, viewport).textContent = 'CASES (V)';
   el('text', {class:'row-label', x:-10, y:Y_DHARMA+4, 'text-anchor':'end'}, viewport).textContent = 'DHARMAS Δ (VI)';
@@ -1447,7 +1447,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
 
   const caseAttrToCasesMaps = { content: contentToCases, trancic: trancicToCases, mental: mentalToCases, senseObj: senseObjToCases, dhyanicObj: dhyanicObjToCases };
   const caseAttrByIdMaps = { content: contentById, trancic: trancicById, mental: mentalById, senseObj: senseObjById, dhyanicObj: dhyanicObjById };
-  const caseAttrLabels = { content: 'Variant of content', trancic: 'Trancic variable', mental: 'Mental variable', senseObj: 'Sense object', dhyanicObj: 'Dhyanic object' };
+  const caseAttrLabels = { content: 'Variant of content', trancic: 'Trancic variable', mental: 'Mental variable', senseObj: 'Sense object', dhyanicObj: 'Dhyānic object' };
   function selectCaseAttr(typeKey, id){
     select(typeKey, id);
     const cases = caseAttrToCasesMaps[typeKey].get(id) || [];
@@ -1744,7 +1744,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
         trancic:[trancicById,trancicToCases,'Trancic variable V-TV:'],
         mental:[mentalById,mentalToCases,'Mental variable V-MV:'],
         senseobj:[senseObjById,senseObjToCases,'Sense object V-O:'],
-        dhyanicobj:[dhyanicObjById,dhyanicObjToCases,'Dhyanic object V-O:'],
+        dhyanicobj:[dhyanicObjById,dhyanicObjToCases,'Dhyānic object V-O:'],
       }[type];
       const [byId, toCases, label] = cfg;
       const item = byId.get(id);

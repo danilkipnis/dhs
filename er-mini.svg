@@ -63,9 +63,9 @@
       <rect class="er-box" x="210" y="380" width="140" height="44" rx="8" />
       <circle class="er-swatch" cx="223" cy="393" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="280" y="406" text-anchor="middle">Sense Object</text>
     </g>
-    <g class="er-node" data-type="dhyanicObj" tabindex="0" role="button" aria-label="Jump to Dhyanic Object">
+    <g class="er-node" data-type="dhyanicObj" tabindex="0" role="button" aria-label="Jump to Dhyānic Object">
       <rect class="er-box" x="370" y="380" width="140" height="44" rx="8" />
-      <circle class="er-swatch" cx="383" cy="393" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="440" y="406" text-anchor="middle">Dhyanic Object</text>
+      <circle class="er-swatch" cx="383" cy="393" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="440" y="406" text-anchor="middle">Dhyānic Object</text>
     </g>
     <g class="er-node" data-type="dharma" tabindex="0" role="button" aria-label="Jump to Dharma">
       <rect class="er-box" x="200" y="500" width="160" height="46" rx="8" />

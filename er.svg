@@ -88,7 +88,7 @@
     <circle class="er-swatch" cx="388.0" cy="295.0" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="456" y="303" text-anchor="middle">Sense Object</text>
     <text class="er-count" x="450" y="319" text-anchor="middle" id="count-ms-er-senseobj"></text>
     <rect class="er-box" x="555.0" y="282.0" width="150" height="46" rx="8" />
-    <circle class="er-swatch" cx="568.0" cy="295.0" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="636" y="303" text-anchor="middle">Dhyanic Object</text>
+    <circle class="er-swatch" cx="568.0" cy="295.0" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="636" y="303" text-anchor="middle">Dhyānic Object</text>
     <text class="er-count" x="630" y="319" text-anchor="middle" id="count-ms-er-dhyanicobj"></text>
     <rect class="er-box" x="735.0" y="282.0" width="150" height="46" rx="8" />
     <circle class="er-swatch" cx="748.0" cy="295.0" r="5" style="fill:var(--caseattr)" /><text class="er-label" x="816" y="303" text-anchor="middle">Mental Variable</text>
