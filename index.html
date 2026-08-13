@@ -1885,5 +1885,29 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   searchInput.addEventListener('keydown', (ev)=>{ if(ev.key === 'Enter') runSearch(); });
   document.getElementById('searchBtn').addEventListener('click', runSearch);
 
+  // ---------- initial focus: Case 1 preselected, popup open ----------
+  // Zoomed so the on-screen gap between the CASES and DHARMAS rows (one
+  // LAYER_GAP apart in diagram units) comes out a bit smaller than the
+  // popup's own rendered height -- measured live rather than hard-coded,
+  // since popup height depends on Case 1's actual content.
+  (function initialFocus(){
+    const l = caseLayout.get('1');
+    if(!l) return;
+    selectByType('case', '1');
+    const cx = l.x, cy = Y_CASE;
+    pinTooltip('case', '1', -9999, -9999);
+    const popupH = tooltip.getBoundingClientRect().height || 200;
+    refreshStageRect();
+    const rect = stageRect;
+    const aspect = rect.width / rect.height;
+    const h = (LAYER_GAP / (popupH * 0.9)) * rect.height;
+    const w = h * aspect;
+    vb = { x: cx - w/2, y: cy - h/2, w, h };
+    flushViewBox();
+    const sx = rect.left + ((cx-vb.x)/vb.w)*rect.width;
+    const sy = rect.top + ((cy-vb.y)/vb.h)*rect.height;
+    pinTooltip('case', '1', sx+14, sy+14);
+  })();
+
 })();
 </script>
