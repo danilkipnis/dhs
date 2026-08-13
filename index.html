@@ -1601,6 +1601,19 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     if(!ev.target.closest('.node')){ clearHighlight(); describe(''); unpinTooltip(); }
   });
 
+  // Left/right arrow keys drive the same same-row neighbour nav as the
+  // tooltip's own <-/-> buttons. Skipped while typing in an input (the
+  // search box) so the keys keep their normal cursor-movement meaning there.
+  document.addEventListener('keydown', (ev)=>{
+    if(!pinnedType) return;
+    if(ev.key !== 'ArrowLeft' && ev.key !== 'ArrowRight') return;
+    const tag = document.activeElement && document.activeElement.tagName;
+    if(tag === 'INPUT' || tag === 'TEXTAREA') return;
+    const dir = ev.key === 'ArrowLeft' ? 'left' : 'right';
+    const n = neighborFor(pinnedType, pinnedId, dir);
+    if(n){ ev.preventDefault(); navigateAndPin(n.type, n.id); }
+  });
+
   // ---------- tooltip ----------
   function esc(s){
     if(s===null||s===undefined) return '';
