@@ -231,6 +231,10 @@
      and share a hue that no cross-row edge uses -- that, plus the arc shape, is
      what tells them apart from the lines leaving the row. */
   .edge.ms-derivation{ stroke-width:1.1px; opacity:.75; stroke:var(--derivation); fill:none; }
+  /* A content variant "derived from" its parent (e.g. 2d from 2) -- same
+     same-row arc and hue as ms-derivation above; the two never share a row
+     so the shared colour causes no ambiguity. */
+  .edge.content-derivation{ stroke-width:1.1px; opacity:.75; stroke:var(--derivation); fill:none; }
   /* Dharma-to-dharma relations from tables XI/XII/XIII (homonym/synonym/isotope
      groups, alpha/beta/gamma). Same-row arcs like ms-derivation above, each in
      its own hue so the three relations stay distinguishable where they overlap. */
@@ -749,7 +753,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     nomCase: [], sphereCase: [], avSphere: [],
     qdSphere: [],
     contentCase: [], trancicCase: [], mentalCase: [], senseObjCase: [], dhyanicObjCase: [],
-    msDerivation: [],
+    msDerivation: [], contentDerivation: [],
     dharmaHomonym: [], dharmaSynonym: [], dharmaIsotope: [],
   };
 
@@ -798,6 +802,14 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     if(!pl || !cl) continue;
     const p = el('path', {class:'edge ms-derivation', d: curve(pl.x, Y_MS, cl.x, Y_MS)}, edgeLayer);
     edgeEls.msDerivation.push({el:p, parent:e.from, child:e.to});
+  }
+
+  for(const e of data.content_derivation_edges){
+    const parentId = e.from.replace('ct-',''), childId = e.to.replace('ct-','');
+    const pl = contentX.get(parentId), cl = contentX.get(childId);
+    if(!pl || !cl) continue;
+    const p = el('path', {class:'edge content-derivation', d: curve(pl.x, pl.y, cl.x, cl.y)}, edgeLayer);
+    edgeEls.contentDerivation.push({el:p, parent:parentId, child:childId});
   }
 
   for(const e of data.ms_edges){
@@ -1311,6 +1323,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   // MS keys keep their "ms-" prefix, matching the node ids; the rest are bare.
   for(const e of data.ms_edges)                    nlink('ms', e.from, 'dharma', e.to.slice(3));
   for(const e of data.ms_derivation_edges)         nlink('ms', e.from, 'ms', e.to);
+  for(const e of data.content_derivation_edges)    nlink('content', e.from.slice(3), 'content', e.to.slice(3));
   for(const e of data.dharma_as_in_edges)          nlink('dharma', e.from.slice(3), 'dharma', e.to.slice(3));
   for(const [id, others] of homonymByDharma)       for(const o of others) nlink('dharma', id, 'dharma', o);
   for(const [id, others] of synonymByDharma)       for(const o of others) nlink('dharma', id, 'dharma', o);
@@ -1364,6 +1377,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     };
     for(const e of edgeEls.msDharma)       e.el.classList.toggle('hl', pair('ms', e.ms, 'dharma', e.dharma));
     for(const e of edgeEls.msDerivation)   e.el.classList.toggle('hl', pair('ms', e.parent, 'ms', e.child));
+    for(const e of edgeEls.contentDerivation) e.el.classList.toggle('hl', pair('content', e.parent, 'content', e.child));
     for(const e of edgeEls.dharmaCase)     e.el.classList.toggle('hl', pair('dharma', e.dharma, 'case', e.case));
     for(const e of edgeEls.dharmaCaseVii)  e.el.classList.toggle('hl', pair('dharma', e.dharma, 'case', e.case));
     for(const e of edgeEls.nomCase)        e.el.classList.toggle('hl', pair('nomenclature', e.nom, 'case', e.case));

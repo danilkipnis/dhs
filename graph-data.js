@@ -138,6 +138,9 @@ function buildGraphData(F){
 
   data.content_case_edges = t5.rows.flatMap(r =>
     (r.content_ids||[]).map(cid => ({from:'ct-'+cid, to:'case-'+r.case_id})));
+  data.content_derivation_edges = data.content
+    .filter(c => c.parent_id != null)
+    .map(c => ({from:'ct-'+c.parent_id, to:c.id}));
   data.trancic_case_edges = t5.rows.flatMap(r => {
     const t = r.trancic_id;
     if(t == null) return [];
