@@ -28,6 +28,9 @@
     --content:        #f87979;
     --caseattr:       #34e5ff;
     --derivation:     #7fd4ff;
+    --homonym:        #e8b339;
+    --synonym:        #e05fd0;
+    --isotope:        #4dd9e8;
     --highlight:      #a297fb;
     --quality-a:      #1eb51e;
     --quality-b:      #f87979;
@@ -53,6 +56,9 @@
     --content:        #e34948;
     --caseattr:       #0891b2;
     --derivation:     #0a6fa8;
+    --homonym:        #a67c00;
+    --synonym:        #a6299d;
+    --isotope:        #0e7f8c;
     --highlight:      #4a3aa7;
     --quality-a:      #0ca30c;
     --quality-b:      #d03b3b;
@@ -225,6 +231,12 @@
      and share a hue that no cross-row edge uses -- that, plus the arc shape, is
      what tells them apart from the lines leaving the row. */
   .edge.ms-derivation{ stroke-width:1.1px; opacity:.75; stroke:var(--derivation); fill:none; }
+  /* Dharma-to-dharma relations from tables XI/XII/XIII (homonym/synonym/isotope
+     groups, alpha/beta/gamma). Same-row arcs like ms-derivation above, each in
+     its own hue so the three relations stay distinguishable where they overlap. */
+  .edge.dharma-homonym{ stroke-width:1px; opacity:.55; stroke:var(--homonym); fill:none; }
+  .edge.dharma-synonym{ stroke-width:1px; opacity:.55; stroke:var(--synonym); fill:none; }
+  .edge.dharma-isotope{ stroke-width:1px; opacity:.55; stroke:var(--isotope); fill:none; }
   .edge.dharma-case{ stroke-width:1px; opacity:.5; }
   /* The same case-dharma relation, but stated by VII rather than VI.
      Solid like its VI counterpart, distinguished by colour. There are ~4x
@@ -738,6 +750,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     qdSphere: [],
     contentCase: [], trancicCase: [], mentalCase: [], senseObjCase: [], dhyanicObjCase: [],
     msDerivation: [],
+    dharmaHomonym: [], dharmaSynonym: [], dharmaIsotope: [],
   };
 
   function curve(x1,y1,x2,y2){
@@ -758,6 +771,28 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   // dharma_as_in_edges are not drawn: an "as in" dharma already carries its
   // own dharma-MS edges (borrowed via ms_range), so the pair already shares
   // visible MS connections -- a horizontal link here would only restate that.
+
+  // Homonym (XI, alpha), synonym (XII, beta) and isotope (XIII, gamma) groups:
+  // unlike "as in", these dharmas share no other visible connection, so the
+  // arc is the only place the relation shows up outside the popup text.
+  // Each map is symmetric (a lists b and b lists a), so draw each pair once.
+  function drawDharmaRelationEdges(byDharma, cssClass, bucket){
+    for(const [id, others] of byDharma){
+      const dl = dharmaLayout.get(id);
+      if(!dl) continue;
+      for(const otherId of others){
+        if(cmpKey(sortKey(id), sortKey(otherId)) >= 0) continue;
+        const ol = dharmaLayout.get(otherId);
+        if(!ol) continue;
+        const p = el('path', {class:'edge '+cssClass, d: curve(dl.x, Y_DHARMA, ol.x, Y_DHARMA)}, edgeLayer);
+        edgeEls[bucket].push({el:p, dharma:id, other:otherId});
+      }
+    }
+  }
+  drawDharmaRelationEdges(homonymByDharma, 'dharma-homonym', 'dharmaHomonym');
+  drawDharmaRelationEdges(synonymByDharma, 'dharma-synonym', 'dharmaSynonym');
+  drawDharmaRelationEdges(isotopeByDharma, 'dharma-isotope', 'dharmaIsotope');
+
   for(const e of data.ms_derivation_edges){
     const pl = msLayout.get(e.from), cl = msLayout.get(e.to);
     if(!pl || !cl) continue;
@@ -1277,6 +1312,9 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   for(const e of data.ms_edges)                    nlink('ms', e.from, 'dharma', e.to.slice(3));
   for(const e of data.ms_derivation_edges)         nlink('ms', e.from, 'ms', e.to);
   for(const e of data.dharma_as_in_edges)          nlink('dharma', e.from.slice(3), 'dharma', e.to.slice(3));
+  for(const [id, others] of homonymByDharma)       for(const o of others) nlink('dharma', id, 'dharma', o);
+  for(const [id, others] of synonymByDharma)       for(const o of others) nlink('dharma', id, 'dharma', o);
+  for(const [id, others] of isotopeByDharma)       for(const o of others) nlink('dharma', id, 'dharma', o);
   for(const e of data.dharma_case_edges)           nlink('dharma', e.from.slice(3), 'case', e.to.slice(5));
   for(const e of data.dharma_case_vii_edges)       nlink('dharma', e.from.slice(3), 'case', e.to.slice(5));
   for(const e of data.nomenclature_case_edges)     nlink('nomenclature', e.from.slice(4), 'case', e.to.slice(5));
@@ -1371,6 +1409,9 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     for(const e of edgeEls.mentalCase)     e.el.classList.toggle('hl', pair('mental', e.mental, 'case', e.case));
     for(const e of edgeEls.senseObjCase)   e.el.classList.toggle('hl', pair('senseObj', e.senseObj, 'case', e.case));
     for(const e of edgeEls.dhyanicObjCase) e.el.classList.toggle('hl', pair('dhyanicObj', e.dhyanicObj, 'case', e.case));
+    for(const e of edgeEls.dharmaHomonym)  e.el.classList.toggle('hl', pair('dharma', e.dharma, 'dharma', e.other));
+    for(const e of edgeEls.dharmaSynonym)  e.el.classList.toggle('hl', pair('dharma', e.dharma, 'dharma', e.other));
+    for(const e of edgeEls.dharmaIsotope)  e.el.classList.toggle('hl', pair('dharma', e.dharma, 'dharma', e.other));
   }
 
   function select(type, id){
