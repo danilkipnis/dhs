@@ -1296,8 +1296,8 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
 
   // ---------- distance-based selection ----------
   // One undirected adjacency list over typed keys ("type|id"), built from exactly
-  // the relations the diagram draws. Clicking a node then means "walk out N steps
-  // from here", so the rule is one number per entity type instead of a bespoke
+  // the relations the diagram draws. Clicking a node then means "show its direct
+  // neighbours", so highlighting reads from this shared graph instead of a bespoke
   // set of neighbours written out in each handler -- which is how the VII
   // case-dharma edges came to be left unhighlighted when a dharma was clicked.
   const adj = new Map();
@@ -1329,18 +1329,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     for(const e of arr) nlink(t, e.from.slice(3), 'case', e.to.slice(5));
   }
 
-  // How far a click reaches. Only dharmas are limited to what they touch
-  // directly; everything else shows two steps.
-  const REACH = {
-    dharma: 1,
-    case: 2, ms: 2,
-    content: 2, trancic: 2, mental: 2, senseObj: 2, dhyanicObj: 2,
-    sphere: 2, nomenclature: 2,
-    avacara: 2, qualDharma: 2,
-  };
-
-  // Which row each type sits on, so a two-step walk can be kept from doubling
-  // back onto the row it started from.
+  // Which row each type sits on, used by the popup's up/down cross-nav below.
   const ROW = {
     avacara: 1, qualDharma: 1,
     sphere: 2, nomenclature: 2,
@@ -1348,34 +1337,11 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     case: 4, dharma: 5, ms: 6,
   };
 
-  // Avacara and character of dharmas share row 1, so the rule below would stop
-  // either from reaching the other through a sphere. Exempt that pair: a sphere
-  // is *defined* as one avacara combined with one character, so the two are
-  // orthogonal axes of the same thing rather than siblings. The row-3 dimension
-  // tables are not exempt -- they only ever co-occur on a case, which is the
-  // incidental kind of neighbour the rule exists to suppress.
-  const ROW_EXEMPT = new Set(['avacara|qualDharma', 'qualDharma|avacara']);
-
+  // A click reaches only what it touches directly -- one step out, no further.
   function reachFrom(type, id){
     const start = nkey(type, id);
-    const startRow = ROW[type];
     const dist = new Map([[start, 0]]);
-    let frontier = [start];
-    for(let d = 1; d <= (REACH[type] ?? 1); d++){
-      const next = [];
-      for(const k of frontier) for(const n of (adj.get(k) || [])){
-        if(dist.has(n)) continue;
-        // Past the first step, never return to the starting row. Going out and
-        // back is what turned one mental state into every mental state of its
-        // dharma, and one content variant into every other variant of its cases.
-        // The first step is exempt, so a dharma still reaches the dharmas it is
-        // declared "as in", and a mental state its derivations.
-        const nt = n.slice(0, n.indexOf('|'));
-        if(d > 1 && ROW[nt] === startRow && !ROW_EXEMPT.has(type + '|' + nt)) continue;
-        dist.set(n, d); next.push(n);
-      }
-      frontier = next;
-    }
+    for(const n of (adj.get(start) || [])) dist.set(n, 1);
     const byType = {};
     for(const k of dist.keys()){
       const i = k.indexOf('|'), t = k.slice(0, i);
