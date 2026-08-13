@@ -226,12 +226,17 @@
   .edge.dharma-homonym{ stroke-width:1px; opacity:.55; stroke:var(--homonym); fill:none; }
   .edge.dharma-synonym{ stroke-width:1px; opacity:.55; stroke:var(--synonym); fill:none; }
   .edge.dharma-isotope{ stroke-width:1px; opacity:.55; stroke:var(--isotope); fill:none; }
-  /* Hidden by default behind the sidebar's alpha/beta/gamma checkboxes: these
-     three relations are dense enough to clutter the DHARMAS row when all on. */
-  .edge.dharma-homonym, .edge.dharma-synonym, .edge.dharma-isotope{ display:none; }
+  /* A dharma declared "as in" an earlier one (table VI). Shares ms-derivation's
+     hue: both are a later entry pointing back to an earlier one it's identical
+     to / derived from, and the two never share a row. */
+  .edge.dharma-as-in{ stroke-width:1px; opacity:.55; stroke:var(--derivation); fill:none; }
+  /* Hidden by default behind the sidebar's alpha/beta/gamma/as-in checkboxes:
+     these relations are dense enough to clutter the DHARMAS row when all on. */
+  .edge.dharma-homonym, .edge.dharma-synonym, .edge.dharma-isotope, .edge.dharma-as-in{ display:none; }
   .edge.dharma-homonym.shown{ display:inline; }
   .edge.dharma-synonym.shown{ display:inline; }
   .edge.dharma-isotope.shown{ display:inline; }
+  .edge.dharma-as-in.shown{ display:inline; }
   .edge.dharma-case{ stroke-width:1px; opacity:.5; }
   /* The same case-dharma relation, but stated by VII rather than VI.
      Solid like its VI counterpart, distinguished by colour. There are ~4x
@@ -360,6 +365,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
         <label title="Homonyms (XI)"><input type="checkbox" id="toggleHomonym">&alpha;</label>
         <label title="Synonyms (XII)"><input type="checkbox" id="toggleSynonym">&beta;</label>
         <label title="Isotopes (XIII)"><input type="checkbox" id="toggleIsotope">&gamma;</label>
+        <label title="As in (VI)"><input type="checkbox" id="toggleAsIn">as in</label>
       </div>
       <div class="search-row">
         <input id="search" type="text" placeholder="Find case / dharma / D-set&hellip;">
@@ -749,7 +755,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     qdSphere: [],
     contentCase: [], trancicCase: [], mentalCase: [], senseObjCase: [], dhyanicObjCase: [],
     msDerivation: [], contentDerivation: [],
-    dharmaHomonym: [], dharmaSynonym: [], dharmaIsotope: [],
+    dharmaHomonym: [], dharmaSynonym: [], dharmaIsotope: [], dharmaAsIn: [],
   };
 
   function curve(x1,y1,x2,y2){
@@ -767,9 +773,17 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     return `M${x1},${y1} C${x1},${midY} ${x2},${midY} ${x2},${y2}`;
   }
 
-  // dharma_as_in_edges are not drawn: an "as in" dharma already carries its
-  // own dharma-MS edges (borrowed via ms_range), so the pair already shares
-  // visible MS connections -- a horizontal link here would only restate that.
+  // An "as in" dharma already carries its own dharma-MS edges (borrowed via
+  // ms_range), so the pair already shares visible MS connections -- this arc
+  // mostly just restates that, which is why it's off by default like the
+  // other three dharma-relation checkboxes below.
+  for(const e of data.dharma_as_in_edges){
+    const dId = e.from.replace('dh-',''), tId = e.to.replace('dh-','');
+    const dl = dharmaLayout.get(dId), tl = dharmaLayout.get(tId);
+    if(!dl || !tl) continue;
+    const p = el('path', {class:'edge dharma-as-in', d: curve(dl.x, Y_DHARMA, tl.x, Y_DHARMA)}, edgeLayer);
+    edgeEls.dharmaAsIn.push({el:p, dharma:dId, other:tId});
+  }
 
   // Homonym (XI, alpha), synonym (XII, beta) and isotope (XIII, gamma) groups:
   // unlike "as in", these dharmas share no other visible connection, so the
@@ -803,6 +817,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   wireEdgeFilter('toggleHomonym', 'dharmaHomonym');
   wireEdgeFilter('toggleSynonym', 'dharmaSynonym');
   wireEdgeFilter('toggleIsotope', 'dharmaIsotope');
+  wireEdgeFilter('toggleAsIn', 'dharmaAsIn');
 
   for(const e of data.ms_derivation_edges){
     const pl = msLayout.get(e.from), cl = msLayout.get(e.to);
@@ -1399,6 +1414,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     for(const e of edgeEls.dharmaHomonym)  e.el.classList.toggle('hl', pair('dharma', e.dharma, 'dharma', e.other));
     for(const e of edgeEls.dharmaSynonym)  e.el.classList.toggle('hl', pair('dharma', e.dharma, 'dharma', e.other));
     for(const e of edgeEls.dharmaIsotope)  e.el.classList.toggle('hl', pair('dharma', e.dharma, 'dharma', e.other));
+    for(const e of edgeEls.dharmaAsIn)     e.el.classList.toggle('hl', pair('dharma', e.dharma, 'dharma', e.other));
   }
 
   function select(type, id){
