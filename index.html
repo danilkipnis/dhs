@@ -1859,10 +1859,10 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     const sy = rect.top + ((y-vb.y)/vb.h)*rect.height;
     pinTooltip(type, id, sx+14, sy+14);
   }
-  function runSearch(){
-    const q = searchInput.value.trim().toLowerCase();
-    if(!q) return;
-
+  // Shared by the search box and the initial ?<query> address-bar param:
+  // resolves q to a node, selects it, and pans/pins its tooltip. Returns
+  // whether a match was found.
+  function trySelectQuery(q){
     const vcMatch = /^vc(.+)$/.exec(q);
     let caseKey = vcMatch ? vcMatch[1] : q;
     // A trailing letter (e.g. "162a") may be a VII sub-case marker rather
@@ -1873,7 +1873,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       selectCase(caseKey);
       const l = caseLayout.get(caseKey);
       focus('case', caseKey, l.x, Y_CASE, Math.max(600, l.width*3));
-      return;
+      return true;
     }
     const msMatch = /^ms(\d+)$/.exec(q);
     if(msMatch && msById.has('ms-'+msMatch[1])){
@@ -1881,35 +1881,35 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       selectMs(id);
       const ml = msLayout.get(id);
       focus('ms', id, ml.x, Y_MS, 500);
-      return;
+      return true;
     }
     const nomMatch = /^t(\d+)$/.exec(q);
     if(nomMatch && nomenclatureById.has(nomMatch[1])){
       selectNomenclature(nomMatch[1]);
       const nl = nomenclatureX.get(nomMatch[1]);
       focus('nomenclature', nomMatch[1], nl.x, nl.y, 500);
-      return;
+      return true;
     }
     const sphMatch = /^s(\d+)$/.exec(q);
     if(sphMatch && sphereById.has(sphMatch[1])){
       selectSphere(sphMatch[1]);
       const sl = sphereX.get(sphMatch[1]);
       focus('sphere', sphMatch[1], sl.x, sl.y, 500);
-      return;
+      return true;
     }
     const qualWord = {a:'A', b:'B', c:'C', wholesome:'A', unwholesome:'B', indeterminate:'C'}[q];
     if(qualWord && qualDharmaById.has(qualWord)){
       selectQuality('qualDharma', qualWord);
       const ql = qualDharmaX.get(qualWord);
       focus('qualdharma', qualWord, ql.x, Y_L1, 500);
-      return;
+      return true;
     }
     const avMatch = /^a([a-z]+)$/.exec(q);
     if(avMatch && avacaraById.has(avMatch[1])){
       selectAvacara(avMatch[1]);
       const al = avacaraX.get(avMatch[1]);
       focus('avacara', avMatch[1], al.x, Y_L1, 500);
-      return;
+      return true;
     }
     const dsetMatch = /^d(\d+)$/.exec(q);
     if(dsetMatch){
@@ -1918,7 +1918,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
         selectCase(dset.case_num);
         const l = caseLayout.get(dset.case_num);
         focus('case', dset.case_num, l.x, Y_CASE, Math.max(600, l.width*3));
-        return;
+        return true;
       }
     }
     const contentMatch = /^c([a-z0-9]+)$/.exec(q);
@@ -1926,28 +1926,28 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       selectCaseAttr('content', contentMatch[1]);
       const pl = contentX.get(contentMatch[1]);
       focus('content', contentMatch[1], pl.x, pl.y, 500);
-      return;
+      return true;
     }
     const trancicMatch = /^tv(\d+)$/.exec(q);
     if(trancicMatch && trancicById.has(trancicMatch[1])){
       selectCaseAttr('trancic', trancicMatch[1]);
       const pl = trancicX.get(trancicMatch[1]);
       focus('trancic', trancicMatch[1], pl.x, pl.y, 500);
-      return;
+      return true;
     }
     const dhyObjMatch = /^o\[(\d+)\]$/.exec(q);
     if(dhyObjMatch && dhyanicObjById.has(dhyObjMatch[1])){
       selectCaseAttr('dhyanicObj', dhyObjMatch[1]);
       const pl = dhyanicObjX.get(dhyObjMatch[1]);
       focus('dhyanicobj', dhyObjMatch[1], pl.x, pl.y, 500);
-      return;
+      return true;
     }
     const senseObjMatch = /^o(\d+)$/.exec(q);
     if(senseObjMatch && senseObjById.has(senseObjMatch[1])){
       selectCaseAttr('senseObj', senseObjMatch[1]);
       const pl = senseObjX.get(senseObjMatch[1]);
       focus('senseobj', senseObjMatch[1], pl.x, pl.y, 500);
-      return;
+      return true;
     }
 
     // ---- fallback: substring search over every pali/translation field ----
@@ -1956,7 +1956,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
         selectDharma(d.dharma_id);
         const l = dharmaLayout.get(d.dharma_id);
         focus('dharma', d.dharma_id, l.x, Y_DHARMA, 500);
-        return;
+        return true;
       }
     }
     for(const m of data.ms){
@@ -1964,7 +1964,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
         selectMs(m.id);
         const ml = msLayout.get(m.id);
         focus('ms', m.id, ml.x, Y_MS, 500);
-        return;
+        return true;
       }
     }
     for(const n of data.nomenclature){
@@ -1972,7 +1972,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
         selectNomenclature(n.term_id);
         const nl = nomenclatureX.get(n.term_id);
         focus('nomenclature', n.term_id, nl.x, nl.y, 500);
-        return;
+        return true;
       }
     }
     for(const s of data.spheres){
@@ -1980,7 +1980,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
         selectSphere(s.sphere_id);
         const sl = sphereX.get(s.sphere_id);
         focus('sphere', s.sphere_id, sl.x, sl.y, 500);
-        return;
+        return true;
       }
     }
     for(const a of data.avacaras){
@@ -1988,7 +1988,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
         selectAvacara(a.key);
         const al = avacaraX.get(a.key);
         focus('avacara', a.key, al.x, Y_L1, 500);
-        return;
+        return true;
       }
     }
     for(const qd of data.quality_dharma){
@@ -1996,7 +1996,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
         selectQuality('qualDharma', qd.letter);
         const ql = qualDharmaX.get(qd.letter);
         focus('qualdharma', qd.letter, ql.x, Y_L1, 500);
-        return;
+        return true;
       }
     }
     const caseAttrSearchTargets = [
@@ -2012,21 +2012,36 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
           selectCaseAttr(typeKey, item[idKey]);
           const pl = xmap.get(item[idKey]);
           focus(dataType, item[idKey], pl.x, pl.y, 500);
-          return;
+          return true;
         }
       }
     }
-    describe(`No match for "${q}".`);
+    return false;
+  }
+  function runSearch(){
+    const q = searchInput.value.trim().toLowerCase();
+    if(!q) return;
+    if(!trySelectQuery(q)) describe(`No match for "${q}".`);
   }
   searchInput.addEventListener('keydown', (ev)=>{ if(ev.key === 'Enter') runSearch(); });
   document.getElementById('searchBtn').addEventListener('click', runSearch);
 
-  // ---------- initial focus: a random case preselected, popup open ----------
-  // First centers on the case at the default zoom and opens its popup there,
-  // then zooms in -- sized off the popup's own rendered height, since that
-  // depends on the case's actual content -- and repositions the popup for
-  // the tighter view. The case stays vertically centered throughout.
+  // ---------- initial focus: ?<query> param, else a random case ----------
+  // If the page was loaded with a ?<query> matching the search box's own
+  // syntax (the same one written back to the address bar on selection),
+  // jump straight to that node instead of picking a case at random.
+  // Otherwise: first center on the random case at the default zoom and open
+  // its popup there, then zoom in -- sized off the popup's own rendered
+  // height, since that depends on the case's actual content -- and
+  // reposition the popup for the tighter view. The case stays vertically
+  // centered throughout.
   (function initialFocus(){
+    const rawQuery = window.location.search.slice(1);
+    if(rawQuery){
+      const q = decodeURIComponent(rawQuery).trim().toLowerCase();
+      if(q && trySelectQuery(q)) return;
+    }
+
     const caseIds = [...caseLayout.keys()];
     const caseId = caseIds[Math.floor(Math.random()*caseIds.length)];
     const l = caseLayout.get(caseId);
