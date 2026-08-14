@@ -1886,27 +1886,37 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   document.getElementById('searchBtn').addEventListener('click', runSearch);
 
   // ---------- initial focus: Case 1 preselected, popup open ----------
-  // Zoomed so the on-screen gap between the CASES and MS rows (two
-  // LAYER_GAP apart in diagram units) comes out a bit smaller than the
-  // popup's own rendered height -- measured live rather than hard-coded,
-  // since popup height depends on Case 1's actual content. Centered
-  // between CASES and MS so the MS row is visible on load too.
+  // First centers on Case 1 at the default zoom and opens its popup there,
+  // then zooms in -- sized off the popup's own rendered height, since that
+  // depends on Case 1's actual content -- and repositions the popup for
+  // the tighter view. Case 1 stays vertically centered throughout.
   (function initialFocus(){
     const l = caseLayout.get('1');
     if(!l) return;
+    const cx = l.x, cy = Y_CASE;
+
+    // 1) Center the view on Case 1 at the default (unzoomed) scale.
+    panTo(cx, cy, fullBox.w);
+    flushViewBox();
+
+    // 2) Select it so the popup renders, positioned against that centered view.
     selectByType('case', '1');
-    const cx = l.x, cy = (Y_CASE + Y_MS) / 2;
-    pinTooltip('case', '1', -9999, -9999);
-    const popupH = tooltip.getBoundingClientRect().height || 200;
     refreshStageRect();
-    const rect = stageRect;
+    let rect = stageRect;
+    let sx = rect.left + ((l.x-vb.x)/vb.w)*rect.width;
+    let sy = rect.top + ((Y_CASE-vb.y)/vb.h)*rect.height;
+    pinTooltip('case', '1', sx+14, sy+14);
+
+    // 3) Now zoom in, sized off the popup's actual rendered height, and
+    // reposition the popup for the new, tighter view.
+    const popupH = tooltip.getBoundingClientRect().height || 200;
     const aspect = rect.width / rect.height;
-    const h = (2*LAYER_GAP / (popupH * 0.9)) * rect.height;
+    const h = (2*LAYER_GAP / (popupH * 0.9)) * rect.height / 1.5;
     const w = h * aspect;
     vb = { x: cx - w/2, y: cy - h/2, w, h };
     flushViewBox();
-    const sx = rect.left + ((l.x-vb.x)/vb.w)*rect.width;
-    const sy = rect.top + ((Y_CASE-vb.y)/vb.h)*rect.height;
+    sx = rect.left + ((l.x-vb.x)/vb.w)*rect.width;
+    sy = rect.top + ((Y_CASE-vb.y)/vb.h)*rect.height;
     pinTooltip('case', '1', sx+14, sy+14);
   })();
 
