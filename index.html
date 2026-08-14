@@ -1410,11 +1410,36 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     for(const e of edgeEls.dharmaAsIn)     e.el.classList.toggle('hl', pair('dharma', e.dharma, 'dharma', e.other));
   }
 
+  // Renders a selection as the same id syntax the search box accepts, so a
+  // copied URL reproduces the search that would land on this node.
+  const SEARCH_PARAM_FOR = {
+    case: id => 'vc'+id,
+    dharma: id => id,
+    ms: id => 'ms'+(String(id).startsWith('ms-') ? id.slice(3) : id),
+    nomenclature: id => 't'+id,
+    sphere: id => 's'+id,
+    avacara: id => 'a'+id,
+    qualDharma: id => String(id).toLowerCase(),
+    content: id => 'c'+id,
+    trancic: id => 'tv'+id,
+    mental: id => id,
+    senseObj: id => 'o'+id,
+    dhyanicObj: id => `o[${id}]`,
+  };
+  function updateAddressBar(type, id){
+    const fn = SEARCH_PARAM_FOR[type];
+    if(!fn) return;
+    const url = new URL(window.location.href);
+    url.search = '?' + fn(id);
+    history.replaceState(null, '', url);
+  }
+
   function select(type, id){
     const reach = reachFrom(type, id);
     dimAllExceptMap(reach.nodes);
     setActive(type, id);
     applyHighlightFromActive(reach);
+    updateAddressBar(type, id);
     return reach;
   }
 
