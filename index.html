@@ -361,7 +361,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
         <label title="As in (VI)"><input type="checkbox" id="toggleAsIn">as in</label>
       </div>
       <div class="search-row">
-        <input id="search" type="text" placeholder="Find case / dharma / D-set&hellip;">
+        <input id="search" type="text" placeholder="Search: vc/ms/t/a/d/c/tv/o/s&lt;id&gt;, A/B/C, or text&hellip;">
         <button id="searchBtn" type="button" title="Search" aria-label="Search">&#128269;</button>
       </div>
     </div>
@@ -1816,34 +1816,129 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
 
   // ---------- search ----------
   const searchInput = document.getElementById('search');
+  // Prefix scheme (see placeholder): vc=case (bare number also works), ms=mind
+  // state, t=nomenclature of thought, a<word>=avacara, single letter/word
+  // A/B/C or wholesome/unwholesome/indeterminate=character of dharma, d=dharmaset
+  // (resolves to its case), c=variant of content, tv=trancic variable,
+  // o<n>/o[<n>]=sense/dhyānic object, s=sphere of thought. Anything else falls
+  // through to a plain substring search over every pali/translation field.
+  // Pans to (x,y) like panTo(), then (re)pins the tooltip on the node just
+  // selected -- panTo() alone only moves the view; without this a search
+  // that runs while a different node's tooltip is already pinned leaves
+  // that stale popup on screen instead of opening the new one.
+  function focus(type, id, x, y, w){
+    panTo(x, y, w);
+    refreshStageRect();
+    const rect = stageRect;
+    const sx = rect.left + ((x-vb.x)/vb.w)*rect.width;
+    const sy = rect.top + ((y-vb.y)/vb.h)*rect.height;
+    pinTooltip(type, id, sx+14, sy+14);
+  }
   function runSearch(){
     const q = searchInput.value.trim().toLowerCase();
     if(!q) return;
-    if(caseById.has(q)){
-      selectCase(q);
-      const l = caseLayout.get(q);
-      panTo(l.x, Y_CASE, Math.max(600, l.width*3));
+
+    const vcMatch = /^vc(.+)$/.exec(q);
+    let caseKey = vcMatch ? vcMatch[1] : q;
+    // A trailing letter (e.g. "162a") may be a VII sub-case marker rather
+    // than part of the case id itself -- if there's no exact match, drop it
+    // and try the bare case id.
+    if(!caseById.has(caseKey) && /[a-z]$/i.test(caseKey)) caseKey = caseKey.slice(0, -1);
+    if(caseById.has(caseKey)){
+      selectCase(caseKey);
+      const l = caseLayout.get(caseKey);
+      focus('case', caseKey, l.x, Y_CASE, Math.max(600, l.width*3));
       return;
     }
-    const nomMatch = /^t(\d+)$/i.exec(q);
+    const msMatch = /^ms(\d+)$/.exec(q);
+    if(msMatch && msById.has('ms-'+msMatch[1])){
+      const id = 'ms-'+msMatch[1];
+      selectMs(id);
+      const ml = msLayout.get(id);
+      focus('ms', id, ml.x, Y_MS, 500);
+      return;
+    }
+    const nomMatch = /^t(\d+)$/.exec(q);
     if(nomMatch && nomenclatureById.has(nomMatch[1])){
       selectNomenclature(nomMatch[1]);
       const nl = nomenclatureX.get(nomMatch[1]);
-      panTo(nl.x, nl.y, 500);
+      focus('nomenclature', nomMatch[1], nl.x, nl.y, 500);
       return;
     }
-    const sphMatch = /^s(\d+)$/i.exec(q);
+    const sphMatch = /^s(\d+)$/.exec(q);
     if(sphMatch && sphereById.has(sphMatch[1])){
       selectSphere(sphMatch[1]);
       const sl = sphereX.get(sphMatch[1]);
-      panTo(sl.x, sl.y, 500);
+      focus('sphere', sphMatch[1], sl.x, sl.y, 500);
       return;
     }
+    const qualWord = {a:'A', b:'B', c:'C', wholesome:'A', unwholesome:'B', indeterminate:'C'}[q];
+    if(qualWord && qualDharmaById.has(qualWord)){
+      selectQuality('qualDharma', qualWord);
+      const ql = qualDharmaX.get(qualWord);
+      focus('qualdharma', qualWord, ql.x, Y_L1, 500);
+      return;
+    }
+    const avMatch = /^a([a-z]+)$/.exec(q);
+    if(avMatch && avacaraById.has(avMatch[1])){
+      selectAvacara(avMatch[1]);
+      const al = avacaraX.get(avMatch[1]);
+      focus('avacara', avMatch[1], al.x, Y_L1, 500);
+      return;
+    }
+    const dsetMatch = /^d(\d+)$/.exec(q);
+    if(dsetMatch){
+      const dset = supersetById.get('D'+dsetMatch[1]);
+      if(dset && caseById.has(dset.case_num)){
+        selectCase(dset.case_num);
+        const l = caseLayout.get(dset.case_num);
+        focus('case', dset.case_num, l.x, Y_CASE, Math.max(600, l.width*3));
+        return;
+      }
+    }
+    const contentMatch = /^c([a-z0-9]+)$/.exec(q);
+    if(contentMatch && contentById.has(contentMatch[1])){
+      selectCaseAttr('content', contentMatch[1]);
+      const pl = contentX.get(contentMatch[1]);
+      focus('content', contentMatch[1], pl.x, pl.y, 500);
+      return;
+    }
+    const trancicMatch = /^tv(\d+)$/.exec(q);
+    if(trancicMatch && trancicById.has(trancicMatch[1])){
+      selectCaseAttr('trancic', trancicMatch[1]);
+      const pl = trancicX.get(trancicMatch[1]);
+      focus('trancic', trancicMatch[1], pl.x, pl.y, 500);
+      return;
+    }
+    const dhyObjMatch = /^o\[(\d+)\]$/.exec(q);
+    if(dhyObjMatch && dhyanicObjById.has(dhyObjMatch[1])){
+      selectCaseAttr('dhyanicObj', dhyObjMatch[1]);
+      const pl = dhyanicObjX.get(dhyObjMatch[1]);
+      focus('dhyanicobj', dhyObjMatch[1], pl.x, pl.y, 500);
+      return;
+    }
+    const senseObjMatch = /^o(\d+)$/.exec(q);
+    if(senseObjMatch && senseObjById.has(senseObjMatch[1])){
+      selectCaseAttr('senseObj', senseObjMatch[1]);
+      const pl = senseObjX.get(senseObjMatch[1]);
+      focus('senseobj', senseObjMatch[1], pl.x, pl.y, 500);
+      return;
+    }
+
+    // ---- fallback: substring search over every pali/translation field ----
     for(const d of data.dharmas){
       if(d.dharma_id.toLowerCase()===q || (d.name_pali||'').toLowerCase().includes(q) || (d.name_translation||'').toLowerCase().includes(q)){
         selectDharma(d.dharma_id);
         const l = dharmaLayout.get(d.dharma_id);
-        panTo(l.x, Y_DHARMA, 500);
+        focus('dharma', d.dharma_id, l.x, Y_DHARMA, 500);
+        return;
+      }
+    }
+    for(const m of data.ms){
+      if((m.pali||'').toLowerCase().includes(q) || (m.translation||'').toLowerCase().includes(q)){
+        selectMs(m.id);
+        const ml = msLayout.get(m.id);
+        focus('ms', m.id, ml.x, Y_MS, 500);
         return;
       }
     }
@@ -1851,7 +1946,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       if((n.term_pali||'').toLowerCase().includes(q) || (n.translation||'').toLowerCase().includes(q)){
         selectNomenclature(n.term_id);
         const nl = nomenclatureX.get(n.term_id);
-        panTo(nl.x, nl.y, 500);
+        focus('nomenclature', n.term_id, nl.x, nl.y, 500);
         return;
       }
     }
@@ -1859,23 +1954,39 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       if((s.sphere_pali||'').toLowerCase().includes(q) || (s.translation||'').toLowerCase().includes(q)){
         selectSphere(s.sphere_id);
         const sl = sphereX.get(s.sphere_id);
-        panTo(sl.x, sl.y, 500);
+        focus('sphere', s.sphere_id, sl.x, sl.y, 500);
+        return;
+      }
+    }
+    for(const a of data.avacaras){
+      if((a.gloss||'').toLowerCase().includes(q)){
+        selectAvacara(a.key);
+        const al = avacaraX.get(a.key);
+        focus('avacara', a.key, al.x, Y_L1, 500);
+        return;
+      }
+    }
+    for(const qd of data.quality_dharma){
+      if((qd.gloss||'').toLowerCase().includes(q)){
+        selectQuality('qualDharma', qd.letter);
+        const ql = qualDharmaX.get(qd.letter);
+        focus('qualdharma', qd.letter, ql.x, Y_L1, 500);
         return;
       }
     }
     const caseAttrSearchTargets = [
-      [data.content, 'content_id', contentX, 'content'],
-      [data.trancic, 'trancic_id', trancicX, 'trancic'],
-      [data.mental, 'mental_id', mentalX, 'mental'],
-      [data.sense_objects, 'object_id', senseObjX, 'senseObj'],
-      [data.dhyanic_objects, 'object_id', dhyanicObjX, 'dhyanicObj'],
+      [data.content, 'content_id', contentX, 'content', 'content'],
+      [data.trancic, 'trancic_id', trancicX, 'trancic', 'trancic'],
+      [data.mental, 'mental_id', mentalX, 'mental', 'mental'],
+      [data.sense_objects, 'object_id', senseObjX, 'senseObj', 'senseobj'],
+      [data.dhyanic_objects, 'object_id', dhyanicObjX, 'dhyanicObj', 'dhyanicobj'],
     ];
-    for(const [list, idKey, xmap, typeKey] of caseAttrSearchTargets){
+    for(const [list, idKey, xmap, typeKey, dataType] of caseAttrSearchTargets){
       for(const item of list){
         if((item.pali||'').toLowerCase().includes(q) || (item.translation||'').toLowerCase().includes(q)){
           selectCaseAttr(typeKey, item[idKey]);
           const pl = xmap.get(item[idKey]);
-          panTo(pl.x, pl.y, 500);
+          focus(dataType, item[idKey], pl.x, pl.y, 500);
           return;
         }
       }
