@@ -1885,18 +1885,18 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   searchInput.addEventListener('keydown', (ev)=>{ if(ev.key === 'Enter') runSearch(); });
   document.getElementById('searchBtn').addEventListener('click', runSearch);
 
-  // ---------- initial focus: Case 162 preselected, popup open ----------
+  // ---------- initial focus: Case 1 preselected, popup open ----------
   // Zoomed so the on-screen gap between the CASES and MS rows (two
   // LAYER_GAP apart in diagram units) comes out a bit smaller than the
   // popup's own rendered height -- measured live rather than hard-coded,
-  // since popup height depends on Case 162's actual content. Centered
+  // since popup height depends on Case 1's actual content. Centered
   // between CASES and MS so the MS row is visible on load too.
   (function initialFocus(){
-    const l = caseLayout.get('162');
+    const l = caseLayout.get('1');
     if(!l) return;
-    selectByType('case', '162');
+    selectByType('case', '1');
     const cx = l.x, cy = (Y_CASE + Y_MS) / 2;
-    pinTooltip('case', '162', -9999, -9999);
+    pinTooltip('case', '1', -9999, -9999);
     const popupH = tooltip.getBoundingClientRect().height || 200;
     refreshStageRect();
     const rect = stageRect;
@@ -1907,7 +1907,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     flushViewBox();
     const sx = rect.left + ((l.x-vb.x)/vb.w)*rect.width;
     const sy = rect.top + ((Y_CASE-vb.y)/vb.h)*rect.height;
-    pinTooltip('case', '162', sx+14, sy+14);
+    pinTooltip('case', '1', sx+14, sy+14);
   })();
 
 })();
