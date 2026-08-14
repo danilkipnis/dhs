@@ -1885,27 +1885,29 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   searchInput.addEventListener('keydown', (ev)=>{ if(ev.key === 'Enter') runSearch(); });
   document.getElementById('searchBtn').addEventListener('click', runSearch);
 
-  // ---------- initial focus: Case 1 preselected, popup open ----------
-  // First centers on Case 1 at the default zoom and opens its popup there,
+  // ---------- initial focus: a random case preselected, popup open ----------
+  // First centers on the case at the default zoom and opens its popup there,
   // then zooms in -- sized off the popup's own rendered height, since that
-  // depends on Case 1's actual content -- and repositions the popup for
-  // the tighter view. Case 1 stays vertically centered throughout.
+  // depends on the case's actual content -- and repositions the popup for
+  // the tighter view. The case stays vertically centered throughout.
   (function initialFocus(){
-    const l = caseLayout.get('1');
+    const caseIds = [...caseLayout.keys()];
+    const caseId = caseIds[Math.floor(Math.random()*caseIds.length)];
+    const l = caseLayout.get(caseId);
     if(!l) return;
     const cx = l.x, cy = Y_CASE;
 
-    // 1) Center the view on Case 1 at the default (unzoomed) scale.
+    // 1) Center the view on the case at the default (unzoomed) scale.
     panTo(cx, cy, fullBox.w);
     flushViewBox();
 
     // 2) Select it so the popup renders, positioned against that centered view.
-    selectByType('case', '1');
+    selectByType('case', caseId);
     refreshStageRect();
     let rect = stageRect;
     let sx = rect.left + ((l.x-vb.x)/vb.w)*rect.width;
     let sy = rect.top + ((Y_CASE-vb.y)/vb.h)*rect.height;
-    pinTooltip('case', '1', sx+14, sy+14);
+    pinTooltip('case', caseId, sx+14, sy+14);
 
     // 3) Now zoom in, sized off the popup's actual rendered height, and
     // reposition the popup for the new, tighter view.
@@ -1917,7 +1919,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     flushViewBox();
     sx = rect.left + ((l.x-vb.x)/vb.w)*rect.width;
     sy = rect.top + ((Y_CASE-vb.y)/vb.h)*rect.height;
-    pinTooltip('case', '1', sx+14, sy+14);
+    pinTooltip('case', caseId, sx+14, sy+14);
   })();
 
 })();
