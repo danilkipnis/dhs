@@ -1862,7 +1862,18 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   // Shared by the search box and the initial ?<query> address-bar param:
   // resolves q to a node, selects it, and pans/pins its tooltip. Returns
   // whether a match was found.
-  function trySelectQuery(q){
+  function trySelectQuery(rawQ){
+    const q = rawQ.trim().toLowerCase();
+    const supMatch = /^ds(\d+)$/.exec(q);
+    if(supMatch){
+      const dset = supersetById.get('D'+supMatch[1]);
+      if(dset && caseById.has(dset.case_num)){
+        selectCase(dset.case_num);
+        const l = caseLayout.get(dset.case_num);
+        focus('case', dset.case_num, l.x, Y_CASE, Math.max(600, l.width*3));
+        return true;
+      }
+    }
     const vcMatch = /^vc(.+)$/.exec(q);
     let caseKey = vcMatch ? vcMatch[1] : q;
     // A trailing letter (e.g. "162a") may be a VII sub-case marker rather
@@ -1911,21 +1922,12 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       focus('avacara', avMatch[1], al.x, Y_L1, 500);
       return true;
     }
-    const dsetMatch = /^d(\d+)$/.exec(q);
-    if(dsetMatch){
-      if(dharmaById.has(dsetMatch[1])){
-        selectDharma(dsetMatch[1]);
-        const l = dharmaLayout.get(dsetMatch[1]);
-        focus('dharma', dsetMatch[1], l.x, Y_DHARMA, 500);
-        return true;
-      }
-      const dset = supersetById.get('D'+dsetMatch[1]);
-      if(dset && caseById.has(dset.case_num)){
-        selectCase(dset.case_num);
-        const l = caseLayout.get(dset.case_num);
-        focus('case', dset.case_num, l.x, Y_CASE, Math.max(600, l.width*3));
-        return true;
-      }
+    const dharmaMatch = /^d(\d+)$/.exec(q);
+    if(dharmaMatch && dharmaById.has(dharmaMatch[1])){
+      selectDharma(dharmaMatch[1]);
+      const l = dharmaLayout.get(dharmaMatch[1]);
+      focus('dharma', dharmaMatch[1], l.x, Y_DHARMA, 500);
+      return true;
     }
     const mentalMatch = /^mv(\d+)$/.exec(q);
     if(mentalMatch && mentalById.has(mentalMatch[1])){
@@ -2032,7 +2034,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     return false;
   }
   function runSearch(){
-    const q = searchInput.value.trim().toLowerCase();
+    const q = searchInput.value.trim();
     if(!q) return;
     if(!trySelectQuery(q)) describe(`No match for "${q}".`);
   }
@@ -2051,7 +2053,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   (function initialFocus(){
     const rawQuery = window.location.search.slice(1);
     if(rawQuery){
-      const q = decodeURIComponent(rawQuery).trim().toLowerCase();
+      const q = decodeURIComponent(rawQuery).trim();
       if(q && trySelectQuery(q)) return;
     }
 
