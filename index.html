@@ -1133,7 +1133,7 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
 
   // Chime played whenever V-O:2 (sound-objects) is involved, gated on
   // #soundToggle -- a little wink at that node's own gloss.
-  const CHIME_MAX_DIST = 2;
+  const CHIME_MAX_DIST = 3;
   const CHIME_PEAK = 0.35;
   let chimeCtx = null;
   function playChime(dist){
@@ -1155,24 +1155,24 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   }
   // Distance is measured on the same shared adjacency graph the click-highlighting
   // uses (see "distance-based selection" below) -- so at distance 2 this reaches,
-  // e.g., a dharma or trancic/mental variable that shares a case with V-O:2, not
-  // just V-O:2 itself (distance 0) or a case directly linked to it (distance 1).
+  // e.g., a dharma or trancic/mental variable that shares a case with V-O:2 (not
+  // just V-O:2 itself at distance 0, or a case directly linked to it at distance
+  // 1), and at distance 3 an ms that derives one of those dharmas.
   function maybeChime(type, id){
     const key = NODE_TYPE_KEY[type];
     if(!key) return;
     const start = nkey('senseObj', '2');
     const target = nkey(key, String(id));
-    let dist = target === start ? 0 : undefined;
-    if(dist === undefined){
-      const n1 = adj.get(start) || new Set();
-      if(n1.has(target)) dist = 1;
-      else{
-        for(const n of n1){
-          if((adj.get(n) || new Set()).has(target)){ dist = 2; break; }
-        }
-      }
+    let dist = 0;
+    let frontier = new Set([start]);
+    const seen = new Set(frontier);
+    while(!frontier.has(target) && dist < CHIME_MAX_DIST){
+      const next = new Set();
+      for(const n of frontier) for(const m of (adj.get(n) || [])) if(!seen.has(m)){ seen.add(m); next.add(m); }
+      frontier = next;
+      dist++;
     }
-    if(dist === undefined) return;
+    if(!frontier.has(target)) return;
     if(document.getElementById('soundToggle').getAttribute('aria-pressed')==='true') playChime(dist);
   }
 
