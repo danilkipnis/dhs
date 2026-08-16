@@ -1133,17 +1133,22 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
 
   // Chime played whenever V-O:2 (sound-objects) is involved, gated on
   // #soundToggle -- a little wink at that node's own gloss.
+  const CHIME_MAX_DIST = 2;
+  const CHIME_PEAK = 0.35;
   let chimeCtx = null;
-  function playChime(){
+  function playChime(dist){
     const ctx = chimeCtx || (chimeCtx = new (window.AudioContext||window.webkitAudioContext)());
     if(ctx.state === 'suspended') ctx.resume();
     // Short, crisp tick similar to a laptop's volume-change blip: a brief
     // sine burst with a fast attack and fast decay, not a sustained tone.
+    // Peak amplitude falls off linearly with distance from V-O:2, so a direct
+    // hit is louder than a two-hop echo through a shared case.
+    const peak = CHIME_PEAK * (1 - dist/(CHIME_MAX_DIST+1));
     const t0 = ctx.currentTime;
     const osc = ctx.createOscillator(), gain = ctx.createGain();
     osc.type = 'sine'; osc.frequency.setValueAtTime(1200, t0);
     gain.gain.setValueAtTime(0, t0);
-    gain.gain.linearRampToValueAtTime(0.35, t0+0.008);
+    gain.gain.linearRampToValueAtTime(peak, t0+0.008);
     gain.gain.exponentialRampToValueAtTime(0.0001, t0+0.09);
     osc.connect(gain).connect(ctx.destination);
     osc.start(t0); osc.stop(t0+0.1);
@@ -1157,18 +1162,18 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     if(!key) return;
     const start = nkey('senseObj', '2');
     const target = nkey(key, String(id));
-    let withinTwo = target === start;
-    if(!withinTwo){
+    let dist = target === start ? 0 : undefined;
+    if(dist === undefined){
       const n1 = adj.get(start) || new Set();
-      withinTwo = n1.has(target);
-      if(!withinTwo){
+      if(n1.has(target)) dist = 1;
+      else{
         for(const n of n1){
-          if((adj.get(n) || new Set()).has(target)){ withinTwo = true; break; }
+          if((adj.get(n) || new Set()).has(target)){ dist = 2; break; }
         }
       }
     }
-    if(!withinTwo) return;
-    if(document.getElementById('soundToggle').getAttribute('aria-pressed')==='true') playChime();
+    if(dist === undefined) return;
+    if(document.getElementById('soundToggle').getAttribute('aria-pressed')==='true') playChime(dist);
   }
 
   const sidebar = document.getElementById('sidebar');
