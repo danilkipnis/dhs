@@ -1148,10 +1148,26 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     osc.connect(gain).connect(ctx.destination);
     osc.start(t0); osc.stop(t0+0.1);
   }
+  // Distance is measured on the same shared adjacency graph the click-highlighting
+  // uses (see "distance-based selection" below) -- so at distance 2 this reaches,
+  // e.g., a dharma or trancic/mental variable that shares a case with V-O:2, not
+  // just V-O:2 itself (distance 0) or a case directly linked to it (distance 1).
   function maybeChime(type, id){
-    const isVO2 = type==='senseobj' && String(id)==='2';
-    const isCaseOfVO2 = type==='case' && (caseToSenseObj.get(String(id))||[]).includes('2');
-    if(!isVO2 && !isCaseOfVO2) return;
+    const key = NODE_TYPE_KEY[type];
+    if(!key) return;
+    const start = nkey('senseObj', '2');
+    const target = nkey(key, String(id));
+    let withinTwo = target === start;
+    if(!withinTwo){
+      const n1 = adj.get(start) || new Set();
+      withinTwo = n1.has(target);
+      if(!withinTwo){
+        for(const n of n1){
+          if((adj.get(n) || new Set()).has(target)){ withinTwo = true; break; }
+        }
+      }
+    }
+    if(!withinTwo) return;
     if(document.getElementById('soundToggle').getAttribute('aria-pressed')==='true') playChime();
   }
 
