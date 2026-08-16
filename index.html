@@ -1599,7 +1599,11 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       candidates.push({type: DATA_TYPE_OF[nCamelType], id: nId});
     }
     if(!candidates.length) return null;
-    return candidates[Math.floor(Math.random() * candidates.length)];
+    // Multiple entities can sit on the same row up/down from here (e.g. t,s,mv,o
+    // above cases) -- pick the one that's leftmost in the view, same tie-break
+    // left/right nav uses.
+    candidates.sort((a,b) => nodeCenter(a.type, a.id).x - nodeCenter(b.type, b.id).x);
+    return candidates[0];
   }
   function neighborFor(type, id, dir){
     return (dir === 'left' || dir === 'right')
@@ -1656,15 +1660,18 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     if(!ev.target.closest('.node')){ clearHighlight(); describe(''); unpinTooltip(); }
   });
 
-  // Left/right arrow keys drive the same same-row neighbour nav as the
-  // tooltip's own <-/-> buttons. Skipped while typing in an input (the
-  // search box) so the keys keep their normal cursor-movement meaning there.
+  // Arrow keys drive the same nav as the tooltip's own <-/-> buttons: left/right
+  // move along the current row, up/down cross to a connected row above/below
+  // (no on-screen buttons for those -- keyboard-only). Skipped while typing in
+  // an input (the search box) so the keys keep their normal cursor-movement
+  // meaning there.
+  const ARROW_DIR = {ArrowLeft:'left', ArrowRight:'right', ArrowUp:'up', ArrowDown:'down'};
   document.addEventListener('keydown', (ev)=>{
     if(!pinnedType) return;
-    if(ev.key !== 'ArrowLeft' && ev.key !== 'ArrowRight') return;
+    const dir = ARROW_DIR[ev.key];
+    if(!dir) return;
     const tag = document.activeElement && document.activeElement.tagName;
     if(tag === 'INPUT' || tag === 'TEXTAREA') return;
-    const dir = ev.key === 'ArrowLeft' ? 'left' : 'right';
     const n = neighborFor(pinnedType, pinnedId, dir);
     if(n){ ev.preventDefault(); navigateAndPin(n.type, n.id); }
   });

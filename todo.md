@@ -21,16 +21,3 @@
 11. Cleanup js code
 12. Cleanup Claude's notes in json
 13. QA OCR
-14. Add vertical (up/down keys) navigation to the popups. Up-one level on the er
-plane (e.g. from Cases to the connected item in the Sphere of Thought if any. Or
-down: from cases to the dharmas level). Pick first item if there are several
-matching entries. There are multiple er levels (entities) above e.g. the Cases
-level: t,s,mv,o,etc. Encode following rule: If there are entries from multiple
-entities("levels on er plane") connected to the given one on the(level) up or
-down, pick the first one (meaning the one located on the left in the view, the
-first one if sorting the currently displayed neighboring entries by their
-corresponding x axis in the view). E.g. for Cases we have three positions as
-for now: "above cases" (t,s,mv,o, etc.), "the cases (same level as the current
-entry)", and "below cases". We are only interested in the above and below
-levels, since entries on the same level are already handled by the left/right
-buttons/keys. Just handle the keyboard up/down, do not add buttons into the popup.
