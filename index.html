@@ -1314,7 +1314,13 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   });
 
   function panTo(x, y, w){
-    const h = w * (fullBox.h/fullBox.w) * (stage.clientHeight/stage.clientWidth || 1);
+    // h must match the stage's own pixel aspect ratio (as fitToStage/wheel/
+    // updatePinnedTooltipPosition all assume), not fullBox's -- otherwise the
+    // viewBox's aspect ratio differs from the viewport's, the SVG letterboxes
+    // under preserveAspectRatio's default "meet", and every screen-space
+    // mapping that assumes vb fills rect exactly (wheel zoom anchor, pinned
+    // tooltip position) drifts on the axis with the mismatch.
+    const h = w * (stage.clientHeight/stage.clientWidth || fullBox.h/fullBox.w);
     vb = { x: x-w/2, y: y-h/2, w, h };
     applyViewBox();
   }
