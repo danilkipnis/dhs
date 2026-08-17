@@ -985,8 +985,8 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     const rect = stageRect;
     const sx = rect.left + ((c.x-vb.x)/vb.w)*rect.width;
     const sy = rect.top + ((c.y-vb.y)/vb.h)*rect.height;
-    tooltip.style.left = (sx+14)+'px';
-    tooltip.style.top = (sy+14)+'px';
+    tooltip.style.left = Math.round(sx+14)+'px';
+    tooltip.style.top = Math.round(sy+14)+'px';
   }
   // Writing viewBox invalidates the raster of the whole diagram (~900 node
   // groups and ~3.6k edge paths), so it must happen at most once per frame.
@@ -1908,8 +1908,8 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     pinnedId = id;
     tooltip.innerHTML = tooltipFor(type, id) + navCrossHtml(type, id) + '<span class="tt-close" title="Close">&times;</span>';
     tooltip.classList.add('pinned');
-    tooltip.style.left = x+'px';
-    tooltip.style.top = y+'px';
+    tooltip.style.left = Math.round(x)+'px';
+    tooltip.style.top = Math.round(y)+'px';
     tooltip.style.display = 'block';
   }
   function unpinTooltip(){
@@ -1932,8 +1932,8 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       tooltip.innerHTML = tooltipFor(type, id);
     }
     tooltip.style.display = 'block';
-    tooltip.style.left = (ev.clientX+14)+'px';
-    tooltip.style.top = (ev.clientY+14)+'px';
+    tooltip.style.left = Math.round(ev.clientX+14)+'px';
+    tooltip.style.top = Math.round(ev.clientY+14)+'px';
   });
   nodeLayer.addEventListener('mouseleave', ()=>{ hoveredKey = null; if(!pinned) tooltip.style.display='none'; });
 

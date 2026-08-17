@@ -1,5 +1,3 @@
-Fix text in popups blurry/unscharf in chrome/edge, windows
-
 Add F9 for mute/unmmute
 
 Add translation: ISBN 978-5-389-18363-6
