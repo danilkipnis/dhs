@@ -10,7 +10,7 @@ step along the current row, up/down cross to a connected row above/below, and
 Tab walks every node on the row left-to-right, crossing between entity types
 and wrapping at the end (Shift+Tab walks it right-to-left). `M` opens/closes
 the sidebar; Escape closes it if
-open. `+`/`-` zoom in/out; `F4` (or a keyboard's dedicated mute key) toggles
+open. `+`/`-` zoom in/out; `O` (or a keyboard's dedicated mute key) toggles
 sound. All of this is disabled while typing in the search box.
 
 ### Table VI is normalized by a script
