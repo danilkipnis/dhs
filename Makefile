@@ -14,7 +14,9 @@ SOURCES := table-iii.json table-iv.json table-v.json table-v-content.json \
            table-v-objects.json table-v-sphere.json table-v-thought.json \
            table-v-trancic.json table-vii.json Table-viii.json
 
-.PHONY: all check serve clean help
+PREFIX  ?= $(HOME)/.local/bin
+
+.PHONY: all check serve clean install help
 .DEFAULT_GOAL := help
 
 all: $(GENERATED)  ## Regenerate the table-vi files if table-vi.json is newer
@@ -49,6 +51,10 @@ serve: all ## Serve over HTTP (fetch() is blocked on file:// URLs)
 
 clean: ## Remove the generated table-vi files and the stamp
 	rm -f $(GENERATED) .table-vi.stamp
+
+install: ## Symlink todo.sh as `todo` into PREFIX (default ~/.local/bin)
+	mkdir -p $(PREFIX)
+	ln -sf $(CURDIR)/todo.sh $(PREFIX)/todo
 
 help: ## List targets
 	@grep -hE '^[a-z.-]+:.*##' $(MAKEFILE_LIST) \
