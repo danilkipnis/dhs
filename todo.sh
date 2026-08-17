@@ -71,8 +71,15 @@ cmd_done() {
   awk -v s="$start" -v e="$end" 'NR >= s && NR <= e { next } { print }' "$TODO_FILE" \
     | awk '/^[ \t]*$/ { blank++; if (blank > 1) next; print; next } { blank = 0; print }' \
     > "$tmp"
-  # trim trailing blank lines
-  awk '{a[NR]=$0} END{ n=NR; while(n>0 && a[n] ~ /^[ \t]*$/) n--; for(i=1;i<=n;i++) print a[i] }' "$tmp" > "$TODO_FILE"
+  # trim leading and trailing blank lines
+  awk '
+    { a[NR] = $0 }
+    END {
+      s = 1; while (s <= NR && a[s] ~ /^[ \t]*$/) s++
+      n = NR; while (n >= s && a[n] ~ /^[ \t]*$/) n--
+      for (i = s; i <= n; i++) print a[i]
+    }
+  ' "$tmp" > "$TODO_FILE"
   rm -f "$tmp"
 }
 
