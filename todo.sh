@@ -1,37 +1,51 @@
 #!/bin/bash
-# Usage: todo.sh [add <text> | done <id> | <id>]
-#   (no args)     print todo.md
-#   add <text>    append a new item at the end
-#   done <id>     remove that item
-#   <id>          print that item's description
+# Usage: todo.sh [add <text> | done <id> | show <id> | list | grep <pattern>]
+#   (no args)      print usage
+#   add <text>     append a new item at the end
+#   done <id>      remove that item
+#   show <id>      print that item's description
+#   list           print all items as an "id"/"description" table
+#   grep <pattern> like list, but only items whose description matches
 #
-# Items have no stored id: todo.md is just "# TODO", a blank line, then
-# items separated from each other by a blank line. <id> is an item's
-# position (1st, 2nd, ...), counted top to bottom each time the script
-# runs -- so ids shift down when an earlier item is done.
+# Items have no stored id: todo.md is items separated from each other by
+# a blank line. <id> is an item's position (1st, 2nd, ...), counted top to
+# bottom each time the script runs -- so ids shift down when an earlier
+# item is done.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 TODO_FILE="$SCRIPT_DIR/todo.md"
 
 usage() {
-  echo "Usage: $(basename "$0") [add <text> | done <id> | <id>]" >&2
-  exit 1
+  echo "Usage: $(basename "$0") [add <text> | done <id> | show <id> | list | grep <pattern>]" >&2
+  exit "${1:-1}"
 }
 
 # Prints "<first-line> <last-line>" (1-indexed, inclusive) of item <id>'s
 # block in todo.md, found by counting blank-line-separated blocks of
-# non-blank lines and skipping the first one (the "# TODO" heading).
-# Prints nothing if there's no such item.
+# non-blank lines. Prints nothing if there's no such item.
 item_line_range() {
   local id="$1"
-  awk -v want=$((id + 1)) '
+  awk -v want="$id" '
     /^[ \t]*$/ { in_block = 0; next }
     {
       if (!in_block) { in_block = 1; block++ }
       if (block == want) { if (!start) start = NR; end = NR }
     }
     END { if (start) print start, end }
+  ' "$TODO_FILE"
+}
+
+# Prints "<id>\t<description>" for every item, one per line, with a
+# multi-line item's description joined into a single line.
+items_table() {
+  awk '
+    /^[ \t]*$/ { if (in_block) { print id "\t" desc; in_block = 0 } next }
+    {
+      if (!in_block) { in_block = 1; id++; desc = $0 }
+      else desc = desc " " $0
+    }
+    END { if (in_block) print id "\t" desc }
   ' "$TODO_FILE"
 }
 
@@ -72,9 +86,19 @@ cmd_show() {
   sed -n "${start},${end}p" "$TODO_FILE"
 }
 
+cmd_list() {
+  { printf "id\tdescription\n"; items_table; } | column -t -s "$(printf '\t')"
+}
+
+cmd_grep() {
+  local pattern="$1"
+  { printf "id\tdescription\n"; items_table | awk -F'\t' -v pat="$pattern" '$2 ~ pat'; } \
+    | column -t -s "$(printf '\t')"
+}
+
 case "${1:-}" in
   "")
-    cat "$TODO_FILE"
+    usage 0
     ;;
   add)
     [[ $# -ge 2 ]] || usage
@@ -85,9 +109,17 @@ case "${1:-}" in
     [[ $# -eq 2 ]] || usage
     cmd_done "$2"
     ;;
-  *[0-9]*)
-    [[ $# -eq 1 && "$1" =~ ^[0-9]+$ ]] || usage
-    cmd_show "$1"
+  show)
+    [[ $# -eq 2 ]] || usage
+    cmd_show "$2"
+    ;;
+  list)
+    [[ $# -eq 1 ]] || usage
+    cmd_list
+    ;;
+  grep)
+    [[ $# -eq 2 ]] || usage
+    cmd_grep "$2"
     ;;
   *)
     usage
