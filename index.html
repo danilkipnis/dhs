@@ -1177,12 +1177,14 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   }
 
   const sidebar = document.getElementById('sidebar');
-  document.getElementById('sidebarToggle').onclick = ()=>{
-    sidebar.classList.toggle('collapsed');
-    // #sidebar slides via a .22s CSS transform; erSvg's on-screen position
-    // moves with it, so its cached rect needs a refresh once settled.
+  // #sidebar slides via a .22s CSS transform; erSvg's on-screen position
+  // moves with it, so its cached rect needs a refresh once settled.
+  function setSidebarCollapsed(collapsed){
+    sidebar.classList.toggle('collapsed', collapsed);
     setTimeout(()=>{ refreshStageRect(); refreshErRect(); }, 240);
-  };
+  }
+  function toggleSidebar(){ setSidebarCollapsed(!sidebar.classList.contains('collapsed')); }
+  document.getElementById('sidebarToggle').onclick = toggleSidebar;
 
   // ---------- ER diagram (inline in sidebar) ----------
   // Same wheel/drag/pinch scheme as the main stage above, against the ER
@@ -1706,17 +1708,24 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   // Arrow keys (and WASD) drive the same nav as the tooltip's own <-/-> buttons:
   // left/right move along the current row, up/down cross to a connected row
   // above/below (no on-screen buttons for those -- keyboard-only). Tab walks
-  // every node on the row left-to-right, crossing between types. All of it is
-  // skipped while typing in an input (the search box) so the keys keep their
-  // normal cursor-movement/typing meaning there.
+  // every node on the row left-to-right, crossing between types. M opens/closes
+  // the sidebar; Escape closes it if open. All of it is skipped while typing in
+  // an input (the search box) so the keys keep their normal cursor-movement/
+  // typing meaning there.
   const ARROW_DIR = {
     arrowleft:'left', arrowright:'right', arrowup:'up', arrowdown:'down',
     a:'left', d:'right', w:'up', s:'down', tab:'tab',
   };
   document.addEventListener('keydown', (ev)=>{
-    if(!pinnedType) return;
     const tag = document.activeElement && document.activeElement.tagName;
     if(tag === 'INPUT' || tag === 'TEXTAREA') return;
+    if(ev.key.toLowerCase() === 'm'){ ev.preventDefault(); toggleSidebar(); return; }
+    if(ev.key === 'Escape' && !sidebar.classList.contains('collapsed')){
+      ev.preventDefault();
+      setSidebarCollapsed(true);
+      return;
+    }
+    if(!pinnedType) return;
     const dir = ARROW_DIR[ev.key.toLowerCase()];
     if(!dir) return;
     const n = neighborFor(pinnedType, pinnedId, dir);

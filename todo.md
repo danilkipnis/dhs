@@ -22,7 +22,6 @@
 11. Cleanup Claude's notes in json
 12. QA OCR
 13. 3d
-14. a key to open the sidebar, collapse with esc
-15. zoom (the buttons + and - in the top left of the view) with the keys + and -
-16. sound on/off with <F4> (or whichever key is reponsible for mute on the
+14. zoom (the buttons + and - in the top left of the view) with the keys + and -
+15. sound on/off with <F4> (or whichever key is reponsible for mute on the
 keyboard)

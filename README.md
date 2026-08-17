@@ -6,8 +6,10 @@
 ### Navigation keys
 
 With a tooltip pinned, arrow keys (or WASD) move between nodes: left/right
-step along the current row, up/down cross to a connected row above/below.
-Disabled while typing in the search box.
+step along the current row, up/down cross to a connected row above/below, and
+Tab walks every node on the row left-to-right, crossing between entity types
+and wrapping at the end. `M` opens/closes the sidebar; Escape closes it if
+open. All of this is disabled while typing in the search box.
 
 ### Table VI is normalized by a script
 
