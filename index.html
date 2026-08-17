@@ -1709,9 +1709,10 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   // left/right move along the current row, up/down cross to a connected row
   // above/below (no on-screen buttons for those -- keyboard-only). Tab walks
   // every node on the row left-to-right, crossing between types. M opens/closes
-  // the sidebar; Escape closes it if open. All of it is skipped while typing in
-  // an input (the search box) so the keys keep their normal cursor-movement/
-  // typing meaning there.
+  // the sidebar; Escape closes it if open. + and - zoom like the on-screen
+  // buttons; F4 (or a keyboard's dedicated mute key) toggles sound. All of it
+  // is skipped while typing in an input (the search box) so the keys keep
+  // their normal cursor-movement/typing meaning there.
   const ARROW_DIR = {
     arrowleft:'left', arrowright:'right', arrowup:'up', arrowdown:'down',
     a:'left', d:'right', w:'up', s:'down', tab:'tab',
@@ -1723,6 +1724,16 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     if(ev.key === 'Escape' && !sidebar.classList.contains('collapsed')){
       ev.preventDefault();
       setSidebarCollapsed(true);
+      return;
+    }
+    if(ev.key === '+' || ev.key === '-'){
+      ev.preventDefault();
+      zoomBtn(ev.key === '+' ? 0.8 : 1.25);
+      return;
+    }
+    if(ev.key === 'F4' || ev.key === 'AudioVolumeMute'){
+      ev.preventDefault();
+      document.getElementById('soundToggle').click();
       return;
     }
     if(!pinnedType) return;
