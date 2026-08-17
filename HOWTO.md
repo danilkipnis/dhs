@@ -8,5 +8,5 @@
 
 # Offline
 1. git clone git@github.com:danilkipnis/dhs.git
-2. cd dhs && make serve
+2. cd dhs && make all && make serve
 3. open http://localhost:8000/index.html
