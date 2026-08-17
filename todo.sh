@@ -1,15 +1,16 @@
 #!/bin/bash
-# Usage: todo.sh [add <text> | done <id>]
+# Usage: todo.sh [add <text> | done <id> | <id>]
 #   (no args)     print todo.md
 #   add <text>    append a new item with the next id
 #   done <id>     remove the item with that id, renumbering the rest
+#   <id>          print that item's description
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TODO_FILE="$SCRIPT_DIR/todo.md"
 
 usage() {
-  echo "Usage: $(basename "$0") [add <text> | done <id>]" >&2
+  echo "Usage: $(basename "$0") [add <text> | done <id> | <id>]" >&2
   exit 1
 }
 
@@ -69,6 +70,22 @@ cmd_done() {
   rm -f "$tmp"
 }
 
+cmd_show() {
+  local id="$1"
+  [[ "$id" =~ ^[0-9]+$ ]] || { echo "id must be numeric" >&2; exit 1; }
+  grep -qE "^${id}\.[ \t]" "$TODO_FILE" || { echo "no item with id ${id}" >&2; exit 1; }
+  awk -v target="$id" '
+    /^[0-9]+\.[ \t]/ {
+      match($0, /^[0-9]+/)
+      cur = substr($0, 1, RLENGTH)
+      show = (cur == target)
+      if (show) print
+      next
+    }
+    { if (show) print }
+  ' "$TODO_FILE"
+}
+
 case "${1:-}" in
   "")
     cat "$TODO_FILE"
@@ -81,6 +98,10 @@ case "${1:-}" in
   done)
     [[ $# -eq 2 ]] || usage
     cmd_done "$2"
+    ;;
+  *[0-9]*)
+    [[ $# -eq 1 && "$1" =~ ^[0-9]+$ ]] || usage
+    cmd_show "$1"
     ;;
   *)
     usage
