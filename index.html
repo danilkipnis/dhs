@@ -1667,18 +1667,21 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     if(!ev.target.closest('.node')){ clearHighlight(); describe(''); unpinTooltip(); }
   });
 
-  // Arrow keys drive the same nav as the tooltip's own <-/-> buttons: left/right
-  // move along the current row, up/down cross to a connected row above/below
-  // (no on-screen buttons for those -- keyboard-only). Skipped while typing in
-  // an input (the search box) so the keys keep their normal cursor-movement
-  // meaning there.
-  const ARROW_DIR = {ArrowLeft:'left', ArrowRight:'right', ArrowUp:'up', ArrowDown:'down'};
+  // Arrow keys (and WASD) drive the same nav as the tooltip's own <-/-> buttons:
+  // left/right move along the current row, up/down cross to a connected row
+  // above/below (no on-screen buttons for those -- keyboard-only). Skipped
+  // while typing in an input (the search box) so the keys keep their normal
+  // cursor-movement/typing meaning there.
+  const ARROW_DIR = {
+    arrowleft:'left', arrowright:'right', arrowup:'up', arrowdown:'down',
+    a:'left', d:'right', w:'up', s:'down',
+  };
   document.addEventListener('keydown', (ev)=>{
     if(!pinnedType) return;
-    const dir = ARROW_DIR[ev.key];
-    if(!dir) return;
     const tag = document.activeElement && document.activeElement.tagName;
     if(tag === 'INPUT' || tag === 'TEXTAREA') return;
+    const dir = ARROW_DIR[ev.key.toLowerCase()];
+    if(!dir) return;
     const n = neighborFor(pinnedType, pinnedId, dir);
     if(n){ ev.preventDefault(); navigateAndPin(n.type, n.id); }
   });

@@ -3,6 +3,12 @@
 
 [ER](https://danilkipnis.github.io/dhs/er.html)
 
+### Navigation keys
+
+With a tooltip pinned, arrow keys (or WASD) move between nodes: left/right
+step along the current row, up/down cross to a connected row above/below.
+Disabled while typing in the search box.
+
 ### Table VI is normalized by a script
 
 `table-vi.json` nests mental states inside dharmas inside cases, and records

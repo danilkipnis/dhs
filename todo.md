@@ -22,10 +22,9 @@
 12. Cleanup Claude's notes in json
 13. QA OCR
 14. 3d
-15. implement awsd keys for left/up/down/right: document under "Navigation keys" (or suggest a name) in README.md
-16. tab to change to the next entity on the right (on the same level in er.svg
+15. tab to change to the next entity on the right (on the same level in er.svg
 e.g. from the last element in vc to the first element of tv
-17. a key to open the sidebar, collapse with esc
-18. zoom (the buttons + and - in the top left of the view) with the keys + and -
-19. sound on/off with <F4> (or whichever key is reponsible for mute on the
+16. a key to open the sidebar, collapse with esc
+17. zoom (the buttons + and - in the top left of the view) with the keys + and -
+18. sound on/off with <F4> (or whichever key is reponsible for mute on the
 keyboard)
