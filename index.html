@@ -1641,15 +1641,16 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     rowIdsFlatCache.set(row, flat);
     return flat;
   }
-  function neighborTab(type, id){
+  function neighborTab(type, id, reverse){
     const row = ROW[NODE_TYPE_KEY[type]];
     const flat = rowIdsFlat(row);
     const i = flat.findIndex(o => o.type === type && o.id === id);
     if(i < 0 || flat.length < 2) return null;
-    return flat[(i + 1) % flat.length];
+    const step = reverse ? -1 : 1;
+    return flat[(i + step + flat.length) % flat.length];
   }
   function neighborFor(type, id, dir){
-    if(dir === 'tab') return neighborTab(type, id);
+    if(dir === 'tab' || dir === 'shift-tab') return neighborTab(type, id, dir === 'shift-tab');
     return (dir === 'left' || dir === 'right')
       ? neighborLeftRight(type, id, dir)
       : neighborUpDown(type, id, dir);
@@ -1708,11 +1709,12 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
   // Arrow keys (and WASD) drive the same nav as the tooltip's own <-/-> buttons:
   // left/right move along the current row, up/down cross to a connected row
   // above/below (no on-screen buttons for those -- keyboard-only). Tab walks
-  // every node on the row left-to-right, crossing between types. M opens/closes
-  // the sidebar; Escape closes it if open. + and - zoom like the on-screen
-  // buttons; F4 (or a keyboard's dedicated mute key) toggles sound. All of it
-  // is skipped while typing in an input (the search box) so the keys keep
-  // their normal cursor-movement/typing meaning there.
+  // every node on the row left-to-right, crossing between types; Shift+Tab
+  // walks it right-to-left. M opens/closes the sidebar; Escape closes it if
+  // open. + and - zoom like the on-screen buttons; F4 (or a keyboard's
+  // dedicated mute key) toggles sound. All of it is skipped while typing in
+  // an input (the search box) so the keys keep their normal cursor-movement/
+  // typing meaning there.
   const ARROW_DIR = {
     arrowleft:'left', arrowright:'right', arrowup:'up', arrowdown:'down',
     a:'left', d:'right', w:'up', s:'down', tab:'tab',
@@ -1737,8 +1739,9 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
       return;
     }
     if(!pinnedType) return;
-    const dir = ARROW_DIR[ev.key.toLowerCase()];
+    let dir = ARROW_DIR[ev.key.toLowerCase()];
     if(!dir) return;
+    if(dir === 'tab' && ev.shiftKey) dir = 'shift-tab';
     const n = neighborFor(pinnedType, pinnedId, dir);
     if(n){ ev.preventDefault(); navigateAndPin(n.type, n.id); }
   });

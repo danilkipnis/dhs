@@ -8,7 +8,8 @@
 With a tooltip pinned, arrow keys (or WASD) move between nodes: left/right
 step along the current row, up/down cross to a connected row above/below, and
 Tab walks every node on the row left-to-right, crossing between entity types
-and wrapping at the end. `M` opens/closes the sidebar; Escape closes it if
+and wrapping at the end (Shift+Tab walks it right-to-left). `M` opens/closes
+the sidebar; Escape closes it if
 open. `+`/`-` zoom in/out; `F4` (or a keyboard's dedicated mute key) toggles
 sound. All of this is disabled while typing in the search box.
 
