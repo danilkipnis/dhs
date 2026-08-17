@@ -16,15 +16,13 @@
     have to be introduced in order to cover for that. Or one. (exactly one
     layer "subsets" inbetween cases and dharmas)
 7.  Die Gewichtung
-9.  Table IX, p. 152
-10. Table X, p. 155
-11. Cleanup js code
-12. Cleanup Claude's notes in json
-13. QA OCR
-14. 3d
-15. tab to change to the next entity on the right (on the same level in er.svg
-e.g. from the last element in vc to the first element of tv
-16. a key to open the sidebar, collapse with esc
-17. zoom (the buttons + and - in the top left of the view) with the keys + and -
-18. sound on/off with <F4> (or whichever key is reponsible for mute on the
+8.  Table IX, p. 152
+9.  Table X, p. 155
+10. Cleanup js code
+11. Cleanup Claude's notes in json
+12. QA OCR
+13. 3d
+14. a key to open the sidebar, collapse with esc
+15. zoom (the buttons + and - in the top left of the view) with the keys + and -
+16. sound on/off with <F4> (or whichever key is reponsible for mute on the
 keyboard)

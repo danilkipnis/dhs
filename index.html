@@ -1611,7 +1611,43 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
     candidates.sort((a,b) => nodeCenter(a.type, a.id).x - nodeCenter(b.type, b.id).x);
     return candidates[0];
   }
+  // Tab walks every node on the current row left-to-right, crossing from one
+  // type to the next when it runs out of that type's own nodes (e.g. from the
+  // last Variant of Content to the first Trancic Variable, both row 3) and
+  // wrapping from the row's last node back to its first.
+  const rowTypeOrderCache = new Map();
+  function rowTypeOrder(row){
+    if(rowTypeOrderCache.has(row)) return rowTypeOrderCache.get(row);
+    const types = Object.keys(ROW).filter(t => ROW[t] === row);
+    types.sort((a, b) => {
+      const idsA = typeIdsSortedByX(DATA_TYPE_OF[a]), idsB = typeIdsSortedByX(DATA_TYPE_OF[b]);
+      const xa = idsA.length ? nodeCenter(DATA_TYPE_OF[a], idsA[0]).x : Infinity;
+      const xb = idsB.length ? nodeCenter(DATA_TYPE_OF[b], idsB[0]).x : Infinity;
+      return xa - xb;
+    });
+    rowTypeOrderCache.set(row, types);
+    return types;
+  }
+  const rowIdsFlatCache = new Map();
+  function rowIdsFlat(row){
+    if(rowIdsFlatCache.has(row)) return rowIdsFlatCache.get(row);
+    const flat = [];
+    for(const camelType of rowTypeOrder(row)){
+      const dataType = DATA_TYPE_OF[camelType];
+      for(const id of typeIdsSortedByX(dataType)) flat.push({type: dataType, id});
+    }
+    rowIdsFlatCache.set(row, flat);
+    return flat;
+  }
+  function neighborTab(type, id){
+    const row = ROW[NODE_TYPE_KEY[type]];
+    const flat = rowIdsFlat(row);
+    const i = flat.findIndex(o => o.type === type && o.id === id);
+    if(i < 0 || flat.length < 2) return null;
+    return flat[(i + 1) % flat.length];
+  }
   function neighborFor(type, id, dir){
+    if(dir === 'tab') return neighborTab(type, id);
     return (dir === 'left' || dir === 'right')
       ? neighborLeftRight(type, id, dir)
       : neighborUpDown(type, id, dir);
@@ -1669,12 +1705,13 @@ Philosophy of Thought: Essays in Interpretation</em>, (London: Curzon Press, 198
 
   // Arrow keys (and WASD) drive the same nav as the tooltip's own <-/-> buttons:
   // left/right move along the current row, up/down cross to a connected row
-  // above/below (no on-screen buttons for those -- keyboard-only). Skipped
-  // while typing in an input (the search box) so the keys keep their normal
-  // cursor-movement/typing meaning there.
+  // above/below (no on-screen buttons for those -- keyboard-only). Tab walks
+  // every node on the row left-to-right, crossing between types. All of it is
+  // skipped while typing in an input (the search box) so the keys keep their
+  // normal cursor-movement/typing meaning there.
   const ARROW_DIR = {
     arrowleft:'left', arrowright:'right', arrowup:'up', arrowdown:'down',
-    a:'left', d:'right', w:'up', s:'down',
+    a:'left', d:'right', w:'up', s:'down', tab:'tab',
   };
   document.addEventListener('keydown', (ev)=>{
     if(!pinnedType) return;
