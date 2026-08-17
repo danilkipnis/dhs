@@ -12,7 +12,7 @@ GENERATED := ms.json ms-membership.json table-vi-dharmas.json
 SOURCES := table-iii.json table-iv.json table-v.json table-v-content.json \
            table-v-content-footnotes.json table-v-mental.json \
            table-v-objects.json table-v-sphere.json table-v-thought.json \
-           table-v-trancic.json table-vii.json Table-viii.json
+           table-v-trancic.json table-vii.json table-viii.json
 
 PREFIX  ?= $(HOME)/.local/bin
 
