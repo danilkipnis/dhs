@@ -1,9 +1,10 @@
 The Essay 5 "Rise of Thought as Phenomenon and System" of Alexander
 Piatigorsky's <em>The Buddhist Philosophy of Thought</em>, 1984, analyses the
-Dhammasaṅgaṇī (dhs), Book I, from phenomenological, structuralist and linguistic
+Dhammasaṅgaṇī (Dhs), Book I, from phenomenological, structuralist and linguistic
 perspective. Piatigorsky laid out his analysis in a set of nesting, cross
 referencing tables. The [page](https://danilkipnis.github.io/dhs/index.html)
-allows you to navigate them and also the [underlying data structure](https://danilkipnis.github.io/dhs/er.html)
+allows you to navigate them and also the underlying
+[data structure](https://danilkipnis.github.io/dhs/er.html).
 
 ### Navigation keys
 
