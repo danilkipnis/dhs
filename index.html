@@ -944,14 +944,14 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
 
   // small-tier row nodes: dot + label above (rows share a Y, so labels
   // stack above the dot rather than beside it)
-  function makeRowNodes(list, idKey, layoutMap, prefix, cssClass, typeKey, dataType, r){
+  function makeRowNodes(list, idKey, layoutMap, prefix, cssClass, typeKey, dataType, r, idFmt){
     for(const item of list){
       const pos = layoutMap.get(item[idKey]);
       if(!pos) continue;
       const g = el('g', {class:'node '+cssClass, 'data-type':dataType, 'data-id':item[idKey], transform:`translate(${pos.x},${pos.y})`}, nodeLayer);
       el('circle', {r}, g);
       if(layoutMap.size <= 50){
-        el('text', {class:'label', y:-8, 'text-anchor':'middle'}, g).textContent = prefix + item[idKey];
+        el('text', {class:'label', y:-8, 'text-anchor':'middle'}, g).textContent = prefix + (idFmt ? idFmt(item[idKey]) : item[idKey]);
       }
       g._cx = pos.x; g._cy = pos.y;
       nodeEls[typeKey].set(item[idKey], g);
@@ -964,8 +964,8 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
   makeRowNodes(data.content, 'content_id', contentX, 'C:', 'node-content', 'content', 'content', 3.6);
   makeRowNodes(data.trancic, 'trancic_id', trancicX, 'TV:', 'node-caseattr', 'trancic', 'trancic', 3.6);
   makeRowNodes(data.mental, 'mental_id', mentalX, 'MV:', 'node-caseattr', 'mental', 'mental', 3.6);
-  makeRowNodes(data.sense_objects, 'object_id', senseObjX, 'O:', 'node-caseattr', 'senseObj', 'senseobj', 3.6);
-  makeRowNodes(data.dhyanic_objects, 'object_id', dhyanicObjX, 'D:', 'node-caseattr', 'dhyanicObj', 'dhyanicobj', 3.6);
+  makeRowNodes(data.sense_objects, 'object_id', senseObjX, 'O', 'node-caseattr', 'senseObj', 'senseobj', 3.6);
+  makeRowNodes(data.dhyanic_objects, 'object_id', dhyanicObjX, 'O', 'node-caseattr', 'dhyanicObj', 'dhyanicobj', 3.6, id=>`[${id}]`);
 
   // ---------- viewBox / pan / zoom ----------
   const fullBox = { x: -170, y: 0, w: totalWidth + 200, h: Y_MS + 60 };
@@ -1804,7 +1804,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
         const dhyIds = caseToDhyanicObj.get(id) || [];
         if(objIds.length || dhyIds.length){
           const objParts = objIds.map(o=>{ const so=senseObjById.get(o); return so? ttLink('senseobj', o, `${esc(o)} ${esc(so.translation)}`) : 'O'+esc(o); });
-          const dhyParts = dhyIds.map(o=>{ const d=dhyanicObjById.get(o); return d? ttLink('dhyanicobj', o, `[${esc(o)}] ${esc(d.pali)} (${esc(d.translation)})`) : 'D'+esc(o); });
+          const dhyParts = dhyIds.map(o=>{ const d=dhyanicObjById.get(o); return d? ttLink('dhyanicobj', o, `[${esc(o)}] ${esc(d.pali)} (${esc(d.translation)})`) : 'O['+esc(o)+']'; });
           rows += `<br><span class="muted">V-O</span> ` + [...objParts, ...dhyParts].join(', ');
         }
         const mentIds = caseToMental.get(id) || [];
@@ -1892,14 +1892,14 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
         content:[contentById,contentToCases,'Variant of content V-C:'],
         trancic:[trancicById,trancicToCases,'Trancic variable V-TV:'],
         mental:[mentalById,mentalToCases,'Mental variable V-MV:'],
-        senseobj:[senseObjById,senseObjToCases,'Sense object V-O:'],
-        dhyanicobj:[dhyanicObjById,dhyanicObjToCases,'Dhyānic object V-O:'],
+        senseobj:[senseObjById,senseObjToCases,'Sense object V-O:',id=>id],
+        dhyanicobj:[dhyanicObjById,dhyanicObjToCases,'Dhyānic object V-O:',id=>`[${id}]`],
       }[type];
-      const [byId, toCases, label] = cfg;
+      const [byId, toCases, label, idFmt] = cfg;
       const item = byId.get(id);
       const nameLine = item ? (item.pali ? `${esc(item.pali)}<br><span class="muted">${esc(item.translation||'')}</span>` : esc(item.translation||'')) : '';
       const parentLine = (item && item.parent_id) ? `<br><span class="muted">&#8594;</span> ${ttLink('content', item.parent_id, esc(item.parent_id))}` : '';
-      return `<b>${esc(label)}${esc(id)}</b><br>${nameLine}${parentLine}`;
+      return `<b>${esc(label)}${esc(idFmt ? idFmt(id) : id)}</b><br>${nameLine}${parentLine}`;
     }
     return '';
   }
