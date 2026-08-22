@@ -1463,6 +1463,11 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     url.search = '?' + fn(id);
     history.replaceState(null, '', url);
   }
+  function clearAddressBar(){
+    const url = new URL(window.location.href);
+    url.search = '';
+    history.replaceState(null, '', url);
+  }
 
   function select(type, id){
     const reach = reachFrom(type, id);
@@ -1918,6 +1923,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     pinnedId = null;
     tooltip.classList.remove('pinned');
     tooltip.style.display = 'none';
+    clearAddressBar();
   }
   let hoveredKey = null;
   nodeLayer.addEventListener('mousemove', (ev)=>{
