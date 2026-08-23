@@ -10,12 +10,6 @@ https://archive.org/details/buddhistmanualof00davirich
 
 Iterate on search function
 
-Add a note that the graph is potentially a simplification because nowhere
-in the text does it say that dharmasets from vi are strict subsets of the
-dharmasets in table vii. If it is required two additional entities would
-have to be introduced in order to cover for that. Or one. (exactly one
-layer "subsets" inbetween cases and dharmas)
-
 Die Gewichtung
 
 Table IX, p. 152
