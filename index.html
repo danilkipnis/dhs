@@ -144,7 +144,8 @@
   .toolbar button:hover{ background:var(--rule); }
   .search-row{ display:flex; gap:.4rem; position:relative; }
   .search-row input{ flex:1 1 auto; min-width:0; width:auto; }
-  .search-row button{ flex:0 0 auto; width:auto; padding:.4rem .55rem; }
+  .search-row button{ flex:0 0 auto; width:auto; padding:.4rem .55rem; display:flex; align-items:center; justify-content:center; }
+  .search-row button svg{ width:15px; height:15px; stroke:currentColor; fill:none; stroke-linecap:round; stroke-linejoin:round; }
   #searchHints{
     position:absolute;
     top:calc(100% + .25rem);
@@ -396,7 +397,12 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
       </div>
       <div class="search-row">
         <input id="search" type="text" placeholder="Search: vc/ms/t/a/d/c/tv/o/s&lt;id&gt;, A/B/C, or text&hellip;" autocomplete="off">
-        <button id="searchBtn" type="button" title="Search" aria-label="Search">&#128269;</button>
+        <button id="searchBtn" type="button" title="Search" aria-label="Search">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="10.5" cy="10.5" r="6.5" stroke-width="2"/>
+            <line x1="15.3" y1="15.3" x2="21" y2="21" stroke-width="2"/>
+          </svg>
+        </button>
         <ul id="searchHints" class="hidden"></ul>
       </div>
     </div>
