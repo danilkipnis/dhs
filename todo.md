@@ -27,3 +27,5 @@ Cleanup Claude's notes in json
 QA OCR
 
 3d
+
+search: show hints (drop down list) while user is typing: v,vc,m,ms,d,ds,o,t,s,a...
