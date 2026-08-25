@@ -1174,7 +1174,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
 
   // Chime played whenever V-O:2 (sound-objects) is involved, gated on
   // #soundToggle -- a little wink at that node's own gloss.
-  const CHIME_MAX_DIST = 3;
+  const CHIME_MAX_DIST = 4;
   const CHIME_PEAK = 0.35;
   let chimeCtx = null;
   function playChime(dist){
@@ -1183,11 +1183,14 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     // Short, crisp tick similar to a laptop's volume-change blip: a brief
     // sine burst with a fast attack and fast decay, not a sustained tone.
     // Peak amplitude falls off linearly with distance from V-O:2, so a direct
-    // hit is louder than a two-hop echo through a shared case.
+    // hit is louder than a two-hop echo through a shared case. Frequency
+    // rises a major third (5:4) with each hop so farther echoes read as
+    // higher-pitched.
     const peak = CHIME_PEAK * (1 - dist/(CHIME_MAX_DIST+1));
+    const freq = 1200 * Math.pow(5/4, dist);
     const t0 = ctx.currentTime;
     const osc = ctx.createOscillator(), gain = ctx.createGain();
-    osc.type = 'sine'; osc.frequency.setValueAtTime(1200, t0);
+    osc.type = 'sine'; osc.frequency.setValueAtTime(freq, t0);
     gain.gain.setValueAtTime(0, t0);
     gain.gain.linearRampToValueAtTime(peak, t0+0.008);
     gain.gain.exponentialRampToValueAtTime(0.0001, t0+0.09);
