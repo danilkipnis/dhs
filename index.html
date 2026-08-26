@@ -1782,6 +1782,9 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
   document.addEventListener('keydown', (ev)=>{
     const tag = document.activeElement && document.activeElement.tagName;
     if(tag === 'INPUT' || tag === 'TEXTAREA') return;
+    // Ctrl/Cmd/Alt combos are left alone (e.g. Ctrl+Shift+R hard-refresh) --
+    // only Shift is allowed through, since Shift+Tab is one of our own bindings.
+    if(ev.ctrlKey || ev.metaKey || ev.altKey) return;
     if(ev.key.toLowerCase() === 'm'){ ev.preventDefault(); toggleSidebar(); return; }
     if(ev.key === 'Escape' && !sidebar.classList.contains('collapsed')){
       ev.preventDefault();
