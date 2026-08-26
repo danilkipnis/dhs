@@ -5,6 +5,7 @@
 - `M`: toggle the sidebar
 - `O`: toggle sound
 - `+`/`-`: zoom in/out
+- `R`: reset view to fit all nodes
 
 # Offline
 1. git clone git@github.com:danilkipnis/dhs.git

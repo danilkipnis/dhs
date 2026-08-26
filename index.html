@@ -1761,9 +1761,9 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
   // every node on the row left-to-right, crossing between types; Shift+Tab
   // walks it right-to-left. M opens/closes the sidebar; Escape closes it if
   // open. + and - zoom like the on-screen buttons; O (or a keyboard's
-  // dedicated mute key) toggles sound. All of it is skipped while typing in
-  // an input (the search box) so the keys keep their normal cursor-movement/
-  // typing meaning there.
+  // dedicated mute key) toggles sound; R resets the view to fit every node
+  // on screen. All of it is skipped while typing in an input (the search
+  // box) so the keys keep their normal cursor-movement/typing meaning there.
   const ARROW_DIR = {
     arrowleft:'left', arrowright:'right', arrowup:'up', arrowdown:'down',
     a:'left', d:'right', w:'up', s:'down', tab:'tab',
@@ -1785,6 +1785,11 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     if(ev.key.toLowerCase() === 'o' || ev.key === 'AudioVolumeMute'){
       ev.preventDefault();
       document.getElementById('soundToggle').click();
+      return;
+    }
+    if(ev.key.toLowerCase() === 'r'){
+      ev.preventDefault();
+      fitToStage();
       return;
     }
     if(!pinnedType) return;
