@@ -1060,7 +1060,10 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     flushViewBox();
   }
   fitToStage();
-  window.addEventListener('resize', fitToStage);
+  // Resize (e.g. F11 fullscreen toggle) must not reset the user's zoom/pan --
+  // only the stage's pixel rect changed, not what part of the diagram (vb)
+  // they were looking at.
+  window.addEventListener('resize', ()=>{ refreshStageRect(); updatePinnedTooltipPosition(); });
 
   stage.addEventListener('wheel', (ev)=>{
     ev.preventDefault();
