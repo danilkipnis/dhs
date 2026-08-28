@@ -2404,13 +2404,11 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     if(ev.target !== searchInput && !searchHints.contains(ev.target)) hideHints();
   });
 
-  // ---------- initial focus: ?<query> param, else a random case ----------
+  // ---------- initial focus: ?<query> param, else fit the whole diagram ----------
   // If the page was loaded with a ?<query> matching the search box's own
   // syntax (the same one written back to the address bar on selection),
-  // jump straight to that node instead of picking a case at random.
-  // Otherwise: center on the random case, open its popup there, then fit
-  // the whole diagram to the screen (same as pressing "r") and reposition
-  // the popup for that full view.
+  // jump straight to that node. Otherwise just fit the whole diagram to
+  // the screen (same as pressing "r"), with nothing preselected.
   (function initialFocus(){
     const rawQuery = window.location.search.slice(1);
     if(rawQuery){
@@ -2418,30 +2416,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
       if(q && trySelectQuery(q)) return;
     }
 
-    const caseIds = [...caseLayout.keys()];
-    const caseId = caseIds[Math.floor(Math.random()*caseIds.length)];
-    const l = caseLayout.get(caseId);
-    if(!l) return;
-    const cx = l.x, cy = Y_CASE;
-
-    // 1) Center the view on the case at the default (unzoomed) scale.
-    panTo(cx, cy, fullBox.w);
-    flushViewBox();
-
-    // 2) Select it so the popup renders, positioned against that centered view.
-    selectByType('case', caseId);
-    refreshStageRect();
-    let rect = stageRect;
-    let sx = rect.left + ((l.x-vb.x)/vb.w)*rect.width;
-    let sy = rect.top + ((Y_CASE-vb.y)/vb.h)*rect.height;
-    pinTooltip('case', caseId, sx+14, sy+14);
-
-    // 3) Fit the whole diagram to the stage, exactly as "r" does, and
-    // reposition the popup for the new view.
     fitToStage();
-    sx = rect.left + ((l.x-vb.x)/vb.w)*rect.width;
-    sy = rect.top + ((Y_CASE-vb.y)/vb.h)*rect.height;
-    pinTooltip('case', caseId, sx+14, sy+14);
   })();
 
 })();
