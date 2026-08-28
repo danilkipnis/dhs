@@ -1786,6 +1786,12 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     // only Shift is allowed through, since Shift+Tab is one of our own bindings.
     if(ev.ctrlKey || ev.metaKey || ev.altKey) return;
     if(ev.key.toLowerCase() === 'm'){ ev.preventDefault(); toggleSidebar(); return; }
+    if(ev.key === '/'){
+      ev.preventDefault();
+      if(sidebar.classList.contains('collapsed')) setSidebarCollapsed(false);
+      searchInput.focus();
+      return;
+    }
     if(ev.key === 'Escape' && pinned){
       ev.preventDefault();
       unpinTooltip();
