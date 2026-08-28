@@ -2408,11 +2408,9 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
   // If the page was loaded with a ?<query> matching the search box's own
   // syntax (the same one written back to the address bar on selection),
   // jump straight to that node instead of picking a case at random.
-  // Otherwise: first center on the random case at the default zoom and open
-  // its popup there, then zoom in -- sized off the popup's own rendered
-  // height, since that depends on the case's actual content -- and
-  // reposition the popup for the tighter view. The case stays vertically
-  // centered throughout.
+  // Otherwise: center on the random case, open its popup there, then fit
+  // the whole diagram to the screen (same as pressing "r") and reposition
+  // the popup for that full view.
   (function initialFocus(){
     const rawQuery = window.location.search.slice(1);
     if(rawQuery){
@@ -2438,14 +2436,9 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     let sy = rect.top + ((Y_CASE-vb.y)/vb.h)*rect.height;
     pinTooltip('case', caseId, sx+14, sy+14);
 
-    // 3) Now zoom in, sized off the popup's actual rendered height, and
-    // reposition the popup for the new, tighter view.
-    const popupH = tooltip.getBoundingClientRect().height || 200;
-    const aspect = rect.width / rect.height;
-    const h = (2*LAYER_GAP / (popupH * 0.9)) * rect.height / 1.5;
-    const w = h * aspect;
-    vb = { x: cx - w/2, y: cy - h/2, w, h };
-    flushViewBox();
+    // 3) Fit the whole diagram to the stage, exactly as "r" does, and
+    // reposition the popup for the new view.
+    fitToStage();
     sx = rect.left + ((l.x-vb.x)/vb.w)*rect.width;
     sy = rect.top + ((Y_CASE-vb.y)/vb.h)*rect.height;
     pinTooltip('case', caseId, sx+14, sy+14);
