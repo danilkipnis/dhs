@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <circle cx="100" cy="100" r="98" fill="#1a6b52"/>
+  <ellipse cx="100" cy="44" rx="15" ry="42" fill="#1a6b52" stroke="#f5efe8" stroke-width="3" transform="rotate(0.0 100 100)"/>
+  <ellipse cx="100" cy="44" rx="15" ry="42" fill="#1a6b52" stroke="#f5efe8" stroke-width="3" transform="rotate(30.0 100 100)"/>
+  <ellipse cx="100" cy="44" rx="15" ry="42" fill="#1a6b52" stroke="#f5efe8" stroke-width="3" transform="rotate(60.0 100 100)"/>
+  <ellipse cx="100" cy="44" rx="15" ry="42" fill="#1a6b52" stroke="#f5efe8" stroke-width="3" transform="rotate(90.0 100 100)"/>
+  <ellipse cx="100" cy="44" rx="15" ry="42" fill="#1a6b52" stroke="#f5efe8" stroke-width="3" transform="rotate(120.0 100 100)"/>
+  <ellipse cx="100" cy="44" rx="15" ry="42" fill="#1a6b52" stroke="#f5efe8" stroke-width="3" transform="rotate(150.0 100 100)"/>
+  <ellipse cx="100" cy="44" rx="15" ry="42" fill="#1a6b52" stroke="#f5efe8" stroke-width="3" transform="rotate(180.0 100 100)"/>
+  <ellipse cx="100" cy="44" rx="15" ry="42" fill="#1a6b52" stroke="#f5efe8" stroke-width="3" transform="rotate(210.0 100 100)"/>
+  <ellipse cx="100" cy="44" rx="15" ry="42" fill="#1a6b52" stroke="#f5efe8" stroke-width="3" transform="rotate(240.0 100 100)"/>
+  <ellipse cx="100" cy="44" rx="15" ry="42" fill="#1a6b52" stroke="#f5efe8" stroke-width="3" transform="rotate(270.0 100 100)"/>
+  <ellipse cx="100" cy="44" rx="15" ry="42" fill="#1a6b52" stroke="#f5efe8" stroke-width="3" transform="rotate(300.0 100 100)"/>
+  <ellipse cx="100" cy="44" rx="15" ry="42" fill="#1a6b52" stroke="#f5efe8" stroke-width="3" transform="rotate(330.0 100 100)"/>
+  <circle cx="100" cy="100" r="34" fill="#1a6b52" stroke="#f5efe8" stroke-width="3"/>
+  <circle cx="100" cy="100" r="17" fill="#1a6b52" stroke="#f5efe8" stroke-width="3"/>
+</svg>
