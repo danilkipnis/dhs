@@ -5,6 +5,9 @@
 # Editor swap files
 .*.sw[a-p]
 
+# npm dependencies (e.g. playwright)
+node_modules/
+
 # Book-style renderings of the 1984 book's pages live on the local
 # book-style-renderings branch, not here. Ignored so that recreating one in this
 # working tree cannot slip it into the public history via `git add -A`.
