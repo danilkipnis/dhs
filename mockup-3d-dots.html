@@ -1,0 +1,311 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style></head><body>
+<!doctype html>
+<meta charset="utf-8">
+<title>Dots in space — 3D mockup</title>
+<style>
+  :root{
+    --surface-1:      #000000;
+    --text-primary:   #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted:     #8f8d82;
+    --rule:           #3a3934;
+    --dharma:         #eb6b38;
+    --case:           #f1f0eb;
+    --nomenclature:   #db9712;
+    --sphere:         #129512;
+    --derivation:     #7fd4ff;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background:var(--surface-1);
+    color:var(--text-primary);
+    font-family:'Libre Franklin', system-ui, sans-serif;
+    overflow:hidden;
+  }
+  #stage{ position:fixed; inset:0; cursor:grab; }
+  #stage.grabbing{ cursor:grabbing; }
+  #stage canvas{ display:block; }
+
+  .placard{
+    position:fixed;
+    top:clamp(18px, 3vw, 40px);
+    left:clamp(18px, 3vw, 40px);
+    max-width:min(420px, 78vw);
+    pointer-events:none;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--text-muted);
+    margin:0 0 8px;
+  }
+  h1{
+    font-weight:600;
+    font-size:clamp(20px, 2.6vw, 28px);
+    line-height:1.15;
+    margin:0 0 12px;
+    color:var(--text-primary);
+  }
+  p.caption{
+    font-size:13.5px;
+    line-height:1.6;
+    color:var(--text-secondary);
+    margin:0 0 14px;
+    max-width:40ch;
+  }
+  p.caption b{ color:var(--text-primary); font-weight:600; }
+
+  .legend{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--text-secondary);
+    border-top:1px solid var(--rule);
+    padding-top:10px;
+  }
+  .legend .row{ display:flex; align-items:center; gap:8px; }
+  .legend .swatch{ width:9px; height:9px; border-radius:50%; flex:0 0 auto; }
+  .legend .line{ width:16px; height:0; border-top:2px solid; flex:0 0 auto; }
+
+  .toggle{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    margin-top:12px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--text-secondary);
+    pointer-events:auto;
+    cursor:pointer;
+    width:fit-content;
+  }
+  .toggle input{ accent-color:var(--dharma); cursor:pointer; margin:0; }
+
+  .corner-note{
+    position:fixed;
+    bottom:clamp(16px, 3vw, 36px);
+    right:clamp(18px, 3vw, 40px);
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--text-muted);
+    text-align:right;
+    line-height:1.6;
+    pointer-events:none;
+  }
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<div id="stage"></div>
+
+<div class="placard">
+  <p class="eyebrow">Tables III · IV · V · VI — prototype</p>
+  <h1>Each row, a circle of dots</h1>
+  <p class="caption">
+    No rendered ring — just the <b>items</b> as dots on a horizontal circle,
+    one circle per row, radius scaled to how many items that row has. Lines
+    connect dots directly, exactly the edges the 2-D view draws, in its own
+    colors.
+  </p>
+  <div class="legend">
+    <div class="row"><span class="swatch" style="background:#f1f0eb"></span>case — 14 dots</div>
+    <div class="row"><span class="swatch" style="background:#eb6b38"></span>dharma — 14 dots</div>
+    <div class="row"><span class="swatch" style="background:#db9712"></span>nomenclature — 9 dots</div>
+    <div class="row"><span class="swatch" style="background:#129512"></span>sphere — 10 dots</div>
+    <div class="row"><span class="line" style="border-color:#db9712"></span>nom → case</div>
+    <div class="row"><span class="line" style="border-color:#129512"></span>sphere → case</div>
+    <div class="row"><span class="line" style="border-color:#c3c2b7"></span>dharma → case</div>
+    <div class="row"><span class="line" style="border-color:#7fd4ff"></span>dharma "as in" dharma</div>
+  </div>
+  <label class="toggle">
+    <input type="checkbox" id="rotateToggle" checked>
+    auto-rotate
+  </label>
+</div>
+
+<div class="corner-note">illustrative view — the 2-D diagram stays the working one</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  // Real subgraph from graph-data.js: Table VI dharmas 1-14 (case 1A),
+  // Table III nomenclature (all 9), Table IV spheres 1-10, Table V cases 1-14.
+  var DHARMA_IDS = ['dh-1','dh-2','dh-3','dh-4','dh-5','dh-6','dh-7','dh-8','dh-9','dh-10','dh-11','dh-12','dh-13','dh-14'];
+  var NOM_IDS    = ['nom-1','nom-2','nom-3','nom-4','nom-5','nom-6','nom-7','nom-8','nom-9'];
+  var SPHERE_IDS = ['sph-1','sph-2','sph-3','sph-4','sph-5','sph-6','sph-7','sph-8','sph-9','sph-10'];
+  var CASE_IDS   = ['case-1','case-2','case-3','case-4','case-5','case-6','case-7','case-8','case-9','case-10','case-11','case-12','case-13','case-14'];
+
+  // dharma_case_edges / nomenclature_case_edges / sphere_case_edges, all -> case-1
+  var CROSS_EDGES = DHARMA_IDS.map(function(id){ return {from:id, to:'case-1', color:0xc3c2b7, opacity:0.55}; })
+    .concat([
+      {from:'nom-1', to:'case-1', color:0xdb9712, opacity:0.55},
+      {from:'sph-1', to:'case-1', color:0x129512, opacity:0.55}
+    ]);
+
+  // dharma_as_in_edges, restricted to dharmas 1-14
+  var SAME_RING_ARCS = [
+    {from:'dh-9',  to:'dh-2',  color:0x7fd4ff},
+    {from:'dh-14', to:'dh-10', color:0x7fd4ff}
+  ];
+
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var stage = document.getElementById('stage');
+  var W = window.innerWidth, H = window.innerHeight;
+
+  var scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x000000);
+
+  var camera = new THREE.PerspectiveCamera(40, W/H, 0.1, 100);
+  camera.position.set(2.2, 3.0, 12.5);
+  camera.lookAt(0, -1.4, 0);
+
+  var renderer = new THREE.WebGLRenderer({ antialias:true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setSize(W, H);
+  stage.appendChild(renderer.domElement);
+
+  var rig = new THREE.Group();
+  scene.add(rig);
+
+  // mouse-wheel zoom: dolly the camera along its view direction, clamped
+  var lookTarget = new THREE.Vector3(0, -1.4, 0);
+  var minDist = 3, maxDist = 30;
+  stage.addEventListener('wheel', function(ev){
+    ev.preventDefault();
+    var dir = camera.position.clone().sub(lookTarget);
+    var dist = dir.length();
+    var next = dist * Math.pow(1.0015, ev.deltaY);
+    next = Math.min(maxDist, Math.max(minDist, next));
+    dir.setLength(next);
+    camera.position.copy(lookTarget).add(dir);
+  }, { passive:false });
+
+  // grab-to-rotate: dragging spins the rig on both axes, and hands control
+  // back from auto-rotate for as long as the drag lasts
+  var dragging = false, lastX = 0, lastY = 0;
+  var wasRotating = false;
+  var PITCH_LIMIT = Math.PI/2 - 0.05;
+  stage.addEventListener('pointerdown', function(ev){
+    dragging = true;
+    lastX = ev.clientX; lastY = ev.clientY;
+    stage.classList.add('grabbing');
+    stage.setPointerCapture(ev.pointerId);
+    wasRotating = rotating;
+    rotating = false;
+  });
+  stage.addEventListener('pointermove', function(ev){
+    if(!dragging) return;
+    var dx = ev.clientX - lastX, dy = ev.clientY - lastY;
+    lastX = ev.clientX; lastY = ev.clientY;
+    rig.rotation.y += dx * 0.006;
+    rig.rotation.x = Math.max(-PITCH_LIMIT, Math.min(PITCH_LIMIT, rig.rotation.x + dy * 0.006));
+  });
+  function endDrag(ev){
+    if(!dragging) return;
+    dragging = false;
+    stage.classList.remove('grabbing');
+    rotating = wasRotating;
+  }
+  stage.addEventListener('pointerup', endDrag);
+  stage.addEventListener('pointercancel', endDrag);
+
+  // linear radius from item count: r = base + k*n
+  function radiusFor(n){ return 0.35 + 0.16*n; }
+
+  // vertical order top->bottom mirrors the 2-D layer order:
+  // nomenclature, sphere, case, dharma
+  var ROWS = [
+    { ids:NOM_IDS,    y: 3.2, color:0xdb9712 },
+    { ids:SPHERE_IDS, y: 1.4, color:0x129512 },
+    { ids:CASE_IDS,   y:-1.0, color:0xf1f0eb },
+    { ids:DHARMA_IDS, y:-3.4, color:0xeb6b38 }
+  ];
+
+  var dotPos = {}; // id -> THREE.Vector3 (world/rig-local space)
+  var dotGeo = new THREE.SphereGeometry(0.028, 8, 8);
+
+  ROWS.forEach(function(row){
+    var n = row.ids.length;
+    var r = radiusFor(n);
+    var mat = new THREE.MeshBasicMaterial({ color:row.color });
+    row.ids.forEach(function(id, i){
+      var a = (i/n)*Math.PI*2 - Math.PI/2;
+      var pos = new THREE.Vector3(Math.cos(a)*r, row.y, Math.sin(a)*r);
+      dotPos[id] = pos;
+      var isHub = id === 'case-1';
+      var dot = new THREE.Mesh(dotGeo, mat);
+      dot.position.copy(pos);
+      dot.scale.setScalar(isHub ? 1.7 : 1);
+      rig.add(dot);
+    });
+  });
+
+  function addLine(p1, p2, color, opacity, bulge){
+    var mid = p1.clone().add(p2).multiplyScalar(0.5);
+    if(bulge) mid.multiplyScalar(1); // same-plane arcs bulge via caller-supplied mid instead
+    var pts = bulge ? bulge(p1, p2) : [p1, mid, p2];
+    var curve = new THREE.CatmullRomCurve3(pts);
+    var geo = new THREE.BufferGeometry().setFromPoints(curve.getPoints(40));
+    var mat = new THREE.LineBasicMaterial({ color:color, transparent:true, opacity:opacity });
+    rig.add(new THREE.Line(geo, mat));
+  }
+
+  // cross-row edges: straight-ish spline sagging slightly toward the central axis
+  CROSS_EDGES.forEach(function(e){
+    var p1 = dotPos[e.from], p2 = dotPos[e.to];
+    if(!p1 || !p2) return;
+    addLine(p1, p2, e.color, e.opacity, function(a,b){
+      var mid = a.clone().add(b).multiplyScalar(0.5);
+      mid.x *= 0.4; mid.z *= 0.4;
+      return [a, mid, b];
+    });
+  });
+
+  // same-row arcs: bow outward within the dharma circle's own plane
+  SAME_RING_ARCS.forEach(function(e){
+    var p1 = dotPos[e.from], p2 = dotPos[e.to];
+    if(!p1 || !p2) return;
+    addLine(p1, p2, e.color, 0.85, function(a,b){
+      var mid = a.clone().add(b).multiplyScalar(0.5);
+      var dir = new THREE.Vector3(mid.x, 0, mid.z).normalize();
+      mid.x = dir.x * (Math.hypot(a.x,a.z) * 1.3);
+      mid.z = dir.z * (Math.hypot(a.x,a.z) * 1.3);
+      return [a, mid, b];
+    });
+  });
+
+  window.addEventListener('resize', function(){
+    W = window.innerWidth; H = window.innerHeight;
+    camera.aspect = W/H;
+    camera.updateProjectionMatrix();
+    renderer.setSize(W, H);
+  });
+
+  var rotateToggle = document.getElementById('rotateToggle');
+  var rotating = rotateToggle.checked && !reduceMotion;
+  rotateToggle.addEventListener('change', function(){
+    rotating = rotateToggle.checked;
+  });
+  if(reduceMotion) rotateToggle.checked = false;
+
+  var clock = new THREE.Clock();
+  function renderFrame(dt){
+    if(rotating) rig.rotation.y += dt * 0.6;
+    renderer.render(scene, camera);
+  }
+
+  renderFrame(0);
+  (function loop(){
+    requestAnimationFrame(loop);
+    renderFrame(clock.getDelta());
+  })();
+})();
+</script>
+
+</body></html>
