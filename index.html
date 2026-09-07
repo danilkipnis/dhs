@@ -218,7 +218,8 @@
      crowd out the search/reset toolbar above it. */
   #erInline{
     width:100%;
-    height:min(60vh, 400px);
+    aspect-ratio:560/672;
+    max-height:min(60vh, 400px);
     border:1px solid #4a4a4a;
     border-radius:8px;
     background:#000000;
@@ -1702,6 +1703,23 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     let content = new THREE.Group();
     rig.add(content);
 
+    // Camera sat at a fixed distance regardless of neighbourhood size, so a
+    // busy hub's ring would spill past the frustum and read as "cut off" by
+    // the box's own edges. Pull the camera back (never closer than the
+    // default framing) just enough that the farthest dot still fits.
+    const DEFAULT_DIST = camera.position.clone().sub(lookTarget).length();
+    function fitCamera(radius){
+      const vFov = camera.fov * Math.PI/180;
+      const hFov = 2*Math.atan(Math.tan(vFov/2)*camera.aspect);
+      const halfFov = Math.min(vFov, hFov)/2;
+      const dist = Math.max(DEFAULT_DIST, Math.min(60, (radius/Math.sin(halfFov))*1.3));
+      const dir = camera.position.clone().sub(lookTarget);
+      if(dir.lengthSq() < 1e-6) dir.set(3, 3, 12);
+      dir.setLength(dist);
+      camera.position.copy(lookTarget).add(dir);
+      camera.lookAt(lookTarget);
+    }
+
     function render(reach, hubType, hubId){
       rig.remove(content);
       content = new THREE.Group();
@@ -1717,6 +1735,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
 
       const labelColor = cssVar('--text-secondary'), hubLabelColor = cssVar('--text-primary');
       const pos = new Map(); // "type|id" -> Vector3
+      let maxReach = 0; // farthest any dot sits from the origin, for fitCamera below
       types.forEach(t => {
         const ids = Array.from(reach.nodes[t]);
         const n = ids.length, r = radiusFor(n);
@@ -1725,6 +1744,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
           const a = n<=1 ? 0 : (i/n)*Math.PI*2;
           const p = new THREE.Vector3(Math.cos(a)*r, levelY.get(t), Math.sin(a)*r);
           pos.set(t+'|'+id, p);
+          maxReach = Math.max(maxReach, p.length());
           const isHub = t===hubType && String(id)===String(hubId);
           const mesh = new THREE.Mesh(isHub?hubGeo:dotGeo, new THREE.MeshBasicMaterial({ color }));
           mesh.position.copy(p);
@@ -1741,6 +1761,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
           }
         });
       });
+      fitCamera(maxReach);
 
       const hubKey = hubType+'|'+hubId, hubPos = pos.get(hubKey);
       if(!hubPos) return;
