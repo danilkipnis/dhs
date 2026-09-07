@@ -162,6 +162,37 @@
     margin:0;
     padding:.25rem 0;
   }
+  /* Sidebar's live 3D mirror of the whole graph: one ring per row (radius by
+     item count), all real edges, dimmed/lit by the same reach the 2-D view
+     highlights from. Ambient shape of the selection, not a read-by-dot view. */
+  #graph3dPanel{
+    margin:.7rem 0 1.1rem;
+  }
+  #graph3dHead{
+    display:flex; align-items:center; justify-content:space-between;
+    font-size:.7rem; letter-spacing:.04em; text-transform:uppercase;
+    color:var(--text-muted);
+    margin-bottom:.35rem;
+  }
+  .graph3dHeadRight{ display:flex; align-items:center; gap:.6rem; }
+  #graph3dPopout{
+    background:none; border:1px solid var(--rule); color:var(--text-secondary);
+    border-radius:4px; width:20px; height:20px; line-height:1;
+    font-size:.85rem; cursor:pointer; padding:0;
+    display:flex; align-items:center; justify-content:center;
+  }
+  #graph3dPopout:hover{ background:var(--rule); color:var(--text-primary); }
+  #graph3dStage{
+    width:100%;
+    height:220px;
+    border:1px solid var(--rule);
+    border-radius:8px;
+    background:var(--surface-1);
+    overflow:hidden;
+    cursor:grab;
+  }
+  #graph3dStage.grabbing{ cursor:grabbing; }
+  #graph3dStage canvas{ display:block; width:100%; height:100%; }
   #searchHints.hidden{ display:none; }
   #searchHints li{
     padding:.32rem .6rem;
@@ -386,7 +417,7 @@ Phenomenon and System,&rdquo; in Alexander Piatigorsky's <em>The Buddhist
 Philosophy of Thought: Essays in Interpretation</em>, London and Dublin: Curzon
 Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p>
     <div id="erInline">
-      <svg id="erSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 688"></svg>
+      <svg id="erSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 8 560 672"></svg>
     </div>
     <div class="toolbar">
       <div class="edge-filters">
@@ -405,9 +436,19 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
         </button>
         <ul id="searchHints" class="hidden"></ul>
       </div>
+      <div id="graph3dPanel">
+        <div id="graph3dHead">
+          <span id="graph3dTitle">3-D view</span>
+          <span class="graph3dHeadRight">
+            <button id="graph3dPopout" type="button" title="Open in a new window">&#10530;</button>
+          </span>
+        </div>
+        <div id="graph3dStage"></div>
+      </div>
     </div>
   </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="graph-data.js"></script>
 <script>
 
@@ -1225,7 +1266,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
   // moves with it, so its cached rect needs a refresh once settled.
   function setSidebarCollapsed(collapsed){
     sidebar.classList.toggle('collapsed', collapsed);
-    setTimeout(()=>{ refreshStageRect(); refreshErRect(); }, 240);
+    setTimeout(()=>{ refreshStageRect(); refreshErRect(); if(window.__resizeGraph3D) window.__resizeGraph3D(); }, 240);
   }
   function toggleSidebar(){ setSidebarCollapsed(!sidebar.classList.contains('collapsed')); }
   document.getElementById('sidebarToggle').onclick = toggleSidebar;
@@ -1235,7 +1276,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
   // SVG's own viewBox instead of the graph's.
   const erSvg = document.getElementById('erSvg');
   erSvg.innerHTML = erSvgMarkup;
-  const erFullBox = { x:0, y:0, w:560, h:688 };
+  const erFullBox = { x:0, y:8, w:560, h:672 };
   let erVbState = { ...erFullBox };
   function erApplyViewBox(){
     erSvg.setAttribute('viewBox', `${erVbState.x} ${erVbState.y} ${erVbState.w} ${erVbState.h}`);
@@ -1518,8 +1559,214 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     setActive(type, id);
     applyHighlightFromActive(reach);
     updateAddressBar(type, id);
+    if(window.__updateGraph3D) window.__updateGraph3D(reach);
     return reach;
   }
+
+  // ---------- 3-D view: the clicked node's own row plus its direct neighbours,
+  // one ring per row involved -- exactly the `reach` the 2-D view highlights
+  // from, not the whole corpus (rendering all ~900 nodes read as noise, not
+  // signal). Lives in the sidebar below search; the popout button reopens the
+  // same view full-size for a heavily-connected node that outgrows the panel.
+  function createGraph3DView(THREE, container, options){
+    options = options || {};
+    const cssVar = name => (getComputedStyle(document.querySelector('.viz-root')).getPropertyValue(name).trim() || '#888888');
+    const colorOf = name => new THREE.Color(cssVar(name));
+
+    const ROW_COLOR = {
+      avacara:'--avacara', qualDharma:'--qualtier', nomenclature:'--nomenclature',
+      sphere:'--sphere', content:'--content', trancic:'--caseattr', mental:'--caseattr',
+      senseObj:'--caseattr', dhyanicObj:'--caseattr', case:'--case', dharma:'--dharma', ms:'--ms',
+    };
+    const LEVEL_GAP = 1.6;
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(cssVar('--surface-1'));
+
+    let W = container.clientWidth || 1, H = container.clientHeight || 1;
+    const camera = new THREE.PerspectiveCamera(42, W/H, 0.05, 200);
+    const lookTarget = new THREE.Vector3(0, 0, 0);
+    camera.position.set(3, 3, 12);
+    camera.lookAt(lookTarget);
+
+    const renderer = new THREE.WebGLRenderer({ antialias:true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setSize(W, H);
+    container.appendChild(renderer.domElement);
+
+    const rig = new THREE.Group();
+    scene.add(rig);
+
+    // Same order of magnitude as the 2-D view's own node radius (2-4px on a
+    // multi-thousand-px canvas) -- a small mark, not a rendered sphere.
+    const DOT_R = 0.045;
+    const dotGeo = new THREE.SphereGeometry(DOT_R, 8, 8);
+    const hubGeo = new THREE.SphereGeometry(DOT_R*1.9, 10, 10);
+
+    // A lone item (n=1) collapses its "ring" to a point instead of drawing a
+    // circle around nothing; otherwise radius grows with sqrt(count) so a
+    // busy hub (case 1 reaches 56-odd dharmas) still reads as one ring.
+    function radiusFor(n){ return n<=1 ? 0.01 : 0.5 + 0.42*Math.sqrt(n); }
+
+    let content = new THREE.Group();
+    rig.add(content);
+
+    function render(reach, hubType, hubId){
+      rig.remove(content);
+      content = new THREE.Group();
+      rig.add(content);
+      if(!reach) return;
+
+      // Vertical order: the same relative row order the 2-D view stacks in
+      // (the ROW map), restricted to just the rows this selection touches.
+      const types = Object.keys(reach.nodes).sort((a,b) => (ROW[a]||0) - (ROW[b]||0));
+      const levelY = new Map();
+      types.forEach((t, i) => levelY.set(t, (types.length-1)/2*LEVEL_GAP - i*LEVEL_GAP));
+
+      const pos = new Map(); // "type|id" -> Vector3
+      types.forEach(t => {
+        const ids = Array.from(reach.nodes[t]);
+        const n = ids.length, r = radiusFor(n);
+        const color = colorOf(ROW_COLOR[t] || '--text-secondary');
+        ids.forEach((id, i) => {
+          const a = n<=1 ? 0 : (i/n)*Math.PI*2;
+          const p = new THREE.Vector3(Math.cos(a)*r, levelY.get(t), Math.sin(a)*r);
+          pos.set(t+'|'+id, p);
+          const isHub = t===hubType && String(id)===String(hubId);
+          const mesh = new THREE.Mesh(isHub?hubGeo:dotGeo, new THREE.MeshBasicMaterial({ color }));
+          mesh.position.copy(p);
+          content.add(mesh);
+        });
+      });
+
+      const hubKey = hubType+'|'+hubId, hubPos = pos.get(hubKey);
+      if(!hubPos) return;
+
+      const derivation = colorOf('--derivation');
+      for(const [key, dist] of reach.dist){
+        if(dist !== 1) continue;
+        const p2 = pos.get(key);
+        if(!p2) continue;
+        const t2 = key.slice(0, key.indexOf('|'));
+        const sameRow = t2 === hubType;
+        const color = sameRow ? derivation : colorOf(ROW_COLOR[t2] || '--text-secondary');
+        const mid = hubPos.clone().add(p2).multiplyScalar(0.5);
+        if(sameRow){
+          // Same-row relation (as-in / derivation / homonym...): bow outward
+          // along the ring, mirroring the 2-D view's own same-row arcs.
+          const out = new THREE.Vector3(mid.x, 0, mid.z);
+          if(out.lengthSq() < 1e-6) out.set(1, 0, 0); else out.normalize();
+          const rMax = Math.max(hubPos.length(), p2.length());
+          mid.set(out.x*rMax*1.3, (hubPos.y+p2.y)/2, out.z*rMax*1.3);
+        } else {
+          mid.x *= 0.3; mid.z *= 0.3; // cross-row cable sags toward the centre
+        }
+        const curve = new THREE.CatmullRomCurve3([hubPos, mid, p2]);
+        const geo = new THREE.BufferGeometry().setFromPoints(curve.getPoints(20));
+        content.add(new THREE.Line(geo, new THREE.LineBasicMaterial({ color })));
+      }
+    }
+
+    // Default viewpoint: a fixed 3/4 angle that shows both the vertical
+    // stacking of rows and each ring's circularity, without any animation.
+    rig.rotation.set(0.16, 0.55, 0);
+
+    function draw(){
+      if(options.isHidden && options.isHidden()) return;
+      renderer.render(scene, camera);
+    }
+
+    // ---- interaction: wheel zoom, grab-drag to orbit (no auto-rotation) ----
+    let dragging = false, lastX = 0, lastY = 0;
+    const PITCH_LIMIT = Math.PI/2 - 0.05;
+    container.style.cursor = 'grab';
+    container.addEventListener('wheel', ev => {
+      ev.preventDefault();
+      const dir = camera.position.clone().sub(lookTarget);
+      const dist = Math.min(60, Math.max(2, dir.length()*Math.pow(1.0015, ev.deltaY)));
+      dir.setLength(dist);
+      camera.position.copy(lookTarget).add(dir);
+      draw();
+    }, { passive:false });
+    container.addEventListener('pointerdown', ev => {
+      dragging = true; lastX = ev.clientX; lastY = ev.clientY;
+      container.style.cursor = 'grabbing';
+      container.setPointerCapture(ev.pointerId);
+    });
+    container.addEventListener('pointermove', ev => {
+      if(!dragging) return;
+      const dx = ev.clientX - lastX, dy = ev.clientY - lastY;
+      lastX = ev.clientX; lastY = ev.clientY;
+      rig.rotation.y += dx*0.006;
+      rig.rotation.x = Math.max(-PITCH_LIMIT, Math.min(PITCH_LIMIT, rig.rotation.x + dy*0.006));
+      draw();
+    });
+    function endDrag(){ dragging = false; container.style.cursor = 'grab'; }
+    container.addEventListener('pointerup', endDrag);
+    container.addEventListener('pointercancel', endDrag);
+
+    function resize(){
+      W = container.clientWidth; H = container.clientHeight;
+      if(!W || !H) return;
+      camera.aspect = W/H;
+      camera.updateProjectionMatrix();
+      renderer.setSize(W, H);
+      draw();
+    }
+
+    return { render:(reach, type, id) => { render(reach, type, id); draw(); }, resize, destroy:()=>{} };
+  }
+
+  (function initGraph3D(){
+    const stageEl = document.getElementById('graph3dStage');
+    if(!stageEl || typeof THREE === 'undefined') return;
+
+    const view = createGraph3DView(THREE, stageEl, {
+      isHidden: () => sidebar.classList.contains('collapsed'),
+    });
+
+    let lastReach = null, lastType = null, lastId = null;
+    let popupWin = null, popupView = null;
+
+    function cssVarSafe(name){
+      return getComputedStyle(document.querySelector('.viz-root')).getPropertyValue(name).trim() || '#000';
+    }
+
+    window.__updateGraph3D = function(reach, type, id){
+      lastReach = reach; lastType = type; lastId = id;
+      view.render(reach, type, id);
+      if(popupView && popupWin && !popupWin.closed) popupView.render(reach, type, id);
+      const title = document.getElementById('graph3dTitle');
+      if(title) title.textContent = '3-D view · ' + type + ' ' + id;
+    };
+    window.__resizeGraph3D = () => view.resize();
+    window.addEventListener('resize', () => view.resize());
+
+    // Seed with a real neighbourhood before anything's been clicked, so the
+    // panel opens in a working state instead of an empty box.
+    const seedCase = data.cases[0];
+    if(seedCase) window.__updateGraph3D(reachFrom('case', seedCase.case_id), 'case', seedCase.case_id);
+
+    document.getElementById('graph3dPopout').addEventListener('click', () => {
+      if(popupWin && !popupWin.closed){ popupWin.focus(); return; }
+      popupWin = window.open('', 'graph3dPopout', 'width=900,height=720');
+      if(!popupWin) return; // popup blocked -- nothing more to do
+      const doc = popupWin.document;
+      doc.title = '3-D view — ' + document.title;
+      doc.head.innerHTML = '<style>html,body{margin:0;height:100%;background:'+cssVarSafe('--surface-1')+';}#c{position:fixed;inset:0;}</style>';
+      doc.body.innerHTML = '<div id="c"></div>';
+      const script = doc.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+      script.onload = () => {
+        popupView = createGraph3DView(popupWin.THREE, doc.getElementById('c'), {
+          isHidden: () => popupWin.closed,
+        });
+        popupWin.addEventListener('resize', () => popupView.resize());
+        if(lastReach) popupView.render(lastReach, lastType, lastId);
+      };
+      doc.head.appendChild(script);
+    });
+  })();
 
   function selectCase(cId){
     select('case', cId);
