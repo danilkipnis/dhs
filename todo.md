@@ -19,5 +19,3 @@ Table X, p. 155
 Cleanup Claude's notes in json
 
 QA OCR
-
-3d
