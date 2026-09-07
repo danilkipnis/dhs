@@ -439,7 +439,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
       </div>
       <div id="graph3dPanel">
         <div id="graph3dHead">
-          <span id="graph3dTitle">3-D view</span>
+          <span id="graph3dTitle"></span>
           <span class="graph3dHeadRight">
             <button id="graph3dPopout" type="button" title="Open in a new window">&#10530;</button>
           </span>
@@ -1587,7 +1587,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     switch(type){
       case 'case': {
         const c = caseById.get(id);
-        return { title: 'Case ' + id, meta: c && c.pages ? 'pp. ' + c.pages : '' };
+        return { title: 'vc' + id, meta: c && c.pages ? 'pp. ' + c.pages : '' };
       }
       case 'dharma': {
         const d = dharmaById.get(id);
@@ -1595,7 +1595,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
       }
       case 'ms': {
         const m = msById.get(id);
-        return { title: 'MS ' + (m ? m.no : id) + (m ? ' ' + m.pali : ''), meta: m ? `“${m.translation||''}”` : '' };
+        return { title: 'ms' + (m ? m.no : id) + (m ? ' ' + m.pali : ''), meta: m ? `“${m.translation||''}”` : '' };
       }
       case 'nomenclature': {
         const n = nomenclatureById.get(id);
@@ -1607,18 +1607,19 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
       }
       case 'avacara': {
         const a = avacaraById.get(id);
-        return { title: 'Avacara ' + id, meta: a ? a.gloss || '' : '' };
+        return { title: 'a' + id, meta: a ? a.gloss || '' : '' };
       }
       case 'qualDharma': {
         const q = qualDharmaById.get(id);
-        return { title: 'Character of dharmas ' + id, meta: q ? q.gloss || '' : '' };
+        return { title: id, meta: q ? q.gloss || '' : '' };
       }
       default: {
         const maps = { content:contentById, trancic:trancicById, mental:mentalById, senseObj:senseObjById, dhyanicObj:dhyanicObjById };
-        const labels = { content:'Content variant', trancic:'Trancic variable', mental:'Mental variable', senseObj:'Sense object', dhyanicObj:'Dhyānic object' };
+        const prefixes = { content:'c', trancic:'tv', mental:'mv', senseObj:'o' };
         const item = maps[type] && maps[type].get(id);
         const meta = item ? (item.pali ? `${item.pali} (${item.translation||''})` : (item.translation||'')) : '';
-        return { title: (labels[type]||type) + ' ' + id, meta };
+        const title = type === 'dhyanicObj' ? 'o[' + id + ']' : (prefixes[type] || type) + id;
+        return { title, meta };
       }
     }
   }
@@ -1800,7 +1801,8 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
       renderer.render(scene, camera);
     }
 
-    // ---- interaction: wheel zoom, grab-drag to orbit (no auto-rotation) ----
+    // ---- interaction: wheel zoom, grab-drag to orbit, slow auto-rotation ----
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let dragging = false, lastX = 0, lastY = 0, downX = 0, downY = 0, moved = false;
     const PITCH_LIMIT = Math.PI/2 - 0.05;
     const CLICK_SLOP = 4; // px of pointer travel still treated as a click, not a drag
@@ -1853,6 +1855,21 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     container.addEventListener('pointerup', endDrag);
     container.addEventListener('pointercancel', () => endDrag());
 
+    // Slow idle spin around the vertical (Y) axis; pauses while the user is
+    // dragging to orbit, and is skipped entirely for prefers-reduced-motion.
+    if(!reduceMotion){
+      const clock = new THREE.Clock();
+      (function spin(){
+        requestAnimationFrame(spin);
+        if(options.isHidden && options.isHidden()) { clock.getDelta(); return; }
+        const dt = clock.getDelta();
+        if(!dragging){
+          rig.rotation.y += dt * 0.12;
+          draw();
+        }
+      })();
+    }
+
     function resize(){
       W = container.clientWidth; H = container.clientHeight;
       if(!W || !H) return;
@@ -1887,7 +1904,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     }
 
     // Text panel for the pop-out window only -- the sidebar panel is too
-    // narrow for prose, so it just gets the "3-D view · type id" title.
+    // narrow for prose, so it just gets the entity's exact index as title.
     function updatePopupInfo(reach, type, id){
       if(!popupWin || popupWin.closed) return;
       const doc = popupWin.document;
@@ -1913,7 +1930,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
         updatePopupInfo(reach, type, id);
       }
       const title = document.getElementById('graph3dTitle');
-      if(title) title.textContent = '3-D view · ' + type + ' ' + id;
+      if(title) title.textContent = describeElement(type, id).title;
     };
     window.__resizeGraph3D = () => view.resize();
     window.addEventListener('resize', () => view.resize());
@@ -1928,7 +1945,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
       popupWin = window.open('', 'graph3dPopout', 'width=900,height=720');
       if(!popupWin) return; // popup blocked -- nothing more to do
       const doc = popupWin.document;
-      doc.title = '3-D view — ' + document.title;
+      doc.title = document.title;
       doc.head.innerHTML = `<style>
         html,body{margin:0;height:100%;background:${cssVarSafe('--surface-1')};
           font-family:'Noto Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;}
