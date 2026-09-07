@@ -1683,6 +1683,11 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     const rig = new THREE.Group();
     scene.add(rig);
 
+    // Dot meshes only (not labels/connector lines) get pushed here on every
+    // render() so a click can be raycast against just the clickable nodes.
+    let pickable = [];
+    const raycaster = new THREE.Raycaster();
+
     // Same order of magnitude as the 2-D view's own node radius (2-4px on a
     // multi-thousand-px canvas) -- a small mark, not a rendered sphere.
     const DOT_R = 0.045;
@@ -1701,6 +1706,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
       rig.remove(content);
       content = new THREE.Group();
       rig.add(content);
+      pickable = [];
       if(!reach) return;
 
       // Vertical order: the same relative row order the 2-D view stacks in
@@ -1722,7 +1728,10 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
           const isHub = t===hubType && String(id)===String(hubId);
           const mesh = new THREE.Mesh(isHub?hubGeo:dotGeo, new THREE.MeshBasicMaterial({ color }));
           mesh.position.copy(p);
+          mesh.userData.type = t;
+          mesh.userData.id = id;
           content.add(mesh);
+          pickable.push(mesh);
 
           const fmt = SHORT_LABEL[t];
           if(fmt){
@@ -1771,8 +1780,9 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     }
 
     // ---- interaction: wheel zoom, grab-drag to orbit (no auto-rotation) ----
-    let dragging = false, lastX = 0, lastY = 0;
+    let dragging = false, lastX = 0, lastY = 0, downX = 0, downY = 0, moved = false;
     const PITCH_LIMIT = Math.PI/2 - 0.05;
+    const CLICK_SLOP = 4; // px of pointer travel still treated as a click, not a drag
     container.style.cursor = 'grab';
     container.addEventListener('wheel', ev => {
       ev.preventDefault();
@@ -1783,7 +1793,9 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
       draw();
     }, { passive:false });
     container.addEventListener('pointerdown', ev => {
-      dragging = true; lastX = ev.clientX; lastY = ev.clientY;
+      dragging = true; moved = false;
+      lastX = ev.clientX; lastY = ev.clientY;
+      downX = ev.clientX; downY = ev.clientY;
       container.style.cursor = 'grabbing';
       container.setPointerCapture(ev.pointerId);
     });
@@ -1791,13 +1803,34 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
       if(!dragging) return;
       const dx = ev.clientX - lastX, dy = ev.clientY - lastY;
       lastX = ev.clientX; lastY = ev.clientY;
+      if(Math.abs(ev.clientX-downX) > CLICK_SLOP || Math.abs(ev.clientY-downY) > CLICK_SLOP) moved = true;
       rig.rotation.y += dx*0.006;
       rig.rotation.x = Math.max(-PITCH_LIMIT, Math.min(PITCH_LIMIT, rig.rotation.x + dy*0.006));
       draw();
     });
-    function endDrag(){ dragging = false; container.style.cursor = 'grab'; }
+    // A click on a dot re-centres the whole app on that node (same as
+    // clicking a node in the 2-D diagram) and shows its tooltip; picking is
+    // skipped once the pointer has moved past CLICK_SLOP, so an orbit-drag
+    // that ends over a dot doesn't also fire a click.
+    function pickAt(ev){
+      const rect = container.getBoundingClientRect();
+      if(!rect.width || !rect.height) return;
+      const ndc = new THREE.Vector2(
+        ((ev.clientX-rect.left)/rect.width)*2-1,
+        -(((ev.clientY-rect.top)/rect.height)*2-1)
+      );
+      raycaster.setFromCamera(ndc, camera);
+      const hit = raycaster.intersectObjects(pickable)[0];
+      if(hit){ if(options.onNodeClick) options.onNodeClick(hit.object.userData.type, hit.object.userData.id, ev.clientX, ev.clientY); }
+      else if(options.onBackgroundClick) options.onBackgroundClick();
+    }
+    function endDrag(ev){
+      const wasClick = dragging && !moved;
+      dragging = false; container.style.cursor = 'grab';
+      if(wasClick && ev && ev.type === 'pointerup') pickAt(ev);
+    }
     container.addEventListener('pointerup', endDrag);
-    container.addEventListener('pointercancel', endDrag);
+    container.addEventListener('pointercancel', () => endDrag());
 
     function resize(){
       W = container.clientWidth; H = container.clientHeight;
@@ -1817,6 +1850,12 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
 
     const view = createGraph3DView(THREE, stageEl, {
       isHidden: () => sidebar.classList.contains('collapsed'),
+      onNodeClick: (camelType, id, x, y) => {
+        const type = DATA_TYPE_OF[camelType] || camelType;
+        selectByType(type, id);
+        pinTooltip(type, id, x+14, y+14);
+      },
+      onBackgroundClick: () => unpinTooltip(),
     });
 
     let lastReach = null, lastType = null, lastId = null;
@@ -1879,6 +1918,32 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
         #infoTitle{font-size:1.15rem;font-weight:600;color:${cssVarSafe('--text-primary')};margin:0 0 .35rem;line-height:1.25;}
         #infoMeta{font-size:.82rem;color:${cssVarSafe('--text-secondary')};line-height:1.5;margin:0 0 .8rem;}
         #infoCounts{font-size:.72rem;color:${cssVarSafe('--text-muted')};border-top:1px solid ${cssVarSafe('--rule')};padding-top:.6rem;}
+        #tooltip3d{
+          position:fixed; pointer-events:auto; display:none;
+          background:${cssVarSafe('--surface-2')}; border:1px solid ${cssVarSafe('--rule')};
+          border-radius:6px; padding:.5rem 1.9rem .5rem .65rem;
+          font-size:.74rem; line-height:1.45; max-width:320px;
+          box-shadow:0 4px 18px rgba(0,0,0,.18); z-index:10;
+          color:${cssVarSafe('--text-secondary')};
+        }
+        #tooltip3d b{color:${cssVarSafe('--text-primary')};}
+        #tooltip3d .muted{color:${cssVarSafe('--text-muted')};}
+        #tooltip3d .tt-close{
+          position:absolute; top:.25rem; right:.4rem; cursor:pointer;
+          color:${cssVarSafe('--text-muted')}; font-size:1rem; line-height:1; padding:.05rem .25rem;
+        }
+        #tooltip3d .tt-close:hover{color:${cssVarSafe('--text-primary')};}
+        #tooltip3d .tt-link{cursor:pointer;}
+        #tooltip3d .tt-link:hover{color:${cssVarSafe('--highlight')};}
+        #tooltip3d .tt-nav{display:flex; justify-content:center; gap:2px; margin-top:.5rem;}
+        #tooltip3d .tt-dir{
+          display:flex; align-items:center; justify-content:center;
+          width:1.5rem; height:1.5rem; background:${cssVarSafe('--surface-1')};
+          border:1px solid ${cssVarSafe('--rule')}; border-radius:4px;
+          color:${cssVarSafe('--text-primary')}; font-size:.7rem; line-height:1; cursor:pointer; padding:0;
+        }
+        #tooltip3d .tt-dir:hover{background:${cssVarSafe('--rule')};}
+        #tooltip3d .tt-dir:disabled{opacity:.25; cursor:default;}
       </style>`;
       doc.body.innerHTML = `<div id="c"></div>
         <div id="info">
@@ -1887,12 +1952,61 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
           <p id="infoTitle"></p>
           <p id="infoMeta"></p>
           <p id="infoCounts"></p>
-        </div>`;
+        </div>
+        <div id="tooltip3d"></div>`;
+
+      // Popup mirror of the 2-D view's pinned tooltip: clicking a dot re-centres
+      // the whole app on that node (same selectByType() path a 2-D click uses,
+      // which also updates the 2-D highlight and both 3-D views) and pins this
+      // tooltip over the click. The nav cross and tt-links inside it reuse the
+      // exact same tooltipFor/navCrossHtml/neighborFor logic as the 2-D tooltip;
+      // only the on-screen anchor point is popup-local, since it stays put
+      // rather than tracking the (re-orbitable) 3-D node position.
+      let popupPinnedType = null, popupPinnedId = null;
+      function renderPopupTooltip(type, id, x, y){
+        const tt = doc.getElementById('tooltip3d');
+        if(!tt) return;
+        popupPinnedType = type; popupPinnedId = id;
+        tt.innerHTML = tooltipFor(type, id) + navCrossHtml(type, id) + '<span class="tt-close" title="Close">&times;</span>';
+        tt.style.left = Math.round(x)+'px';
+        tt.style.top = Math.round(y)+'px';
+        tt.style.display = 'block';
+      }
+      function hidePopupTooltip(){
+        const tt = doc.getElementById('tooltip3d');
+        if(tt) tt.style.display = 'none';
+        popupPinnedType = null; popupPinnedId = null;
+      }
+      doc.addEventListener('click', ev => {
+        const tt = doc.getElementById('tooltip3d');
+        if(!tt || !tt.contains(ev.target)) return;
+        if(ev.target.closest('.tt-close')){ hidePopupTooltip(); return; }
+        const dirBtn = ev.target.closest('.tt-dir');
+        if(dirBtn){
+          if(dirBtn.disabled) return;
+          const n = neighborFor(popupPinnedType, popupPinnedId, dirBtn.getAttribute('data-dir'));
+          if(n){ selectByType(n.type, n.id); renderPopupTooltip(n.type, n.id, parseInt(tt.style.left, 10), parseInt(tt.style.top, 10)); }
+          return;
+        }
+        const link = ev.target.closest('.tt-link');
+        if(link){
+          const lt = link.getAttribute('data-type'), lid = link.getAttribute('data-id');
+          selectByType(lt, lid);
+          renderPopupTooltip(lt, lid, parseInt(tt.style.left, 10), parseInt(tt.style.top, 10));
+        }
+      });
+
       const script = doc.createElement('script');
       script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
       script.onload = () => {
         popupView = createGraph3DView(popupWin.THREE, doc.getElementById('c'), {
           isHidden: () => popupWin.closed,
+          onNodeClick: (camelType, id, x, y) => {
+            const type = DATA_TYPE_OF[camelType] || camelType;
+            selectByType(type, id);
+            renderPopupTooltip(type, id, x+14, y+14);
+          },
+          onBackgroundClick: () => hidePopupTooltip(),
         });
         popupWin.addEventListener('resize', () => popupView.resize());
         if(lastReach){
