@@ -1559,25 +1559,111 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     setActive(type, id);
     applyHighlightFromActive(reach);
     updateAddressBar(type, id);
-    if(window.__updateGraph3D) window.__updateGraph3D(reach);
+    if(window.__updateGraph3D) window.__updateGraph3D(reach, type, id);
     return reach;
+  }
+
+  // Short on-dot label per type, exactly the text the 2-D view prints above
+  // each of its own nodes (see makeRowNodes/the case & dharma loops above).
+  const SHORT_LABEL = {
+    case: id => String(id),
+    dharma: id => 'Δ' + id,
+    ms: id => { const m = msById.get(id); return m ? String(m.no) : String(id); },
+    nomenclature: id => 'T' + id,
+    sphere: id => 'S' + id,
+    avacara: id => String(id),
+    qualDharma: id => 'Ch:' + id,
+    content: id => 'C:' + id,
+    trancic: id => 'TV:' + id,
+    mental: id => 'MV:' + id,
+    senseObj: id => 'O' + id,
+    dhyanicObj: id => 'O[' + id + ']',
+  };
+
+  // One-line title + gloss for a node, in the same voice each selectX()'s
+  // describe() uses -- reused by the pop-out window's info panel.
+  function describeElement(type, id){
+    switch(type){
+      case 'case': {
+        const c = caseById.get(id);
+        return { title: 'Case ' + id, meta: c && c.pages ? 'pp. ' + c.pages : '' };
+      }
+      case 'dharma': {
+        const d = dharmaById.get(id);
+        return { title: 'Δ' + id + (d ? ' ' + d.name_pali : ''), meta: d ? `“${d.name_translation||''}” — quality ${d.quality}` : '' };
+      }
+      case 'ms': {
+        const m = msById.get(id);
+        return { title: 'MS ' + (m ? m.no : id) + (m ? ' ' + m.pali : ''), meta: m ? `“${m.translation||''}”` : '' };
+      }
+      case 'nomenclature': {
+        const n = nomenclatureById.get(id);
+        return { title: 'T' + id + (n ? ' ' + n.term_pali : ''), meta: n ? `“${n.translation||''}”` : '' };
+      }
+      case 'sphere': {
+        const s = sphereById.get(id);
+        return { title: 'S' + id + (s ? ' ' + s.sphere_pali : ''), meta: s ? `“${s.translation||''}”` : '' };
+      }
+      case 'avacara': {
+        const a = avacaraById.get(id);
+        return { title: 'Avacara ' + id, meta: a ? a.gloss || '' : '' };
+      }
+      case 'qualDharma': {
+        const q = qualDharmaById.get(id);
+        return { title: 'Character of dharmas ' + id, meta: q ? q.gloss || '' : '' };
+      }
+      default: {
+        const maps = { content:contentById, trancic:trancicById, mental:mentalById, senseObj:senseObjById, dhyanicObj:dhyanicObjById };
+        const labels = { content:'Content variant', trancic:'Trancic variable', mental:'Mental variable', senseObj:'Sense object', dhyanicObj:'Dhyānic object' };
+        const item = maps[type] && maps[type].get(id);
+        const meta = item ? (item.pali ? `${item.pali} (${item.translation||''})` : (item.translation||'')) : '';
+        return { title: (labels[type]||type) + ' ' + id, meta };
+      }
+    }
   }
 
   // ---------- 3-D view: the clicked node's own row plus its direct neighbours,
   // one ring per row involved -- exactly the `reach` the 2-D view highlights
   // from, not the whole corpus (rendering all ~900 nodes read as noise, not
   // signal). Lives in the sidebar below search; the popout button reopens the
-  // same view full-size for a heavily-connected node that outgrows the panel.
+  // same view full-size for a heavily-connected node that outgrows the panel,
+  // with a text panel describing what's centred.
+  function makeLabelSprite(THREE, text, colorHex){
+    const c = document.createElement('canvas');
+    c.width = 256; c.height = 64;
+    const ctx = c.getContext('2d');
+    ctx.font = '600 30px system-ui, sans-serif';
+    ctx.fillStyle = colorHex;
+    ctx.textBaseline = 'middle';
+    ctx.fillText(text, 4, 34);
+    const tex = new THREE.CanvasTexture(c);
+    tex.minFilter = THREE.LinearFilter;
+    const mat = new THREE.SpriteMaterial({ map:tex, transparent:true, depthWrite:false, depthTest:false });
+    const sprite = new THREE.Sprite(mat);
+    const h = 0.16;
+    sprite.scale.set(h*(c.width/c.height), h, 1);
+    return sprite;
+  }
+
+  // Which CSS custom property carries each row's accent (same colors the
+  // 2-D view's .node-* / .edge.* rules use).
+  const ROW_COLOR = {
+    avacara:'--avacara', qualDharma:'--qualtier', nomenclature:'--nomenclature',
+    sphere:'--sphere', content:'--content', trancic:'--caseattr', mental:'--caseattr',
+    senseObj:'--caseattr', dhyanicObj:'--caseattr', case:'--case', dharma:'--dharma', ms:'--ms',
+  };
+
+  // Which source table each row comes from, for the pop-out's eyebrow line.
+  const TABLE_OF = {
+    avacara:'Table IV', qualDharma:'Table IV', nomenclature:'Table III', sphere:'Table IV',
+    content:'Table V', trancic:'Table V', mental:'Table V', senseObj:'Table V', dhyanicObj:'Table V',
+    case:'Table V', dharma:'Table VI', ms:'Table VI',
+  };
+
   function createGraph3DView(THREE, container, options){
     options = options || {};
     const cssVar = name => (getComputedStyle(document.querySelector('.viz-root')).getPropertyValue(name).trim() || '#888888');
     const colorOf = name => new THREE.Color(cssVar(name));
-
-    const ROW_COLOR = {
-      avacara:'--avacara', qualDharma:'--qualtier', nomenclature:'--nomenclature',
-      sphere:'--sphere', content:'--content', trancic:'--caseattr', mental:'--caseattr',
-      senseObj:'--caseattr', dhyanicObj:'--caseattr', case:'--case', dharma:'--dharma', ms:'--ms',
-    };
     const LEVEL_GAP = 1.6;
 
     const scene = new THREE.Scene();
@@ -1623,6 +1709,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
       const levelY = new Map();
       types.forEach((t, i) => levelY.set(t, (types.length-1)/2*LEVEL_GAP - i*LEVEL_GAP));
 
+      const labelColor = cssVar('--text-secondary'), hubLabelColor = cssVar('--text-primary');
       const pos = new Map(); // "type|id" -> Vector3
       types.forEach(t => {
         const ids = Array.from(reach.nodes[t]);
@@ -1636,6 +1723,13 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
           const mesh = new THREE.Mesh(isHub?hubGeo:dotGeo, new THREE.MeshBasicMaterial({ color }));
           mesh.position.copy(p);
           content.add(mesh);
+
+          const fmt = SHORT_LABEL[t];
+          if(fmt){
+            const label = makeLabelSprite(THREE, fmt(id), isHub ? hubLabelColor : labelColor);
+            label.position.set(p.x, p.y + (isHub?0.16:0.11), p.z);
+            content.add(label);
+          }
         });
       });
 
@@ -1732,10 +1826,32 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
       return getComputedStyle(document.querySelector('.viz-root')).getPropertyValue(name).trim() || '#000';
     }
 
+    // Text panel for the pop-out window only -- the sidebar panel is too
+    // narrow for prose, so it just gets the "3-D view · type id" title.
+    function updatePopupInfo(reach, type, id){
+      if(!popupWin || popupWin.closed) return;
+      const doc = popupWin.document;
+      const info = doc.getElementById('info');
+      if(!info) return;
+      const { title, meta } = describeElement(type, id);
+      const counts = Object.entries(reach.nodes)
+        .sort((a,b) => (ROW[a[0]]||0) - (ROW[b[0]]||0))
+        .map(([t, ids]) => `${ids.size} ${t}`).join(' · ');
+      doc.getElementById('infoEyebrow').textContent = TABLE_OF[type] || type;
+      doc.getElementById('infoRule').style.background = cssVarSafe(ROW_COLOR[type] || '--text-secondary');
+      doc.getElementById('infoTitle').textContent = title;
+      doc.getElementById('infoMeta').textContent = meta || '';
+      doc.getElementById('infoMeta').style.display = meta ? '' : 'none';
+      doc.getElementById('infoCounts').textContent = 'Neighbourhood: ' + counts;
+    }
+
     window.__updateGraph3D = function(reach, type, id){
       lastReach = reach; lastType = type; lastId = id;
       view.render(reach, type, id);
-      if(popupView && popupWin && !popupWin.closed) popupView.render(reach, type, id);
+      if(popupView && popupWin && !popupWin.closed){
+        popupView.render(reach, type, id);
+        updatePopupInfo(reach, type, id);
+      }
       const title = document.getElementById('graph3dTitle');
       if(title) title.textContent = '3-D view · ' + type + ' ' + id;
     };
@@ -1753,8 +1869,25 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
       if(!popupWin) return; // popup blocked -- nothing more to do
       const doc = popupWin.document;
       doc.title = '3-D view — ' + document.title;
-      doc.head.innerHTML = '<style>html,body{margin:0;height:100%;background:'+cssVarSafe('--surface-1')+';}#c{position:fixed;inset:0;}</style>';
-      doc.body.innerHTML = '<div id="c"></div>';
+      doc.head.innerHTML = `<style>
+        html,body{margin:0;height:100%;background:${cssVarSafe('--surface-1')};
+          font-family:'Noto Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;}
+        #c{position:fixed;inset:0;}
+        #info{position:fixed;top:1.4rem;left:1.4rem;max-width:min(340px,70vw);pointer-events:none;}
+        #infoEyebrow{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:${cssVarSafe('--text-muted')};margin:0 0 .5rem;}
+        #infoRule{width:28px;height:2px;margin:0 0 .7rem;}
+        #infoTitle{font-size:1.15rem;font-weight:600;color:${cssVarSafe('--text-primary')};margin:0 0 .35rem;line-height:1.25;}
+        #infoMeta{font-size:.82rem;color:${cssVarSafe('--text-secondary')};line-height:1.5;margin:0 0 .8rem;}
+        #infoCounts{font-size:.72rem;color:${cssVarSafe('--text-muted')};border-top:1px solid ${cssVarSafe('--rule')};padding-top:.6rem;}
+      </style>`;
+      doc.body.innerHTML = `<div id="c"></div>
+        <div id="info">
+          <p id="infoEyebrow"></p>
+          <div id="infoRule"></div>
+          <p id="infoTitle"></p>
+          <p id="infoMeta"></p>
+          <p id="infoCounts"></p>
+        </div>`;
       const script = doc.createElement('script');
       script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
       script.onload = () => {
@@ -1762,7 +1895,10 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
           isHidden: () => popupWin.closed,
         });
         popupWin.addEventListener('resize', () => popupView.resize());
-        if(lastReach) popupView.render(lastReach, lastType, lastId);
+        if(lastReach){
+          popupView.render(lastReach, lastType, lastId);
+          updatePopupInfo(lastReach, lastType, lastId);
+        }
       };
       doc.head.appendChild(script);
     });
