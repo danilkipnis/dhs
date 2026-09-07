@@ -2017,6 +2017,26 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
         }
       });
 
+      // Same left/right (and up/down/tab/home/end) key bindings as the 2-D
+      // tooltip's nav cross -- the pop-out is a separate browser window with
+      // its own document, so it needs its own keydown listener rather than
+      // relying on the main document's.
+      doc.addEventListener('keydown', ev => {
+        if(ev.ctrlKey || ev.metaKey || ev.altKey) return;
+        if(ev.key === 'Escape' && popupPinnedType){ ev.preventDefault(); hidePopupTooltip(); return; }
+        if(!popupPinnedType) return;
+        let dir = ARROW_DIR[ev.key.toLowerCase()];
+        if(!dir) return;
+        if(dir === 'tab' && ev.shiftKey) dir = 'shift-tab';
+        const n = neighborFor(popupPinnedType, popupPinnedId, dir);
+        if(n){
+          ev.preventDefault();
+          const tt = doc.getElementById('tooltip3d');
+          selectByType(n.type, n.id);
+          renderPopupTooltip(n.type, n.id, parseInt(tt.style.left, 10), parseInt(tt.style.top, 10));
+        }
+      });
+
       const script = doc.createElement('script');
       script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
       script.onload = () => {
