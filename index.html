@@ -1950,7 +1950,6 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
 
     const view = createGraph3DView(THREE, stageEl, {
       isHidden: () => sidebar.classList.contains('collapsed'),
-      autoRotate: false,
       onNodeClick: (camelType, id, x, y) => {
         const type = DATA_TYPE_OF[camelType] || camelType;
         selectByType(type, id);
