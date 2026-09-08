@@ -2102,7 +2102,12 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
       // navigable by keyboard even when nothing has been clicked yet.
       doc.addEventListener('keydown', ev => {
         if(ev.ctrlKey || ev.metaKey || ev.altKey) return;
-        if(ev.key === 'Escape' && popupPinnedType){ ev.preventDefault(); hidePopupTooltip(); return; }
+        if(ev.key === 'Escape'){
+          ev.preventDefault();
+          if(popupPinnedType) hidePopupTooltip();
+          else popupWin.close();
+          return;
+        }
         if(ev.key === '+' || ev.key === '-'){
           ev.preventDefault();
           if(popupView) popupView.zoomBy(ev.key === '+' ? 0.8 : 1.25);
