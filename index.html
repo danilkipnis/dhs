@@ -523,6 +523,16 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
   const synonymByDharma = new Map(Object.entries(data.synonyms_by_dharma || {}));
   const isotopeByDharma = new Map(Object.entries(data.isotopes_by_dharma || {}));
   const xivByDharma = new Map(Object.entries(data.xiv_by_dharma || {}));
+
+  // Undirected a|b keys for "as in" (table VI), used by the 3-D view to tell
+  // apart the four same-row dharma relations (as-in, homonym &alpha;, synonym
+  // &beta;, isotope &gamma;) it draws in one shared ring, so each gets its own
+  // wire color instead of collapsing into one generic "derivation" hue.
+  const dharmaAsInPairs = new Set();
+  for(const e of data.dharma_as_in_edges){
+    const a = e.from.slice(3), b = e.to.slice(3);
+    dharmaAsInPairs.add(a+'|'+b); dharmaAsInPairs.add(b+'|'+a);
+  }
   const xivSign = s => s==='-' ? `<span style="color:var(--quality-a)">&minus;</span>`
     : s==='+' ? `<span style="color:var(--quality-b)">+</span>` : esc(s);
 
@@ -1668,6 +1678,17 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     const colorOf = name => new THREE.Color(cssVar(name));
     const LEVEL_GAP = 1.6;
 
+    // These four rows always draw every item the table holds, dimmed unless
+    // reached from the hub, rather than only whatever the hub's one-hop reach
+    // touches -- so panning around never makes the rest of the row (every
+    // other case, every other dharma...) seem to vanish.
+    const FULL_IDS = {
+      nomenclature: data.nomenclature.map(n=>n.term_id),
+      sphere: data.spheres.map(s=>s.sphere_id),
+      case: caseOrder.map(c=>c.case_id),
+      dharma: data.dharmas.map(d=>d.dharma_id),
+    };
+
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(cssVar('--surface-1'));
 
@@ -1729,33 +1750,45 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
       if(!reach) return;
 
       // Vertical order: the same relative row order the 2-D view stacks in
-      // (the ROW map), restricted to just the rows this selection touches.
-      const types = Object.keys(reach.nodes).sort((a,b) => (ROW[a]||0) - (ROW[b]||0));
+      // (the ROW map). The four FULL_IDS rows always take part even when the
+      // hub's reach doesn't touch them; any other row (avacara, ms...) only
+      // appears when the hub's one-hop reach actually includes it.
+      const extraTypes = Object.keys(reach.nodes).filter(t => !FULL_IDS[t]);
+      const types = [...Object.keys(FULL_IDS), ...extraTypes].sort((a,b) => (ROW[a]||0) - (ROW[b]||0));
       const levelY = new Map();
       types.forEach((t, i) => levelY.set(t, (types.length-1)/2*LEVEL_GAP - i*LEVEL_GAP));
 
       const labelColor = cssVar('--text-secondary'), hubLabelColor = cssVar('--text-primary');
+      const dimColor = colorOf('--text-muted');
       const pos = new Map(); // "type|id" -> Vector3
       let maxReach = 0; // farthest any dot sits from the origin, for fitCamera below
       types.forEach(t => {
-        const ids = Array.from(reach.nodes[t]);
+        const activeSet = reach.nodes[t] || new Set();
+        // A FULL_IDS row draws every item the table holds; any other row is
+        // still limited to what the hub's reach touches.
+        const ids = FULL_IDS[t] || Array.from(activeSet);
         const n = ids.length, r = radiusFor(n);
-        const color = colorOf(ROW_COLOR[t] || '--text-secondary');
+        const rowColor = colorOf(ROW_COLOR[t] || '--text-secondary');
         ids.forEach((id, i) => {
           const a = n<=1 ? 0 : (i/n)*Math.PI*2;
           const p = new THREE.Vector3(Math.cos(a)*r, levelY.get(t), Math.sin(a)*r);
           pos.set(t+'|'+id, p);
           maxReach = Math.max(maxReach, p.length());
           const isHub = t===hubType && String(id)===String(hubId);
-          const mesh = new THREE.Mesh(isHub?hubGeo:dotGeo, new THREE.MeshBasicMaterial({ color }));
+          const isActive = isHub || activeSet.has(String(id));
+          const color = isActive ? rowColor : dimColor;
+          const mat = new THREE.MeshBasicMaterial({ color, transparent:!isActive, opacity: isActive?1:0.35 });
+          const mesh = new THREE.Mesh(isHub?hubGeo:dotGeo, mat);
           mesh.position.copy(p);
           mesh.userData.type = t;
           mesh.userData.id = id;
           content.add(mesh);
           pickable.push(mesh);
 
+          // Labels only for active dots -- a full case/dharma row can run to
+          // a hundred-odd items, and labelling all of them would be noise.
           const fmt = SHORT_LABEL[t];
-          if(fmt){
+          if(fmt && isActive){
             const label = makeLabelSprite(THREE, fmt(id), isHub ? hubLabelColor : labelColor);
             label.position.set(p.x, p.y + (isHub?0.16:0.11), p.z);
             content.add(label);
@@ -1768,13 +1801,29 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
       if(!hubPos) return;
 
       const derivation = colorOf('--derivation');
+      // Same-row dharma relations share one adjacency graph but come from four
+      // distinct tables; look up which one links a given pair so each keeps
+      // the 2-D view's own color instead of collapsing into one hue.
+      function dharmaPairColor(a, b){
+        if(dharmaAsInPairs.has(a+'|'+b)) return derivation;
+        if((homonymByDharma.get(a)||[]).includes(b)) return colorOf('--homonym');
+        if((synonymByDharma.get(a)||[]).includes(b)) return colorOf('--synonym');
+        if((isotopeByDharma.get(a)||[]).includes(b)) return colorOf('--isotope');
+        return derivation;
+      }
       for(const [key, dist] of reach.dist){
         if(dist !== 1) continue;
         const p2 = pos.get(key);
         if(!p2) continue;
         const t2 = key.slice(0, key.indexOf('|'));
+        const id2 = key.slice(key.indexOf('|')+1);
         const sameRow = t2 === hubType;
-        const color = sameRow ? derivation : colorOf(ROW_COLOR[t2] || '--text-secondary');
+        // Case<->dharma cables read as noise in the row's own orange/off-white
+        // hues; a plain white wire against the dark stage reads clearest.
+        const isCaseDharma = (hubType==='case' && t2==='dharma') || (hubType==='dharma' && t2==='case');
+        const color = sameRow
+          ? (hubType==='dharma' ? dharmaPairColor(String(hubId), id2) : derivation)
+          : (isCaseDharma ? colorOf('--text-primary') : colorOf(ROW_COLOR[t2] || '--text-secondary'));
         const mid = hubPos.clone().add(p2).multiplyScalar(0.5);
         if(sameRow){
           // Same-row relation (as-in / derivation / homonym...): bow outward
@@ -1856,8 +1905,10 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     container.addEventListener('pointercancel', () => endDrag());
 
     // Slow idle spin around the vertical (Y) axis; pauses while the user is
-    // dragging to orbit, and is skipped entirely for prefers-reduced-motion.
-    if(!reduceMotion){
+    // dragging to orbit, and is skipped entirely for prefers-reduced-motion
+    // or when the caller opts out (the sidebar mini view: constant motion in
+    // a small always-visible panel was more distracting than useful).
+    if(!reduceMotion && options.autoRotate !== false){
       const clock = new THREE.Clock();
       (function spin(){
         requestAnimationFrame(spin);
@@ -1888,6 +1939,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
 
     const view = createGraph3DView(THREE, stageEl, {
       isHidden: () => sidebar.classList.contains('collapsed'),
+      autoRotate: false,
       onNodeClick: (camelType, id, x, y) => {
         const type = DATA_TYPE_OF[camelType] || camelType;
         selectByType(type, id);
