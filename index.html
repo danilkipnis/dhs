@@ -1864,13 +1864,16 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     const PITCH_LIMIT = Math.PI/2 - 0.05;
     const CLICK_SLOP = 4; // px of pointer travel still treated as a click, not a drag
     container.style.cursor = 'grab';
-    container.addEventListener('wheel', ev => {
-      ev.preventDefault();
+    function zoomBy(factor){
       const dir = camera.position.clone().sub(lookTarget);
-      const dist = Math.min(60, Math.max(2, dir.length()*Math.pow(1.0015, ev.deltaY)));
+      const dist = Math.min(60, Math.max(2, dir.length()*factor));
       dir.setLength(dist);
       camera.position.copy(lookTarget).add(dir);
       draw();
+    }
+    container.addEventListener('wheel', ev => {
+      ev.preventDefault();
+      zoomBy(Math.pow(1.0015, ev.deltaY));
     }, { passive:false });
     container.addEventListener('pointerdown', ev => {
       dragging = true; moved = false;
@@ -1938,7 +1941,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
       draw();
     }
 
-    return { render:(reach, type, id) => { render(reach, type, id); draw(); }, resize, destroy:()=>{} };
+    return { render:(reach, type, id) => { render(reach, type, id); draw(); }, resize, zoomBy, destroy:()=>{} };
   }
 
   (function initGraph3D(){
@@ -2100,6 +2103,11 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
       doc.addEventListener('keydown', ev => {
         if(ev.ctrlKey || ev.metaKey || ev.altKey) return;
         if(ev.key === 'Escape' && popupPinnedType){ ev.preventDefault(); hidePopupTooltip(); return; }
+        if(ev.key === '+' || ev.key === '-'){
+          ev.preventDefault();
+          if(popupView) popupView.zoomBy(ev.key === '+' ? 0.8 : 1.25);
+          return;
+        }
         let dir = ARROW_DIR[ev.key.toLowerCase()];
         if(!dir) return;
         if(dir === 'tab' && ev.shiftKey) dir = 'shift-tab';
