@@ -22,7 +22,11 @@ in the transcribed data, only "Δ", "X", "Y" as headers)
 Tables XIII (γ) and XIV (Δ): figure out what the I-XI subsection groups
 actually represent -- they consistently partition the same ~56 dharma
 numbers, but the criterion behind the boundaries isn't in the transcribed
-data (doesn't match the case_no groupings in table-vi-dharmas.json either)
+data (doesn't match the case_no groupings in table-vi-dharmas.json either).
+Note: "isotopic" (Table XIII, γ) is likely used in the topological sense --
+continuously-deformable/interchangeable occurrences of a dharma, as opposed
+to "homonymous" (Table XI, α) which is same name/form but distinct -- worth
+checking against the book when chasing this.
 
 Cleanup Claude's notes in json
 
