@@ -191,13 +191,21 @@
     margin-bottom:.35rem;
   }
   .graph3dHeadRight{ display:flex; align-items:center; gap:.6rem; }
-  #graph3dPopout{
+  #graph3dPopout, #graph3dCollapse{
     background:none; border:1px solid var(--rule); color:var(--text-secondary);
     border-radius:4px; width:20px; height:20px; line-height:1;
     font-size:.85rem; cursor:pointer; padding:0;
     display:flex; align-items:center; justify-content:center;
   }
-  #graph3dPopout:hover{ background:var(--rule); color:var(--text-primary); }
+  #graph3dPopout:hover, #graph3dCollapse:hover{ background:var(--rule); color:var(--text-primary); }
+  /* Collapsed: keep just the header (title + buttons) so the panel reads as
+     a small tab rather than an empty box, and #graph3dStage becomes
+     display:none, which is also what the 3D view's own isHidden() check
+     reads to pause rendering while collapsed. */
+  #graph3dPanel.collapsed{ padding-bottom:.6rem; }
+  #graph3dPanel.collapsed #graph3dStage{ display:none; }
+  #graph3dPanel.collapsed #graph3dHead{ margin-bottom:0; }
+  #graph3dCollapse{ font-size:.7rem; }
   #graph3dStage{
     width:100%;
     height:220px;
@@ -461,6 +469,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
       <span id="graph3dTitle"></span>
       <span class="graph3dHeadRight">
         <button id="graph3dPopout" type="button" title="Open in a new window">&#10530;</button>
+        <button id="graph3dCollapse" type="button" title="Collapse">&#9662;</button>
       </span>
     </div>
     <div id="graph3dStage"></div>
@@ -2078,6 +2087,15 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     };
     window.__resizeGraph3D = () => view.resize();
     window.addEventListener('resize', () => view.resize());
+
+    const panel = document.getElementById('graph3dPanel');
+    const collapseBtn = document.getElementById('graph3dCollapse');
+    collapseBtn.addEventListener('click', () => {
+      const collapsed = panel.classList.toggle('collapsed');
+      collapseBtn.innerHTML = collapsed ? '&#9656;' : '&#9662;';
+      collapseBtn.title = collapsed ? 'Expand' : 'Collapse';
+      if(!collapsed) view.resize();
+    });
 
     document.getElementById('graph3dPopout').addEventListener('click', () => {
       if(popupWin && !popupWin.closed){ popupWin.focus(); return; }
