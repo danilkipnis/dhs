@@ -162,11 +162,27 @@
     margin:0;
     padding:.25rem 0;
   }
-  /* Sidebar's live 3D mirror of the whole graph: one ring per row (radius by
-     item count), all real edges, dimmed/lit by the same reach the 2-D view
-     highlights from. Ambient shape of the selection, not a read-by-dot view. */
+  /* Live 3D mirror of the whole graph: one ring per row (radius by item
+     count), all real edges, dimmed/lit by the same reach the 2-D view
+     highlights from. Ambient shape of the selection, not a read-by-dot view.
+     A floating panel of its own (sibling of #sidebar, not nested inside it)
+     so collapsing the controls with "m" doesn't take the 3D view with it --
+     it only needs to slide clear of the sidebar when that's open. */
   #graph3dPanel{
-    margin:.7rem 0 1.1rem;
+    position:absolute;
+    top:3.2rem;
+    right:1.1rem;
+    width:min(300px, 86vw);
+    z-index:19;
+    padding:.6rem .7rem .7rem;
+    background:var(--surface-2);
+    border:1px solid var(--rule);
+    border-radius:8px;
+    box-shadow:0 2px 10px rgba(0,0,0,.15);
+    transition:right .22s ease;
+  }
+  #sidebar:not(.collapsed) ~ #graph3dPanel{
+    right:calc(min(340px, 88vw) + 1.6rem);
   }
   #graph3dHead{
     display:flex; align-items:center; justify-content:space-between;
@@ -438,16 +454,16 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
         </button>
         <ul id="searchHints" class="hidden"></ul>
       </div>
-      <div id="graph3dPanel">
-        <div id="graph3dHead">
-          <span id="graph3dTitle"></span>
-          <span class="graph3dHeadRight">
-            <button id="graph3dPopout" type="button" title="Open in a new window">&#10530;</button>
-          </span>
-        </div>
-        <div id="graph3dStage"></div>
-      </div>
     </div>
+  </div>
+  <div id="graph3dPanel">
+    <div id="graph3dHead">
+      <span id="graph3dTitle"></span>
+      <span class="graph3dHeadRight">
+        <button id="graph3dPopout" type="button" title="Open in a new window">&#10530;</button>
+      </span>
+    </div>
+    <div id="graph3dStage"></div>
   </div>
 </div>
 <script>
@@ -2012,7 +2028,10 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     }
 
     const view = createGraph3DView(THREE, stageEl, {
-      isHidden: () => sidebar.classList.contains('collapsed'),
+      // The panel floats independently of the sidebar now, so "hidden" means
+      // the stage itself isn't rendered (e.g. the 3D feature toggle set
+      // #graph3dPanel to display:none), not that the sidebar is collapsed.
+      isHidden: () => stageEl.offsetParent === null,
       onNodeClick: (camelType, id, x, y) => {
         const type = DATA_TYPE_OF[camelType] || camelType;
         selectByType(type, id);
