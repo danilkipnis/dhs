@@ -27,6 +27,12 @@ Note: "isotopic" (Table XIII, γ) is likely used in the topological sense --
 continuously-deformable/interchangeable occurrences of a dharma, as opposed
 to "homonymous" (Table XI, α) which is same name/form but distinct -- worth
 checking against the book when chasing this.
+Предположение (не подтверждено книгой): "изотопность" здесь может означать,
+что подграф связей одной дхармы непрерывно преобразуем (изоморфен/деформируем)
+в подграф другой дхармы -- то есть понятие на стыке graph theory и топологии;
+при этом группы I-XI не связаны между собой (graph-data.js:388-391), так что
+такая изотопия, если она есть, локальна -- работает только внутри своей
+группы, а не глобально по всем 56 дхармам.
 
 Cleanup Claude's notes in json
 
