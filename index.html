@@ -1490,11 +1490,31 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     case: 4, dharma: 5, ms: 6,
   };
 
-  // A click reaches only what it touches directly -- one step out, no further.
+  // A click reaches what it touches directly, plus a second step out through
+  // those neighbours -- but only when that second step lands on a genuinely
+  // new entity, different from both the hub and the neighbour it passed
+  // through (e.g. case -> dharma -> ms, or case -> sphere -> avacara/
+  // qualDharma). Two things are excluded: staying on the same entity as the
+  // neighbour just passed through (dharma -> dharma via homonym/synonym/
+  // isotope/as-in, already reachable in one step when it matters), and
+  // landing back on the hub's own entity (case -> dharma -> case, or
+  // case -> content -> case, both of which are many-to-many links that would
+  // otherwise flood the view with every other case sharing that dharma or
+  // that content value, not an actual "further neighbour" of the hub).
   function reachFrom(type, id){
     const start = nkey(type, id);
     const dist = new Map([[start, 0]]);
     for(const n of (adj.get(start) || [])) dist.set(n, 1);
+    for(const [k, d] of Array.from(dist)){
+      if(d !== 1) continue;
+      const kType = k.slice(0, k.indexOf('|'));
+      for(const n of (adj.get(k) || [])){
+        if(dist.has(n)) continue;
+        const nType = n.slice(0, n.indexOf('|'));
+        if(nType === kType || nType === type) continue;
+        dist.set(n, 2);
+      }
+    }
     const byType = {};
     for(const k of dist.keys()){
       const i = k.indexOf('|'), t = k.slice(0, i);
@@ -1819,33 +1839,42 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
         if((isotopeByDharma.get(a)||[]).includes(b)) return colorOf('--isotope');
         return derivation;
       }
-      for(const [key, dist] of reach.dist){
-        if(dist !== 1) continue;
-        const p2 = pos.get(key);
-        if(!p2) continue;
-        const t2 = key.slice(0, key.indexOf('|'));
-        const id2 = key.slice(key.indexOf('|')+1);
-        const sameRow = t2 === hubType;
-        // Case<->dharma cables read as noise in the row's own orange/off-white
-        // hues; a plain white wire against the dark stage reads clearest.
-        const isCaseDharma = (hubType==='case' && t2==='dharma') || (hubType==='dharma' && t2==='case');
-        const color = sameRow
-          ? (hubType==='dharma' ? dharmaPairColor(String(hubId), id2) : derivation)
-          : (isCaseDharma ? colorOf('--text-primary') : colorOf(ROW_COLOR[t2] || '--text-secondary'));
-        const mid = hubPos.clone().add(p2).multiplyScalar(0.5);
-        if(sameRow){
-          // Same-row relation (as-in / derivation / homonym...): bow outward
-          // along the ring, mirroring the 2-D view's own same-row arcs.
-          const out = new THREE.Vector3(mid.x, 0, mid.z);
-          if(out.lengthSq() < 1e-6) out.set(1, 0, 0); else out.normalize();
-          const rMax = Math.max(hubPos.length(), p2.length());
-          mid.set(out.x*rMax*1.3, (hubPos.y+p2.y)/2, out.z*rMax*1.3);
-        } else {
-          mid.x *= 0.3; mid.z *= 0.3; // cross-row cable sags toward the centre
+      // Draw one cable per real edge that steps outward by exactly one
+      // distance layer -- hub-to-1st-hop and, now, 1st-hop-to-2nd-hop alike.
+      // Walking reach.dist (rather than just the hub's own adjacency) and
+      // requiring an actual adj edge keeps this to edges that are really on
+      // the graph, not just any two dots that happen to be one layer apart.
+      for(const [key, d] of reach.dist){
+        const p1 = pos.get(key);
+        if(!p1) continue;
+        for(const n of (adj.get(key) || [])){
+          if(reach.dist.get(n) !== d + 1) continue;
+          const p2 = pos.get(n);
+          if(!p2) continue;
+          const t1 = key.slice(0, key.indexOf('|')), id1 = key.slice(key.indexOf('|')+1);
+          const t2 = n.slice(0, n.indexOf('|')), id2 = n.slice(n.indexOf('|')+1);
+          const sameRow = t1 === t2;
+          // Case<->dharma cables read as noise in the row's own orange/off-white
+          // hues; a plain white wire against the dark stage reads clearest.
+          const isCaseDharma = (t1==='case' && t2==='dharma') || (t1==='dharma' && t2==='case');
+          const color = sameRow
+            ? (t1==='dharma' ? dharmaPairColor(id1, id2) : derivation)
+            : (isCaseDharma ? colorOf('--text-primary') : colorOf(ROW_COLOR[t2] || '--text-secondary'));
+          const mid = p1.clone().add(p2).multiplyScalar(0.5);
+          if(sameRow){
+            // Same-row relation (as-in / derivation / homonym...): bow outward
+            // along the ring, mirroring the 2-D view's own same-row arcs.
+            const out = new THREE.Vector3(mid.x, 0, mid.z);
+            if(out.lengthSq() < 1e-6) out.set(1, 0, 0); else out.normalize();
+            const rMax = Math.max(p1.length(), p2.length());
+            mid.set(out.x*rMax*1.3, (p1.y+p2.y)/2, out.z*rMax*1.3);
+          } else {
+            mid.x *= 0.3; mid.z *= 0.3; // cross-row cable sags toward the centre
+          }
+          const curve = new THREE.CatmullRomCurve3([p1, mid, p2]);
+          const geo = new THREE.BufferGeometry().setFromPoints(curve.getPoints(20));
+          content.add(new THREE.Line(geo, new THREE.LineBasicMaterial({ color })));
         }
-        const curve = new THREE.CatmullRomCurve3([hubPos, mid, p2]);
-        const geo = new THREE.BufferGeometry().setFromPoints(curve.getPoints(20));
-        content.add(new THREE.Line(geo, new THREE.LineBasicMaterial({ color })));
       }
     }
 
