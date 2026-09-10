@@ -426,6 +426,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
         <label title="Synonyms (XII)"><input type="checkbox" id="toggleSynonym">&beta;</label>
         <label title="Isotopes (XIII)"><input type="checkbox" id="toggleIsotope">&gamma;</label>
         <label title="As in (VI)"><input type="checkbox" id="toggleAsIn">as in</label>
+        <label title="Show the 3D graph view (uncheck for better performance on slow devices)"><input type="checkbox" id="toggle3dView" checked>3D view</label>
       </div>
       <div class="search-row">
         <input id="search" type="text" placeholder="Search: vc/ms/t/a/d/c/tv/o/s&lt;id&gt;, A/B/C, or text&hellip;" autocomplete="off">
@@ -449,7 +450,14 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     </div>
   </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+  // document.write keeps three.js loaded (or skipped) before the scripts
+  // below run, so createGraph3DView's `typeof THREE === 'undefined'` guard
+  // sees the right answer without restructuring this into async loading.
+  if(localStorage.getItem('graph3dDisabled') !== '1'){
+    document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');
+  }
+</script>
 <script src="graph-data.js"></script>
 <script>
 
@@ -904,6 +912,15 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
   wireEdgeFilter('toggleSynonym', 'dharmaSynonym');
   wireEdgeFilter('toggleIsotope', 'dharmaIsotope');
   wireEdgeFilter('toggleAsIn', 'dharmaAsIn');
+
+  (function wire3dViewToggle(){
+    const cb = document.getElementById('toggle3dView');
+    cb.checked = localStorage.getItem('graph3dDisabled') !== '1';
+    cb.addEventListener('change', () => {
+      localStorage.setItem('graph3dDisabled', cb.checked ? '0' : '1');
+      location.reload();
+    });
+  })();
 
   for(const e of data.ms_derivation_edges){
     const pl = msLayout.get(e.from), cl = msLayout.get(e.to);
@@ -1975,7 +1992,12 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
 
   (function initGraph3D(){
     const stageEl = document.getElementById('graph3dStage');
-    if(!stageEl || typeof THREE === 'undefined') return;
+    if(!stageEl) return;
+    if(typeof THREE === 'undefined'){
+      const panel = document.getElementById('graph3dPanel');
+      if(panel) panel.style.display = 'none';
+      return;
+    }
 
     const view = createGraph3DView(THREE, stageEl, {
       isHidden: () => sidebar.classList.contains('collapsed'),
