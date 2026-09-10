@@ -1794,6 +1794,18 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
       pickable = [];
       if(!reach) return;
 
+      // Exception to the two-hop rule, 3-D view only: from a case, MS is
+      // never a direct neighbour -- it only shows up here as the second hop
+      // through a dharma. When a case has several dharmas, painting each
+      // one's MS entries makes the view unreadably busy, so this hop is
+      // dropped for case hubs specifically (the 2-D view still shows it).
+      if(hubType === 'case' && reach.nodes.ms){
+        const nodes = {...reach.nodes};
+        delete nodes.ms;
+        const dist = new Map(Array.from(reach.dist).filter(([k]) => !k.startsWith('ms|')));
+        reach = { nodes, dist };
+      }
+
       // Vertical order: the same relative row order the 2-D view stacks in
       // (the ROW map). The four FULL_IDS rows always take part even when the
       // hub's reach doesn't touch them; any other row (avacara, ms...) only
