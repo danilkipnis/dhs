@@ -2249,6 +2249,11 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
           if(popupView) popupView.zoomBy(ev.key === '+' ? 0.8 : 1.25);
           return;
         }
+        if(ev.key.toLowerCase() === 'o' || ev.key === 'AudioVolumeMute'){
+          ev.preventDefault();
+          document.getElementById('soundToggle').click();
+          return;
+        }
         let dir = ARROW_DIR[ev.key.toLowerCase()];
         if(!dir) return;
         if(dir === 'tab' && ev.shiftKey) dir = 'shift-tab';
