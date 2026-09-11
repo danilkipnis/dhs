@@ -205,6 +205,10 @@
   #graph3dPanel.collapsed{ padding-bottom:.6rem; }
   #graph3dPanel.collapsed #graph3dStage{ display:none; }
   #graph3dPanel.collapsed #graph3dHead{ margin-bottom:0; }
+  /* While the pop-out window is open, the sidebar mini view is redundant
+     (same scene, tiny) and just burns GPU for a second render -- hide the
+     whole panel rather than leave a dead/duplicate thumbnail. */
+  #graph3dPanel.poppedOut{ display:none; }
   #graph3dCollapse{ font-size:.7rem; }
   #graph3dStage{
     width:100%;
@@ -2126,6 +2130,13 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
       if(popupWin && !popupWin.closed){ popupWin.focus(); return; }
       popupWin = window.open('', 'graph3dPopout', 'width=900,height=720');
       if(!popupWin) return; // popup blocked -- nothing more to do
+      panel.classList.add('poppedOut');
+      popupWin.addEventListener('unload', () => {
+        panel.classList.remove('poppedOut');
+        popupView = null; popupWin = null;
+        view.resize();
+        if(lastReach) view.render(lastReach, lastType, lastId);
+      });
       const doc = popupWin.document;
       doc.title = document.title;
       doc.head.innerHTML = `<style>
