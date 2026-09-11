@@ -1275,8 +1275,8 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
 
   // Chime played whenever V-O:2 (sound-objects) is involved, gated on
   // #soundToggle -- a little wink at that node's own gloss.
-  const CHIME_MAX_DIST = 3;
-  const CHIME_PEAK = 0.35;
+  const CHIME_MAX_DIST = 6;
+  const CHIME_PEAK = 0.6;
   let chimeCtx = null;
   function playChime(dist){
     const ctx = chimeCtx || (chimeCtx = new (window.AudioContext||window.webkitAudioContext)());
