@@ -1893,6 +1893,18 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
         if((isotopeByDharma.get(a)||[]).includes(b)) return colorOf('--isotope');
         return derivation;
       }
+      // The alpha/beta/gamma/"as in" checkboxes gate these same four dharma
+      // relations in the 2-D view (by toggling a 'shown' class on their own
+      // SVG paths); the 3-D view shares the same adj graph, so it has to
+      // check the same checkboxes itself before drawing a cable for one of
+      // these pairs, or they'd always show regardless of the toggle state.
+      function dharmaPairShown(a, b){
+        if(dharmaAsInPairs.has(a+'|'+b)) return document.getElementById('toggleAsIn').checked;
+        if((homonymByDharma.get(a)||[]).includes(b)) return document.getElementById('toggleHomonym').checked;
+        if((synonymByDharma.get(a)||[]).includes(b)) return document.getElementById('toggleSynonym').checked;
+        if((isotopeByDharma.get(a)||[]).includes(b)) return document.getElementById('toggleIsotope').checked;
+        return true;
+      }
       // Draw one cable per real edge that steps outward by exactly one
       // distance layer -- hub-to-1st-hop and, now, 1st-hop-to-2nd-hop alike.
       // Walking reach.dist (rather than just the hub's own adjacency) and
@@ -1908,6 +1920,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
           const t1 = key.slice(0, key.indexOf('|')), id1 = key.slice(key.indexOf('|')+1);
           const t2 = n.slice(0, n.indexOf('|')), id2 = n.slice(n.indexOf('|')+1);
           const sameRow = t1 === t2;
+          if(sameRow && t1==='dharma' && !dharmaPairShown(id1, id2)) continue;
           // Case<->dharma cables read as noise in the row's own orange/off-white
           // hues; a plain white wire against the dark stage reads clearest.
           const isCaseDharma = (t1==='case' && t2==='dharma') || (t1==='dharma' && t2==='case');
@@ -2087,6 +2100,18 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     };
     window.__resizeGraph3D = () => view.resize();
     window.addEventListener('resize', () => view.resize());
+
+    // The alpha/beta/gamma/"as in" checkboxes only fire their own 2-D 'shown'
+    // class toggle; without this the 3-D view wouldn't pick up the change
+    // until the next click re-selected a node.
+    for(const id of ['toggleHomonym', 'toggleSynonym', 'toggleIsotope', 'toggleAsIn']){
+      const cb = document.getElementById(id);
+      cb.addEventListener('change', () => {
+        if(!lastReach) return;
+        view.render(lastReach, lastType, lastId);
+        if(popupView && popupWin && !popupWin.closed) popupView.render(lastReach, lastType, lastId);
+      });
+    }
 
     const panel = document.getElementById('graph3dPanel');
     const collapseBtn = document.getElementById('graph3dCollapse');
