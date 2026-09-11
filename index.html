@@ -205,6 +205,10 @@
   #graph3dPanel.collapsed{ padding-bottom:.6rem; }
   #graph3dPanel.collapsed #graph3dStage{ display:none; }
   #graph3dPanel.collapsed #graph3dHead{ margin-bottom:0; }
+  /* While the pop-out window is open, the sidebar mini view is redundant
+     (same scene, tiny) and just burns GPU for a second render -- hide the
+     whole panel rather than leave a dead/duplicate thumbnail. */
+  #graph3dPanel.poppedOut{ display:none; }
   #graph3dCollapse{ font-size:.7rem; }
   #graph3dStage{
     width:100%;
@@ -1893,6 +1897,18 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
         if((isotopeByDharma.get(a)||[]).includes(b)) return colorOf('--isotope');
         return derivation;
       }
+      // The alpha/beta/gamma/"as in" checkboxes gate these same four dharma
+      // relations in the 2-D view (by toggling a 'shown' class on their own
+      // SVG paths); the 3-D view shares the same adj graph, so it has to
+      // check the same checkboxes itself before drawing a cable for one of
+      // these pairs, or they'd always show regardless of the toggle state.
+      function dharmaPairShown(a, b){
+        if(dharmaAsInPairs.has(a+'|'+b)) return document.getElementById('toggleAsIn').checked;
+        if((homonymByDharma.get(a)||[]).includes(b)) return document.getElementById('toggleHomonym').checked;
+        if((synonymByDharma.get(a)||[]).includes(b)) return document.getElementById('toggleSynonym').checked;
+        if((isotopeByDharma.get(a)||[]).includes(b)) return document.getElementById('toggleIsotope').checked;
+        return true;
+      }
       // Draw one cable per real edge that steps outward by exactly one
       // distance layer -- hub-to-1st-hop and, now, 1st-hop-to-2nd-hop alike.
       // Walking reach.dist (rather than just the hub's own adjacency) and
@@ -1908,6 +1924,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
           const t1 = key.slice(0, key.indexOf('|')), id1 = key.slice(key.indexOf('|')+1);
           const t2 = n.slice(0, n.indexOf('|')), id2 = n.slice(n.indexOf('|')+1);
           const sameRow = t1 === t2;
+          if(sameRow && t1==='dharma' && !dharmaPairShown(id1, id2)) continue;
           // Case<->dharma cables read as noise in the row's own orange/off-white
           // hues; a plain white wire against the dark stage reads clearest.
           const isCaseDharma = (t1==='case' && t2==='dharma') || (t1==='dharma' && t2==='case');
@@ -2088,6 +2105,18 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     window.__resizeGraph3D = () => view.resize();
     window.addEventListener('resize', () => view.resize());
 
+    // The alpha/beta/gamma/"as in" checkboxes only fire their own 2-D 'shown'
+    // class toggle; without this the 3-D view wouldn't pick up the change
+    // until the next click re-selected a node.
+    for(const id of ['toggleHomonym', 'toggleSynonym', 'toggleIsotope', 'toggleAsIn']){
+      const cb = document.getElementById(id);
+      cb.addEventListener('change', () => {
+        if(!lastReach) return;
+        view.render(lastReach, lastType, lastId);
+        if(popupView && popupWin && !popupWin.closed) popupView.render(lastReach, lastType, lastId);
+      });
+    }
+
     const panel = document.getElementById('graph3dPanel');
     const collapseBtn = document.getElementById('graph3dCollapse');
     collapseBtn.addEventListener('click', () => {
@@ -2101,6 +2130,13 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
       if(popupWin && !popupWin.closed){ popupWin.focus(); return; }
       popupWin = window.open('', 'graph3dPopout', 'width=900,height=720');
       if(!popupWin) return; // popup blocked -- nothing more to do
+      panel.classList.add('poppedOut');
+      popupWin.addEventListener('unload', () => {
+        panel.classList.remove('poppedOut');
+        popupView = null; popupWin = null;
+        view.resize();
+        if(lastReach) view.render(lastReach, lastType, lastId);
+      });
       const doc = popupWin.document;
       doc.title = document.title;
       doc.head.innerHTML = `<style>
@@ -2180,13 +2216,14 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
         if(dirBtn){
           if(dirBtn.disabled) return;
           const n = neighborFor(popupPinnedType, popupPinnedId, dirBtn.getAttribute('data-dir'));
-          if(n){ selectByType(n.type, n.id); renderPopupTooltip(n.type, n.id, parseInt(tt.style.left, 10), parseInt(tt.style.top, 10)); }
+          if(n){ selectByType(n.type, n.id); refreshPinnedTooltip(n.type, n.id); renderPopupTooltip(n.type, n.id, parseInt(tt.style.left, 10), parseInt(tt.style.top, 10)); }
           return;
         }
         const link = ev.target.closest('.tt-link');
         if(link){
           const lt = link.getAttribute('data-type'), lid = link.getAttribute('data-id');
           selectByType(lt, lid);
+          refreshPinnedTooltip(lt, lid);
           renderPopupTooltip(lt, lid, parseInt(tt.style.left, 10), parseInt(tt.style.top, 10));
         }
       });
@@ -2212,6 +2249,11 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
           if(popupView) popupView.zoomBy(ev.key === '+' ? 0.8 : 1.25);
           return;
         }
+        if(ev.key.toLowerCase() === 'o' || ev.key === 'AudioVolumeMute'){
+          ev.preventDefault();
+          document.getElementById('soundToggle').click();
+          return;
+        }
         let dir = ARROW_DIR[ev.key.toLowerCase()];
         if(!dir) return;
         if(dir === 'tab' && ev.shiftKey) dir = 'shift-tab';
@@ -2221,6 +2263,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
             ev.preventDefault();
             const tt = doc.getElementById('tooltip3d');
             selectByType(n.type, n.id);
+            refreshPinnedTooltip(n.type, n.id);
             renderPopupTooltip(n.type, n.id, parseInt(tt.style.left, 10), parseInt(tt.style.top, 10));
           }
           return;
@@ -2229,7 +2272,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
         // lastType is the camelCase reach key (e.g. "senseObj"); neighborFor
         // and selectByType both key off the lowercase DOM data-type string.
         const n = neighborFor(DATA_TYPE_OF[lastType], lastId, dir);
-        if(n){ ev.preventDefault(); selectByType(n.type, n.id); }
+        if(n){ ev.preventDefault(); selectByType(n.type, n.id); refreshPinnedTooltip(n.type, n.id); }
       });
 
       const script = doc.createElement('script');
@@ -2240,6 +2283,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
           onNodeClick: (camelType, id, x, y) => {
             const type = DATA_TYPE_OF[camelType] || camelType;
             selectByType(type, id);
+            refreshPinnedTooltip(type, id);
             renderPopupTooltip(type, id, x+14, y+14);
           },
           onBackgroundClick: () => hidePopupTooltip(),
@@ -2733,6 +2777,24 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     tooltip.classList.remove('pinned');
     tooltip.style.display = 'none';
     clearAddressBar();
+  }
+  // The 3-D pop-out window navigates the shared hub via its own keyboard/nav
+  // handling (selectByType only -- see the pop-out's keydown/click listeners
+  // above), which never touches this window's own pinned tooltip. Without
+  // this, a tooltip left pinned here before opening the pop-out would keep
+  // showing the node it was pinned on -- and just refreshing its content in
+  // place still leaves it sitting over the old node, so this re-pans and
+  // re-pins it exactly like navigateAndPin does for the main view's own nav.
+  function refreshPinnedTooltip(type, id){
+    if(!pinned) return;
+    const c = nodeCenter(type, id);
+    if(!c){ pinTooltip(type, id, window.innerWidth/2, window.innerHeight/2); return; }
+    vb = { x: c.x-vb.w/2, y: c.y-vb.h/2, w: vb.w, h: vb.h };
+    applyViewBox();
+    const rect = stageRect;
+    const sx = rect.left + ((c.x-vb.x)/vb.w)*rect.width;
+    const sy = rect.top + ((c.y-vb.y)/vb.h)*rect.height;
+    pinTooltip(type, id, sx+14, sy+14);
   }
   let hoveredKey = null;
   nodeLayer.addEventListener('mousemove', (ev)=>{
