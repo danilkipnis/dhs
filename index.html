@@ -2205,13 +2205,14 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
         if(dirBtn){
           if(dirBtn.disabled) return;
           const n = neighborFor(popupPinnedType, popupPinnedId, dirBtn.getAttribute('data-dir'));
-          if(n){ selectByType(n.type, n.id); renderPopupTooltip(n.type, n.id, parseInt(tt.style.left, 10), parseInt(tt.style.top, 10)); }
+          if(n){ selectByType(n.type, n.id); refreshPinnedTooltip(n.type, n.id); renderPopupTooltip(n.type, n.id, parseInt(tt.style.left, 10), parseInt(tt.style.top, 10)); }
           return;
         }
         const link = ev.target.closest('.tt-link');
         if(link){
           const lt = link.getAttribute('data-type'), lid = link.getAttribute('data-id');
           selectByType(lt, lid);
+          refreshPinnedTooltip(lt, lid);
           renderPopupTooltip(lt, lid, parseInt(tt.style.left, 10), parseInt(tt.style.top, 10));
         }
       });
@@ -2246,6 +2247,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
             ev.preventDefault();
             const tt = doc.getElementById('tooltip3d');
             selectByType(n.type, n.id);
+            refreshPinnedTooltip(n.type, n.id);
             renderPopupTooltip(n.type, n.id, parseInt(tt.style.left, 10), parseInt(tt.style.top, 10));
           }
           return;
@@ -2254,7 +2256,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
         // lastType is the camelCase reach key (e.g. "senseObj"); neighborFor
         // and selectByType both key off the lowercase DOM data-type string.
         const n = neighborFor(DATA_TYPE_OF[lastType], lastId, dir);
-        if(n){ ev.preventDefault(); selectByType(n.type, n.id); }
+        if(n){ ev.preventDefault(); selectByType(n.type, n.id); refreshPinnedTooltip(n.type, n.id); }
       });
 
       const script = doc.createElement('script');
@@ -2265,6 +2267,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
           onNodeClick: (camelType, id, x, y) => {
             const type = DATA_TYPE_OF[camelType] || camelType;
             selectByType(type, id);
+            refreshPinnedTooltip(type, id);
             renderPopupTooltip(type, id, x+14, y+14);
           },
           onBackgroundClick: () => hidePopupTooltip(),
@@ -2758,6 +2761,17 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     tooltip.classList.remove('pinned');
     tooltip.style.display = 'none';
     clearAddressBar();
+  }
+  // The 3-D pop-out window navigates the shared hub via its own keyboard/nav
+  // handling (selectByType only -- see the pop-out's keydown/click listeners
+  // above), which never touches this window's own pinned tooltip. Without
+  // this, a tooltip left pinned here before opening the pop-out would keep
+  // showing the node it was pinned on while the 3-D views moved on.
+  function refreshPinnedTooltip(type, id){
+    if(!pinned) return;
+    pinnedType = type;
+    pinnedId = id;
+    tooltip.innerHTML = tooltipFor(type, id) + navCrossHtml(type, id) + '<span class="tt-close" title="Close">&times;</span>';
   }
   let hoveredKey = null;
   nodeLayer.addEventListener('mousemove', (ev)=>{
