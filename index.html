@@ -1273,49 +1273,27 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     btn.setAttribute('aria-pressed', btn.getAttribute('aria-pressed') !== 'true');
   };
 
-  // Chime played whenever V-O:2 (sound-objects) is involved, gated on
+  // Chime played only when V-O:2 (sound-objects) itself is clicked, gated on
   // #soundToggle -- a little wink at that node's own gloss.
-  const CHIME_MAX_DIST = 6;
   const CHIME_PEAK = 0.6;
   let chimeCtx = null;
-  function playChime(dist){
+  function playChime(){
     const ctx = chimeCtx || (chimeCtx = new (window.AudioContext||window.webkitAudioContext)());
     if(ctx.state === 'suspended') ctx.resume();
     // Short, crisp tick similar to a laptop's volume-change blip: a brief
     // sine burst with a fast attack and fast decay, not a sustained tone.
-    // Peak amplitude falls off linearly with distance from V-O:2, so a direct
-    // hit is louder than a two-hop echo through a shared case.
-    const peak = CHIME_PEAK * (1 - dist/(CHIME_MAX_DIST+1));
     const t0 = ctx.currentTime;
     const osc = ctx.createOscillator(), gain = ctx.createGain();
     osc.type = 'sine'; osc.frequency.setValueAtTime(1200, t0);
     gain.gain.setValueAtTime(0, t0);
-    gain.gain.linearRampToValueAtTime(peak, t0+0.008);
+    gain.gain.linearRampToValueAtTime(CHIME_PEAK, t0+0.008);
     gain.gain.exponentialRampToValueAtTime(0.0001, t0+0.09);
     osc.connect(gain).connect(ctx.destination);
     osc.start(t0); osc.stop(t0+0.1);
   }
-  // Distance is measured on the same shared adjacency graph the click-highlighting
-  // uses (see "distance-based selection" below) -- so at distance 2 this reaches,
-  // e.g., a dharma or trancic/mental variable that shares a case with V-O:2 (not
-  // just V-O:2 itself at distance 0, or a case directly linked to it at distance
-  // 1), and at distance 3 an ms that derives one of those dharmas.
   function maybeChime(type, id){
-    const key = NODE_TYPE_KEY[type];
-    if(!key) return;
-    const start = nkey('senseObj', '2');
-    const target = nkey(key, String(id));
-    let dist = 0;
-    let frontier = new Set([start]);
-    const seen = new Set(frontier);
-    while(!frontier.has(target) && dist < CHIME_MAX_DIST){
-      const next = new Set();
-      for(const n of frontier) for(const m of (adj.get(n) || [])) if(!seen.has(m)){ seen.add(m); next.add(m); }
-      frontier = next;
-      dist++;
-    }
-    if(!frontier.has(target)) return;
-    if(document.getElementById('soundToggle').getAttribute('aria-pressed')==='true') playChime(dist);
+    if(NODE_TYPE_KEY[type] !== 'senseObj' || String(id) !== '2') return;
+    if(document.getElementById('soundToggle').getAttribute('aria-pressed')==='true') playChime();
   }
 
   const sidebar = document.getElementById('sidebar');
