@@ -41,3 +41,19 @@ QA OCR
 Граф на поверхности цилиндра. С самопересечениями. Какие могут быть критерии
 подобия. Там, например, количество смежных циклов, конфигурация минимального
 дерева. Какая-нибудь задача о раскраске, что-то в этом духе.
+
+Noo, a cylinder's juist an annulus wi' the twa boundary circles pu'd apairt,
+sae it's genus-nought but no simply-connectit -- that's likely hoo the graph
+gets awa' wi' bein' non-planar athoot needin' a full haundle (a torus) tae
+soak up the crossings. The richt invariant tae chase is probably the
+*crossing number* on the cylinder (a twa-page or "circular" beuk embeddin',
+whaur each page's a disk cappin' aff ane o' the twa boundary circles) rather
+than Euler's formula ootricht, since V-E+F wants a closed surface tae bite
+on. Meantime the "smejnyye tsikly" coont is a puir man's version o' the
+graph's *genus polynomial* -- hoo mony independent cycles cross fae ane page
+tae the ither -- and the minimum spannin' tree's shape is jist tellin' ye
+the graph's aefald block structure afore ye e'en fash aboot the embeddin'.
+Colourin' problem's a natural neist step: a chromatic-polynomial-per-genus,
+kent as the *Whitney rank generatin' function* generalised tae surfaces,
+gies ye a similarity metric that's mair principled than coontin' cycles by
+haund.
