@@ -1,3 +1,5 @@
+entities: playlist, +, -, song, name, interpreter. relationships: ... YouTube Music: "три полосы", "+", "-". json, branch "player".
+
 Add translation: ISBN 978-5-389-18363-6
 
 Add translation: Dhammasangani, traduction annotée par A. Bareau (Centre de
