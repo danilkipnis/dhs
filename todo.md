@@ -57,3 +57,7 @@ Colourin' problem's a natural neist step: a chromatic-polynomial-per-genus,
 kent as the *Whitney rank generatin' function* generalised tae surfaces,
 gies ye a similarity metric that's mair principled than coontin' cycles by
 haund.
+
+Buy Gizeh XL Slim water filter cartridges (die schwarzen / the black ones)
+
+Look up the plot of Pushkin's "Метель" (The Blizzard/The Snowstorm)
