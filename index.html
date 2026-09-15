@@ -1775,6 +1775,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     const renderer = new THREE.WebGLRenderer({ antialias:true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(W, H);
+    renderer.domElement.style.touchAction = 'none';
     container.appendChild(renderer.domElement);
 
     const rig = new THREE.Group();
@@ -2014,6 +2015,32 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     }
     container.addEventListener('pointerup', endDrag);
     container.addEventListener('pointercancel', () => endDrag());
+
+    // Two-finger pinch to zoom, mirroring the wheel handler above. Single-finger
+    // orbit is already covered by the pointer events above (Pointer Events
+    // unify mouse and touch); a second touch cancels that drag so the two
+    // gestures don't fight over the same pointer state.
+    let pinchDist = 0;
+    const touchDist = (ev) => {
+      const [a, b] = ev.touches;
+      return Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY);
+    };
+    container.addEventListener('touchstart', ev => {
+      if(ev.touches.length === 2){
+        dragging = false;
+        pinchDist = touchDist(ev);
+      }
+    }, { passive:true });
+    container.addEventListener('touchmove', ev => {
+      if(ev.touches.length !== 2) return;
+      ev.preventDefault();
+      const dist = touchDist(ev);
+      if(pinchDist > 0) zoomBy(pinchDist/dist);
+      pinchDist = dist;
+    }, { passive:false });
+    container.addEventListener('touchend', ev => {
+      pinchDist = ev.touches.length === 2 ? touchDist(ev) : 0;
+    });
 
     // Slow idle spin around the vertical (Y) axis; pauses while the user is
     // dragging to orbit, and is skipped entirely for prefers-reduced-motion
