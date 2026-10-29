@@ -6,6 +6,25 @@ referencing tables. The [page](https://danilkipnis.github.io/dhs/index.html)
 allows you to navigate them and also the underlying
 [data structure](https://danilkipnis.github.io/dhs/er.html).
 
+### How it works
+
+Each printed table is transcribed into its own JSON file. In the browser,
+`graph-data.js` fetches them all and derives every node and edge from them.
+Nothing is duplicated into the code.
+
+- **`er.html`**: the schema. It shows 12 entity types (avacara down to mental
+  state) with crow's-foot cardinalities and the self-relations (dharma "as in",
+  MS "derived from", the α/β/γ dharma groups). Row counts are filled in from
+  the live data. Its colours are the graph's legend.
+- **`index.html`**: the instances, as a layered plain-SVG graph with no
+  layout library. It has six rows, from most general to most specific. Mental
+  states, dharmas and cases are laid out bottom-up on one running x cursor, so
+  each case sits above its dharmas and each dharma above the mental states it
+  names. Clicking a node runs a 2-step breadth-first search over an undirected
+  adjacency map. That search skips hops back to the same type, and only edges
+  between consecutive steps are lit. Pan and zoom only rewrite the `viewBox`,
+  at most once per frame. A three.js view shows the same selection in 3D.
+
 ### Navigation keys
 
 With a tooltip pinned, arrow keys (or WASD) move between nodes: left/right
