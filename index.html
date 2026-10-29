@@ -70,7 +70,7 @@
   .viz-root{
     background:var(--surface-1);
     color:var(--text-primary);
-    font-family:'Noto Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    font-family:'Noto Sans','Segoe UI',Helvetica,Arial,sans-serif;
     height:100vh;
     width:100vw;
     overflow:hidden;
@@ -1275,8 +1275,8 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
 
   // Chime played whenever V-O:2 (sound-objects) is involved, gated on
   // #soundToggle -- a little wink at that node's own gloss.
-  const CHIME_MAX_DIST = 3;
-  const CHIME_PEAK = 0.35;
+  const CHIME_MAX_DIST = 6;
+  const CHIME_PEAK = 0.6;
   let chimeCtx = null;
   function playChime(dist){
     const ctx = chimeCtx || (chimeCtx = new (window.AudioContext||window.webkitAudioContext)());
@@ -1775,6 +1775,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     const renderer = new THREE.WebGLRenderer({ antialias:true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(W, H);
+    renderer.domElement.style.touchAction = 'none';
     container.appendChild(renderer.domElement);
 
     const rig = new THREE.Group();
@@ -2015,6 +2016,32 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
     container.addEventListener('pointerup', endDrag);
     container.addEventListener('pointercancel', () => endDrag());
 
+    // Two-finger pinch to zoom, mirroring the wheel handler above. Single-finger
+    // orbit is already covered by the pointer events above (Pointer Events
+    // unify mouse and touch); a second touch cancels that drag so the two
+    // gestures don't fight over the same pointer state.
+    let pinchDist = 0;
+    const touchDist = (ev) => {
+      const [a, b] = ev.touches;
+      return Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY);
+    };
+    container.addEventListener('touchstart', ev => {
+      if(ev.touches.length === 2){
+        dragging = false;
+        pinchDist = touchDist(ev);
+      }
+    }, { passive:true });
+    container.addEventListener('touchmove', ev => {
+      if(ev.touches.length !== 2) return;
+      ev.preventDefault();
+      const dist = touchDist(ev);
+      if(pinchDist > 0) zoomBy(pinchDist/dist);
+      pinchDist = dist;
+    }, { passive:false });
+    container.addEventListener('touchend', ev => {
+      pinchDist = ev.touches.length === 2 ? touchDist(ev) : 0;
+    });
+
     // Slow idle spin around the vertical (Y) axis; pauses while the user is
     // dragging to orbit, and is skipped entirely for prefers-reduced-motion
     // or when the caller opts out (the sidebar mini view: constant motion in
@@ -2141,7 +2168,7 @@ Press; Totowa, NJ: Barnes &amp; Noble Books, 1984, pp. 92 to 145, 165 to 167.</p
       doc.title = document.title;
       doc.head.innerHTML = `<style>
         html,body{margin:0;height:100%;background:${cssVarSafe('--surface-1')};
-          font-family:'Noto Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;}
+          font-family:'Noto Sans','Segoe UI',Helvetica,Arial,sans-serif;}
         #c{position:fixed;inset:0;}
         #info{position:fixed;top:1.4rem;left:1.4rem;max-width:min(340px,70vw);pointer-events:none;}
         #infoEyebrow{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:${cssVarSafe('--text-muted')};margin:0 0 .5rem;}
