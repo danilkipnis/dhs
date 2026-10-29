@@ -64,7 +64,7 @@
     {
       "group": "VII",
       "entries": [
-        { "parent": "38", "children": ["74"] },
+        { "parent": "38", "children": ["74"], "note": "Printed as 38 in the original; the hiri/ahirika pairing suggests 37 may be meant." },
         { "parent": "38", "children": ["75"] }
       ]
     },
